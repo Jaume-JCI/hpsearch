@@ -3,8 +3,9 @@
 __all__ = ['ExampleExperimentManager']
 
 # Cell
+import warnings
+warnings.filterwarnings('ignore')
 import sys
-sys.path.append('./src')
 from .experiment_manager import ExperimentManager
 
 class ExampleExperimentManager (ExperimentManager):
