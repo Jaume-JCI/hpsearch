@@ -1,0 +1,42 @@
+
+
+Experiment 0 => parameters: 
+	my_first=0.6,
+	my_second=1.2,
+	my_third=3.0
+
+
+
+Experiment 1 => parameters: 
+	my_first=0.6,
+	my_second=2.3,
+	my_third=3.0
+
+
+
+Experiment 2 => parameters: 
+	my_first=0.6,
+	my_second=4.0,
+	my_third=3.0
+
+
+
+Experiment 3 => parameters: 
+	my_first=0.3,
+	my_second=1.2,
+	my_third=3.0
+
+
+
+Experiment 4 => parameters: 
+	my_first=0.3,
+	my_second=2.3,
+	my_third=3.0
+
+
+
+Experiment 5 => parameters: 
+	my_first=0.3,
+	my_second=4.0,
+	my_third=3.0
+

@@ -1,0 +1,7 @@
+,experiment_number,git_hash,lineno,log_message,path_results_big,script_path
+0,0,b'1d37855ec76504a895b81e8af877a31f5db7d025\n',10,"single input, learning rate and regularization grid search, 500 epochs",/mnt/datascience-vol/experiments/00000/0,<ipython-input-2-55f8fed21566>
+1,1,b'1d37855ec76504a895b81e8af877a31f5db7d025\n',10,"single input, learning rate and regularization grid search, 500 epochs",/mnt/datascience-vol/experiments/00001/0,<ipython-input-2-55f8fed21566>
+2,2,b'1d37855ec76504a895b81e8af877a31f5db7d025\n',10,"single input, learning rate and regularization grid search, 500 epochs",/mnt/datascience-vol/experiments/00002/0,<ipython-input-2-55f8fed21566>
+3,3,b'1d37855ec76504a895b81e8af877a31f5db7d025\n',10,"single input, learning rate and regularization grid search, 500 epochs",/mnt/datascience-vol/experiments/00003/0,<ipython-input-2-55f8fed21566>
+4,4,b'1d37855ec76504a895b81e8af877a31f5db7d025\n',10,"single input, learning rate and regularization grid search, 500 epochs",/mnt/datascience-vol/experiments/00004/0,<ipython-input-2-55f8fed21566>
+5,5,b'1d37855ec76504a895b81e8af877a31f5db7d025\n',10,"single input, learning rate and regularization grid search, 500 epochs",/mnt/datascience-vol/experiments/00005/0,<ipython-input-2-55f8fed21566>

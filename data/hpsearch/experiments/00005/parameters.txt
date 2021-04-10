@@ -1,0 +1,13 @@
+parameters=dict(my_first=0.3,
+                my_second=4.0,
+                my_third=3.0)
+
+
+
+other_parameters=dict(experiment_number=5,
+                      git_hash='b'1d37855ec76504a895b81e8af877a31f5db7d025\n'',
+                      lineno=10,
+                      log_message='single input, learning rate and regularization grid search, 500 epochs',
+                      path_results_big='/mnt/datascience-vol/experiments/00005/0',
+                      script_path='<ipython-input-2-55f8fed21566>')
+
