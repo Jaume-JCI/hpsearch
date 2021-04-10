@@ -5,8 +5,7 @@ __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 index = {"em": "06_experiment.ipynb",
          "parameters": "06_experiment.ipynb",
          "other_parameters": "06_experiment.ipynb",
-         "ExampleExperimentManager": "07_example_wrapper.ipynb",
-         "root_path": "07_example_wrapper.ipynb"}
+         "ExampleExperimentManager": "07_example_wrapper.ipynb"}
 
 modules = ["experiment.py",
            "example_wrapper.py"]

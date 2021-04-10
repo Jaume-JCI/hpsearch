@@ -1,13 +1,13 @@
 repository: fastai/nbdev
 output: web
-topnav_title: nbdev
-site_title: nbdev
-company_name: fast.ai
-description: Writing a library entirely in notebooks
+topnav_title: hpsearch 
+site_title: hpsearch
+company_name: JCI
+description: Hyper-parameter search and ML experimentation framework 
 google_search: 000837339549978028235:vh0pq0omtgr
 use_math: true
 google_analytics:
-twitter_username: fastdotai
+twitter_username: none
 
 host: 127.0.0.1
 # the preview server used. Leave as is.
