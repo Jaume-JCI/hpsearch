@@ -59,7 +59,7 @@ defaults:
       tooltip: true
 
 sidebars: [home_sidebar]
-baseurl: /jaume_nbdev/
+baseurl: /hpsearch/
 plugins:
     - jekyll-remote-theme
     

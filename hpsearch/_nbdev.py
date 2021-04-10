@@ -11,7 +11,7 @@ index = {"em": "06_experiment.ipynb",
 modules = ["experiment.py",
            "example_wrapper.py"]
 
-doc_url = "https://jaume-jci.github.io/jaume_nbdev/jaume_nbdev/"
+doc_url = "https://jaume-jci.github.io/jaume_nbdev/hpsearch/"
 
 git_url = "https://github.com/Jaume-JCI/hpsearch/tree/master/"
 
