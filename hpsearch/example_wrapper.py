@@ -23,7 +23,13 @@ class ExampleExperimentManager (ExperimentManager):
 
 # Cell
 def my_function(x):
-    ''' Example help
-    x: int'''
+    ''' Example help.
+
+    Parameters:
+       x: int
+       y: str
+    Returns:
+       int
+    '''
 
     return 2*x

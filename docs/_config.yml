@@ -60,7 +60,5 @@ defaults:
 
 sidebars: [home_sidebar]
 baseurl: /hpsearch/
-plugins:
-    - jekyll-remote-theme
     
-remote_theme: fastai/nbdev-jekyll-theme
+theme: jekyll-theme-cayman 
