@@ -252,8 +252,9 @@ class ExperimentManager (object):
         # ****************************************************************
         logger_experiment = set_logger ("experiment", path_experiment)
         logger_experiment.info ('script: {}, line number: {}'.format(other_parameters['script_path'], other_parameters['lineno']))
-        shutil.copy (other_parameters['script_path'], path_experiment)
-        shutil.copy (other_parameters['script_path'], path_root_experiment)
+        if os.path.exists(other_parameters['script_path']):
+            shutil.copy (other_parameters['script_path'], path_experiment)
+            shutil.copy (other_parameters['script_path'], path_root_experiment)
         
         # summary logger
         logger_summary = set_logger ("summary", root_path, mode='w', stdout=False, just_message=True, filename='summary.txt')

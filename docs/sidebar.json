@@ -2,6 +2,7 @@
   "hpsearch": {
     "Overview": "/",
     "Experiment": "experiment.html",
-    "Example Wrapper": "example_wrapper.html"
+    "Example Wrapper": "example_wrapper.html",
+    "Title": "hp_util.html"
   }
 }
