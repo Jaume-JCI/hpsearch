@@ -1,6 +1,3 @@
-![](https://github.com/fastai/nbdev/workflows/CI/badge.svg)
-
-
 # Welcome to hspearch
 > hyper-parameter search and ML experimentation framework
 
@@ -14,3 +11,5 @@
 ## Installing
 
 To be completed
+
+## Another section
