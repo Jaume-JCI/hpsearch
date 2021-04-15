@@ -2,17 +2,25 @@
 
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
-index = {"em": "06_experiment.ipynb",
-         "parameters": "06_experiment.ipynb",
-         "other_parameters": "06_experiment.ipynb",
-         "ExampleExperimentManager": "07_example_wrapper.ipynb",
-         "my_function": "07_example_wrapper.ipynb",
-         "write_some": "07_example_wrapper.ipynb",
-         "print_util": "hp_util.ipynb"}
+index = {"ExampleExperimentManager": "example_experiment_manager.ipynb",
+         "ExperimentManager": "experiment_manager.ipynb",
+         "get_git_revision_hash": "experiment_manager.ipynb",
+         "record_parameters": "experiment_manager.ipynb",
+         "mypprint": "experiment_manager.ipynb",
+         "mymakedirs": "experiment_manager.ipynb",
+         "find_closest_epoch": "experiment_manager.ipynb",
+         "load_or_create_experiment_values": "experiment_manager.ipynb",
+         "store_parameters": "experiment_manager.ipynb",
+         "isnull": "experiment_manager.ipynb",
+         "get_experiment_number": "experiment_manager.ipynb",
+         "get_experiment_numbers": "experiment_manager.ipynb",
+         "set_logger": "experiment_manager.ipynb",
+         "insert_experiment_script_path": "experiment_manager.ipynb",
+         "load_parameters": "experiment_manager.ipynb",
+         "save_other_parameters": "experiment_manager.ipynb"}
 
-modules = ["experiment.py",
-           "example_wrapper.py",
-           "tools/hp_util.py"]
+modules = ["examples/example_experiment_manager.py",
+           "experiment_manager.py"]
 
 doc_url = "https://jaume-jci.github.io/jaume_nbdev/hpsearch/"
 

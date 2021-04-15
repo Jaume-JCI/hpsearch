@@ -101,4 +101,8 @@ def print_table (pars):
 
     return df, df2, df_scores
     
-df, df2, df_scores = print_table (pars)
+def main():
+    df, df2, df_scores = print_table (pars)
+    
+if __name__ == "__main__":
+    main()

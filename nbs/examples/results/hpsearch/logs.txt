@@ -1,0 +1,170 @@
+2021-04-14 20:59:06,124 - experiment_manager - INFO - experiment script: <ipython-input-2-8f74626aee57>, line: 10
+2021-04-14 20:59:06,125 - experiment_manager - INFO - processing hyper-parameter 0 out of 6
+2021-04-14 20:59:06,126 - experiment_manager - INFO - doing run 0 out of 1
+2021-04-14 20:59:06,126 - experiment_manager - INFO - single input, learning rate and regularization grid search, 500 epochs
+2021-04-14 20:59:06,133 - experiment_manager - INFO - running experiment 0
+2021-04-14 20:59:06,133 - experiment_manager - INFO - run number: 0
+2021-04-14 20:59:06,134 - experiment_manager - INFO - 
+parameters:
+	my_first=0.6,
+	my_second=1.2,
+	my_third=3.0
+
+2021-04-14 20:59:06,147 - experiment_manager - INFO - time spent for evaluation: 3.0040740966796875e-05
+2021-04-14 20:59:06,150 - experiment_manager - INFO - 0 - my_score: -1.8
+2021-04-14 20:59:06,159 - experiment_manager - INFO - finished experiment 0
+2021-04-14 20:59:06,160 - experiment_manager - INFO - processing hyper-parameter 1 out of 6
+2021-04-14 20:59:06,160 - experiment_manager - INFO - doing run 0 out of 1
+2021-04-14 20:59:06,161 - experiment_manager - INFO - single input, learning rate and regularization grid search, 500 epochs
+2021-04-14 20:59:06,176 - experiment_manager - INFO - running experiment 1
+2021-04-14 20:59:06,176 - experiment_manager - INFO - run number: 0
+2021-04-14 20:59:06,177 - experiment_manager - INFO - 
+parameters:
+	my_first=0.6,
+	my_second=2.3,
+	my_third=3.0
+
+2021-04-14 20:59:06,190 - experiment_manager - INFO - time spent for evaluation: 3.123283386230469e-05
+2021-04-14 20:59:06,192 - experiment_manager - INFO - 0 - my_score: -0.7000000000000002
+2021-04-14 20:59:06,203 - experiment_manager - INFO - finished experiment 1
+2021-04-14 20:59:06,204 - experiment_manager - INFO - processing hyper-parameter 2 out of 6
+2021-04-14 20:59:06,204 - experiment_manager - INFO - doing run 0 out of 1
+2021-04-14 20:59:06,205 - experiment_manager - INFO - single input, learning rate and regularization grid search, 500 epochs
+2021-04-14 20:59:06,216 - experiment_manager - INFO - running experiment 2
+2021-04-14 20:59:06,217 - experiment_manager - INFO - run number: 0
+2021-04-14 20:59:06,217 - experiment_manager - INFO - 
+parameters:
+	my_first=0.6,
+	my_second=4.0,
+	my_third=3.0
+
+2021-04-14 20:59:06,230 - experiment_manager - INFO - time spent for evaluation: 3.0994415283203125e-05
+2021-04-14 20:59:06,232 - experiment_manager - INFO - 0 - my_score: 1.0
+2021-04-14 20:59:06,243 - experiment_manager - INFO - finished experiment 2
+2021-04-14 20:59:06,244 - experiment_manager - INFO - processing hyper-parameter 3 out of 6
+2021-04-14 20:59:06,244 - experiment_manager - INFO - doing run 0 out of 1
+2021-04-14 20:59:06,245 - experiment_manager - INFO - single input, learning rate and regularization grid search, 500 epochs
+2021-04-14 20:59:06,259 - experiment_manager - INFO - running experiment 3
+2021-04-14 20:59:06,259 - experiment_manager - INFO - run number: 0
+2021-04-14 20:59:06,260 - experiment_manager - INFO - 
+parameters:
+	my_first=0.3,
+	my_second=1.2,
+	my_third=3.0
+
+2021-04-14 20:59:06,273 - experiment_manager - INFO - time spent for evaluation: 3.075599670410156e-05
+2021-04-14 20:59:06,275 - experiment_manager - INFO - 0 - my_score: 3.5999999999999996
+2021-04-14 20:59:06,286 - experiment_manager - INFO - finished experiment 3
+2021-04-14 20:59:06,287 - experiment_manager - INFO - processing hyper-parameter 4 out of 6
+2021-04-14 20:59:06,287 - experiment_manager - INFO - doing run 0 out of 1
+2021-04-14 20:59:06,288 - experiment_manager - INFO - single input, learning rate and regularization grid search, 500 epochs
+2021-04-14 20:59:06,303 - experiment_manager - INFO - running experiment 4
+2021-04-14 20:59:06,304 - experiment_manager - INFO - run number: 0
+2021-04-14 20:59:06,304 - experiment_manager - INFO - 
+parameters:
+	my_first=0.3,
+	my_second=2.3,
+	my_third=3.0
+
+2021-04-14 20:59:06,317 - experiment_manager - INFO - time spent for evaluation: 3.24249267578125e-05
+2021-04-14 20:59:06,319 - experiment_manager - INFO - 0 - my_score: 6.8999999999999995
+2021-04-14 20:59:06,330 - experiment_manager - INFO - finished experiment 4
+2021-04-14 20:59:06,331 - experiment_manager - INFO - processing hyper-parameter 5 out of 6
+2021-04-14 20:59:06,332 - experiment_manager - INFO - doing run 0 out of 1
+2021-04-14 20:59:06,332 - experiment_manager - INFO - single input, learning rate and regularization grid search, 500 epochs
+2021-04-14 20:59:06,348 - experiment_manager - INFO - running experiment 5
+2021-04-14 20:59:06,349 - experiment_manager - INFO - run number: 0
+2021-04-14 20:59:06,349 - experiment_manager - INFO - 
+parameters:
+	my_first=0.3,
+	my_second=4.0,
+	my_third=3.0
+
+2021-04-14 20:59:06,363 - experiment_manager - INFO - time spent for evaluation: 3.170967102050781e-05
+2021-04-14 20:59:06,364 - experiment_manager - INFO - 0 - my_score: 12.0
+2021-04-14 20:59:06,376 - experiment_manager - INFO - finished experiment 5
+2021-04-14 21:00:49,083 - experiment_manager - INFO - experiment script: <ipython-input-5-cec3091ac3a9>, line: 9
+2021-04-14 21:00:49,083 - experiment_manager - INFO - processing hyper-parameter 0 out of 6
+2021-04-14 21:00:49,084 - experiment_manager - INFO - doing run 0 out of 1
+2021-04-14 21:00:49,084 - experiment_manager - INFO - single input, learning rate and regularization grid search, 500 epochs
+2021-04-14 21:00:49,099 - experiment_manager - INFO - running experiment 0
+2021-04-14 21:00:49,100 - experiment_manager - INFO - run number: 0
+2021-04-14 21:00:49,101 - experiment_manager - INFO - 
+parameters:
+	my_first=0.6,
+	my_second=1.2,
+	my_third=3.0
+
+2021-04-14 21:00:49,114 - experiment_manager - INFO - time spent for evaluation: 3.0279159545898438e-05
+2021-04-14 21:00:49,116 - experiment_manager - INFO - 0 - my_score: -1.8
+2021-04-14 21:00:49,127 - experiment_manager - INFO - finished experiment 0
+2021-04-14 21:00:49,129 - experiment_manager - INFO - processing hyper-parameter 1 out of 6
+2021-04-14 21:00:49,130 - experiment_manager - INFO - doing run 0 out of 1
+2021-04-14 21:00:49,130 - experiment_manager - INFO - single input, learning rate and regularization grid search, 500 epochs
+2021-04-14 21:00:49,145 - experiment_manager - INFO - running experiment 1
+2021-04-14 21:00:49,146 - experiment_manager - INFO - run number: 0
+2021-04-14 21:00:49,146 - experiment_manager - INFO - 
+parameters:
+	my_first=0.6,
+	my_second=2.3,
+	my_third=3.0
+
+2021-04-14 21:00:49,157 - experiment_manager - INFO - time spent for evaluation: 2.8371810913085938e-05
+2021-04-14 21:00:49,159 - experiment_manager - INFO - 0 - my_score: -0.7000000000000002
+2021-04-14 21:00:49,171 - experiment_manager - INFO - finished experiment 1
+2021-04-14 21:00:49,172 - experiment_manager - INFO - processing hyper-parameter 2 out of 6
+2021-04-14 21:00:49,172 - experiment_manager - INFO - doing run 0 out of 1
+2021-04-14 21:00:49,173 - experiment_manager - INFO - single input, learning rate and regularization grid search, 500 epochs
+2021-04-14 21:00:49,186 - experiment_manager - INFO - running experiment 2
+2021-04-14 21:00:49,187 - experiment_manager - INFO - run number: 0
+2021-04-14 21:00:49,187 - experiment_manager - INFO - 
+parameters:
+	my_first=0.6,
+	my_second=4.0,
+	my_third=3.0
+
+2021-04-14 21:00:49,202 - experiment_manager - INFO - time spent for evaluation: 2.765655517578125e-05
+2021-04-14 21:00:49,204 - experiment_manager - INFO - 0 - my_score: 1.0
+2021-04-14 21:00:49,215 - experiment_manager - INFO - finished experiment 2
+2021-04-14 21:00:49,216 - experiment_manager - INFO - processing hyper-parameter 3 out of 6
+2021-04-14 21:00:49,216 - experiment_manager - INFO - doing run 0 out of 1
+2021-04-14 21:00:49,216 - experiment_manager - INFO - single input, learning rate and regularization grid search, 500 epochs
+2021-04-14 21:00:49,230 - experiment_manager - INFO - running experiment 3
+2021-04-14 21:00:49,230 - experiment_manager - INFO - run number: 0
+2021-04-14 21:00:49,231 - experiment_manager - INFO - 
+parameters:
+	my_first=0.3,
+	my_second=1.2,
+	my_third=3.0
+
+2021-04-14 21:00:49,242 - experiment_manager - INFO - time spent for evaluation: 2.7179718017578125e-05
+2021-04-14 21:00:49,243 - experiment_manager - INFO - 0 - my_score: 3.5999999999999996
+2021-04-14 21:00:49,255 - experiment_manager - INFO - finished experiment 3
+2021-04-14 21:00:49,255 - experiment_manager - INFO - processing hyper-parameter 4 out of 6
+2021-04-14 21:00:49,256 - experiment_manager - INFO - doing run 0 out of 1
+2021-04-14 21:00:49,256 - experiment_manager - INFO - single input, learning rate and regularization grid search, 500 epochs
+2021-04-14 21:00:49,272 - experiment_manager - INFO - running experiment 4
+2021-04-14 21:00:49,272 - experiment_manager - INFO - run number: 0
+2021-04-14 21:00:49,273 - experiment_manager - INFO - 
+parameters:
+	my_first=0.3,
+	my_second=2.3,
+	my_third=3.0
+
+2021-04-14 21:00:49,288 - experiment_manager - INFO - time spent for evaluation: 3.266334533691406e-05
+2021-04-14 21:00:49,291 - experiment_manager - INFO - 0 - my_score: 6.8999999999999995
+2021-04-14 21:00:49,303 - experiment_manager - INFO - finished experiment 4
+2021-04-14 21:00:49,303 - experiment_manager - INFO - processing hyper-parameter 5 out of 6
+2021-04-14 21:00:49,304 - experiment_manager - INFO - doing run 0 out of 1
+2021-04-14 21:00:49,304 - experiment_manager - INFO - single input, learning rate and regularization grid search, 500 epochs
+2021-04-14 21:00:49,318 - experiment_manager - INFO - running experiment 5
+2021-04-14 21:00:49,319 - experiment_manager - INFO - run number: 0
+2021-04-14 21:00:49,319 - experiment_manager - INFO - 
+parameters:
+	my_first=0.3,
+	my_second=4.0,
+	my_third=3.0
+
+2021-04-14 21:00:49,331 - experiment_manager - INFO - time spent for evaluation: 3.0040740966796875e-05
+2021-04-14 21:00:49,333 - experiment_manager - INFO - 0 - my_score: 12.0
+2021-04-14 21:00:49,344 - experiment_manager - INFO - finished experiment 5

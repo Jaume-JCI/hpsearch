@@ -11,13 +11,13 @@ entries:
       url: /
     - output: web,pdf
       title: Experiment
-      url: experiment.html
+      url: example_experiment.html
     - output: web,pdf
-      title: Example Wrapper
-      url: example_wrapper.html
+      title: Example Experiment Manager
+      url: example_experiment_manager.html
     - output: web,pdf
       title: Title
-      url: hp_util.html
+      url: experiment_manager.html
     output: web
     title: hpsearch
   output: web

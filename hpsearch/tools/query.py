@@ -1,7 +1,6 @@
 import argparse
 import sys
 sys.path.append('.')
-sys.path.append('src')
 from collections import namedtuple
 from IPython.display import display
 # csp api
@@ -67,7 +66,7 @@ def query (pars, other_parameters=False):
     return result_query 
 
 
-if __name__ == '__main__':
+def main():
 
     df = query (pars, other_parameters=pars.other)
     if pars.experiments is None:
@@ -102,3 +101,6 @@ if __name__ == '__main__':
     if pars.show:
        import hpsearch.visualization.plot_visdom as pv
        pv.plot_multiple_histories(df.index, root_folder=pars.root,metrics=pars.metric, parameters=None)
+        
+if __name__ == "__main__":
+    main()

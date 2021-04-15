@@ -36,27 +36,33 @@ parser.add_argument('--run', default=0, type=int)
 parser.add_argument('--op', default=default_op, type=str)
 parser.add_argument('--file', default='model_history.pk', type=str)
 
-pars = parser.parse_args()
+def main():
+    pars = parser.parse_args()
 
-if pars.d == 1:
-    pars.root = 'squeezenet2'
-elif pars.d == 2:
-    pars.root = 'squeezenet2msmt'
-elif pars.d == 3:
-    pars.root = 'lrbatch'
- 
-exps = pars.e
-if exps[0] == -1:
-    root_path = get_paths.get_path_experiments (folder = pars.root)
-    experiment_number = pickle.load(open('%s/current_experiment_number.pkl' %root_path,'rb'))
-    exps[0] = experiment_number
+    if pars.d == 1:
+        pars.root = 'squeezenet2'
+    elif pars.d == 2:
+        pars.root = 'squeezenet2msmt'
+    elif pars.d == 3:
+        pars.root = 'lrbatch'
 
-if len(exps)>1 and (exps[1] == -2):
-    root_path = get_paths.get_path_experiments (folder = pars.root)
-    df = pd.read_csv('%s/experiments_data.csv' %root_path,index_col=0)
-    if pars.op=='max':
-        exps[1] = df['0_%s' %default_metric].idxmax()
-    else:
-        exps[1] = df['0_%s' %default_metric].idxmin()
+    exps = pars.e
+    if exps[0] == -1:
+        root_path = get_paths.get_path_experiments (folder = pars.root)
+        experiment_number = pickle.load(open('%s/current_experiment_number.pkl' %root_path,'rb'))
+        exps[0] = experiment_number
 
-pv.plot_multiple_histories(exps, run_number=pars.run, root_folder=pars.root,metrics=pars.metric, parameters=pars.labels, name_file=pars.file)
+    if len(exps)>1 and (exps[1] == -2):
+        root_path = get_paths.get_path_experiments (folder = pars.root)
+        df = pd.read_csv('%s/experiments_data.csv' %root_path,index_col=0)
+        if pars.op=='max':
+            exps[1] = df['0_%s' %default_metric].idxmax()
+        else:
+            exps[1] = df['0_%s' %default_metric].idxmin()
+
+
+    pv.plot_multiple_histories(exps, run_number=pars.run, root_folder=pars.root,metrics=pars.metric, parameters=pars.labels, 
+                               name_file=pars.file)
+    
+if __name__ == "__main__":
+    main()

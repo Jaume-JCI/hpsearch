@@ -4,7 +4,7 @@ from hpsearch.experiment_manager import create_experiment_and_run, grid_search, 
 
 # python experiments/intermediate.py -r -f pretrain_dqn
 
-if __name__ == '__main__':
+def main():
 
     parser = argparse.ArgumentParser(description='run experiment') 
     parser.add_argument('-s', '--store', action= "store_true") 
@@ -24,3 +24,5 @@ if __name__ == '__main__':
     if pars.remove:
         record_intermediate_results(root_folder=pars.folder, remove=True, new_parameters=other_parameters)
    
+if __name__ == "__main__":
+    main()

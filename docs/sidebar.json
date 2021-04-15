@@ -1,8 +1,8 @@
 {
   "hpsearch": {
     "Overview": "/",
-    "Experiment": "experiment.html",
-    "Example Wrapper": "example_wrapper.html",
-    "Title": "hp_util.html"
+    "Experiment": "example_experiment.html",
+    "Example Experiment Manager": "example_experiment_manager.html",
+    "Title": "experiment_manager.html"
   }
 }
