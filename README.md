@@ -21,19 +21,14 @@ from hpsearch.examples.example_experiment_manager import ExampleExperimentManage
 
 em = ExampleExperimentManager ()
 
-em.run_experiment(parameters={'a':1}, mya=50)
+em.run_experiment(parameters={'a':1})
 ```
 
 
-    ---------------------------------------------------------------------------
 
-    TypeError                                 Traceback (most recent call last)
 
-    <ipython-input-3-74871d1eec13> in <module>
-          3 em = ExampleExperimentManager ()
-          4 
-    ----> 5 em.run_experiment(parameters={'a':1}, mya=50)
-    
+    {'my_score': 2}
 
-    TypeError: run_experiment() got an unexpected keyword argument 'mya'
 
+
+This is function `load_parameters`

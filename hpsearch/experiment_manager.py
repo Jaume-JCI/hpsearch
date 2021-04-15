@@ -42,7 +42,8 @@ class ExperimentManager (object):
         self.parameters_non_pickable = {}
 
     def run_experiment_pipeline (self, run_number=0, path_results='./results', parameters = {}):
-        """ Runs complete learning pipeline: loading / generating data, building and learning model, applying it to data, and evaluating it."""
+        """ Runs complete learning pipeline: loading / generating data, building and learning model, applying it to data,
+        and evaluating it."""
         start_time = time.time()
 
         # record all parameters except for non-pickable ones
@@ -60,7 +61,7 @@ class ExperimentManager (object):
         if not parameters.get('just_visualize', False):
             time_before = time.time()
             score_dict = self._run_experiment (parameters=parameters, path_results=path_results, run_number=run_number)
-            logger.info ('time spent for evaluation: {}'.format(time.time()-time_before))
+            logger.info ('time spent on this experiment: {}'.format(time.time()-time_before))
         else:
             score_dict = None
 
