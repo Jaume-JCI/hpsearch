@@ -64,7 +64,7 @@ nb_path: "nbs/index.ipynb"
 
 <span class="n">em</span> <span class="o">=</span> <span class="n">ExampleExperimentManager</span> <span class="p">()</span>
 
-<span class="n">em</span><span class="o">.</span><span class="n">run_experiment</span><span class="p">(</span><span class="n">parameters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">})</span>
+<span class="n">em</span><span class="o">.</span><span class="n">run_experiment</span><span class="p">(</span><span class="n">parameters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">},</span> <span class="n">mya</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -76,12 +76,17 @@ nb_path: "nbs/index.ipynb"
 
 <div class="output_area">
 
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">TypeError</span>                                 Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-3-74871d1eec13&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-intense-fg ansi-bold">      3</span> em <span class="ansi-blue-fg">=</span> ExampleExperimentManager <span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">      4</span> 
+<span class="ansi-green-fg">----&gt; 5</span><span class="ansi-red-fg"> </span>em<span class="ansi-blue-fg">.</span>run_experiment<span class="ansi-blue-fg">(</span>parameters<span class="ansi-blue-fg">=</span><span class="ansi-blue-fg">{</span><span class="ansi-blue-fg">&#39;a&#39;</span><span class="ansi-blue-fg">:</span><span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">}</span><span class="ansi-blue-fg">,</span> mya<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">50</span><span class="ansi-blue-fg">)</span>
 
-
-<div class="output_text output_subarea output_execute_result">
-<pre>{&#39;my_score&#39;: 2}</pre>
+<span class="ansi-red-fg">TypeError</span>: run_experiment() got an unexpected keyword argument &#39;mya&#39;</pre>
 </div>
-
 </div>
 
 </div>
