@@ -16,8 +16,14 @@ entries:
       title: Example Experiment Manager
       url: example_experiment_manager.html
     - output: web,pdf
-      title: Title
+      title: Experiment Manager
       url: experiment_manager.html
+    - output: web,pdf
+      title: principles
+      url: principles.html
+    - output: web,pdf
+      title: Title
+      url: principles_great.html
     output: web
     title: hpsearch
   output: web

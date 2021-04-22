@@ -5,7 +5,7 @@ sys.path.append('src')
 import pandas as pd
 import pickle
 import hpsearch.visualization.plot_visdom as pv
-import hpsearch.config.get_paths as get_paths
+from hpsearch.config.hpconfig import get_path_experiments
 
 
 default_root = 'sac'
@@ -48,12 +48,12 @@ def main():
 
     exps = pars.e
     if exps[0] == -1:
-        root_path = get_paths.get_path_experiments (folder = pars.root)
+        root_path = get_path_experiments (folder = pars.root)
         experiment_number = pickle.load(open('%s/current_experiment_number.pkl' %root_path,'rb'))
         exps[0] = experiment_number
 
     if len(exps)>1 and (exps[1] == -2):
-        root_path = get_paths.get_path_experiments (folder = pars.root)
+        root_path = get_path_experiments (folder = pars.root)
         df = pd.read_csv('%s/experiments_data.csv' %root_path,index_col=0)
         if pars.op=='max':
             exps[1] = df['0_%s' %default_metric].idxmax()

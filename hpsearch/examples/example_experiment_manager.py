@@ -3,10 +3,9 @@
 __all__ = ['ExampleExperimentManager']
 
 # Cell
-import warnings
-warnings.filterwarnings('ignore')
-import sys
 from ..experiment_manager import ExperimentManager
+import hpsearch
+import os
 
 class ExampleExperimentManager (ExperimentManager):
 
@@ -20,3 +19,12 @@ class ExampleExperimentManager (ExperimentManager):
         else:
             dict_results['my_score'] = parameters.get('my_second',1) * parameters.get('my_third', 2)
         return dict_results
+
+    def get_default_parameters (self, parameters):
+        defaults = dict(my_first=5,
+                        my_second=10,
+                        my_third=100)
+        return defaults
+
+    def get_path_experiments (self, path_experiments = None, folder = None):
+        return f'{os.path.dirname(hpsearch.__file__)}/../results'

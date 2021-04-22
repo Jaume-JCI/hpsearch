@@ -25,11 +25,8 @@ import logging
 import traceback
 import shutil
 
-# hpsearch config
-from .config.default_parameters import get_default_parameters
-from .config import get_paths
-
 # hpsearch core API
+from .config.manager_factory import ManagerFactory
 from .utils.resume_from_checkpoint import make_resume_from_checkpoint, exists_current_checkpoint, finished_all_epochs, obtain_last_result
 from .utils import experiment_utils
 from .utils.experiment_utils import remove_defaults
@@ -38,8 +35,54 @@ from .utils.organize_experiments import remove_defaults_from_experiment_data
 
 class ExperimentManager (object):
 
-    def __init__ (self):
+    def __init__ (self, allow_base_class=False):
         self.parameters_non_pickable = {}
+        self.allow_base_class = allow_base_class
+        self.manager_factory = ManagerFactory(allow_base_class=allow_base_class)
+        self.manager_factory.register_manager (self)
+
+    def get_default_parameters (self, parameters):
+        if not self.allow_base_class:
+            raise ImportError ('call get_default_parameters from base class is not allowed')
+        return {}
+
+    def get_path_experiments (self, path_experiments = None, folder = None):
+        """Gives the root path to the folder where results of experiments are stored."""
+
+        if not self.allow_base_class:
+            raise ImportError ('call get_path_experiments from base class is not allowed')
+
+        path_experiments = 'results/hpsearch'
+        if folder != None:
+            path_experiments = f'{path_experiments}/{folder}'
+
+        return path_experiments
+
+    def get_path_alternative (self, path_results):
+        if not self.allow_base_class:
+            raise ImportError ('call get_path_alternative from base class is not allowed')
+        root1 = 'results'
+        root2 = '/mnt/datascience-vol'
+        path_alternative = path_results.replace(root1, root2)
+
+        return path_alternative
+
+    def get_path_data (self, run_number, root_path=None, parameters={}):
+        if root_path is None:
+            root_path = self.get_path_experiments()
+        return f'{root_path}/data'
+
+    def get_path_experiment (self, experiment_id, root_path=None, root_folder=None):
+        if root_path is None:
+            root_path = self.get_path_experiments(folder=root_folder)
+        path_experiment = f'%s/experiments/%05d' %(root_path,experiment_id)
+        return path_experiment
+
+    def get_path_results (self, experiment_id, run_number, root_path=None, root_folder=None):
+        path_experiment = self.get_path_experiment (experiment_id, root_path=root_path, root_folder=root_folder)
+        path_results = '%s/%d' %(path_experiment,run_number)
+        return path_results
+
 
     def run_experiment_pipeline (self, run_number=0, path_results='./results', parameters = {}):
         """ Runs complete learning pipeline: loading / generating data, building and learning model, applying it to data,
@@ -139,8 +182,14 @@ class ExperimentManager (object):
 
         # get root_path and create directories
         if root_path is None:
-            root_path = get_paths.get_path_experiments(folder = other_parameters.get('root_folder'))
+            root_path = self.get_path_experiments(folder = other_parameters.get('root_folder'))
         os.makedirs (root_path, exist_ok = True)
+
+        # ****************************************************
+        # register (subclassed) manager so that it can be used by decoupled modules
+        # ****************************************************
+        self.manager_factory.register_manager (self)
+        self.manager_factory.write_manager (self)
 
         # ****************************************************
         #   get experiment number given parameters
@@ -212,7 +261,7 @@ class ExperimentManager (object):
         #   check conditions for skipping experiment
         # ****************************************************
         if not isnull(experiment_data, experiment_number, name_score) and not other_parameters.get('repeat_experiment', False) and not other_parameters.get('just_visualize', False):
-            if other_parameters.get('check_finished', False) and not finished_all_epochs(parameters, get_paths.get_path_results (experiment_number, run_number=run_number, root_path=root_path), other_parameters.get('name_epoch','max_epoch')):
+            if other_parameters.get('check_finished', False) and not finished_all_epochs(parameters, self.get_path_results (experiment_number, run_number=run_number, root_path=root_path), other_parameters.get('name_epoch','max_epoch')):
                 unfinished_flag = True
             else:
                 logger.info ('skipping...')
@@ -240,7 +289,7 @@ class ExperimentManager (object):
         mymakedirs(path_experiment, exist_ok=True)
 
         # path to save big files
-        path_experiment_big_size = get_paths.get_path_alternative (path_experiment)
+        path_experiment_big_size = self.get_path_alternative (path_experiment)
         os.makedirs (path_experiment_big_size, exist_ok = True)
         other_parameters['path_results_big'] = path_experiment_big_size
 
@@ -281,7 +330,7 @@ class ExperimentManager (object):
         parameters.update(other_parameters)
 
         # add default parameters - their values are overwritten by input values, if given
-        parameters_with_defaults = get_default_parameters(parameters)
+        parameters_with_defaults = self.get_default_parameters(parameters)
         parameters_with_defaults.update(parameters)
         parameters = parameters_with_defaults
 
@@ -296,7 +345,7 @@ class ExperimentManager (object):
             prev_experiment_number = find_closest_epoch (experiment_data2, parameters, name_epoch=name_epoch)
             if prev_experiment_number is not None:
                 logger.info('using prev_epoch: %d' %prev_experiment_number)
-                prev_path_results = get_paths.get_path_results (prev_experiment_number, run_number=run_number, root_path=root_path)
+                prev_path_results = self.get_path_results (prev_experiment_number, run_number=run_number, root_path=root_path)
                 found = make_resume_from_checkpoint (parameters, prev_path_results)
                 if found:
                     logger.info ('found previous exp: %d' %prev_experiment_number)
@@ -309,7 +358,7 @@ class ExperimentManager (object):
         if not resuming_from_prev_epoch_flag and parameters.get('from_exp', None) is not None:
             prev_experiment_number = parameters.get('from_exp', None)
             logger.info('using previous experiment %d' %prev_experiment_number)
-            prev_path_results = get_paths.get_path_results (prev_experiment_number, run_number=run_number, root_path=root_path)
+            prev_path_results = self.get_path_results (prev_experiment_number, run_number=run_number, root_path=root_path)
             make_resume_from_checkpoint (parameters, prev_path_results, use_best=True)
 
         # ****************************************************************
@@ -392,7 +441,7 @@ class ExperimentManager (object):
             run_numbers = range (nruns)
 
         if root_path is None:
-            root_path = get_paths.get_path_experiments(folder  = other_parameters.get('root_folder'))
+            root_path = self.get_path_experiments(folder  = other_parameters.get('root_folder'))
         path_results_base = root_path
 
         mymakedirs(path_results_base,exist_ok=True)
@@ -470,7 +519,7 @@ class ExperimentManager (object):
         from optuna.integration.skopt import SkoptSampler
 
         if root_path is None:
-            root_path = get_paths.get_path_experiments(folder  = other_parameters.get('root_folder'))
+            root_path = self.get_path_experiments(folder  = other_parameters.get('root_folder'))
 
         other_parameters = other_parameters.copy()
 
@@ -561,7 +610,7 @@ class ExperimentManager (object):
             other_parameters['root_folder'] = root_folder
 
         if root_path is None:
-            root_path = get_paths.get_path_experiments(folder  = other_parameters.get('root_folder'))
+            root_path = self.get_path_experiments(folder  = other_parameters.get('root_folder'))
 
         logger = set_logger ("experiment_manager", root_path)
 
@@ -604,9 +653,9 @@ class ExperimentManager (object):
     def rerun_experiment_pipeline (self, experiments, run_numbers=None, root_path=None, root_folder=None, new_parameters={}, save_results=False):
 
         if root_path is None:
-            root_path = get_paths.get_path_experiments(folder=root_folder)
+            root_path = self.get_path_experiments(folder=root_folder)
         for experiment_id in experiments:
-            path_root_experiment = get_paths.get_path_experiment (experiment_id, root_path=root_path)
+            path_root_experiment = self.get_path_experiment (experiment_id, root_path=root_path)
 
             parameters, other_parameters=pickle.load(open('%s/parameters.pk' %path_root_experiment,'rb'))
             parameters = parameters.copy()
@@ -614,7 +663,7 @@ class ExperimentManager (object):
             parameters.update(new_parameters)
             for run_number in run_numbers:
                 path_experiment = '%s/%d/' %(path_root_experiment, run_number)
-                path_data = get_paths.get_path_data (run_number, root_path, parameters)
+                path_data = self.get_path_data (run_number, root_path, parameters)
                 score, _ = self.run_experiment_pipeline (run_number, path_experiment, parameters = parameters)
 
                 if save_results:
@@ -639,9 +688,9 @@ class ExperimentManager (object):
     def rerun_experiment_par (self, experiments, run_numbers=None, root_path=None, root_folder=None, parameters={}):
 
         if root_path is None:
-            root_path = get_paths.get_path_experiments(folder=root_folder)
+            root_path = self.get_path_experiments(folder=root_folder)
         for experiment_id in experiments:
-            path_root_experiment = get_paths.get_path_experiment (experiment_id, root_path=root_path)
+            path_root_experiment = self.get_path_experiment (experiment_id, root_path=root_path)
 
             for run_number in run_numbers:
                 path_experiment = '%s/%d/' %(path_root_experiment, run_number)
@@ -658,8 +707,7 @@ class ExperimentManager (object):
             root_path=root_path, root_folder=root_folder,
             new_parameters=new_parameters)
 
-# ##################################################
-# ##################################################
+# Cell
 def get_git_revision_hash(root_path=None):
     try:
         git_hash = subprocess.check_output(['git', 'rev-parse', 'HEAD'])

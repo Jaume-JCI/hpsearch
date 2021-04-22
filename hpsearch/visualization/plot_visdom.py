@@ -5,7 +5,7 @@ import pickle
 import pandas as pd
 from IPython.display import display
 import visdom
-import hpsearch.config.get_paths as get_paths
+from hpsearch.config.hpconfig import get_path_results, get_path_experiments
 import hpsearch.utils.experiment_utils as ut
     
     
@@ -22,7 +22,7 @@ def plot_multiple_histories (experiments, run_number=0, root_path=None, root_fol
                              op='max', include_parameters_in_legend=False):
     
     if root_path is None:
-        root_path = get_paths.get_path_experiments(folder=root_folder)
+        root_path = get_path_experiments(folder=root_folder)
     
     df = pd.read_csv('%s/experiments_data.csv' %root_path,index_col=0)
     df2 = ut.get_experiment_parameters (df.loc[experiments], only_not_null=True)
@@ -43,7 +43,7 @@ def plot_multiple_histories (experiments, run_number=0, root_path=None, root_fol
         df = df.loc[experiments,parameters]
     
     if type(metrics)==str and (metrics == 'all'):
-        path_results = get_paths.get_path_results (experiments[0], run_number=run_number, root_path=root_path)
+        path_results = get_path_results (experiments[0], run_number=run_number, root_path=root_path)
         do_hack (path_results, name_file, hack)
         history = pickle.load(open('%s/%s' %(path_results, name_file),'rb'))
         metrics = history.keys()
@@ -61,7 +61,7 @@ def plot_multiple_histories (experiments, run_number=0, root_path=None, root_fol
         title = metric
         histories = []
         for experiment_id in experiments:
-            path_results = get_paths.get_path_results (experiment_id, run_number=run_number, root_path=root_path)
+            path_results = get_path_results (experiment_id, run_number=run_number, root_path=root_path)
             do_hack (path_results, name_file, hack)
             if os.path.exists('%s/%s' %(path_results, name_file)):
                 history = pickle.load(open('%s/%s' %(path_results, name_file),'rb'))

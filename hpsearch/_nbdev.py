@@ -2,7 +2,17 @@
 
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
-index = {"ExampleExperimentManager": "example_experiment_manager.ipynb",
+index = {"get_default_parameters": "hpconfig.ipynb",
+         "get_path_experiments": "hpconfig.ipynb",
+         "get_path_alternative": "hpconfig.ipynb",
+         "get_path_data": "hpconfig.ipynb",
+         "get_path_experiment": "hpconfig.ipynb",
+         "get_path_results": "hpconfig.ipynb",
+         "manager_factory": "hpconfig.ipynb",
+         "experiment_manager": "manager_factory.ipynb",
+         "mf.experiment_manager": "hpconfig.ipynb",
+         "ManagerFactory": "manager_factory.ipynb",
+         "ExampleExperimentManager": "example_experiment_manager.ipynb",
          "ExperimentManager": "experiment_manager.ipynb",
          "get_git_revision_hash": "experiment_manager.ipynb",
          "record_parameters": "experiment_manager.ipynb",
@@ -17,10 +27,29 @@ index = {"ExampleExperimentManager": "example_experiment_manager.ipynb",
          "set_logger": "experiment_manager.ipynb",
          "insert_experiment_script_path": "experiment_manager.ipynb",
          "load_parameters": "experiment_manager.ipynb",
-         "save_other_parameters": "experiment_manager.ipynb"}
+         "save_other_parameters": "experiment_manager.ipynb",
+         "remove_defaults": "experiment_utils.ipynb",
+         "query": "experiment_utils.ipynb",
+         "summarize_results": "experiment_utils.ipynb",
+         "summary": "experiment_utils.ipynb",
+         "get_parameters_columns": "experiment_utils.ipynb",
+         "get_experiment_parameters": "experiment_utils.ipynb",
+         "get_scores_columns": "experiment_utils.ipynb",
+         "get_experiment_scores": "experiment_utils.ipynb",
+         "find_rows_with_parameters_dict": "experiment_utils.ipynb",
+         "get_classes_with_results": "experiment_utils.ipynb",
+         "get_parameters_unique": "experiment_utils.ipynb",
+         "compact_parameters": "experiment_utils.ipynb",
+         "replace_with_default_values": "experiment_utils.ipynb",
+         "join_experiments": "organize_experiments.ipynb",
+         "remove_defaults_from_experiment_data": "organize_experiments.ipynb"}
 
-modules = ["examples/example_experiment_manager.py",
-           "experiment_manager.py"]
+modules = ["config/hpconfig.py",
+           "config/manager_factory.py",
+           "examples/example_experiment_manager.py",
+           "experiment_manager.py",
+           "utils/experiment_utils.py",
+           "utils/organize_experiments.py"]
 
 doc_url = "https://jaume-jci.github.io/jaume_nbdev/hpsearch/"
 

@@ -1,8 +1,6 @@
 import pickle
 import os
 import numpy as np
-from hpsearch.config.default_parameters import get_default_parameters
-
 
 def make_resume_from_checkpoint (parameters, prev_path_results, use_best=False):
 
@@ -35,7 +33,8 @@ def exists_current_checkpoint (parameters, path_results):
     return os.path.exists('%s/best_model.%s' %(path_results, model_extension))
         
 def finished_all_epochs (parameters, path_results, name_epoch='max_epoch'):
-        
+    from hpsearch.config.default_parameters import get_default_parameters
+    
     finished = True
     defaults = get_default_parameters(parameters)
     current_epoch = parameters.get(name_epoch, defaults.get(name_epoch))

@@ -1,8 +1,8 @@
-2021-04-14 21:00:49,331 - 
+2021-04-20 20:32:11,629 - 
 
 ****************************************************************************************************
 experiment: 5, run: 0
-script: <ipython-input-5-cec3091ac3a9>, line number: 9
+script: <ipython-input-4-8fc501477ce0>, line number: 4
 parameters:
 	my_first=0.3,
 	my_second=4.0,

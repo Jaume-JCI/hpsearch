@@ -1,2 +1,7 @@
 2021-04-14 20:59:06,228 - experiment - INFO - script: <ipython-input-2-8f74626aee57>, line number: 10
 2021-04-14 21:00:49,196 - experiment - INFO - script: <ipython-input-5-cec3091ac3a9>, line number: 9
+2021-04-20 15:06:39,969 - experiment - INFO - script: <ipython-input-4-8fc501477ce0>, line number: 4
+2021-04-20 15:34:11,159 - experiment - INFO - script: <ipython-input-4-8fc501477ce0>, line number: 4
+2021-04-20 20:24:43,980 - experiment - INFO - script: <ipython-input-4-8fc501477ce0>, line number: 4
+2021-04-20 20:30:27,004 - experiment - INFO - script: <ipython-input-4-8fc501477ce0>, line number: 4
+2021-04-20 20:32:11,493 - experiment - INFO - script: <ipython-input-4-8fc501477ce0>, line number: 4

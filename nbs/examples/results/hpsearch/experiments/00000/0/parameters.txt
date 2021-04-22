@@ -1,10 +1,10 @@
 parameters=dict(experiment_number=0,
-                git_hash='b'acea3c95539cc595c15a7076e5380210bdf372f6\n'',
-                lineno=9,
+                git_hash='b'7c52749249a441bae45f8800fd118fd6f761862b\n'',
+                lineno=4,
                 log_message='single input, learning rate and regularization grid search, 500 epochs',
                 my_first=0.6,
                 my_second=1.2,
                 my_third=3.0,
                 path_results_big='/mnt/datascience-vol/hpsearch/experiments/00000/0',
-                script_path='<ipython-input-5-cec3091ac3a9>')
+                script_path='<ipython-input-4-8fc501477ce0>')
 
