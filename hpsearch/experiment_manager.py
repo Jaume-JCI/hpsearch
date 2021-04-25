@@ -925,13 +925,14 @@ def insert_experiment_script_path (other_parameters, logger):
 #
 def load_parameters (experiment=None, root_path=None, root_folder = None, other_parameters={}, parameters = {}, check_experiment_matches=True):
 
+    from .config.hpconfig import get_path_experiments, get_path_experiment
     if root_folder is not None:
         other_parameters['root_folder'] = root_folder
 
     if root_path is None:
-        root_path = get_paths.get_path_experiments(folder  = other_parameters.get('root_folder'))
+        root_path = get_path_experiments(folder  = other_parameters.get('root_folder'))
 
-    path_root_experiment = get_paths.get_path_experiment (experiment, root_path=root_path)
+    path_root_experiment = get_path_experiment (experiment, root_path=root_path)
 
     logger = set_logger ("experiment_manager", root_path)
 

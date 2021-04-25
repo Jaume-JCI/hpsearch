@@ -1,2 +1,5 @@
 hpsearch/app_config
 results
+hpsearch/**/*/*.pyc
+nbs/.ipynb_checkpoints
+hpsearch.egg-info
