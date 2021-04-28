@@ -3,3 +3,4 @@ results
 hpsearch/**/*/*.pyc
 nbs/.ipynb_checkpoints
 hpsearch.egg-info
+nbs/**/*/.ipynb_checkpoints

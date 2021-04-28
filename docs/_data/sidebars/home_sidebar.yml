@@ -10,6 +10,15 @@ entries:
       title: Overview
       url: /
     - output: web,pdf
+      title: Parameter configuration
+      url: hpconfig.html
+    - output: web,pdf
+      title: Manager factory
+      url: manager_factory.html
+    - output: web,pdf
+      title: Dummy Experiment Manager
+      url: dummy_experiment_manager.html
+    - output: web,pdf
       title: Experiment
       url: example_experiment.html
     - output: web,pdf
@@ -19,11 +28,23 @@ entries:
       title: Experiment Manager
       url: experiment_manager.html
     - output: web,pdf
-      title: principles
-      url: principles.html
+      title: Change manager
+      url: change_manager.html
     - output: web,pdf
-      title: Title
-      url: principles_great.html
+      title: Query
+      url: query.html
+    - output: web,pdf
+      title: Experiment Utils
+      url: experiment_utils.html
+    - output: web,pdf
+      title: Organize experiments
+      url: organize_experiments.html
+    - output: web,pdf
+      title: Metric correlation
+      url: metric_correlation.html
+    - output: web,pdf
+      title: Plotly wrapper
+      url: plotly.html
     output: web
     title: hpsearch
   output: web

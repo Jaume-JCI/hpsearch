@@ -5,7 +5,7 @@ import argparse
 import sys
 sys.path.append('.')
 sys.path.append('src')
-import hpsearch.config.get_paths as get_paths
+from hpsearch.config.hpconfig import get_path_experiments
 import hpsearch.utils.experiment_utils as ut
 
 default_root = 'sac'

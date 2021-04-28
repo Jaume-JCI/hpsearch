@@ -26,6 +26,21 @@ nb_path: "nbs/examples/example_experiment_manager.ipynb"
     
 <div class="cell border-box-sizing code_cell rendered">
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/anaconda/envs/athena_gpu/lib/python3.7/site-packages/sklearn/utils/deprecation.py:144: FutureWarning: The sklearn.datasets.base module is  deprecated in version 0.22 and will be removed in version 0.24. The corresponding classes / functions should instead be imported from sklearn.datasets. Anything that cannot be imported from sklearn.datasets is now part of the private API.
+  warnings.warn(message, FutureWarning)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
     {% endraw %}
 
@@ -58,7 +73,7 @@ nb_path: "nbs/examples/example_experiment_manager.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="ExampleExperimentManager" class="doc_header"><code>class</code> <code>ExampleExperimentManager</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/examples/example_experiment_manager.py#L11" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ExampleExperimentManager</code>() :: <a href="/hpsearch/experiment_manager.html#ExperimentManager"><code>ExperimentManager</code></a></p>
+<h2 id="ExampleExperimentManager" class="doc_header"><code>class</code> <code>ExampleExperimentManager</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/examples/example_experiment_manager.py#L10" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ExampleExperimentManager</code>() :: <a href="/hpsearch/experiment_manager.html#ExperimentManager"><code>ExperimentManager</code></a></p>
 </blockquote>
 
 </div>
@@ -91,12 +106,7 @@ nb_path: "nbs/examples/example_experiment_manager.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
-
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
-
-<span class="n">em</span> <span class="o">=</span> <span class="n">ExampleExperimentManager</span> <span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">em</span> <span class="o">=</span> <span class="n">ExampleExperimentManager</span> <span class="p">()</span>
 <span class="n">parameters</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">my_third</span><span class="o">=</span><span class="mf">3.0</span><span class="p">)</span>
 <span class="n">other_parameters</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
 <span class="n">em</span><span class="o">.</span><span class="n">grid_search</span> <span class="p">(</span><span class="n">log_message</span><span class="o">=</span><span class="s1">&#39;single input, learning rate and regularization grid search, 500 epochs&#39;</span><span class="p">,</span>
@@ -116,7 +126,7 @@ nb_path: "nbs/examples/example_experiment_manager.ipynb"
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>experiment script: &lt;ipython-input-3-90d3a1d1a2a4&gt;, line: 9
+<pre>experiment script: &lt;ipython-input-4-8fc501477ce0&gt;, line: 4
 processing hyper-parameter 0 out of 6
 doing run 0 out of 1
 single input, learning rate and regularization grid search, 500 epochs
@@ -128,8 +138,8 @@ parameters:
 	my_second=1.2,
 	my_third=3.0
 
-script: &lt;ipython-input-3-90d3a1d1a2a4&gt;, line number: 9
-time spent for evaluation: 3.314018249511719e-05
+script: &lt;ipython-input-4-8fc501477ce0&gt;, line number: 4
+time spent on this experiment: 3.0279159545898438e-05
 0 - my_score: -1.8
 finished experiment 0
 processing hyper-parameter 1 out of 6
@@ -143,8 +153,8 @@ parameters:
 	my_second=2.3,
 	my_third=3.0
 
-script: &lt;ipython-input-3-90d3a1d1a2a4&gt;, line number: 9
-time spent for evaluation: 3.075599670410156e-05
+script: &lt;ipython-input-4-8fc501477ce0&gt;, line number: 4
+time spent on this experiment: 2.288818359375e-05
 0 - my_score: -0.7000000000000002
 finished experiment 1
 processing hyper-parameter 2 out of 6
@@ -158,8 +168,8 @@ parameters:
 	my_second=4.0,
 	my_third=3.0
 
-script: &lt;ipython-input-3-90d3a1d1a2a4&gt;, line number: 9
-time spent for evaluation: 3.457069396972656e-05
+script: &lt;ipython-input-4-8fc501477ce0&gt;, line number: 4
+time spent on this experiment: 2.384185791015625e-05
 0 - my_score: 1.0
 finished experiment 2
 processing hyper-parameter 3 out of 6
@@ -173,8 +183,8 @@ parameters:
 	my_second=1.2,
 	my_third=3.0
 
-script: &lt;ipython-input-3-90d3a1d1a2a4&gt;, line number: 9
-time spent for evaluation: 3.314018249511719e-05
+script: &lt;ipython-input-4-8fc501477ce0&gt;, line number: 4
+time spent on this experiment: 2.2649765014648438e-05
 0 - my_score: 3.5999999999999996
 finished experiment 3
 processing hyper-parameter 4 out of 6
@@ -188,9 +198,28 @@ parameters:
 	my_second=2.3,
 	my_third=3.0
 
-script: &lt;ipython-input-3-90d3a1d1a2a4&gt;, line number: 9
-time spent for evaluation: 3.361701965332031e-05
-0 - my_score: 6.8999999999999995
+script: &lt;ipython-input-4-8fc501477ce0&gt;, line number: 4
+time spent on this experiment: 2.47955322265625e-05
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>write_manager failed with exception &lt;class &#39;__main__.ExampleExperimentManager&#39;&gt; is a built-in class
+write_manager failed with exception &lt;class &#39;__main__.ExampleExperimentManager&#39;&gt; is a built-in class
+write_manager failed with exception &lt;class &#39;__main__.ExampleExperimentManager&#39;&gt; is a built-in class
+write_manager failed with exception &lt;class &#39;__main__.ExampleExperimentManager&#39;&gt; is a built-in class
+write_manager failed with exception &lt;class &#39;__main__.ExampleExperimentManager&#39;&gt; is a built-in class
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>0 - my_score: 6.8999999999999995
 finished experiment 4
 processing hyper-parameter 5 out of 6
 doing run 0 out of 1
@@ -203,10 +232,18 @@ parameters:
 	my_second=4.0,
 	my_third=3.0
 
-script: &lt;ipython-input-3-90d3a1d1a2a4&gt;, line number: 9
-time spent for evaluation: 3.409385681152344e-05
+script: &lt;ipython-input-4-8fc501477ce0&gt;, line number: 4
+time spent on this experiment: 2.5033950805664062e-05
 0 - my_score: 12.0
 finished experiment 5
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>write_manager failed with exception &lt;class &#39;__main__.ExampleExperimentManager&#39;&gt; is a built-in class
 </pre>
 </div>
 </div>

@@ -1,10 +1,17 @@
 {
   "hpsearch": {
     "Overview": "/",
+    "Parameter configuration": "hpconfig.html",
+    "Manager factory": "manager_factory.html",
+    "Dummy Experiment Manager": "dummy_experiment_manager.html",
     "Experiment": "example_experiment.html",
     "Example Experiment Manager": "example_experiment_manager.html",
     "Experiment Manager": "experiment_manager.html",
-    "principles": "principles.html",
-    "Title": "principles_great.html"
+    "Change manager": "change_manager.html",
+    "Query": "query.html",
+    "Experiment Utils": "experiment_utils.html",
+    "Organize experiments": "organize_experiments.html",
+    "Metric correlation": "metric_correlation.html",
+    "Plotly wrapper": "plotly.html"
   }
 }

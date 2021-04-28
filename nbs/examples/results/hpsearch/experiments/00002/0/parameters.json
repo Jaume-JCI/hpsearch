@@ -1,1 +1,0 @@
-{"my_first": 0.6, "my_second": 4.0, "my_third": 3.0, "log_message": "single input, learning rate and regularization grid search, 500 epochs", "script_path": "<ipython-input-4-8fc501477ce0>", "lineno": 4, "experiment_number": 2, "path_results_big": "/mnt/datascience-vol/hpsearch/experiments/00002/0", "git_hash": "b'7c52749249a441bae45f8800fd118fd6f761862b\\n'"}
