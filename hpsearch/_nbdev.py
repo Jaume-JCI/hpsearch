@@ -3,6 +3,7 @@
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
 index = {"get_default_parameters": "hpconfig.ipynb",
+         "get_default_operations": "hpconfig.ipynb",
          "get_path_experiments": "hpconfig.ipynb",
          "get_path_alternative": "hpconfig.ipynb",
          "get_path_data": "hpconfig.ipynb",
@@ -34,6 +35,8 @@ index = {"get_default_parameters": "hpconfig.ipynb",
          "save_other_parameters": "experiment_manager.ipynb",
          "change_manager": "change_manager.ipynb",
          "main": "query.ipynb",
+         "metric_visualization": "metric_visualization.ipynb",
+         "print_parameters": "print_parameters.ipynb",
          "query": "experiment_utils.ipynb",
          "do_query_and_show": "query.ipynb",
          "remove_defaults": "experiment_utils.ipynb",
@@ -51,12 +54,13 @@ index = {"get_default_parameters": "hpconfig.ipynb",
          "replace_with_default_values": "experiment_utils.ipynb",
          "join_experiments": "organize_experiments.ipynb",
          "remove_defaults_from_experiment_data": "organize_experiments.ipynb",
-         "plot_metric_relationship": "metric_correlation.ipynb",
-         "imshow": "plotly.ipynb",
-         "plot": "plotly.ipynb",
-         "add_trace": "plotly.ipynb",
-         "symbol2marker": "plotly.ipynb",
-         "plot_df": "plotly.ipynb"}
+         "plot_multiple_histories": "experiment_visualization.ipynb",
+         "plot_metric_relationship": "experiment_visualization.ipynb",
+         "imshow": "plot_utils.ipynb",
+         "plot": "plot_utils.ipynb",
+         "add_trace": "plot_utils.ipynb",
+         "symbol2marker": "plot_utils.ipynb",
+         "plot_df": "plot_utils.ipynb"}
 
 modules = ["config/hpconfig.py",
            "config/manager_factory.py",
@@ -64,11 +68,13 @@ modules = ["config/hpconfig.py",
            "examples/example_experiment_manager.py",
            "experiment_manager.py",
            "tools/change_manager.py",
+           "tools/metric_visualization.py",
+           "tools/print_parameters.py",
            "tools/query.py",
            "utils/experiment_utils.py",
            "utils/organize_experiments.py",
-           "visualization/metric_correlation.py",
-           "visualization/plotly.py"]
+           "visualization/experiment_visualization.py",
+           "visualization/plot_utils.py"]
 
 doc_url = "https://jaume-jci.github.io/jaume_nbdev/hpsearch/"
 

@@ -46,6 +46,12 @@ class ExperimentManager (object):
             raise ImportError ('call get_default_parameters from base class is not allowed')
         return {}
 
+    def get_default_operations (self):
+        default_operations = dict (root='results',
+                                   metric='accuracy',
+                                   op='min')
+        return default_operations
+
     def get_path_experiments (self, path_experiments = None, folder = None):
         """Gives the root path to the folder where results of experiments are stored."""
 
@@ -59,11 +65,8 @@ class ExperimentManager (object):
         return path_experiments
 
     def get_path_alternative (self, path_results):
-        if not self.allow_base_class:
-            raise ImportError ('call get_path_alternative from base class is not allowed')
-        root1 = 'results'
-        root2 = '/mnt/datascience-vol'
-        path_alternative = path_results.replace(root1, root2)
+        #path_alternative = path_results.replace(root1, root2)
+        path_alternative = path_results
 
         return path_alternative
 

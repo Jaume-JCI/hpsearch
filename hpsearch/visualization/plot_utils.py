@@ -119,6 +119,11 @@ def add_trace (x, y=None, style='b', label='', backend='plotly', marker = None, 
     elif backend=='matplotlib':
         import matplotlib.pyplot as plt
 
+        if (len(style)>=1) and (style[0]=='A'):
+            color = ['b','r', 'g', 'k', 'c', 'm', 'o', 'y']*100
+            style=list(style)
+            style[0] = color[len(traces)]
+            style = ''.join(style)
         traces += [dict(x=x, y=y, style=style, label=label)]
     else:
         raise ValueError (f'backend {backend} not valid')

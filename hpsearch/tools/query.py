@@ -13,11 +13,10 @@ from collections import namedtuple
 from IPython.display import display
 # hpsearch api
 import hpsearch.utils.experiment_utils as ut
-import pdb
 
 
-def query (pv = {}, pf = {}, pall=[], pexact=False, root= 'sac',
-           metric = 'cost_test', experiments=None, runs = None, op = 'min', stats=['mean'],
+def query (pv = {}, pf = {}, pall=[], pexact=False, root= None,
+           metric = None, experiments=None, runs = None, op = None, stats=['mean'],
            results=0, other_parameters=False):
 
 
@@ -32,9 +31,19 @@ def query (pv = {}, pf = {}, pall=[], pexact=False, root= 'sac',
     return result_query
 
 def do_query_and_show (pall=[], best=None, compact=0, exact=False, experiments=None, pf={}, last=None,
-                       metric='cost_test', op='min', other_parameters=False, input_range=None, results=0,
-                       root='sac', round=2, runs=None, show=False, stats=['mean'], pv={},
-                       sort=None):
+                       metric=None, op=None, other_parameters=False, input_range=None, results=0,
+                       root=None, round=2, runs=None, show=False, stats=['mean'], pv={},
+                       sort=None, display_all_columns=False):
+
+    from ..config.hpconfig import get_default_operations
+    default_operations = get_default_operations ()
+    if root is None:
+        root = default_operations.get('root', 'results')
+    if metric is None:
+        metric = default_operations.get('metric', 'accuracy')
+    if op is None:
+        op = default_operations.get('op', 'min')
+
 
     df = query (pv = pv, pf = pf, pall=pall, pexact=exact, root= root,
                metric = metric, experiments=experiments, runs = runs, op = op, stats=stats,
@@ -57,14 +66,15 @@ def do_query_and_show (pall=[], best=None, compact=0, exact=False, experiments=N
 
     if (round is not None) and (round != 0):
         df[stats] = df[stats].round(round)
-    display (df)
+    if display_all_columns:
+        display (df)
 
-    print ('index: ')
-    print (df.index)
-    print ('min: {}, max: {}'.format(df.index.min(), df.index.max()))
+    print (f'experiments: {list(df.index)}')
+    print ('min experiment #: {}, max experiment #: {}'.format(df.index.min(), df.index.max()))
 
-    print ('with unique parameters:')
+    print ('result of query:')
     _, df2 = ut.get_parameters_unique(df)
+    #df2.index.name = 'experiment #'
     if compact > 0:
         prev_cols = df2.columns.copy()
         df2, dict_rename = ut.compact_parameters (df2, compact)
@@ -75,22 +85,18 @@ def do_query_and_show (pall=[], best=None, compact=0, exact=False, experiments=N
     if show:
         import hpsearch.visualization.plot_visdom as pv
         pv.plot_multiple_histories(df.index, root_folder=root,metrics=metric, parameters=None)
+    return df2
 
-
+# Cell
 def main():
-    default_root = 'sac'
-    default_metric = 'cost_test'
     default_always = ''
-    default_op = 'min'
-
-    #python print_table2.py -d 2 -f "dict(optim='sgd')"
 
     parser = argparse.ArgumentParser(description='show metrics in visdom browser')
     # Datasets
-    parser.add_argument('-m','--metric', type=str, default=default_metric, help="metrics scores")
+    parser.add_argument('-m','--metric', type=str, default=None, help="metrics scores")
     parser.add_argument('--stats', type=str, nargs='+', default=['mean'],  help="statistics for multiple runs")
     parser.add_argument('--experiments', type=int, nargs='+', default=None,  help="experiment numbers")
-    parser.add_argument('-r','--root', type=str, default=default_root)
+    parser.add_argument('-r','--root', type=str, default=None)
     parser.add_argument('-v', type=str, default='{}', help='variable parameters')
     parser.add_argument('-f', type=str, default='{}', help='fixed parameters')
     parser.add_argument('-a', type=str, default='[]', help='all parameters')
@@ -100,11 +106,10 @@ def main():
     parser.add_argument('--range', type=int, nargs='+', default=None, help='include this range of experiments')
     parser.add_argument('-c', '--compact', type=int, default=0, help='compact parameters to this number of characters')
     parser.add_argument('--results', type=int, default=0, help='min number of results to consider')
-    parser.add_argument('-d', type=int, default=0)
     parser.add_argument('-s', '--show', action= "store_true")
     parser.add_argument('--other', action= "store_true")
     parser.add_argument('--always', type=str, default = default_always)
-    parser.add_argument('--op', default=default_op, type=str)
+    parser.add_argument('--op', default=None, type=str)
     parser.add_argument('--round', default=2, type=int, help='round scores to this number of digits')
     parser.add_argument('--runs', default=None, type=int, nargs='+', help='query restricted to run number provided')
     parser.add_argument('--sort', default=None, type=str)
@@ -117,13 +122,6 @@ def main():
     pars.f.update(pars.always)
 
     print ('dictionary of query terms=%s' %pars.f)
-
-    if pars.d == 1:
-        pars.root = 'squeezenet2'
-    elif pars.d == 2:
-        pars.root = 'squeezenet2msmt'
-    elif pars.d == 3:
-        pars.root = 'allexperiments'
 
     #pdb.set_trace()
     do_query_and_show (pall=pars.a, best = pars.best, compact = pars.compact, exact=pars.exact, experiments=pars.experiments,

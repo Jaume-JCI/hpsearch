@@ -98,7 +98,7 @@ class DummyExperimentManager (ExperimentManager):
 
     # implementing the following method is not necessary but recommended
     def get_default_parameters (self, parameters):
-        '''Indicate the default value for each of the hyper-parameters used'''
+        """Indicate the default value for each of the hyper-parameters used."""
         defaults = dict(offset=0.5,
                         rate=0.01,
                         epochs=10)
@@ -106,11 +106,20 @@ class DummyExperimentManager (ExperimentManager):
 
     # implementing the following method is not necessary but recommended
     def get_path_experiments (self, path_experiments = None, folder = None):
-        return f'{os.path.dirname(hpsearch.__file__)}/../results'
+        """Gives the root path to the folder where results of experiments are stored."""
+        path_experiments = f'{os.path.dirname(hpsearch.__file__)}/../results'
+        if folder != None:
+            path_experiments = f'{path_experiments}/{folder}'
+        return path_experiments
 
     # implementing the following method is not necessary but recommended
-    def get_path_alternative  (self, path_results):
-        return path_results
+    def get_default_operations (self):
+        default_operations = dict (root='',
+                                   metric='validation_accuracy',
+                                   op='max')
+
+        return default_operations
+
 
 # Cell
 def run_multiple_experiments (nruns=1, noise=0.0):

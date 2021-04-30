@@ -163,9 +163,9 @@ def summarize_results(path_experiments = None,
         number_before = len(result_columns)
         all_have_results = ~experiment_data.loc[:,result_columns].isnull().any(axis=0)
         result_columns = (np.array(result_columns)[all_have_results]).tolist()
-        print ('%d out of %d class_ids for whom all the selected experiments have completed' %(len(result_columns), number_before))
+        print ('%d out of %d runs for whom all the selected experiments have completed' %(len(result_columns), number_before))
 
-    print ('total data examined: %d experiments with at least %d class_ids each' %(experiment_data.shape[0],experiment_data['num_results'].min()))
+    print ('total data examined: %d experiments with at least %d runs done for each one' %(experiment_data.shape[0],experiment_data['num_results'].min()))
 
     scores = -experiment_data.loc[:,result_columns].values
     rank = np.argsort(scores,axis=0)
