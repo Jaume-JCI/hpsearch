@@ -17,7 +17,7 @@ from ..config.hpconfig import get_path_experiments
 from ..config.hpconfig import get_default_operations
 
 def metric_visualization (exps=[-1,-2], run_number=0, root_folder=None, metric=None, op = None,
-                         parameters=None, name_file='model_history.pk', include_loss=False, backend='visdom'):
+                         parameters=None, name_file='model_history.pk', include_loss=False, backend='plotly'):
 
     default_operations = get_default_operations ()
     if root_folder is None:

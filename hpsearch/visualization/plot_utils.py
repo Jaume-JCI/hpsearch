@@ -120,7 +120,7 @@ def add_trace (x, y=None, style='b', label='', backend='plotly', marker = None, 
         import matplotlib.pyplot as plt
 
         if (len(style)>=1) and (style[0]=='A'):
-            color = ['b','r', 'g', 'k', 'c', 'm', 'o', 'y']*100
+            color = ['b','r', 'g', 'k', 'c', 'm', 'y']*100
             style=list(style)
             style[0] = color[len(traces)]
             style = ''.join(style)

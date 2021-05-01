@@ -47,9 +47,9 @@ def plot_multiple_histories (experiments, run_number=0, root_path=None, root_fol
     df2 = ut.replace_with_default_values (df2)
     df_show = df.copy()
 
-    traces = []
     for (imetric,metric) in enumerate(metrics):
         title = metric
+        traces = []
         for experiment_id in experiments:
             path_results = get_path_results (experiment_id, run_number=run_number, root_path=root_path)
             if os.path.exists('%s/%s' %(path_results, name_file)):

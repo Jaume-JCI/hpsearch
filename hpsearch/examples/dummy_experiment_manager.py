@@ -4,12 +4,13 @@ __all__ = ['FakeModel', 'DummyExperimentManager', 'run_multiple_experiments', 'r
 
 # Cell
 import numpy as np
+import pickle
 
 class FakeModel (object):
 
     overfitting_epochs = 20
 
-    def __init__ (self, offset=0.5, rate=0.01, epochs=10, noise=0.0):
+    def __init__ (self, offset=0.5, rate=0.01, epochs=10, noise=0.0, verbose=True):
         # hyper-parameters
         self.offset = offset
         self.rate = rate
@@ -24,20 +25,51 @@ class FakeModel (object):
         # noise
         self.noise = noise
 
+        # other parameters
+        self.verbose = verbose
+
+        self.history = {}
+
     def fit (self):
         number_epochs = int(self.epochs)
-        print (f'fitting model with {number_epochs} epochs')
+        if self.verbose:
+            print (f'fitting model with {number_epochs} epochs')
         for epoch in range(number_epochs):
             self.weight += self.rate
             if epoch < self.overfitting_epochs:
                 self.accuracy += self.rate
             else:
                 self.accuracy -= self.rate
-            print (f'epoch {epoch}: accuracy: {self.accuracy}')
+            if self.verbose:
+                print (f'epoch {epoch}: accuracy: {self.accuracy}')
+
+            # we keep track of the evolution of different metrics to later be able to visualize it
+            self.store_intermediate_metrics ()
+
+    def store_intermediate_metrics (self):
+        validation_accuracy, test_accuracy = self.score()
+        if 'validation_accuracy' not in self.history:
+            self.history['validation_accuracy'] = []
+        self.history['validation_accuracy'].append(validation_accuracy)
+
+        if 'test_accuracy' not in self.history:
+            self.history['test_accuracy'] = []
+        self.history['test_accuracy'].append(test_accuracy)
+
+        if 'accuracy' not in self.history:
+            self.history['accuracy'] = []
+        self.history['accuracy'].append(self.accuracy)
+
+    def save_model_and_history (self, path_results):
+        pickle.dump (self.weight, open(f'{path_results}/model_weights.pk','wb'))
+        pickle.dump (self.history, open(f'{path_results}/model_history.pk','wb'))
+
+    def load_model_and_history (self, path_results):
+        self.weight = pickle.load (open(f'{path_results}/model_weights.pk','rb'))
+        self.history = pickle.load (open(f'{path_results}/model_history.pk','rb'))
 
     def score (self):
         # validation accuracy
-        print (f'noise: {self.noise}')
         validation_accuracy = self.accuracy + np.random.randn() * self.noise
 
         # test accuracy
@@ -72,19 +104,23 @@ class DummyExperimentManager (ExperimentManager):
         offset = parameters.get('offset', 0.5)   # default value: 0.5
         rate = parameters.get('rate', 0.01)   # default value: 0.01
         epochs = parameters.get('epochs', 10) # default value: 10
+        noise = parameters.get('noise', 0.0)
 
         # other parameters that do not form part of our experiment definition
         # changing the values of these other parameters, does not make the ID of the experiment change
-        noise = parameters.get('noise', 0.0)
+        verbose = parameters.get('verbose', True)
 
         # build model with given hyper-parameters
-        model = FakeModel (offset=offset, rate=rate, epochs=epochs, noise = noise)
+        model = FakeModel (offset=offset, rate=rate, epochs=epochs, noise = noise, verbose=verbose)
 
         # load training, validation and test data (fake step)
         model.load_data()
 
         # fit model with training data
         model.fit ()
+
+        # save model weights and evolution of accuracy metric across epochs
+        model.save_model_and_history(path_results)
 
         # evaluate model with validation and test data
         validation_accuracy, test_accuracy = model.score()
@@ -122,11 +158,11 @@ class DummyExperimentManager (ExperimentManager):
 
 
 # Cell
-def run_multiple_experiments (nruns=1, noise=0.0):
+def run_multiple_experiments (nruns=1, noise=0.0, verbose=True, rate=0.03):
     em = DummyExperimentManager ()
-    parameters_single_value = dict(rate=0.03)   # parameters where we use a fixed value
+    parameters_single_value = dict(rate=rate, noise=noise)   # parameters where we use a fixed value
     parameters_multiple_values=dict(offset=[0.1, 0.3, 0.6], epochs=[5, 15, 30]) # parameters where we try multiple values
-    other_parameters = dict(noise=noise) # parameters that control other aspects that are not part of our experiment definition (a new experiment is not created if we assign different values for these parametsers)
+    other_parameters = dict(verbose=verbose) # parameters that control other aspects that are not part of our experiment definition (a new experiment is not created if we assign different values for these parametsers)
     em.grid_search (log_message='fixed rate, multiple epochs values',
             parameters_single_value=parameters_single_value,
             parameters_multiple_values=parameters_multiple_values,
