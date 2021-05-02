@@ -86,6 +86,8 @@ class ExperimentManager (object):
         path_results = '%s/%d' %(path_experiment,run_number)
         return path_results
 
+    def experiment_visualization (self, **kwargs):
+        raise ValueError ('this type of experiment visualization is not recognized')
 
     def run_experiment_pipeline (self, run_number=0, path_results='./results', parameters = {}):
         """ Runs complete learning pipeline: loading / generating data, building and learning model, applying it to data,

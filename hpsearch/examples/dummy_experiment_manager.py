@@ -89,10 +89,12 @@ class FakeModel (object):
     def load_data (self):
         pass
 
+
 # Cell
 from ..experiment_manager import ExperimentManager
 import hpsearch
 import os
+from ..visualization import plot_utils
 
 class DummyExperimentManager (ExperimentManager):
 
@@ -125,6 +127,9 @@ class DummyExperimentManager (ExperimentManager):
         # evaluate model with validation and test data
         validation_accuracy, test_accuracy = model.score()
 
+        # store model
+        self.model = model
+
         # the function returns a dictionary with keys corresponding to the names of each metric.
         # We return result on validation and test set in this example
         dict_results = dict (validation_accuracy = validation_accuracy,
@@ -156,6 +161,20 @@ class DummyExperimentManager (ExperimentManager):
 
         return default_operations
 
+    def experiment_visualization (self, experiments=None, run_number=0, root_path=None, root_folder=None,
+                                  name_file='model_history.pk', metric='test_accuracy', backend='matplotlib',
+                                  **kwargs):
+        if root_path is None:
+            root_path = self.get_path_experiments(folder=root_folder)
+        traces = []
+        for experiment_id in experiments:
+            path_results = self.get_path_results (experiment_id, run_number=run_number, root_path=root_path)
+            if os.path.exists('%s/%s' %(path_results, name_file)):
+                history = pickle.load(open('%s/%s' %(path_results, name_file),'rb'))
+                label = '{}'.format(experiment_id)
+                traces = plot_utils.add_trace ((1-np.array(history[metric]))*20, style='A.-', label=label,
+                                               backend=backend, traces=traces)
+        plot_utils.plot(title=metric, xlabel='epoch', ylabel=metric, traces=traces, backend=backend)
 
 # Cell
 def run_multiple_experiments (nruns=1, noise=0.0, verbose=True, rate=0.03):
