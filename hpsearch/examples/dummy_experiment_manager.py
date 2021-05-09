@@ -20,7 +20,7 @@ class FakeModel (object):
         self.weight = 0
 
         # fake accuracy
-        self.accuracy = self.offset
+        self.accuracy = 0
 
         # noise
         self.noise = noise
@@ -29,14 +29,19 @@ class FakeModel (object):
         self.verbose = verbose
 
         self.history = {}
+        self.current_epoch = 0
 
     def fit (self):
         number_epochs = int(self.epochs)
         if self.verbose:
             print (f'fitting model with {number_epochs} epochs')
+
+        if self.current_epoch==0:
+            self.accuracy = self.offset
+
         for epoch in range(number_epochs):
             self.weight += self.rate
-            if epoch < self.overfitting_epochs:
+            if self.current_epoch < self.overfitting_epochs:
                 self.accuracy += self.rate
             else:
                 self.accuracy -= self.rate
@@ -45,6 +50,9 @@ class FakeModel (object):
 
             # we keep track of the evolution of different metrics to later be able to visualize it
             self.store_intermediate_metrics ()
+
+            # increase current epoch by 1
+            self.current_epoch += 1
 
     def store_intermediate_metrics (self):
         validation_accuracy, test_accuracy = self.score()
@@ -65,8 +73,16 @@ class FakeModel (object):
         pickle.dump (self.history, open(f'{path_results}/model_history.pk','wb'))
 
     def load_model_and_history (self, path_results):
-        self.weight = pickle.load (open(f'{path_results}/model_weights.pk','rb'))
-        self.history = pickle.load (open(f'{path_results}/model_history.pk','rb'))
+        if os.path.exists(f'{path_results}/model_weights.pk'):
+            self.weight = pickle.load (open(f'{path_results}/model_weights.pk','rb'))
+            self.history = pickle.load (open(f'{path_results}/model_history.pk','rb'))
+            self.current_epoch = len(self.history['accuracy'])
+            if self.current_epoch > 0:
+                self.accuracy = self.history['accuracy'][-1]
+            else:
+                self.accuracy = self.offset
+        else:
+            print (f'model not found in {path_results}')
 
     def score (self):
         # validation accuracy
