@@ -193,8 +193,7 @@ class ExperimentManager (object):
         # ****************************************************
         # register (subclassed) manager so that it can be used by decoupled modules
         # ****************************************************
-        self.manager_factory.register_manager (self)
-        self.manager_factory.write_manager (self)
+        self.register_and_store_subclassed_manager ()
 
         # ****************************************************
         #   get experiment number given parameters
@@ -742,6 +741,11 @@ class ExperimentManager (object):
             return experiment_numbers[0]
         else:
             return None
+
+    def register_and_store_subclassed_manager (self):
+        print ('registering')
+        self.manager_factory.register_manager (self)
+        self.manager_factory.write_manager (self)
 
 # Cell
 def get_git_revision_hash(root_path=None):

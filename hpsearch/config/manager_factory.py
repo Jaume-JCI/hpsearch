@@ -20,6 +20,8 @@ class ManagerFactory (object):
         if verbose > 1:
             self.logger.setLevel('DEBUG')
         self.obtain_paths()
+        self.method = 1
+        print (f'using import method {self.method}')
         #pdb.set_trace()
 
     def register_manager (self, experiment_manager_to_register):
@@ -34,35 +36,58 @@ class ManagerFactory (object):
         self.destination_path_module = destination_path_module
         self.destination_path_import = f'{destination_path_folder}/subclassed_manager_import.py'
         self.class_two_module_file = f'{self.destination_path_folder}/class_two_module.pk'
+        self.class_two_import_file = f'{self.destination_path_folder}/class_two_import.pk'
         self.class_two_base_file = f'{self.destination_path_folder}/class_two_base.pk'
         self.current_path = os.path.abspath(os.path.curdir)
-        print (f'current path: {self.current_path}')
+        #print (f'current path: {self.current_path}')
+
+    def determine_import_string (self, source_path, base_path, experiment_manager):
+        if self.method==1:
+                import_module_string = experiment_manager.__class__.__module__
+        elif self.method==2:
+            if source_path.startswith(base_path + '/'):
+                split_list = source_path.split(base_path + '/')
+                import_module_string = split_list[1]
+                import_module_string = import_module_string.replace('/','.')
+                import_module_string = import_module_string.replace('.py', '')
+            else:
+                print (f'current path {base_path} not found in source path {source_path}')
+                import_module_string = 'hpsearch.app_config.subclassed_manager'
+        self.import_module_string = import_module_string
+        return import_module_string
 
     def write_manager (self, experiment_manager):
         name_subclass = experiment_manager.__class__.__name__
         try:
             source_path = inspect.getfile(experiment_manager.__class__)
             self.obtain_paths()
-            self.write_manager_subclass (name_subclass, source_path, self.current_path)
+            import_module_string = self.determine_import_string (source_path, self.current_path, experiment_manager)
+            self.write_manager_subclass (name_subclass, source_path, self.current_path, import_module_string)
 
             self.load_class_two_module ()
             self.class_two_module.update({name_subclass: source_path})
+            self.class_two_import.update({name_subclass: import_module_string})
             self.class_two_base.update({name_subclass: self.current_path})
             pickle.dump (self.class_two_module, open(self.class_two_module_file, 'wb'))
+            pickle.dump (self.class_two_import, open(self.class_two_import_file, 'wb'))
             pickle.dump (self.class_two_base, open(self.class_two_base_file, 'wb'))
         except Exception as e:
             print (f'write_manager failed with exception {e}')
 
-    def write_manager_subclass (self, name_subclass, source_path, base_path=None):
+    def write_manager_subclass (self, name_subclass, source_path, base_path=None, import_module_string=None):
         if base_path is None:
             base_path = self.current_path
         os.makedirs(self.destination_path_folder, exist_ok=True)
         shutil.copy (source_path, self.destination_path_module)
 
         f = open (self.destination_path_import, 'wt')
+        #if name_subclass not in self.class_two_module.keys():
+        #f = open (self.destination_path_import, 'at')
         f.write ('import sys\n')
         f.write (f'sys.path.append("{base_path}")\n')
-        f.write (f'from hpsearch.app_config.subclassed_manager import {name_subclass} as Manager')
+        #f.write (f'from hpsearch.app_config.subclassed_manager import {name_subclass} as Manager')
+        f.write (f'from {import_module_string} import {name_subclass} as Manager')
+
         f.close()
 
     def load_class_two_module (self):
@@ -70,6 +95,13 @@ class ManagerFactory (object):
             self.class_two_module = pickle.load (open(self.class_two_module_file,'rb'))
         else:
             self.class_two_module = {}
+
+        if os.path.exists (self.class_two_import_file):
+            self.class_two_import = pickle.load (open(self.class_two_import_file,'rb'))
+        else:
+            self.class_two_import = {}
+            print ('class2import not found, switching to original method')
+            self.method = 2
 
         if os.path.exists (self.class_two_base_file):
             self.class_two_base = pickle.load (open(self.class_two_base_file,'rb'))
@@ -86,7 +118,8 @@ class ManagerFactory (object):
             base_path = self.class_two_base[name_subclass]
         else:
             base_path = self.current_path
-        self.write_manager_subclass (name_subclass, self.class_two_module[name_subclass], base_path)
+        self.write_manager_subclass (name_subclass, self.class_two_module[name_subclass], base_path,
+                                    self.class_two_import[name_subclass])
         self.reset_manager()
         self.import_written_manager()
 
@@ -155,7 +188,15 @@ class ManagerFactory (object):
 
         self.load_class_two_module ()
         if os.path.exists(self.class_two_module_file):
-            self.logger.debug ('deleting')
+            self.logger.debug (f'deleting {self.class_two_module_file}')
             os.remove(self.class_two_module_file)
+
+        if os.path.exists(self.class_two_import_file):
+            self.logger.debug (f'deleting {self.class_two_import_file}')
+            os.remove(self.class_two_import_file)
+
+        if os.path.exists(self.class_two_base_file):
+            self.logger.debug (f'deleting {self.class_two_base_file}')
+            os.remove(self.class_two_base_file)
 
         self.set_base_manager ()
