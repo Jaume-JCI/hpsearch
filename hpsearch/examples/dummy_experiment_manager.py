@@ -159,6 +159,10 @@ class DummyExperimentManager (ExperimentManager):
         defaults = dict(offset=0.5,
                         rate=0.01,
                         epochs=10)
+
+        if parameters.get('rate', defaults['rate']) < 0.001:
+            defaults.update (epochs=100)
+
         return defaults
 
     # implementing the following method is not necessary but recommended
@@ -193,10 +197,13 @@ class DummyExperimentManager (ExperimentManager):
         plot_utils.plot(title=metric, xlabel='epoch', ylabel=metric, traces=traces, backend=backend)
 
 # Cell
-def run_multiple_experiments (nruns=1, noise=0.0, verbose=True, rate=0.03):
+def run_multiple_experiments (nruns=1, noise=0.0, verbose=True, rate=0.03, values_to_explore=None):
     em = DummyExperimentManager ()
     parameters_single_value = dict(rate=rate, noise=noise)   # parameters where we use a fixed value
-    parameters_multiple_values=dict(offset=[0.1, 0.3, 0.6], epochs=[5, 15, 30]) # parameters where we try multiple values
+    if values_to_explore is None:
+        parameters_multiple_values=dict(offset=[0.1, 0.3, 0.6], epochs=[5, 15, 30]) # parameters where we try multiple values
+    else:
+        parameters_multiple_values=values_to_explore
     other_parameters = dict(verbose=verbose) # parameters that control other aspects that are not part of our experiment definition (a new experiment is not created if we assign different values for these parametsers)
     em.grid_search (log_message='fixed rate, multiple epochs values',
             parameters_single_value=parameters_single_value,

@@ -27,6 +27,7 @@ def plot_multiple_histories (experiments, run_number=0, root_path=None, root_fol
         root_path = get_path_experiments(folder=root_folder)
 
     df = pd.read_csv('%s/experiments_data.csv' %root_path,index_col=0)
+    df = ut.replace_with_default_values (df)
     df2 = ut.get_experiment_parameters (df.loc[experiments], only_not_null=True)
     parameters2, df2 = ut.get_parameters_unique(df2)
 
@@ -43,8 +44,7 @@ def plot_multiple_histories (experiments, run_number=0, root_path=None, root_fol
         metrics = [metrics]
     if type(metrics_second) == str:
         metrics_second = [metrics_second]
-    df = ut.replace_with_default_values (df)
-    df2 = ut.replace_with_default_values (df2)
+
     df_show = df.copy()
 
     for (imetric,metric) in enumerate(metrics):

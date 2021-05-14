@@ -346,10 +346,17 @@ def compact_parameters (df, number_characters=1):
 
     return df, dict_rename
 
+# Cell
 def replace_with_default_values (df, parameters={}):
     from ..config.hpconfig import get_default_parameters
 
-    defaults = get_default_parameters(parameters=parameters)
+    parameters_names = get_parameters_columns (df)
+
     for k in df.columns:
-        df.loc[df[k].isna(), k] = defaults.get(k)
+        experiments_idx=np.argwhere(df[k].isna().ravel()).ravel()
+        experiments=df.index[experiments_idx]
+        for experiment in experiments:
+            parameters = df.loc[experiment, parameters_names].to_dict()
+            defaults = get_default_parameters(parameters)
+            df.loc[experiment, k] = defaults.get(k)
     return df
