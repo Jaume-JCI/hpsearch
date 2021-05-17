@@ -30,10 +30,14 @@ def include_best_and_last_experiment (metrics, experiments=[-1, -2], root_folder
                 print (f'we use the first metric {first_metric} in given list {metrics} for obtaining the best experiment')
             root_path = get_path_experiments (folder = root_folder)
             df = pd.read_csv(f'{root_path}/experiments_data.csv',index_col=0)
-            if op=='max':
-                experiments[i] = df[f'{run_number}_{first_metric}'].idxmax()
+            score_column = f'{run_number}_{first_metric}'
+            if score_column in df.columns:
+                if op=='max':
+                    experiments[i] = df[score_column].idxmax()
+                else:
+                    experiments[i] = df[score_column].idxmin()
             else:
-                experiments[i] = df[f'{run_number}_{first_metric}'].idxmin()
+                del experiments[i]
 
     return experiments
 
