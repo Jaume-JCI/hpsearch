@@ -3,15 +3,22 @@
     "Overview": "/",
     "Parameter configuration": "hpconfig.html",
     "Manager factory": "manager_factory.html",
+    "Complex Dummy Experiment Manager": "complex_dummy_experiment_manager.html",
     "Dummy Experiment Manager": "dummy_experiment_manager.html",
     "Experiment": "example_experiment.html",
     "Example Experiment Manager": "example_experiment_manager.html",
     "Experiment Manager": "experiment_manager.html",
     "Change manager": "change_manager.html",
+    "Metric visualization": "metric_visualization.html",
+    "Print info": "print_info.html",
+    "Print parameters": "print_parameters.html",
+    "Print table": "print_table.html",
     "Query": "query.html",
+    "Remove experiments": "remove_experiments.html",
     "Experiment Utils": "experiment_utils.html",
     "Organize experiments": "organize_experiments.html",
-    "Metric correlation": "metric_correlation.html",
-    "Plotly wrapper": "plotly.html"
+    "Resume utilities": "resume_from_checkpoint.html",
+    "Visualization utils": "experiment_visualization.html",
+    "Plot utilities": "plot_utils.html"
   }
 }

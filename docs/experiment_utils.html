@@ -32,6 +32,1932 @@ nb_path: "nbs/utils/experiment_utils.ipynb"
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># populate data for testing</span>
+<span class="kn">from</span> <span class="nn">hpsearch.examples.dummy_experiment_manager</span> <span class="kn">import</span> <span class="n">remove_previous_experiments</span><span class="p">,</span> <span class="n">run_multiple_experiments</span>
+
+<span class="n">remove_previous_experiments</span><span class="p">()</span>
+<span class="n">run_multiple_experiments</span><span class="p">(</span><span class="n">nruns</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                        <span class="n">values_to_explore</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">offset</span><span class="o">=</span><span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">],</span> <span class="n">epochs</span><span class="o">=</span><span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">]))</span>
+
+<span class="n">run_multiple_experiments</span><span class="p">(</span><span class="n">nruns</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="mf">0.0001</span><span class="p">,</span>
+                        <span class="n">values_to_explore</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">offset</span><span class="o">=</span><span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">],</span> <span class="n">epochs</span><span class="o">=</span><span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">]))</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">get_experiment_data</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+<details class="description">
+      <summary data-open="Hide Output" data-close="Show Output"></summary>
+        <summary></summary>
+        
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>experiment script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line: 208
+processing hyper-parameter 0 out of 9
+doing run 0 out of 5
+fixed rate, multiple epochs values
+running experiment 0
+run number: 0
+
+parameters:
+	epochs=5,
+	noise=0.1,
+	offset=0.1,
+	rate=0.03
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00023818016052246094
+0 - validation_accuracy: 0.2843767146865233
+0 - test_accuracy: 0.38705186003908765
+finished experiment 0
+processing hyper-parameter 0 out of 9
+doing run 1 out of 5
+fixed rate, multiple epochs values
+running experiment 0
+run number: 1
+
+parameters:
+	epochs=5,
+	noise=0.1,
+	offset=0.1,
+	rate=0.03
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00024962425231933594
+1 - validation_accuracy: 0.3015274718797575
+1 - test_accuracy: 0.2422556497304169
+finished experiment 0
+processing hyper-parameter 0 out of 9
+doing run 2 out of 5
+fixed rate, multiple epochs values
+running experiment 0
+run number: 2
+
+parameters:
+	epochs=5,
+	noise=0.1,
+	offset=0.1,
+	rate=0.03
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00024890899658203125
+2 - validation_accuracy: 0.1662246756686216
+2 - test_accuracy: 0.3027207420464449
+finished experiment 0
+processing hyper-parameter 0 out of 9
+doing run 3 out of 5
+fixed rate, multiple epochs values
+running experiment 0
+run number: 3
+
+parameters:
+	epochs=5,
+	noise=0.1,
+	offset=0.1,
+	rate=0.03
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00025177001953125
+3 - validation_accuracy: 0.24648927468656948
+3 - test_accuracy: 0.20683995699632732
+finished experiment 0
+processing hyper-parameter 0 out of 9
+doing run 4 out of 5
+fixed rate, multiple epochs values
+running experiment 0
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>using import method 1
+using import method 1
+registering
+registering
+registering
+registering
+registering
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>run number: 4
+
+parameters:
+	epochs=5,
+	noise=0.1,
+	offset=0.1,
+	rate=0.03
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00025916099548339844
+4 - validation_accuracy: 0.1680447688017932
+4 - test_accuracy: 0.25003098164078363
+finished experiment 0
+processing hyper-parameter 1 out of 9
+doing run 0 out of 5
+fixed rate, multiple epochs values
+running experiment 1
+run number: 0
+
+parameters:
+	epochs=5,
+	noise=0.1,
+	offset=0.3,
+	rate=0.03
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00024509429931640625
+0 - validation_accuracy: 0.3648493154931236
+0 - test_accuracy: 0.5904411762101056
+finished experiment 1
+processing hyper-parameter 1 out of 9
+doing run 1 out of 5
+fixed rate, multiple epochs values
+running experiment 1
+run number: 1
+
+parameters:
+	epochs=5,
+	noise=0.1,
+	offset=0.3,
+	rate=0.03
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00022840499877929688
+1 - validation_accuracy: 0.48323012438523527
+1 - test_accuracy: 0.5567550223380346
+finished experiment 1
+processing hyper-parameter 1 out of 9
+doing run 2 out of 5
+fixed rate, multiple epochs values
+running experiment 1
+run number: 2
+
+parameters:
+	epochs=5,
+	noise=0.1,
+	offset=0.3,
+	rate=0.03
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002276897430419922
+2 - validation_accuracy: 0.4760401870096643
+2 - test_accuracy: 0.5314241438281108
+finished experiment 1
+processing hyper-parameter 1 out of 9
+doing run 3 out of 5
+fixed rate, multiple epochs values
+running experiment 1
+run number: 3
+
+parameters:
+	epochs=5,
+	noise=0.1,
+	offset=0.3,
+	rate=0.03
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00023245811462402344
+3 - validation_accuracy: 0.3925817581272847
+3 - test_accuracy: 0.5728727898005879
+finished experiment 1
+processing hyper-parameter 1 out of 9
+doing run 4 out of 5
+fixed rate, multiple epochs values
+running experiment 1
+run number: 4
+
+parameters:
+	epochs=5,
+	noise=0.1,
+	offset=0.3,
+	rate=0.03
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0005695819854736328
+4 - validation_accuracy: 0.6012647512373402
+4 - test_accuracy: 0.5255867321640824
+finished experiment 1
+processing hyper-parameter 2 out of 9
+doing run 0 out of 5
+fixed rate, multiple epochs values
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>registering
+registering
+registering
+registering
+registering
+registering
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>running experiment 2
+run number: 0
+
+parameters:
+	epochs=5,
+	noise=0.1,
+	offset=0.6,
+	rate=0.03
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00028252601623535156
+0 - validation_accuracy: 0.8525989407582322
+0 - test_accuracy: 0.730826348564946
+finished experiment 2
+processing hyper-parameter 2 out of 9
+doing run 1 out of 5
+fixed rate, multiple epochs values
+running experiment 2
+run number: 1
+
+parameters:
+	epochs=5,
+	noise=0.1,
+	offset=0.6,
+	rate=0.03
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002372264862060547
+1 - validation_accuracy: 0.8992636190042553
+1 - test_accuracy: 0.8934654004829641
+finished experiment 2
+processing hyper-parameter 2 out of 9
+doing run 2 out of 5
+fixed rate, multiple epochs values
+running experiment 2
+run number: 2
+
+parameters:
+	epochs=5,
+	noise=0.1,
+	offset=0.6,
+	rate=0.03
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00027751922607421875
+2 - validation_accuracy: 0.6191632634920077
+2 - test_accuracy: 0.927275614762623
+finished experiment 2
+processing hyper-parameter 2 out of 9
+doing run 3 out of 5
+fixed rate, multiple epochs values
+running experiment 2
+run number: 3
+
+parameters:
+	epochs=5,
+	noise=0.1,
+	offset=0.6,
+	rate=0.03
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00022840499877929688
+3 - validation_accuracy: 0.6756648773450287
+3 - test_accuracy: 0.8859487539421411
+finished experiment 2
+processing hyper-parameter 2 out of 9
+doing run 4 out of 5
+fixed rate, multiple epochs values
+running experiment 2
+run number: 4
+
+parameters:
+	epochs=5,
+	noise=0.1,
+	offset=0.6,
+	rate=0.03
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00024175643920898438
+4 - validation_accuracy: 0.5975368930603141
+4 - test_accuracy: 1.0
+finished experiment 2
+processing hyper-parameter 3 out of 9
+doing run 0 out of 5
+fixed rate, multiple epochs values
+running experiment 3
+run number: 0
+
+parameters:
+	noise=0.1,
+	offset=0.1,
+	rate=0.03
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002522468566894531
+0 - validation_accuracy: 0.5135242344126247
+0 - test_accuracy: 0.500660082809219
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>registering
+registering
+registering
+registering
+registering
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>finished experiment 3
+processing hyper-parameter 3 out of 9
+doing run 1 out of 5
+fixed rate, multiple epochs values
+running experiment 3
+run number: 1
+
+parameters:
+	noise=0.1,
+	offset=0.1,
+	rate=0.03
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002636909484863281
+1 - validation_accuracy: 0.5199187310861645
+1 - test_accuracy: 0.018385450738753528
+finished experiment 3
+processing hyper-parameter 3 out of 9
+doing run 2 out of 5
+fixed rate, multiple epochs values
+running experiment 3
+run number: 2
+
+parameters:
+	noise=0.1,
+	offset=0.1,
+	rate=0.03
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002639293670654297
+2 - validation_accuracy: 0.3124878983461864
+2 - test_accuracy: 0.20118936733351178
+finished experiment 3
+processing hyper-parameter 3 out of 9
+doing run 3 out of 5
+fixed rate, multiple epochs values
+running experiment 3
+run number: 3
+
+parameters:
+	noise=0.1,
+	offset=0.1,
+	rate=0.03
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002789497375488281
+3 - validation_accuracy: 0.43761860675431435
+3 - test_accuracy: 0.3832193261058241
+finished experiment 3
+processing hyper-parameter 3 out of 9
+doing run 4 out of 5
+fixed rate, multiple epochs values
+running experiment 3
+run number: 4
+
+parameters:
+	noise=0.1,
+	offset=0.1,
+	rate=0.03
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002422332763671875
+4 - validation_accuracy: 0.28968371479460525
+4 - test_accuracy: 0.24550576405580457
+finished experiment 3
+processing hyper-parameter 4 out of 9
+doing run 0 out of 5
+fixed rate, multiple epochs values
+running experiment 4
+run number: 0
+
+parameters:
+	noise=0.1,
+	offset=0.3,
+	rate=0.03
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>registering
+registering
+registering
+registering
+registering
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>time spent on this experiment: 0.0004858970642089844
+0 - validation_accuracy: 0.6940568279056579
+0 - test_accuracy: 0.5365675811366728
+finished experiment 4
+processing hyper-parameter 4 out of 9
+doing run 1 out of 5
+fixed rate, multiple epochs values
+running experiment 4
+run number: 1
+
+parameters:
+	noise=0.1,
+	offset=0.3,
+	rate=0.03
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002627372741699219
+1 - validation_accuracy: 0.6581640689547488
+1 - test_accuracy: 0.40695529515458095
+finished experiment 4
+processing hyper-parameter 4 out of 9
+doing run 2 out of 5
+fixed rate, multiple epochs values
+running experiment 4
+run number: 2
+
+parameters:
+	noise=0.1,
+	offset=0.3,
+	rate=0.03
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002460479736328125
+2 - validation_accuracy: 0.9592510059025511
+2 - test_accuracy: 0.4226736439192687
+finished experiment 4
+processing hyper-parameter 4 out of 9
+doing run 3 out of 5
+fixed rate, multiple epochs values
+running experiment 4
+run number: 3
+
+parameters:
+	noise=0.1,
+	offset=0.3,
+	rate=0.03
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002689361572265625
+3 - validation_accuracy: 0.47955339399058183
+3 - test_accuracy: 0.5556908431650546
+finished experiment 4
+processing hyper-parameter 4 out of 9
+doing run 4 out of 5
+fixed rate, multiple epochs values
+running experiment 4
+run number: 4
+
+parameters:
+	noise=0.1,
+	offset=0.3,
+	rate=0.03
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002510547637939453
+4 - validation_accuracy: 0.8303559443664357
+4 - test_accuracy: 0.5042690516653277
+finished experiment 4
+processing hyper-parameter 5 out of 9
+doing run 0 out of 5
+fixed rate, multiple epochs values
+running experiment 5
+run number: 0
+
+parameters:
+	noise=0.1,
+	offset=0.6,
+	rate=0.03
+
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>registering
+registering
+registering
+registering
+registering
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00027561187744140625
+0 - validation_accuracy: 0.7756028957517443
+0 - test_accuracy: 0.6825032331510794
+finished experiment 5
+processing hyper-parameter 5 out of 9
+doing run 1 out of 5
+fixed rate, multiple epochs values
+running experiment 5
+run number: 1
+
+parameters:
+	noise=0.1,
+	offset=0.6,
+	rate=0.03
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002853870391845703
+1 - validation_accuracy: 0.8715815922852432
+1 - test_accuracy: 0.8667100071994455
+finished experiment 5
+processing hyper-parameter 5 out of 9
+doing run 2 out of 5
+fixed rate, multiple epochs values
+running experiment 5
+run number: 2
+
+parameters:
+	noise=0.1,
+	offset=0.6,
+	rate=0.03
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002512931823730469
+2 - validation_accuracy: 0.7452270674445594
+2 - test_accuracy: 0.6339854426594235
+finished experiment 5
+processing hyper-parameter 5 out of 9
+doing run 3 out of 5
+fixed rate, multiple epochs values
+running experiment 5
+run number: 3
+
+parameters:
+	noise=0.1,
+	offset=0.6,
+	rate=0.03
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002777576446533203
+3 - validation_accuracy: 0.8423267398576385
+3 - test_accuracy: 0.7429835147730793
+finished experiment 5
+processing hyper-parameter 5 out of 9
+doing run 4 out of 5
+fixed rate, multiple epochs values
+running experiment 5
+run number: 4
+
+parameters:
+	noise=0.1,
+	offset=0.6,
+	rate=0.03
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002434253692626953
+4 - validation_accuracy: 1.0
+4 - test_accuracy: 0.8192561915611634
+finished experiment 5
+processing hyper-parameter 6 out of 9
+doing run 0 out of 5
+fixed rate, multiple epochs values
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>registering
+registering
+registering
+registering
+registering
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>running experiment 6
+run number: 0
+
+parameters:
+	epochs=100,
+	noise=0.1,
+	offset=0.1,
+	rate=0.03
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0005707740783691406
+0 - validation_accuracy: 0.0
+0 - test_accuracy: 0.0
+finished experiment 6
+processing hyper-parameter 6 out of 9
+doing run 1 out of 5
+fixed rate, multiple epochs values
+running experiment 6
+run number: 1
+
+parameters:
+	epochs=100,
+	noise=0.1,
+	offset=0.1,
+	rate=0.03
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0006127357482910156
+1 - validation_accuracy: 0.0
+1 - test_accuracy: 0.0
+finished experiment 6
+processing hyper-parameter 6 out of 9
+doing run 2 out of 5
+fixed rate, multiple epochs values
+running experiment 6
+run number: 2
+
+parameters:
+	epochs=100,
+	noise=0.1,
+	offset=0.1,
+	rate=0.03
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0005769729614257812
+2 - validation_accuracy: 0.0
+2 - test_accuracy: 0.0
+finished experiment 6
+processing hyper-parameter 6 out of 9
+doing run 3 out of 5
+fixed rate, multiple epochs values
+running experiment 6
+run number: 3
+
+parameters:
+	epochs=100,
+	noise=0.1,
+	offset=0.1,
+	rate=0.03
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0005612373352050781
+3 - validation_accuracy: 0.0
+3 - test_accuracy: 0.0
+finished experiment 6
+processing hyper-parameter 6 out of 9
+doing run 4 out of 5
+fixed rate, multiple epochs values
+running experiment 6
+run number: 4
+
+parameters:
+	epochs=100,
+	noise=0.1,
+	offset=0.1,
+	rate=0.03
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0005767345428466797
+4 - validation_accuracy: 0.0
+4 - test_accuracy: 0.0
+finished experiment 6
+processing hyper-parameter 7 out of 9
+doing run 0 out of 5
+fixed rate, multiple epochs values
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>registering
+registering
+registering
+registering
+registering
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>running experiment 7
+run number: 0
+
+parameters:
+	epochs=100,
+	noise=0.1,
+	offset=0.3,
+	rate=0.03
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0006356239318847656
+0 - validation_accuracy: 0.0
+0 - test_accuracy: 0.0
+finished experiment 7
+processing hyper-parameter 7 out of 9
+doing run 1 out of 5
+fixed rate, multiple epochs values
+running experiment 7
+run number: 1
+
+parameters:
+	epochs=100,
+	noise=0.1,
+	offset=0.3,
+	rate=0.03
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0005729198455810547
+1 - validation_accuracy: 0.0
+1 - test_accuracy: 0.0
+finished experiment 7
+processing hyper-parameter 7 out of 9
+doing run 2 out of 5
+fixed rate, multiple epochs values
+running experiment 7
+run number: 2
+
+parameters:
+	epochs=100,
+	noise=0.1,
+	offset=0.3,
+	rate=0.03
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0005536079406738281
+2 - validation_accuracy: 0.0
+2 - test_accuracy: 0.0
+finished experiment 7
+processing hyper-parameter 7 out of 9
+doing run 3 out of 5
+fixed rate, multiple epochs values
+running experiment 7
+run number: 3
+
+parameters:
+	epochs=100,
+	noise=0.1,
+	offset=0.3,
+	rate=0.03
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0006806850433349609
+3 - validation_accuracy: 0.0
+3 - test_accuracy: 0.0
+finished experiment 7
+processing hyper-parameter 7 out of 9
+doing run 4 out of 5
+fixed rate, multiple epochs values
+running experiment 7
+run number: 4
+
+parameters:
+	epochs=100,
+	noise=0.1,
+	offset=0.3,
+	rate=0.03
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0005609989166259766
+4 - validation_accuracy: 0.0
+4 - test_accuracy: 0.0
+finished experiment 7
+processing hyper-parameter 8 out of 9
+doing run 0 out of 5
+fixed rate, multiple epochs values
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>registering
+registering
+registering
+registering
+registering
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>running experiment 8
+run number: 0
+
+parameters:
+	epochs=100,
+	noise=0.1,
+	offset=0.6,
+	rate=0.03
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0005528926849365234
+0 - validation_accuracy: 0.0
+0 - test_accuracy: 0.0
+finished experiment 8
+processing hyper-parameter 8 out of 9
+doing run 1 out of 5
+fixed rate, multiple epochs values
+running experiment 8
+run number: 1
+
+parameters:
+	epochs=100,
+	noise=0.1,
+	offset=0.6,
+	rate=0.03
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0005679130554199219
+1 - validation_accuracy: 0.0
+1 - test_accuracy: 0.0
+finished experiment 8
+processing hyper-parameter 8 out of 9
+doing run 2 out of 5
+fixed rate, multiple epochs values
+running experiment 8
+run number: 2
+
+parameters:
+	epochs=100,
+	noise=0.1,
+	offset=0.6,
+	rate=0.03
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0005681514739990234
+2 - validation_accuracy: 0.0
+2 - test_accuracy: 0.0
+finished experiment 8
+processing hyper-parameter 8 out of 9
+doing run 3 out of 5
+fixed rate, multiple epochs values
+running experiment 8
+run number: 3
+
+parameters:
+	epochs=100,
+	noise=0.1,
+	offset=0.6,
+	rate=0.03
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0005605220794677734
+3 - validation_accuracy: 0.0
+3 - test_accuracy: 0.0
+finished experiment 8
+processing hyper-parameter 8 out of 9
+doing run 4 out of 5
+fixed rate, multiple epochs values
+running experiment 8
+run number: 4
+
+parameters:
+	epochs=100,
+	noise=0.1,
+	offset=0.6,
+	rate=0.03
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0006906986236572266
+4 - validation_accuracy: 0.0
+4 - test_accuracy: 0.0
+finished experiment 8
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>registering
+registering
+registering
+registering
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>experiment script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line: 208
+processing hyper-parameter 0 out of 9
+doing run 0 out of 5
+fixed rate, multiple epochs values
+running experiment 9
+run number: 0
+
+parameters:
+	epochs=5,
+	noise=0.1,
+	offset=0.1,
+	rate=0.0001
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00032019615173339844
+0 - validation_accuracy: 0.19519557089633655
+0 - test_accuracy: 0.26634671301491813
+finished experiment 9
+processing hyper-parameter 0 out of 9
+doing run 1 out of 5
+fixed rate, multiple epochs values
+running experiment 9
+run number: 1
+
+parameters:
+	epochs=5,
+	noise=0.1,
+	offset=0.1,
+	rate=0.0001
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00024390220642089844
+1 - validation_accuracy: 0.0
+1 - test_accuracy: 0.26279599717067825
+finished experiment 9
+processing hyper-parameter 0 out of 9
+doing run 2 out of 5
+fixed rate, multiple epochs values
+running experiment 9
+run number: 2
+
+parameters:
+	epochs=5,
+	noise=0.1,
+	offset=0.1,
+	rate=0.0001
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002295970916748047
+2 - validation_accuracy: 0.09801049127523995
+2 - test_accuracy: 0.3646334790545728
+finished experiment 9
+processing hyper-parameter 0 out of 9
+doing run 3 out of 5
+fixed rate, multiple epochs values
+running experiment 9
+run number: 3
+
+parameters:
+	epochs=5,
+	noise=0.1,
+	offset=0.1,
+	rate=0.0001
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00025200843811035156
+3 - validation_accuracy: 0.0
+3 - test_accuracy: 0.07958599442380411
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>using import method 1
+registering
+registering
+registering
+registering
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>finished experiment 9
+processing hyper-parameter 0 out of 9
+doing run 4 out of 5
+fixed rate, multiple epochs values
+running experiment 9
+run number: 4
+
+parameters:
+	epochs=5,
+	noise=0.1,
+	offset=0.1,
+	rate=0.0001
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00025653839111328125
+4 - validation_accuracy: 0.14926042350785496
+4 - test_accuracy: 0.25200548958956254
+finished experiment 9
+processing hyper-parameter 1 out of 9
+doing run 0 out of 5
+fixed rate, multiple epochs values
+running experiment 10
+run number: 0
+
+parameters:
+	epochs=5,
+	noise=0.1,
+	offset=0.3,
+	rate=0.0001
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002269744873046875
+0 - validation_accuracy: 0.34162281834779856
+0 - test_accuracy: 0.4548672197032512
+finished experiment 10
+processing hyper-parameter 1 out of 9
+doing run 1 out of 5
+fixed rate, multiple epochs values
+running experiment 10
+run number: 1
+
+parameters:
+	epochs=5,
+	noise=0.1,
+	offset=0.3,
+	rate=0.0001
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002505779266357422
+1 - validation_accuracy: 0.3664502740023855
+1 - test_accuracy: 0.4732731132751653
+finished experiment 10
+processing hyper-parameter 1 out of 9
+doing run 2 out of 5
+fixed rate, multiple epochs values
+running experiment 10
+run number: 2
+
+parameters:
+	epochs=5,
+	noise=0.1,
+	offset=0.3,
+	rate=0.0001
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>registering
+registering
+registering
+registering
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>time spent on this experiment: 0.0002551078796386719
+2 - validation_accuracy: 0.20353203625161959
+2 - test_accuracy: 0.3399839525458471
+finished experiment 10
+processing hyper-parameter 1 out of 9
+doing run 3 out of 5
+fixed rate, multiple epochs values
+running experiment 10
+run number: 3
+
+parameters:
+	epochs=5,
+	noise=0.1,
+	offset=0.3,
+	rate=0.0001
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00023698806762695312
+3 - validation_accuracy: 0.3996899951590484
+3 - test_accuracy: 0.49460146471464994
+finished experiment 10
+processing hyper-parameter 1 out of 9
+doing run 4 out of 5
+fixed rate, multiple epochs values
+running experiment 10
+run number: 4
+
+parameters:
+	epochs=5,
+	noise=0.1,
+	offset=0.3,
+	rate=0.0001
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002532005310058594
+4 - validation_accuracy: 0.45566470868560643
+4 - test_accuracy: 0.3723247986552512
+finished experiment 10
+processing hyper-parameter 2 out of 9
+doing run 0 out of 5
+fixed rate, multiple epochs values
+running experiment 11
+run number: 0
+
+parameters:
+	epochs=5,
+	noise=0.1,
+	offset=0.6,
+	rate=0.0001
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002593994140625
+0 - validation_accuracy: 0.5712471537137995
+0 - test_accuracy: 0.6218798950139108
+finished experiment 11
+processing hyper-parameter 2 out of 9
+doing run 1 out of 5
+fixed rate, multiple epochs values
+running experiment 11
+run number: 1
+
+parameters:
+	epochs=5,
+	noise=0.1,
+	offset=0.6,
+	rate=0.0001
+
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>registering
+registering
+registering
+registering
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002739429473876953
+1 - validation_accuracy: 0.7685587125427678
+1 - test_accuracy: 0.8415083599069585
+finished experiment 11
+processing hyper-parameter 2 out of 9
+doing run 2 out of 5
+fixed rate, multiple epochs values
+running experiment 11
+run number: 2
+
+parameters:
+	epochs=5,
+	noise=0.1,
+	offset=0.6,
+	rate=0.0001
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00023651123046875
+2 - validation_accuracy: 0.7490921335640588
+2 - test_accuracy: 0.8738987292582212
+finished experiment 11
+processing hyper-parameter 2 out of 9
+doing run 3 out of 5
+fixed rate, multiple epochs values
+running experiment 11
+run number: 3
+
+parameters:
+	epochs=5,
+	noise=0.1,
+	offset=0.6,
+	rate=0.0001
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00023174285888671875
+3 - validation_accuracy: 0.6193136194541934
+3 - test_accuracy: 0.8420822701596473
+finished experiment 11
+processing hyper-parameter 2 out of 9
+doing run 4 out of 5
+fixed rate, multiple epochs values
+running experiment 11
+run number: 4
+
+parameters:
+	epochs=5,
+	noise=0.1,
+	offset=0.6,
+	rate=0.0001
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002307891845703125
+4 - validation_accuracy: 0.5316472363610126
+4 - test_accuracy: 0.8962452362371782
+finished experiment 11
+processing hyper-parameter 3 out of 9
+doing run 0 out of 5
+fixed rate, multiple epochs values
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>registering
+registering
+registering
+registering
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>running experiment 12
+run number: 0
+
+parameters:
+	epochs=10,
+	noise=0.1,
+	offset=0.1,
+	rate=0.0001
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00025463104248046875
+0 - validation_accuracy: 0.0
+0 - test_accuracy: 0.019412801110372503
+finished experiment 12
+processing hyper-parameter 3 out of 9
+doing run 1 out of 5
+fixed rate, multiple epochs values
+running experiment 12
+run number: 1
+
+parameters:
+	epochs=10,
+	noise=0.1,
+	offset=0.1,
+	rate=0.0001
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002684593200683594
+1 - validation_accuracy: 0.10470872935862448
+1 - test_accuracy: 0.0
+finished experiment 12
+processing hyper-parameter 3 out of 9
+doing run 2 out of 5
+fixed rate, multiple epochs values
+running experiment 12
+run number: 2
+
+parameters:
+	epochs=10,
+	noise=0.1,
+	offset=0.1,
+	rate=0.0001
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002727508544921875
+2 - validation_accuracy: 0.13536246911296315
+2 - test_accuracy: 0.0
+finished experiment 12
+processing hyper-parameter 3 out of 9
+doing run 3 out of 5
+fixed rate, multiple epochs values
+running experiment 12
+run number: 3
+
+parameters:
+	epochs=10,
+	noise=0.1,
+	offset=0.1,
+	rate=0.0001
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002582073211669922
+3 - validation_accuracy: 0.18774638653521297
+3 - test_accuracy: 0.0
+finished experiment 12
+processing hyper-parameter 3 out of 9
+doing run 4 out of 5
+fixed rate, multiple epochs values
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>registering
+registering
+registering
+registering
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>running experiment 12
+run number: 4
+
+parameters:
+	epochs=10,
+	noise=0.1,
+	offset=0.1,
+	rate=0.0001
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002684593200683594
+4 - validation_accuracy: 0.1550077150918911
+4 - test_accuracy: 0.0
+finished experiment 12
+processing hyper-parameter 4 out of 9
+doing run 0 out of 5
+fixed rate, multiple epochs values
+running experiment 13
+run number: 0
+
+parameters:
+	epochs=10,
+	noise=0.1,
+	offset=0.3,
+	rate=0.0001
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002551078796386719
+0 - validation_accuracy: 0.31580515326886727
+0 - test_accuracy: 0.2557468242645836
+finished experiment 13
+processing hyper-parameter 4 out of 9
+doing run 1 out of 5
+fixed rate, multiple epochs values
+running experiment 13
+run number: 1
+
+parameters:
+	epochs=10,
+	noise=0.1,
+	offset=0.3,
+	rate=0.0001
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002644062042236328
+1 - validation_accuracy: 0.34403327707728004
+1 - test_accuracy: 0.12723117506776277
+finished experiment 13
+processing hyper-parameter 4 out of 9
+doing run 2 out of 5
+fixed rate, multiple epochs values
+running experiment 13
+run number: 2
+
+parameters:
+	epochs=10,
+	noise=0.1,
+	offset=0.3,
+	rate=0.0001
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0004627704620361328
+2 - validation_accuracy: 0.3111134951333344
+2 - test_accuracy: 0.3057870414406595
+finished experiment 13
+processing hyper-parameter 4 out of 9
+doing run 3 out of 5
+fixed rate, multiple epochs values
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>registering
+registering
+registering
+registering
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>running experiment 13
+run number: 3
+
+parameters:
+	epochs=10,
+	noise=0.1,
+	offset=0.3,
+	rate=0.0001
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002491474151611328
+3 - validation_accuracy: 0.2884063839415865
+3 - test_accuracy: 0.09271218909314063
+finished experiment 13
+processing hyper-parameter 4 out of 9
+doing run 4 out of 5
+fixed rate, multiple epochs values
+running experiment 13
+run number: 4
+
+parameters:
+	epochs=10,
+	noise=0.1,
+	offset=0.3,
+	rate=0.0001
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002715587615966797
+4 - validation_accuracy: 0.13296385429173047
+4 - test_accuracy: 0.2857357777946938
+finished experiment 13
+processing hyper-parameter 5 out of 9
+doing run 0 out of 5
+fixed rate, multiple epochs values
+running experiment 14
+run number: 0
+
+parameters:
+	epochs=10,
+	noise=0.1,
+	offset=0.6,
+	rate=0.0001
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002605915069580078
+0 - validation_accuracy: 0.6639523322132407
+0 - test_accuracy: 0.5576692451567336
+finished experiment 14
+processing hyper-parameter 5 out of 9
+doing run 1 out of 5
+fixed rate, multiple epochs values
+running experiment 14
+run number: 1
+
+parameters:
+	epochs=10,
+	noise=0.1,
+	offset=0.6,
+	rate=0.0001
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002560615539550781
+1 - validation_accuracy: 0.7598891271490786
+1 - test_accuracy: 0.5207254350667875
+finished experiment 14
+processing hyper-parameter 5 out of 9
+doing run 2 out of 5
+fixed rate, multiple epochs values
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>registering
+registering
+registering
+registering
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>running experiment 14
+run number: 2
+
+parameters:
+	epochs=10,
+	noise=0.1,
+	offset=0.6,
+	rate=0.0001
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002703666687011719
+2 - validation_accuracy: 0.6144881346744162
+2 - test_accuracy: 0.6534582954329455
+finished experiment 14
+processing hyper-parameter 5 out of 9
+doing run 3 out of 5
+fixed rate, multiple epochs values
+running experiment 14
+run number: 3
+
+parameters:
+	epochs=10,
+	noise=0.1,
+	offset=0.6,
+	rate=0.0001
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0003230571746826172
+3 - validation_accuracy: 0.6214228946108662
+3 - test_accuracy: 0.3722907855912483
+finished experiment 14
+processing hyper-parameter 5 out of 9
+doing run 4 out of 5
+fixed rate, multiple epochs values
+running experiment 14
+run number: 4
+
+parameters:
+	epochs=10,
+	noise=0.1,
+	offset=0.6,
+	rate=0.0001
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.000316619873046875
+4 - validation_accuracy: 0.8488975119283356
+4 - test_accuracy: 0.5697326896624002
+finished experiment 14
+processing hyper-parameter 6 out of 9
+doing run 0 out of 5
+fixed rate, multiple epochs values
+running experiment 15
+run number: 0
+
+parameters:
+	noise=0.1,
+	offset=0.1,
+	rate=0.0001
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0005822181701660156
+0 - validation_accuracy: 0.18678104720831729
+0 - test_accuracy: 0.0
+finished experiment 15
+processing hyper-parameter 6 out of 9
+doing run 1 out of 5
+fixed rate, multiple epochs values
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>registering
+registering
+registering
+registering
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>running experiment 15
+run number: 1
+
+parameters:
+	noise=0.1,
+	offset=0.1,
+	rate=0.0001
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0005664825439453125
+1 - validation_accuracy: 0.1529523498095926
+1 - test_accuracy: 0.0
+finished experiment 15
+processing hyper-parameter 6 out of 9
+doing run 2 out of 5
+fixed rate, multiple epochs values
+running experiment 15
+run number: 2
+
+parameters:
+	noise=0.1,
+	offset=0.1,
+	rate=0.0001
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0005691051483154297
+2 - validation_accuracy: 0.0
+2 - test_accuracy: 0.0
+finished experiment 15
+processing hyper-parameter 6 out of 9
+doing run 3 out of 5
+fixed rate, multiple epochs values
+running experiment 15
+run number: 3
+
+parameters:
+	noise=0.1,
+	offset=0.1,
+	rate=0.0001
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0007297992706298828
+3 - validation_accuracy: 0.2767658202903842
+3 - test_accuracy: 0.0
+finished experiment 15
+processing hyper-parameter 6 out of 9
+doing run 4 out of 5
+fixed rate, multiple epochs values
+running experiment 15
+run number: 4
+
+parameters:
+	noise=0.1,
+	offset=0.1,
+	rate=0.0001
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0005505084991455078
+4 - validation_accuracy: 0.14582914766522495
+4 - test_accuracy: 0.08364527532376848
+finished experiment 15
+processing hyper-parameter 7 out of 9
+doing run 0 out of 5
+fixed rate, multiple epochs values
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>registering
+registering
+registering
+registering
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>running experiment 16
+run number: 0
+
+parameters:
+	noise=0.1,
+	offset=0.3,
+	rate=0.0001
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0006244182586669922
+0 - validation_accuracy: 0.18968644623799774
+0 - test_accuracy: 0.08742780825400698
+finished experiment 16
+processing hyper-parameter 7 out of 9
+doing run 1 out of 5
+fixed rate, multiple epochs values
+running experiment 16
+run number: 1
+
+parameters:
+	noise=0.1,
+	offset=0.3,
+	rate=0.0001
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0005974769592285156
+1 - validation_accuracy: 0.3013444806185109
+1 - test_accuracy: 0.24371992695154895
+finished experiment 16
+processing hyper-parameter 7 out of 9
+doing run 2 out of 5
+fixed rate, multiple epochs values
+running experiment 16
+run number: 2
+
+parameters:
+	noise=0.1,
+	offset=0.3,
+	rate=0.0001
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0005624294281005859
+2 - validation_accuracy: 0.4464692986632988
+2 - test_accuracy: 0.16589103116802503
+finished experiment 16
+processing hyper-parameter 7 out of 9
+doing run 3 out of 5
+fixed rate, multiple epochs values
+running experiment 16
+run number: 3
+
+parameters:
+	noise=0.1,
+	offset=0.3,
+	rate=0.0001
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0005784034729003906
+3 - validation_accuracy: 0.4021590787490284
+3 - test_accuracy: 0.11777014493567639
+finished experiment 16
+processing hyper-parameter 7 out of 9
+doing run 4 out of 5
+fixed rate, multiple epochs values
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>registering
+registering
+registering
+registering
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>running experiment 16
+run number: 4
+
+parameters:
+	noise=0.1,
+	offset=0.3,
+	rate=0.0001
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0005559921264648438
+4 - validation_accuracy: 0.2733671695858267
+4 - test_accuracy: 0.08115086541170509
+finished experiment 16
+processing hyper-parameter 8 out of 9
+doing run 0 out of 5
+fixed rate, multiple epochs values
+running experiment 17
+run number: 0
+
+parameters:
+	noise=0.1,
+	offset=0.6,
+	rate=0.0001
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0006062984466552734
+0 - validation_accuracy: 0.6769813926451949
+0 - test_accuracy: 0.41920851267783876
+finished experiment 17
+processing hyper-parameter 8 out of 9
+doing run 1 out of 5
+fixed rate, multiple epochs values
+running experiment 17
+run number: 1
+
+parameters:
+	noise=0.1,
+	offset=0.6,
+	rate=0.0001
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0005953311920166016
+1 - validation_accuracy: 0.6136316920432402
+1 - test_accuracy: 0.5553737827597465
+finished experiment 17
+processing hyper-parameter 8 out of 9
+doing run 2 out of 5
+fixed rate, multiple epochs values
+running experiment 17
+run number: 2
+
+parameters:
+	noise=0.1,
+	offset=0.6,
+	rate=0.0001
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0005767345428466797
+2 - validation_accuracy: 0.7033662521568352
+2 - test_accuracy: 0.5429860532911611
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>registering
+registering
+registering
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>finished experiment 17
+processing hyper-parameter 8 out of 9
+doing run 3 out of 5
+fixed rate, multiple epochs values
+running experiment 17
+run number: 3
+
+parameters:
+	noise=0.1,
+	offset=0.6,
+	rate=0.0001
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0006270408630371094
+3 - validation_accuracy: 0.5552723696993566
+3 - test_accuracy: 0.6168038969593501
+finished experiment 17
+processing hyper-parameter 8 out of 9
+doing run 4 out of 5
+fixed rate, multiple epochs values
+running experiment 17
+run number: 4
+
+parameters:
+	noise=0.1,
+	offset=0.6,
+	rate=0.0001
+
+script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0007841587066650391
+4 - validation_accuracy: 0.3898350912860318
+4 - test_accuracy: 0.6886226620061873
+finished experiment 17
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>registering
+registering
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+    </details>
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
 <div class="output">
@@ -40,7 +1966,7 @@ nb_path: "nbs/utils/experiment_utils.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="remove_defaults" class="doc_header"><code>remove_defaults</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L22" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>remove_defaults</code>(<strong><code>parameters</code></strong>)</p>
+<h4 id="remove_defaults" class="doc_header"><code>remove_defaults</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L23" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>remove_defaults</code>(<strong><code>parameters</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -64,7 +1990,7 @@ nb_path: "nbs/utils/experiment_utils.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="query" class="doc_header"><code>query</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L31" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>query</code>(<strong><code>path_experiments</code></strong>=<em><code>None</code></em>, <strong><code>folder_experiments</code></strong>=<em><code>None</code></em>, <strong><code>intersection</code></strong>=<em><code>False</code></em>, <strong><code>experiments</code></strong>=<em><code>None</code></em>, <strong><code>suffix_results</code></strong>=<em><code>''</code></em>, <strong><code>min_results</code></strong>=<em><code>0</code></em>, <strong><code>classes</code></strong>=<em><code>None</code></em>, <strong><code>parameters_fixed</code></strong>=<em><code>{}</code></em>, <strong><code>parameters_variable</code></strong>=<em><code>{}</code></em>, <strong><code>parameters_all</code></strong>=<em><code>[]</code></em>, <strong><code>exact_match</code></strong>=<em><code>True</code></em>, <strong><code>output</code></strong>=<em><code>'all'</code></em>, <strong><code>ascending</code></strong>=<em><code>False</code></em>, <strong><code>suffix_test_set</code></strong>=<em><code>None</code></em>, <strong><code>stats</code></strong>=<em><code>['mean', 'median', 'rank', 'min', 'max', 'std']</code></em>, <strong><code>query_other_parameters</code></strong>=<em><code>False</code></em>)</p>
+<h4 id="query" class="doc_header"><code>query</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L32" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>query</code>(<strong><code>path_experiments</code></strong>=<em><code>None</code></em>, <strong><code>folder_experiments</code></strong>=<em><code>None</code></em>, <strong><code>intersection</code></strong>=<em><code>False</code></em>, <strong><code>experiments</code></strong>=<em><code>None</code></em>, <strong><code>suffix_results</code></strong>=<em><code>''</code></em>, <strong><code>min_results</code></strong>=<em><code>0</code></em>, <strong><code>classes</code></strong>=<em><code>None</code></em>, <strong><code>parameters_fixed</code></strong>=<em><code>{}</code></em>, <strong><code>parameters_variable</code></strong>=<em><code>{}</code></em>, <strong><code>parameters_all</code></strong>=<em><code>[]</code></em>, <strong><code>exact_match</code></strong>=<em><code>True</code></em>, <strong><code>output</code></strong>=<em><code>'all'</code></em>, <strong><code>ascending</code></strong>=<em><code>False</code></em>, <strong><code>suffix_test_set</code></strong>=<em><code>None</code></em>, <strong><code>stats</code></strong>=<em><code>['mean', 'median', 'rank', 'min', 'max', 'std']</code></em>, <strong><code>query_other_parameters</code></strong>=<em><code>False</code></em>)</p>
 </blockquote>
 
 </div>
@@ -95,7 +2021,7 @@ nb_path: "nbs/utils/experiment_utils.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_experiment_data" class="doc_header"><code>get_experiment_data</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L97" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_experiment_data</code>(<strong><code>path_experiments</code></strong>=<em><code>None</code></em>, <strong><code>folder_experiments</code></strong>=<em><code>None</code></em>, <strong><code>experiments</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="get_experiment_data" class="doc_header"><code>get_experiment_data</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L98" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_experiment_data</code>(<strong><code>path_experiments</code></strong>=<em><code>None</code></em>, <strong><code>folder_experiments</code></strong>=<em><code>None</code></em>, <strong><code>experiments</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 <p>Returns data stored from previous experiments in the form DataFrame.</p>
 <p>If path_experiments is not given, it uses the default one.</p>
@@ -128,7 +2054,7 @@ nb_path: "nbs/utils/experiment_utils.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="summarize_results" class="doc_header"><code>summarize_results</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L116" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>summarize_results</code>(<strong><code>path_experiments</code></strong>=<em><code>None</code></em>, <strong><code>folder_experiments</code></strong>=<em><code>None</code></em>, <strong><code>intersection</code></strong>=<em><code>False</code></em>, <strong><code>experiments</code></strong>=<em><code>None</code></em>, <strong><code>suffix_results</code></strong>=<em><code>''</code></em>, <strong><code>min_results</code></strong>=<em><code>0</code></em>, <strong><code>class_ids</code></strong>=<em><code>None</code></em>, <strong><code>parameters</code></strong>=<em><code>None</code></em>, <strong><code>output</code></strong>=<em><code>'all'</code></em>, <strong><code>data</code></strong>=<em><code>None</code></em>, <strong><code>ascending</code></strong>=<em><code>False</code></em>, <strong><code>suffix_test_set</code></strong>=<em><code>None</code></em>, <strong><code>stats</code></strong>=<em><code>['mean', 'median', 'rank', 'min', 'max', 'std']</code></em>)</p>
+<h4 id="summarize_results" class="doc_header"><code>summarize_results</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L117" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>summarize_results</code>(<strong><code>path_experiments</code></strong>=<em><code>None</code></em>, <strong><code>folder_experiments</code></strong>=<em><code>None</code></em>, <strong><code>intersection</code></strong>=<em><code>False</code></em>, <strong><code>experiments</code></strong>=<em><code>None</code></em>, <strong><code>suffix_results</code></strong>=<em><code>''</code></em>, <strong><code>min_results</code></strong>=<em><code>0</code></em>, <strong><code>class_ids</code></strong>=<em><code>None</code></em>, <strong><code>parameters</code></strong>=<em><code>None</code></em>, <strong><code>output</code></strong>=<em><code>'all'</code></em>, <strong><code>data</code></strong>=<em><code>None</code></em>, <strong><code>ascending</code></strong>=<em><code>False</code></em>, <strong><code>suffix_test_set</code></strong>=<em><code>None</code></em>, <strong><code>stats</code></strong>=<em><code>['mean', 'median', 'rank', 'min', 'max', 'std']</code></em>)</p>
 </blockquote>
 <p>Obtains summary scores for the desired list of experiments. Uses the experiment_data csv for that purpose</p>
 <p>Example use:</p>
@@ -167,7 +2093,7 @@ nb_path: "nbs/utils/experiment_utils.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="summary" class="doc_header"><code>summary</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L229" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>summary</code>(<strong><code>df</code></strong>, <strong><code>experiments</code></strong>=<em><code>None</code></em>, <strong><code>score</code></strong>=<em><code>None</code></em>, <strong><code>compact</code></strong>=<em><code>True</code></em>)</p>
+<h4 id="summary" class="doc_header"><code>summary</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L230" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>summary</code>(<strong><code>df</code></strong>, <strong><code>experiments</code></strong>=<em><code>None</code></em>, <strong><code>score</code></strong>=<em><code>None</code></em>, <strong><code>compact</code></strong>=<em><code>True</code></em>)</p>
 </blockquote>
 
 </div>
@@ -191,7 +2117,7 @@ nb_path: "nbs/utils/experiment_utils.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_parameters_columns" class="doc_header"><code>get_parameters_columns</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L240" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_parameters_columns</code>(<strong><code>experiment_data</code></strong>, <strong><code>only_not_null</code></strong>=<em><code>False</code></em>)</p>
+<h4 id="get_parameters_columns" class="doc_header"><code>get_parameters_columns</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L241" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_parameters_columns</code>(<strong><code>experiment_data</code></strong>, <strong><code>only_not_null</code></strong>=<em><code>False</code></em>)</p>
 </blockquote>
 
 </div>
@@ -215,7 +2141,7 @@ nb_path: "nbs/utils/experiment_utils.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_experiment_parameters" class="doc_header"><code>get_experiment_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L246" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_experiment_parameters</code>(<strong><code>experiment_data</code></strong>, <strong><code>only_not_null</code></strong>=<em><code>False</code></em>)</p>
+<h4 id="get_experiment_parameters" class="doc_header"><code>get_experiment_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L247" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_experiment_parameters</code>(<strong><code>experiment_data</code></strong>, <strong><code>only_not_null</code></strong>=<em><code>False</code></em>)</p>
 </blockquote>
 
 </div>
@@ -239,7 +2165,7 @@ nb_path: "nbs/utils/experiment_utils.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_scores_columns" class="doc_header"><code>get_scores_columns</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L249" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_scores_columns</code>(<strong><code>experiment_data</code></strong>=<em><code>None</code></em>, <strong><code>suffix_results</code></strong>=<em><code>''</code></em>, <strong><code>class_ids</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="get_scores_columns" class="doc_header"><code>get_scores_columns</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L250" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_scores_columns</code>(<strong><code>experiment_data</code></strong>=<em><code>None</code></em>, <strong><code>suffix_results</code></strong>=<em><code>''</code></em>, <strong><code>class_ids</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 <p>Determine the columnns that provide evaluation scores. We assume that they start with the class number, and that the other columns do not start with a digit</p>
 
@@ -264,7 +2190,7 @@ nb_path: "nbs/utils/experiment_utils.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_experiment_scores" class="doc_header"><code>get_experiment_scores</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L265" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_experiment_scores</code>(<strong><code>experiment_data</code></strong>=<em><code>None</code></em>, <strong><code>suffix_results</code></strong>=<em><code>''</code></em>, <strong><code>class_ids</code></strong>=<em><code>None</code></em>, <strong><code>remove_suffix</code></strong>=<em><code>False</code></em>)</p>
+<h4 id="get_experiment_scores" class="doc_header"><code>get_experiment_scores</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L266" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_experiment_scores</code>(<strong><code>experiment_data</code></strong>=<em><code>None</code></em>, <strong><code>suffix_results</code></strong>=<em><code>''</code></em>, <strong><code>class_ids</code></strong>=<em><code>None</code></em>, <strong><code>remove_suffix</code></strong>=<em><code>False</code></em>)</p>
 </blockquote>
 
 </div>
@@ -295,7 +2221,181 @@ nb_path: "nbs/utils/experiment_utils.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="find_rows_with_parameters_dict" class="doc_header"><code>find_rows_with_parameters_dict</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L273" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>find_rows_with_parameters_dict</code>(<strong><code>experiment_data</code></strong>, <strong><code>parameters_dict</code></strong>, <strong><code>create_if_not_exists</code></strong>=<em><code>True</code></em>, <strong><code>exact_match</code></strong>=<em><code>True</code></em>, <strong><code>ignore_keys</code></strong>=<em><code>[]</code></em>, <strong><code>precision</code></strong>=<em><code>1e-10</code></em>)</p>
+<h4 id="get_scores_names" class="doc_header"><code>get_scores_names</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L273" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_scores_names</code>(<strong><code>experiment_data</code></strong>=<em><code>None</code></em>, <strong><code>run_number</code></strong>=<em><code>None</code></em>, <strong><code>experiment</code></strong>=<em><code>None</code></em>, <strong><code>only_valid</code></strong>=<em><code>True</code></em>)</p>
+</blockquote>
+<p>Determine the names of the scores included in experiment data.</p>
+<p>We assume that the score columns start with the class number, and that the other columns do not start with a digit.</p>
+<p>If run_number is provided, we provide the scores stored for that run number. If, in addition to this,
+experiment is provided, and only_valid=True, we provide only the scores that are not NaN for the given
+experiment number.</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">scores_names</span> <span class="o">=</span> <span class="n">get_scores_names</span> <span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">scores_names</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">scores_names</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;test_accuracy&#39;</span><span class="p">,</span> <span class="s1">&#39;validation_accuracy&#39;</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[&#39;test_accuracy&#39;, &#39;validation_accuracy&#39;]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">scores_names</span><span class="o">=</span><span class="n">get_scores_names</span> <span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">run_number</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">experiment</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">scores_names</span><span class="p">)</span>
+<span class="k">assert</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">scores_names</span><span class="p">))</span><span class="o">==</span><span class="p">[</span><span class="s1">&#39;test_accuracy&#39;</span><span class="p">,</span> <span class="s1">&#39;validation_accuracy&#39;</span><span class="p">]</span>
+
+<span class="c1"># test when only some scores are valid</span>
+<span class="n">df2</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">df2</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="s1">&#39;3_test_accuracy&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+<span class="n">scores_names</span><span class="o">=</span><span class="n">get_scores_names</span> <span class="p">(</span><span class="n">df2</span><span class="p">,</span> <span class="n">run_number</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">experiment</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">scores_names</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">scores_names</span><span class="o">==</span><span class="p">[</span><span class="s1">&#39;validation_accuracy&#39;</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[&#39;test_accuracy&#39;, &#39;validation_accuracy&#39;]
+[&#39;validation_accuracy&#39;]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="get_monitored_training_metrics" class="doc_header"><code>get_monitored_training_metrics</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L299" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_monitored_training_metrics</code>(<strong><code>experiment</code></strong>, <strong><code>run_number</code></strong>=<em><code>0</code></em>, <strong><code>history_file_name</code></strong>=<em><code>'model_history.pk'</code></em>, <strong><code>path_results</code></strong>=<em><code>None</code></em>, <strong><code>root_path</code></strong>=<em><code>None</code></em>, <strong><code>root_folder</code></strong>=<em><code>None</code></em>)</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">monitored_metrics</span> <span class="o">=</span> <span class="n">get_monitored_training_metrics</span> <span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">monitored_metrics</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">monitored_metrics</span><span class="o">==</span><span class="p">[</span><span class="s1">&#39;validation_accuracy&#39;</span><span class="p">,</span> <span class="s1">&#39;test_accuracy&#39;</span><span class="p">,</span> <span class="s1">&#39;accuracy&#39;</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[&#39;validation_accuracy&#39;, &#39;test_accuracy&#39;, &#39;accuracy&#39;]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="find_rows_with_parameters_dict" class="doc_header"><code>find_rows_with_parameters_dict</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L312" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>find_rows_with_parameters_dict</code>(<strong><code>experiment_data</code></strong>, <strong><code>parameters_dict</code></strong>, <strong><code>create_if_not_exists</code></strong>=<em><code>True</code></em>, <strong><code>exact_match</code></strong>=<em><code>True</code></em>, <strong><code>ignore_keys</code></strong>=<em><code>[]</code></em>, <strong><code>precision</code></strong>=<em><code>1e-10</code></em>)</p>
 </blockquote>
 <p>Finds rows that match parameters. If the dataframe doesn't have any parameter with that name, a new column is created and changed_dataframe is set to True.</p>
 
@@ -327,7 +2427,7 @@ nb_path: "nbs/utils/experiment_utils.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_classes_with_results" class="doc_header"><code>get_classes_with_results</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L318" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_classes_with_results</code>(<strong><code>experiment_data</code></strong>=<em><code>None</code></em>, <strong><code>suffix_results</code></strong>=<em><code>''</code></em>, <strong><code>class_ids</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="get_classes_with_results" class="doc_header"><code>get_classes_with_results</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L357" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_classes_with_results</code>(<strong><code>experiment_data</code></strong>=<em><code>None</code></em>, <strong><code>suffix_results</code></strong>=<em><code>''</code></em>, <strong><code>class_ids</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 <p>Gets the list of class_ids for whom there are results in experiment_data.</p>
 <p>Example usage with summarize_results:
@@ -356,7 +2456,7 @@ nb_path: "nbs/utils/experiment_utils.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_parameters_unique" class="doc_header"><code>get_parameters_unique</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L334" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_parameters_unique</code>(<strong><code>df</code></strong>)</p>
+<h4 id="get_parameters_unique" class="doc_header"><code>get_parameters_unique</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L373" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_parameters_unique</code>(<strong><code>df</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -380,7 +2480,7 @@ nb_path: "nbs/utils/experiment_utils.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="compact_parameters" class="doc_header"><code>compact_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L341" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>compact_parameters</code>(<strong><code>df</code></strong>, <strong><code>number_characters</code></strong>=<em><code>1</code></em>)</p>
+<h4 id="compact_parameters" class="doc_header"><code>compact_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L380" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>compact_parameters</code>(<strong><code>df</code></strong>, <strong><code>number_characters</code></strong>=<em><code>1</code></em>)</p>
 </blockquote>
 
 </div>
@@ -393,6 +2493,19 @@ nb_path: "nbs/utils/experiment_utils.ipynb"
 </div>
     {% endraw %}
 
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Replace-with-default-values">Replace with default values<a class="anchor-link" href="#Replace-with-default-values"> </a></h3>
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -404,7 +2517,7 @@ nb_path: "nbs/utils/experiment_utils.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="replace_with_default_values" class="doc_header"><code>replace_with_default_values</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L349" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>replace_with_default_values</code>(<strong><code>df</code></strong>, <strong><code>parameters</code></strong>=<em><code>{}</code></em>)</p>
+<h4 id="replace_with_default_values" class="doc_header"><code>replace_with_default_values</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L389" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>replace_with_default_values</code>(<strong><code>df</code></strong>, <strong><code>parameters</code></strong>=<em><code>{}</code></em>)</p>
 </blockquote>
 
 </div>
@@ -420,6 +2533,24 @@ nb_path: "nbs/utils/experiment_utils.ipynb"
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">=</span><span class="n">replace_with_default_values</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="k">assert</span> <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">epochs</span><span class="o">.</span><span class="n">values</span> <span class="o">==</span> <span class="p">([</span><span class="mf">5.</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span> <span class="o">+</span> <span class="p">[</span><span class="mf">10.</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span> <span class="o">+</span> <span class="p">[</span><span class="mf">100.</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
 
 </div>
     {% endraw %}

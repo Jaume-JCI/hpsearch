@@ -16,6 +16,9 @@ entries:
       title: Manager factory
       url: manager_factory.html
     - output: web,pdf
+      title: Complex Dummy Experiment Manager
+      url: complex_dummy_experiment_manager.html
+    - output: web,pdf
       title: Dummy Experiment Manager
       url: dummy_experiment_manager.html
     - output: web,pdf
@@ -31,8 +34,23 @@ entries:
       title: Change manager
       url: change_manager.html
     - output: web,pdf
+      title: Metric visualization
+      url: metric_visualization.html
+    - output: web,pdf
+      title: Print info
+      url: print_info.html
+    - output: web,pdf
+      title: Print parameters
+      url: print_parameters.html
+    - output: web,pdf
+      title: Print table
+      url: print_table.html
+    - output: web,pdf
       title: Query
       url: query.html
+    - output: web,pdf
+      title: Remove experiments
+      url: remove_experiments.html
     - output: web,pdf
       title: Experiment Utils
       url: experiment_utils.html
@@ -40,11 +58,14 @@ entries:
       title: Organize experiments
       url: organize_experiments.html
     - output: web,pdf
-      title: Metric correlation
-      url: metric_correlation.html
+      title: Resume utilities
+      url: resume_from_checkpoint.html
     - output: web,pdf
-      title: Plotly wrapper
-      url: plotly.html
+      title: Visualization utils
+      url: experiment_visualization.html
+    - output: web,pdf
+      title: Plot utilities
+      url: plot_utils.html
     output: web
     title: hpsearch
   output: web
