@@ -32,11 +32,45 @@ nb_path: "nbs/utils/experiment_utils.ipynb"
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="get_experiment_data" class="doc_header"><code>get_experiment_data</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L9" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_experiment_data</code>(<strong><code>path_experiments</code></strong>=<em><code>None</code></em>, <strong><code>folder_experiments</code></strong>=<em><code>None</code></em>, <strong><code>experiments</code></strong>=<em><code>None</code></em>)</p>
+</blockquote>
+<p>Returns data stored from previous experiments in the form DataFrame.</p>
+<p>If path_experiments is not given, it uses the default one.</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># populate data for testing</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">hpsearch.examples.dummy_experiment_manager</span> <span class="kn">import</span> <span class="n">remove_previous_experiments</span><span class="p">,</span> <span class="n">run_multiple_experiments</span>
 
 <span class="n">remove_previous_experiments</span><span class="p">()</span>
@@ -62,7 +96,7 @@ nb_path: "nbs/utils/experiment_utils.ipynb"
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>experiment script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line: 208
+<pre>experiment script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line: 208
 processing hyper-parameter 0 out of 9
 doing run 0 out of 5
 fixed rate, multiple epochs values
@@ -75,10 +109,10 @@ parameters:
 	offset=0.1,
 	rate=0.03
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00023818016052246094
-0 - validation_accuracy: 0.2843767146865233
-0 - test_accuracy: 0.38705186003908765
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00025200843811035156
+0 - validation_accuracy: 0.15266689578632928
+0 - test_accuracy: 0.22414728586662405
 finished experiment 0
 processing hyper-parameter 0 out of 9
 doing run 1 out of 5
@@ -92,10 +126,10 @@ parameters:
 	offset=0.1,
 	rate=0.03
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00024962425231933594
-1 - validation_accuracy: 0.3015274718797575
-1 - test_accuracy: 0.2422556497304169
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.000225067138671875
+1 - validation_accuracy: 0.3360969674400924
+1 - test_accuracy: 0.34119369526599813
 finished experiment 0
 processing hyper-parameter 0 out of 9
 doing run 2 out of 5
@@ -109,10 +143,10 @@ parameters:
 	offset=0.1,
 	rate=0.03
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00024890899658203125
-2 - validation_accuracy: 0.1662246756686216
-2 - test_accuracy: 0.3027207420464449
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00025582313537597656
+2 - validation_accuracy: 0.3632296637060181
+2 - test_accuracy: 0.32439068915159414
 finished experiment 0
 processing hyper-parameter 0 out of 9
 doing run 3 out of 5
@@ -126,15 +160,27 @@ parameters:
 	offset=0.1,
 	rate=0.03
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00025177001953125
-3 - validation_accuracy: 0.24648927468656948
-3 - test_accuracy: 0.20683995699632732
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002295970916748047
+3 - validation_accuracy: 0.3224226912895627
+3 - test_accuracy: 0.20721671600365893
 finished experiment 0
 processing hyper-parameter 0 out of 9
 doing run 4 out of 5
 fixed rate, multiple epochs values
 running experiment 0
+run number: 4
+
+parameters:
+	epochs=5,
+	noise=0.1,
+	offset=0.1,
+	rate=0.03
+
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002319812774658203
+4 - validation_accuracy: 0.22291017457739787
+4 - test_accuracy: 0.35656824380590046
 </pre>
 </div>
 </div>
@@ -156,19 +202,7 @@ registering
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>run number: 4
-
-parameters:
-	epochs=5,
-	noise=0.1,
-	offset=0.1,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00025916099548339844
-4 - validation_accuracy: 0.1680447688017932
-4 - test_accuracy: 0.25003098164078363
-finished experiment 0
+<pre>finished experiment 0
 processing hyper-parameter 1 out of 9
 doing run 0 out of 5
 fixed rate, multiple epochs values
@@ -181,10 +215,10 @@ parameters:
 	offset=0.3,
 	rate=0.03
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00024509429931640625
-0 - validation_accuracy: 0.3648493154931236
-0 - test_accuracy: 0.5904411762101056
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00027489662170410156
+0 - validation_accuracy: 0.39716960779641236
+0 - test_accuracy: 0.5513162107001803
 finished experiment 1
 processing hyper-parameter 1 out of 9
 doing run 1 out of 5
@@ -198,10 +232,10 @@ parameters:
 	offset=0.3,
 	rate=0.03
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00022840499877929688
-1 - validation_accuracy: 0.48323012438523527
-1 - test_accuracy: 0.5567550223380346
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.000225067138671875
+1 - validation_accuracy: 0.47170100276171284
+1 - test_accuracy: 0.39902230762809854
 finished experiment 1
 processing hyper-parameter 1 out of 9
 doing run 2 out of 5
@@ -215,10 +249,10 @@ parameters:
 	offset=0.3,
 	rate=0.03
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002276897430419922
-2 - validation_accuracy: 0.4760401870096643
-2 - test_accuracy: 0.5314241438281108
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00029158592224121094
+2 - validation_accuracy: 0.4622654461280188
+2 - test_accuracy: 0.4694834802578932
 finished experiment 1
 processing hyper-parameter 1 out of 9
 doing run 3 out of 5
@@ -232,10 +266,10 @@ parameters:
 	offset=0.3,
 	rate=0.03
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00023245811462402344
-3 - validation_accuracy: 0.3925817581272847
-3 - test_accuracy: 0.5728727898005879
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00023651123046875
+3 - validation_accuracy: 0.43200153485801773
+3 - test_accuracy: 0.31628098764360213
 finished experiment 1
 processing hyper-parameter 1 out of 9
 doing run 4 out of 5
@@ -249,10 +283,10 @@ parameters:
 	offset=0.3,
 	rate=0.03
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0005695819854736328
-4 - validation_accuracy: 0.6012647512373402
-4 - test_accuracy: 0.5255867321640824
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00023603439331054688
+4 - validation_accuracy: 0.4867202633727114
+4 - test_accuracy: 0.5394530368357544
 finished experiment 1
 processing hyper-parameter 2 out of 9
 doing run 0 out of 5
@@ -286,10 +320,10 @@ parameters:
 	offset=0.6,
 	rate=0.03
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00028252601623535156
-0 - validation_accuracy: 0.8525989407582322
-0 - test_accuracy: 0.730826348564946
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002951622009277344
+0 - validation_accuracy: 0.7191028503388301
+0 - test_accuracy: 0.8977844699113078
 finished experiment 2
 processing hyper-parameter 2 out of 9
 doing run 1 out of 5
@@ -303,271 +337,193 @@ parameters:
 	offset=0.6,
 	rate=0.03
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002372264862060547
-1 - validation_accuracy: 0.8992636190042553
-1 - test_accuracy: 0.8934654004829641
-finished experiment 2
-processing hyper-parameter 2 out of 9
-doing run 2 out of 5
-fixed rate, multiple epochs values
-running experiment 2
-run number: 2
-
-parameters:
-	epochs=5,
-	noise=0.1,
-	offset=0.6,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00027751922607421875
-2 - validation_accuracy: 0.6191632634920077
-2 - test_accuracy: 0.927275614762623
-finished experiment 2
-processing hyper-parameter 2 out of 9
-doing run 3 out of 5
-fixed rate, multiple epochs values
-running experiment 2
-run number: 3
-
-parameters:
-	epochs=5,
-	noise=0.1,
-	offset=0.6,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00022840499877929688
-3 - validation_accuracy: 0.6756648773450287
-3 - test_accuracy: 0.8859487539421411
-finished experiment 2
-processing hyper-parameter 2 out of 9
-doing run 4 out of 5
-fixed rate, multiple epochs values
-running experiment 2
-run number: 4
-
-parameters:
-	epochs=5,
-	noise=0.1,
-	offset=0.6,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00024175643920898438
-4 - validation_accuracy: 0.5975368930603141
-4 - test_accuracy: 1.0
-finished experiment 2
-processing hyper-parameter 3 out of 9
-doing run 0 out of 5
-fixed rate, multiple epochs values
-running experiment 3
-run number: 0
-
-parameters:
-	noise=0.1,
-	offset=0.1,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002522468566894531
-0 - validation_accuracy: 0.5135242344126247
-0 - test_accuracy: 0.500660082809219
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>registering
-registering
-registering
-registering
-registering
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>finished experiment 3
-processing hyper-parameter 3 out of 9
-doing run 1 out of 5
-fixed rate, multiple epochs values
-running experiment 3
-run number: 1
-
-parameters:
-	noise=0.1,
-	offset=0.1,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002636909484863281
-1 - validation_accuracy: 0.5199187310861645
-1 - test_accuracy: 0.018385450738753528
-finished experiment 3
-processing hyper-parameter 3 out of 9
-doing run 2 out of 5
-fixed rate, multiple epochs values
-running experiment 3
-run number: 2
-
-parameters:
-	noise=0.1,
-	offset=0.1,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002639293670654297
-2 - validation_accuracy: 0.3124878983461864
-2 - test_accuracy: 0.20118936733351178
-finished experiment 3
-processing hyper-parameter 3 out of 9
-doing run 3 out of 5
-fixed rate, multiple epochs values
-running experiment 3
-run number: 3
-
-parameters:
-	noise=0.1,
-	offset=0.1,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002789497375488281
-3 - validation_accuracy: 0.43761860675431435
-3 - test_accuracy: 0.3832193261058241
-finished experiment 3
-processing hyper-parameter 3 out of 9
-doing run 4 out of 5
-fixed rate, multiple epochs values
-running experiment 3
-run number: 4
-
-parameters:
-	noise=0.1,
-	offset=0.1,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002422332763671875
-4 - validation_accuracy: 0.28968371479460525
-4 - test_accuracy: 0.24550576405580457
-finished experiment 3
-processing hyper-parameter 4 out of 9
-doing run 0 out of 5
-fixed rate, multiple epochs values
-running experiment 4
-run number: 0
-
-parameters:
-	noise=0.1,
-	offset=0.3,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>registering
-registering
-registering
-registering
-registering
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>time spent on this experiment: 0.0004858970642089844
-0 - validation_accuracy: 0.6940568279056579
-0 - test_accuracy: 0.5365675811366728
-finished experiment 4
-processing hyper-parameter 4 out of 9
-doing run 1 out of 5
-fixed rate, multiple epochs values
-running experiment 4
-run number: 1
-
-parameters:
-	noise=0.1,
-	offset=0.3,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002627372741699219
-1 - validation_accuracy: 0.6581640689547488
-1 - test_accuracy: 0.40695529515458095
-finished experiment 4
-processing hyper-parameter 4 out of 9
-doing run 2 out of 5
-fixed rate, multiple epochs values
-running experiment 4
-run number: 2
-
-parameters:
-	noise=0.1,
-	offset=0.3,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002460479736328125
-2 - validation_accuracy: 0.9592510059025511
-2 - test_accuracy: 0.4226736439192687
-finished experiment 4
-processing hyper-parameter 4 out of 9
-doing run 3 out of 5
-fixed rate, multiple epochs values
-running experiment 4
-run number: 3
-
-parameters:
-	noise=0.1,
-	offset=0.3,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002689361572265625
-3 - validation_accuracy: 0.47955339399058183
-3 - test_accuracy: 0.5556908431650546
-finished experiment 4
-processing hyper-parameter 4 out of 9
-doing run 4 out of 5
-fixed rate, multiple epochs values
-running experiment 4
-run number: 4
-
-parameters:
-	noise=0.1,
-	offset=0.3,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
 time spent on this experiment: 0.0002510547637939453
-4 - validation_accuracy: 0.8303559443664357
-4 - test_accuracy: 0.5042690516653277
-finished experiment 4
-processing hyper-parameter 5 out of 9
-doing run 0 out of 5
+1 - validation_accuracy: 0.6672526577873056
+1 - test_accuracy: 0.8600352971770913
+finished experiment 2
+processing hyper-parameter 2 out of 9
+doing run 2 out of 5
 fixed rate, multiple epochs values
-running experiment 5
-run number: 0
+running experiment 2
+run number: 2
 
 parameters:
+	epochs=5,
 	noise=0.1,
 	offset=0.6,
 	rate=0.03
 
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00024271011352539062
+2 - validation_accuracy: 0.8681626504472708
+2 - test_accuracy: 0.8706116222244603
+finished experiment 2
+processing hyper-parameter 2 out of 9
+doing run 3 out of 5
+fixed rate, multiple epochs values
+running experiment 2
+run number: 3
+
+parameters:
+	epochs=5,
+	noise=0.1,
+	offset=0.6,
+	rate=0.03
+
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00023365020751953125
+3 - validation_accuracy: 0.7168535072803944
+3 - test_accuracy: 0.7932790827862133
+finished experiment 2
+processing hyper-parameter 2 out of 9
+doing run 4 out of 5
+fixed rate, multiple epochs values
+running experiment 2
+run number: 4
+
+parameters:
+	epochs=5,
+	noise=0.1,
+	offset=0.6,
+	rate=0.03
+
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00022745132446289062
+4 - validation_accuracy: 0.7256267613865433
+4 - test_accuracy: 0.7128405184477872
+finished experiment 2
+processing hyper-parameter 3 out of 9
+doing run 0 out of 5
+fixed rate, multiple epochs values
+running experiment 3
+run number: 0
+
+parameters:
+	noise=0.1,
+	offset=0.1,
+	rate=0.03
+
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002658367156982422
+0 - validation_accuracy: 0.28211964591969596
+0 - test_accuracy: 0.40006660002903605
+finished experiment 3
+processing hyper-parameter 3 out of 9
+doing run 1 out of 5
+fixed rate, multiple epochs values
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>registering
+registering
+registering
+registering
+registering
+registering
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>running experiment 3
+run number: 1
+
+parameters:
+	noise=0.1,
+	offset=0.1,
+	rate=0.03
+
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0003070831298828125
+1 - validation_accuracy: 0.23846410399794138
+1 - test_accuracy: 0.3336684811816314
+finished experiment 3
+processing hyper-parameter 3 out of 9
+doing run 2 out of 5
+fixed rate, multiple epochs values
+running experiment 3
+run number: 2
+
+parameters:
+	noise=0.1,
+	offset=0.1,
+	rate=0.03
+
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00026917457580566406
+2 - validation_accuracy: 0.33508343999448764
+2 - test_accuracy: 0.1478355897005293
+finished experiment 3
+processing hyper-parameter 3 out of 9
+doing run 3 out of 5
+fixed rate, multiple epochs values
+running experiment 3
+run number: 3
+
+parameters:
+	noise=0.1,
+	offset=0.1,
+	rate=0.03
+
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002675056457519531
+3 - validation_accuracy: 0.5420937291946821
+3 - test_accuracy: 0.30625355285840516
+finished experiment 3
+processing hyper-parameter 3 out of 9
+doing run 4 out of 5
+fixed rate, multiple epochs values
+running experiment 3
+run number: 4
+
+parameters:
+	noise=0.1,
+	offset=0.1,
+	rate=0.03
+
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00025534629821777344
+4 - validation_accuracy: 0.3881877593875343
+4 - test_accuracy: 0.4041429999523872
+finished experiment 3
+processing hyper-parameter 4 out of 9
+doing run 0 out of 5
+fixed rate, multiple epochs values
+running experiment 4
+run number: 0
+
+parameters:
+	noise=0.1,
+	offset=0.3,
+	rate=0.03
+
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00025773048400878906
+0 - validation_accuracy: 0.7148138530110053
+0 - test_accuracy: 0.4124257392297318
+finished experiment 4
+processing hyper-parameter 4 out of 9
+doing run 1 out of 5
+fixed rate, multiple epochs values
+running experiment 4
+run number: 1
+
+parameters:
+	noise=0.1,
+	offset=0.3,
+	rate=0.03
+
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002758502960205078
+1 - validation_accuracy: 0.4928996250891281
+1 - test_accuracy: 0.4774884246768475
 </pre>
 </div>
 </div>
@@ -587,10 +543,70 @@ registering
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00027561187744140625
-0 - validation_accuracy: 0.7756028957517443
-0 - test_accuracy: 0.6825032331510794
+<pre>finished experiment 4
+processing hyper-parameter 4 out of 9
+doing run 2 out of 5
+fixed rate, multiple epochs values
+running experiment 4
+run number: 2
+
+parameters:
+	noise=0.1,
+	offset=0.3,
+	rate=0.03
+
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002512931823730469
+2 - validation_accuracy: 0.6966074754233561
+2 - test_accuracy: 0.56251762801707
+finished experiment 4
+processing hyper-parameter 4 out of 9
+doing run 3 out of 5
+fixed rate, multiple epochs values
+running experiment 4
+run number: 3
+
+parameters:
+	noise=0.1,
+	offset=0.3,
+	rate=0.03
+
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00027370452880859375
+3 - validation_accuracy: 0.33597191847470337
+3 - test_accuracy: 0.5485116240636105
+finished experiment 4
+processing hyper-parameter 4 out of 9
+doing run 4 out of 5
+fixed rate, multiple epochs values
+running experiment 4
+run number: 4
+
+parameters:
+	noise=0.1,
+	offset=0.3,
+	rate=0.03
+
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002758502960205078
+4 - validation_accuracy: 0.5696821309812252
+4 - test_accuracy: 0.5933082420817203
+finished experiment 4
+processing hyper-parameter 5 out of 9
+doing run 0 out of 5
+fixed rate, multiple epochs values
+running experiment 5
+run number: 0
+
+parameters:
+	noise=0.1,
+	offset=0.6,
+	rate=0.03
+
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00039124488830566406
+0 - validation_accuracy: 0.8820793556587345
+0 - test_accuracy: 0.6442930474629986
 finished experiment 5
 processing hyper-parameter 5 out of 9
 doing run 1 out of 5
@@ -603,11 +619,30 @@ parameters:
 	offset=0.6,
 	rate=0.03
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002853870391845703
-1 - validation_accuracy: 0.8715815922852432
-1 - test_accuracy: 0.8667100071994455
-finished experiment 5
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002593994140625
+1 - validation_accuracy: 1.0
+1 - test_accuracy: 0.8699747106164485
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>registering
+registering
+registering
+registering
+registering
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>finished experiment 5
 processing hyper-parameter 5 out of 9
 doing run 2 out of 5
 fixed rate, multiple epochs values
@@ -619,10 +654,10 @@ parameters:
 	offset=0.6,
 	rate=0.03
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002512931823730469
-2 - validation_accuracy: 0.7452270674445594
-2 - test_accuracy: 0.6339854426594235
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002608299255371094
+2 - validation_accuracy: 0.946025559970333
+2 - test_accuracy: 0.7944906778954153
 finished experiment 5
 processing hyper-parameter 5 out of 9
 doing run 3 out of 5
@@ -635,10 +670,10 @@ parameters:
 	offset=0.6,
 	rate=0.03
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002777576446533203
-3 - validation_accuracy: 0.8423267398576385
-3 - test_accuracy: 0.7429835147730793
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002598762512207031
+3 - validation_accuracy: 0.8526294061750216
+3 - test_accuracy: 0.8205318504252314
 finished experiment 5
 processing hyper-parameter 5 out of 9
 doing run 4 out of 5
@@ -651,34 +686,15 @@ parameters:
 	offset=0.6,
 	rate=0.03
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002434253692626953
-4 - validation_accuracy: 1.0
-4 - test_accuracy: 0.8192561915611634
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002574920654296875
+4 - validation_accuracy: 0.9556060018201905
+4 - test_accuracy: 0.8026396453339764
 finished experiment 5
 processing hyper-parameter 6 out of 9
 doing run 0 out of 5
 fixed rate, multiple epochs values
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>registering
-registering
-registering
-registering
-registering
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>running experiment 6
+running experiment 6
 run number: 0
 
 parameters:
@@ -687,8 +703,8 @@ parameters:
 	offset=0.1,
 	rate=0.03
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0005707740783691406
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0005457401275634766
 0 - validation_accuracy: 0.0
 0 - test_accuracy: 0.0
 finished experiment 6
@@ -704,8 +720,27 @@ parameters:
 	offset=0.1,
 	rate=0.03
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0006127357482910156
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>registering
+registering
+registering
+registering
+registering
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>time spent on this experiment: 0.0005657672882080078
 1 - validation_accuracy: 0.0
 1 - test_accuracy: 0.0
 finished experiment 6
@@ -721,8 +756,8 @@ parameters:
 	offset=0.1,
 	rate=0.03
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0005769729614257812
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0005605220794677734
 2 - validation_accuracy: 0.0
 2 - test_accuracy: 0.0
 finished experiment 6
@@ -738,8 +773,8 @@ parameters:
 	offset=0.1,
 	rate=0.03
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0005612373352050781
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0005776882171630859
 3 - validation_accuracy: 0.0
 3 - test_accuracy: 0.0
 finished experiment 6
@@ -755,13 +790,30 @@ parameters:
 	offset=0.1,
 	rate=0.03
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0005767345428466797
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0005445480346679688
 4 - validation_accuracy: 0.0
 4 - test_accuracy: 0.0
 finished experiment 6
 processing hyper-parameter 7 out of 9
 doing run 0 out of 5
+fixed rate, multiple epochs values
+running experiment 7
+run number: 0
+
+parameters:
+	epochs=100,
+	noise=0.1,
+	offset=0.3,
+	rate=0.03
+
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0005726814270019531
+0 - validation_accuracy: 0.0
+0 - test_accuracy: 0.0
+finished experiment 7
+processing hyper-parameter 7 out of 9
+doing run 1 out of 5
 fixed rate, multiple epochs values
 </pre>
 </div>
@@ -783,23 +835,6 @@ registering
 
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>running experiment 7
-run number: 0
-
-parameters:
-	epochs=100,
-	noise=0.1,
-	offset=0.3,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0006356239318847656
-0 - validation_accuracy: 0.0
-0 - test_accuracy: 0.0
-finished experiment 7
-processing hyper-parameter 7 out of 9
-doing run 1 out of 5
-fixed rate, multiple epochs values
-running experiment 7
 run number: 1
 
 parameters:
@@ -808,8 +843,8 @@ parameters:
 	offset=0.3,
 	rate=0.03
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0005729198455810547
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0005476474761962891
 1 - validation_accuracy: 0.0
 1 - test_accuracy: 0.0
 finished experiment 7
@@ -825,8 +860,8 @@ parameters:
 	offset=0.3,
 	rate=0.03
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0005536079406738281
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.000682830810546875
 2 - validation_accuracy: 0.0
 2 - test_accuracy: 0.0
 finished experiment 7
@@ -842,8 +877,8 @@ parameters:
 	offset=0.3,
 	rate=0.03
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0006806850433349609
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0007450580596923828
 3 - validation_accuracy: 0.0
 3 - test_accuracy: 0.0
 finished experiment 7
@@ -859,13 +894,30 @@ parameters:
 	offset=0.3,
 	rate=0.03
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0005609989166259766
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0005419254302978516
 4 - validation_accuracy: 0.0
 4 - test_accuracy: 0.0
 finished experiment 7
 processing hyper-parameter 8 out of 9
 doing run 0 out of 5
+fixed rate, multiple epochs values
+running experiment 8
+run number: 0
+
+parameters:
+	epochs=100,
+	noise=0.1,
+	offset=0.6,
+	rate=0.03
+
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0005519390106201172
+0 - validation_accuracy: 0.0
+0 - test_accuracy: 0.0
+finished experiment 8
+processing hyper-parameter 8 out of 9
+doing run 1 out of 5
 fixed rate, multiple epochs values
 </pre>
 </div>
@@ -887,23 +939,6 @@ registering
 
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>running experiment 8
-run number: 0
-
-parameters:
-	epochs=100,
-	noise=0.1,
-	offset=0.6,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0005528926849365234
-0 - validation_accuracy: 0.0
-0 - test_accuracy: 0.0
-finished experiment 8
-processing hyper-parameter 8 out of 9
-doing run 1 out of 5
-fixed rate, multiple epochs values
-running experiment 8
 run number: 1
 
 parameters:
@@ -912,8 +947,8 @@ parameters:
 	offset=0.6,
 	rate=0.03
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0005679130554199219
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0006034374237060547
 1 - validation_accuracy: 0.0
 1 - test_accuracy: 0.0
 finished experiment 8
@@ -929,8 +964,8 @@ parameters:
 	offset=0.6,
 	rate=0.03
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0005681514739990234
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0005445480346679688
 2 - validation_accuracy: 0.0
 2 - test_accuracy: 0.0
 finished experiment 8
@@ -946,8 +981,8 @@ parameters:
 	offset=0.6,
 	rate=0.03
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0005605220794677734
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0005865097045898438
 3 - validation_accuracy: 0.0
 3 - test_accuracy: 0.0
 finished experiment 8
@@ -963,8 +998,8 @@ parameters:
 	offset=0.6,
 	rate=0.03
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0006906986236572266
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0005438327789306641
 4 - validation_accuracy: 0.0
 4 - test_accuracy: 0.0
 finished experiment 8
@@ -978,7 +1013,6 @@ finished experiment 8
 <pre>registering
 registering
 registering
-registering
 </pre>
 </div>
 </div>
@@ -986,7 +1020,7 @@ registering
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>experiment script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line: 208
+<pre>experiment script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line: 208
 processing hyper-parameter 0 out of 9
 doing run 0 out of 5
 fixed rate, multiple epochs values
@@ -999,10 +1033,10 @@ parameters:
 	offset=0.1,
 	rate=0.0001
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00032019615173339844
-0 - validation_accuracy: 0.19519557089633655
-0 - test_accuracy: 0.26634671301491813
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002536773681640625
+0 - validation_accuracy: 0.09896520077513671
+0 - test_accuracy: 0.1429448560553782
 finished experiment 9
 processing hyper-parameter 0 out of 9
 doing run 1 out of 5
@@ -1016,10 +1050,10 @@ parameters:
 	offset=0.1,
 	rate=0.0001
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00024390220642089844
-1 - validation_accuracy: 0.0
-1 - test_accuracy: 0.26279599717067825
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002636909484863281
+1 - validation_accuracy: 0.29094232169160816
+1 - test_accuracy: 0.06820371679913417
 finished experiment 9
 processing hyper-parameter 0 out of 9
 doing run 2 out of 5
@@ -1033,10 +1067,10 @@ parameters:
 	offset=0.1,
 	rate=0.0001
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002295970916748047
-2 - validation_accuracy: 0.09801049127523995
-2 - test_accuracy: 0.3646334790545728
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00023412704467773438
+2 - validation_accuracy: 0.09050097806217536
+2 - test_accuracy: 0.24118282743322353
 finished experiment 9
 processing hyper-parameter 0 out of 9
 doing run 3 out of 5
@@ -1050,10 +1084,10 @@ parameters:
 	offset=0.1,
 	rate=0.0001
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00025200843811035156
-3 - validation_accuracy: 0.0
-3 - test_accuracy: 0.07958599442380411
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002434253692626953
+3 - validation_accuracy: 0.1357619580873862
+3 - test_accuracy: 0.1277123577176299
 </pre>
 </div>
 </div>
@@ -1086,10 +1120,10 @@ parameters:
 	offset=0.1,
 	rate=0.0001
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00025653839111328125
-4 - validation_accuracy: 0.14926042350785496
-4 - test_accuracy: 0.25200548958956254
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002231597900390625
+4 - validation_accuracy: 0.19700113864369304
+4 - test_accuracy: 0.2364927812206559
 finished experiment 9
 processing hyper-parameter 1 out of 9
 doing run 0 out of 5
@@ -1103,10 +1137,10 @@ parameters:
 	offset=0.3,
 	rate=0.0001
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002269744873046875
-0 - validation_accuracy: 0.34162281834779856
-0 - test_accuracy: 0.4548672197032512
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00022983551025390625
+0 - validation_accuracy: 0.2762110027008862
+0 - test_accuracy: 0.1538028592750314
 finished experiment 10
 processing hyper-parameter 1 out of 9
 doing run 1 out of 5
@@ -1120,10 +1154,10 @@ parameters:
 	offset=0.3,
 	rate=0.0001
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002505779266357422
-1 - validation_accuracy: 0.3664502740023855
-1 - test_accuracy: 0.4732731132751653
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00026106834411621094
+1 - validation_accuracy: 0.3118694311541041
+1 - test_accuracy: 0.5322847223532259
 finished experiment 10
 processing hyper-parameter 1 out of 9
 doing run 2 out of 5
@@ -1137,7 +1171,6 @@ parameters:
 	offset=0.3,
 	rate=0.0001
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
 </pre>
 </div>
 </div>
@@ -1156,9 +1189,10 @@ registering
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>time spent on this experiment: 0.0002551078796386719
-2 - validation_accuracy: 0.20353203625161959
-2 - test_accuracy: 0.3399839525458471
+<pre>script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00027298927307128906
+2 - validation_accuracy: 0.2824791885113888
+2 - test_accuracy: 0.5488555492997031
 finished experiment 10
 processing hyper-parameter 1 out of 9
 doing run 3 out of 5
@@ -1172,10 +1206,10 @@ parameters:
 	offset=0.3,
 	rate=0.0001
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00023698806762695312
-3 - validation_accuracy: 0.3996899951590484
-3 - test_accuracy: 0.49460146471464994
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00025391578674316406
+3 - validation_accuracy: 0.3542108445440566
+3 - test_accuracy: 0.29594442703234025
 finished experiment 10
 processing hyper-parameter 1 out of 9
 doing run 4 out of 5
@@ -1189,10 +1223,10 @@ parameters:
 	offset=0.3,
 	rate=0.0001
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002532005310058594
-4 - validation_accuracy: 0.45566470868560643
-4 - test_accuracy: 0.3723247986552512
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00023484230041503906
+4 - validation_accuracy: 0.17774350013350784
+4 - test_accuracy: 0.27922115331820174
 finished experiment 10
 processing hyper-parameter 2 out of 9
 doing run 0 out of 5
@@ -1206,23 +1240,15 @@ parameters:
 	offset=0.6,
 	rate=0.0001
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002593994140625
-0 - validation_accuracy: 0.5712471537137995
-0 - test_accuracy: 0.6218798950139108
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00023651123046875
+0 - validation_accuracy: 0.7449750829699029
+0 - test_accuracy: 0.6106967681815832
 finished experiment 11
 processing hyper-parameter 2 out of 9
 doing run 1 out of 5
 fixed rate, multiple epochs values
 running experiment 11
-run number: 1
-
-parameters:
-	epochs=5,
-	noise=0.1,
-	offset=0.6,
-	rate=0.0001
-
 </pre>
 </div>
 </div>
@@ -1241,10 +1267,18 @@ registering
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002739429473876953
-1 - validation_accuracy: 0.7685587125427678
-1 - test_accuracy: 0.8415083599069585
+<pre>run number: 1
+
+parameters:
+	epochs=5,
+	noise=0.1,
+	offset=0.6,
+	rate=0.0001
+
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002689361572265625
+1 - validation_accuracy: 0.5266615252610372
+1 - test_accuracy: 0.6113805962175347
 finished experiment 11
 processing hyper-parameter 2 out of 9
 doing run 2 out of 5
@@ -1258,10 +1292,10 @@ parameters:
 	offset=0.6,
 	rate=0.0001
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00023651123046875
-2 - validation_accuracy: 0.7490921335640588
-2 - test_accuracy: 0.8738987292582212
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002422332763671875
+2 - validation_accuracy: 0.6701665507505248
+2 - test_accuracy: 0.6979460528571291
 finished experiment 11
 processing hyper-parameter 2 out of 9
 doing run 3 out of 5
@@ -1275,10 +1309,10 @@ parameters:
 	offset=0.6,
 	rate=0.0001
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00023174285888671875
-3 - validation_accuracy: 0.6193136194541934
-3 - test_accuracy: 0.8420822701596473
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002295970916748047
+3 - validation_accuracy: 0.6325131473982049
+3 - test_accuracy: 1.0
 finished experiment 11
 processing hyper-parameter 2 out of 9
 doing run 4 out of 5
@@ -1292,33 +1326,15 @@ parameters:
 	offset=0.6,
 	rate=0.0001
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002307891845703125
-4 - validation_accuracy: 0.5316472363610126
-4 - test_accuracy: 0.8962452362371782
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00022411346435546875
+4 - validation_accuracy: 0.5537033928503765
+4 - test_accuracy: 0.6623624860136151
 finished experiment 11
 processing hyper-parameter 3 out of 9
 doing run 0 out of 5
 fixed rate, multiple epochs values
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>registering
-registering
-registering
-registering
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>running experiment 12
+running experiment 12
 run number: 0
 
 parameters:
@@ -1327,10 +1343,28 @@ parameters:
 	offset=0.1,
 	rate=0.0001
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00025463104248046875
-0 - validation_accuracy: 0.0
-0 - test_accuracy: 0.019412801110372503
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002837181091308594
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>registering
+registering
+registering
+registering
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>0 - validation_accuracy: 0.04952188204693862
+0 - test_accuracy: 0.0
 finished experiment 12
 processing hyper-parameter 3 out of 9
 doing run 1 out of 5
@@ -1344,9 +1378,9 @@ parameters:
 	offset=0.1,
 	rate=0.0001
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002684593200683594
-1 - validation_accuracy: 0.10470872935862448
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002827644348144531
+1 - validation_accuracy: 0.2254282949295951
 1 - test_accuracy: 0.0
 finished experiment 12
 processing hyper-parameter 3 out of 9
@@ -1361,9 +1395,9 @@ parameters:
 	offset=0.1,
 	rate=0.0001
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002727508544921875
-2 - validation_accuracy: 0.13536246911296315
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002791881561279297
+2 - validation_accuracy: 0.09139587110249203
 2 - test_accuracy: 0.0
 finished experiment 12
 processing hyper-parameter 3 out of 9
@@ -1378,14 +1412,27 @@ parameters:
 	offset=0.1,
 	rate=0.0001
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002582073211669922
-3 - validation_accuracy: 0.18774638653521297
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00025343894958496094
+3 - validation_accuracy: 0.08369893072167195
 3 - test_accuracy: 0.0
 finished experiment 12
 processing hyper-parameter 3 out of 9
 doing run 4 out of 5
 fixed rate, multiple epochs values
+running experiment 12
+run number: 4
+
+parameters:
+	epochs=10,
+	noise=0.1,
+	offset=0.1,
+	rate=0.0001
+
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0006406307220458984
+4 - validation_accuracy: 0.3157410492005387
+4 - test_accuracy: 0.015465026968653608
 </pre>
 </div>
 </div>
@@ -1404,20 +1451,7 @@ registering
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>running experiment 12
-run number: 4
-
-parameters:
-	epochs=10,
-	noise=0.1,
-	offset=0.1,
-	rate=0.0001
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002684593200683594
-4 - validation_accuracy: 0.1550077150918911
-4 - test_accuracy: 0.0
-finished experiment 12
+<pre>finished experiment 12
 processing hyper-parameter 4 out of 9
 doing run 0 out of 5
 fixed rate, multiple epochs values
@@ -1430,10 +1464,10 @@ parameters:
 	offset=0.3,
 	rate=0.0001
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002551078796386719
-0 - validation_accuracy: 0.31580515326886727
-0 - test_accuracy: 0.2557468242645836
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00028133392333984375
+0 - validation_accuracy: 0.35045612766303835
+0 - test_accuracy: 0.14014553959417575
 finished experiment 13
 processing hyper-parameter 4 out of 9
 doing run 1 out of 5
@@ -1447,10 +1481,10 @@ parameters:
 	offset=0.3,
 	rate=0.0001
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002644062042236328
-1 - validation_accuracy: 0.34403327707728004
-1 - test_accuracy: 0.12723117506776277
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00025534629821777344
+1 - validation_accuracy: 0.25505444215342143
+1 - test_accuracy: 0.23363258688736716
 finished experiment 13
 processing hyper-parameter 4 out of 9
 doing run 2 out of 5
@@ -1464,10 +1498,10 @@ parameters:
 	offset=0.3,
 	rate=0.0001
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0004627704620361328
-2 - validation_accuracy: 0.3111134951333344
-2 - test_accuracy: 0.3057870414406595
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002715587615966797
+2 - validation_accuracy: 0.45664223983173
+2 - test_accuracy: 0.26110344921209705
 finished experiment 13
 processing hyper-parameter 4 out of 9
 doing run 3 out of 5
@@ -1499,10 +1533,10 @@ parameters:
 	offset=0.3,
 	rate=0.0001
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002491474151611328
-3 - validation_accuracy: 0.2884063839415865
-3 - test_accuracy: 0.09271218909314063
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00024628639221191406
+3 - validation_accuracy: 0.27094650906487855
+3 - test_accuracy: 0.2979338107213556
 finished experiment 13
 processing hyper-parameter 4 out of 9
 doing run 4 out of 5
@@ -1516,10 +1550,10 @@ parameters:
 	offset=0.3,
 	rate=0.0001
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002715587615966797
-4 - validation_accuracy: 0.13296385429173047
-4 - test_accuracy: 0.2857357777946938
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002446174621582031
+4 - validation_accuracy: 0.31013020620298576
+4 - test_accuracy: 0.19649721078921792
 finished experiment 13
 processing hyper-parameter 5 out of 9
 doing run 0 out of 5
@@ -1533,10 +1567,10 @@ parameters:
 	offset=0.6,
 	rate=0.0001
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002605915069580078
-0 - validation_accuracy: 0.6639523322132407
-0 - test_accuracy: 0.5576692451567336
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00024366378784179688
+0 - validation_accuracy: 0.5681066975163386
+0 - test_accuracy: 0.463205962343943
 finished experiment 14
 processing hyper-parameter 5 out of 9
 doing run 1 out of 5
@@ -1550,10 +1584,10 @@ parameters:
 	offset=0.6,
 	rate=0.0001
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002560615539550781
-1 - validation_accuracy: 0.7598891271490786
-1 - test_accuracy: 0.5207254350667875
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002636909484863281
+1 - validation_accuracy: 0.6464914740697283
+1 - test_accuracy: 0.3643199706662177
 finished experiment 14
 processing hyper-parameter 5 out of 9
 doing run 2 out of 5
@@ -1585,10 +1619,10 @@ parameters:
 	offset=0.6,
 	rate=0.0001
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002703666687011719
-2 - validation_accuracy: 0.6144881346744162
-2 - test_accuracy: 0.6534582954329455
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0002639293670654297
+2 - validation_accuracy: 0.6321302596279039
+2 - test_accuracy: 0.5178861334947883
 finished experiment 14
 processing hyper-parameter 5 out of 9
 doing run 3 out of 5
@@ -1602,10 +1636,10 @@ parameters:
 	offset=0.6,
 	rate=0.0001
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0003230571746826172
-3 - validation_accuracy: 0.6214228946108662
-3 - test_accuracy: 0.3722907855912483
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00028395652770996094
+3 - validation_accuracy: 0.533554069688769
+3 - test_accuracy: 0.5889073125831905
 finished experiment 14
 processing hyper-parameter 5 out of 9
 doing run 4 out of 5
@@ -1619,10 +1653,10 @@ parameters:
 	offset=0.6,
 	rate=0.0001
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.000316619873046875
-4 - validation_accuracy: 0.8488975119283356
-4 - test_accuracy: 0.5697326896624002
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.00023674964904785156
+4 - validation_accuracy: 0.6210084595923386
+4 - test_accuracy: 0.6465632808255075
 finished experiment 14
 processing hyper-parameter 6 out of 9
 doing run 0 out of 5
@@ -1635,10 +1669,10 @@ parameters:
 	offset=0.1,
 	rate=0.0001
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0005822181701660156
-0 - validation_accuracy: 0.18678104720831729
-0 - test_accuracy: 0.0
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0005505084991455078
+0 - validation_accuracy: 0.13631776781504923
+0 - test_accuracy: 0.13103000481008314
 finished experiment 15
 processing hyper-parameter 6 out of 9
 doing run 1 out of 5
@@ -1669,9 +1703,9 @@ parameters:
 	offset=0.1,
 	rate=0.0001
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0005664825439453125
-1 - validation_accuracy: 0.1529523498095926
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0005736351013183594
+1 - validation_accuracy: 0.0
 1 - test_accuracy: 0.0
 finished experiment 15
 processing hyper-parameter 6 out of 9
@@ -1685,10 +1719,10 @@ parameters:
 	offset=0.1,
 	rate=0.0001
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0005691051483154297
-2 - validation_accuracy: 0.0
-2 - test_accuracy: 0.0
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0005764961242675781
+2 - validation_accuracy: 0.20993379268416448
+2 - test_accuracy: 0.09162735213882556
 finished experiment 15
 processing hyper-parameter 6 out of 9
 doing run 3 out of 5
@@ -1701,10 +1735,10 @@ parameters:
 	offset=0.1,
 	rate=0.0001
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0007297992706298828
-3 - validation_accuracy: 0.2767658202903842
-3 - test_accuracy: 0.0
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0005595684051513672
+3 - validation_accuracy: 0.04732594468109938
+3 - test_accuracy: 0.04669841243405413
 finished experiment 15
 processing hyper-parameter 6 out of 9
 doing run 4 out of 5
@@ -1717,10 +1751,10 @@ parameters:
 	offset=0.1,
 	rate=0.0001
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0005505084991455078
-4 - validation_accuracy: 0.14582914766522495
-4 - test_accuracy: 0.08364527532376848
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0005652904510498047
+4 - validation_accuracy: 0.02844958120661982
+4 - test_accuracy: 0.06619082703799394
 finished experiment 15
 processing hyper-parameter 7 out of 9
 doing run 0 out of 5
@@ -1751,10 +1785,10 @@ parameters:
 	offset=0.3,
 	rate=0.0001
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0006244182586669922
-0 - validation_accuracy: 0.18968644623799774
-0 - test_accuracy: 0.08742780825400698
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0005609989166259766
+0 - validation_accuracy: 0.5364942774550069
+0 - test_accuracy: 0.20969020110026101
 finished experiment 16
 processing hyper-parameter 7 out of 9
 doing run 1 out of 5
@@ -1767,10 +1801,10 @@ parameters:
 	offset=0.3,
 	rate=0.0001
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0005974769592285156
-1 - validation_accuracy: 0.3013444806185109
-1 - test_accuracy: 0.24371992695154895
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0005686283111572266
+1 - validation_accuracy: 0.2650501760467349
+1 - test_accuracy: 0.3309456908633217
 finished experiment 16
 processing hyper-parameter 7 out of 9
 doing run 2 out of 5
@@ -1783,10 +1817,10 @@ parameters:
 	offset=0.3,
 	rate=0.0001
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0005624294281005859
-2 - validation_accuracy: 0.4464692986632988
-2 - test_accuracy: 0.16589103116802503
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.000560760498046875
+2 - validation_accuracy: 0.21541797244846772
+2 - test_accuracy: 0.3114364379114165
 finished experiment 16
 processing hyper-parameter 7 out of 9
 doing run 3 out of 5
@@ -1799,10 +1833,10 @@ parameters:
 	offset=0.3,
 	rate=0.0001
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0005784034729003906
-3 - validation_accuracy: 0.4021590787490284
-3 - test_accuracy: 0.11777014493567639
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0005602836608886719
+3 - validation_accuracy: 0.28698172275496536
+3 - test_accuracy: 0.265568241571796
 finished experiment 16
 processing hyper-parameter 7 out of 9
 doing run 4 out of 5
@@ -1833,10 +1867,10 @@ parameters:
 	offset=0.3,
 	rate=0.0001
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0005559921264648438
-4 - validation_accuracy: 0.2733671695858267
-4 - test_accuracy: 0.08115086541170509
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0005648136138916016
+4 - validation_accuracy: 0.3282727582579871
+4 - test_accuracy: 0.15398647440429333
 finished experiment 16
 processing hyper-parameter 8 out of 9
 doing run 0 out of 5
@@ -1849,10 +1883,10 @@ parameters:
 	offset=0.6,
 	rate=0.0001
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0006062984466552734
-0 - validation_accuracy: 0.6769813926451949
-0 - test_accuracy: 0.41920851267783876
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0005669593811035156
+0 - validation_accuracy: 0.6187024612832258
+0 - test_accuracy: 0.4426267965254723
 finished experiment 17
 processing hyper-parameter 8 out of 9
 doing run 1 out of 5
@@ -1865,10 +1899,10 @@ parameters:
 	offset=0.6,
 	rate=0.0001
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0005953311920166016
-1 - validation_accuracy: 0.6136316920432402
-1 - test_accuracy: 0.5553737827597465
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0006165504455566406
+1 - validation_accuracy: 0.6578885435983082
+1 - test_accuracy: 0.6160814844138441
 finished experiment 17
 processing hyper-parameter 8 out of 9
 doing run 2 out of 5
@@ -1881,10 +1915,14 @@ parameters:
 	offset=0.6,
 	rate=0.0001
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0005767345428466797
-2 - validation_accuracy: 0.7033662521568352
-2 - test_accuracy: 0.5429860532911611
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0005555152893066406
+2 - validation_accuracy: 0.5348487601906166
+2 - test_accuracy: 0.4305613918752504
+finished experiment 17
+processing hyper-parameter 8 out of 9
+doing run 3 out of 5
+fixed rate, multiple epochs values
 </pre>
 </div>
 </div>
@@ -1895,6 +1933,7 @@ time spent on this experiment: 0.0005767345428466797
 <pre>registering
 registering
 registering
+registering
 </pre>
 </div>
 </div>
@@ -1902,11 +1941,7 @@ registering
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>finished experiment 17
-processing hyper-parameter 8 out of 9
-doing run 3 out of 5
-fixed rate, multiple epochs values
-running experiment 17
+<pre>running experiment 17
 run number: 3
 
 parameters:
@@ -1914,10 +1949,10 @@ parameters:
 	offset=0.6,
 	rate=0.0001
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0006270408630371094
-3 - validation_accuracy: 0.5552723696993566
-3 - test_accuracy: 0.6168038969593501
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0005712509155273438
+3 - validation_accuracy: 0.8920098752421158
+3 - test_accuracy: 0.37111766315723477
 finished experiment 17
 processing hyper-parameter 8 out of 9
 doing run 4 out of 5
@@ -1930,10 +1965,10 @@ parameters:
 	offset=0.6,
 	rate=0.0001
 
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0007841587066650391
-4 - validation_accuracy: 0.3898350912860318
-4 - test_accuracy: 0.6886226620061873
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
+time spent on this experiment: 0.0005617141723632812
+4 - validation_accuracy: 0.43750509123185477
+4 - test_accuracy: 0.7226835064642162
 finished experiment 17
 </pre>
 </div>
@@ -1943,7 +1978,6 @@ finished experiment 17
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>registering
-registering
 </pre>
 </div>
 </div>
@@ -1966,7 +2000,7 @@ registering
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="remove_defaults" class="doc_header"><code>remove_defaults</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L23" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>remove_defaults</code>(<strong><code>parameters</code></strong>)</p>
+<h4 id="remove_defaults" class="doc_header"><code>remove_defaults</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L42" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>remove_defaults</code>(<strong><code>parameters</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -1990,41 +2024,8 @@ registering
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="query" class="doc_header"><code>query</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L32" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>query</code>(<strong><code>path_experiments</code></strong>=<em><code>None</code></em>, <strong><code>folder_experiments</code></strong>=<em><code>None</code></em>, <strong><code>intersection</code></strong>=<em><code>False</code></em>, <strong><code>experiments</code></strong>=<em><code>None</code></em>, <strong><code>suffix_results</code></strong>=<em><code>''</code></em>, <strong><code>min_results</code></strong>=<em><code>0</code></em>, <strong><code>classes</code></strong>=<em><code>None</code></em>, <strong><code>parameters_fixed</code></strong>=<em><code>{}</code></em>, <strong><code>parameters_variable</code></strong>=<em><code>{}</code></em>, <strong><code>parameters_all</code></strong>=<em><code>[]</code></em>, <strong><code>exact_match</code></strong>=<em><code>True</code></em>, <strong><code>output</code></strong>=<em><code>'all'</code></em>, <strong><code>ascending</code></strong>=<em><code>False</code></em>, <strong><code>suffix_test_set</code></strong>=<em><code>None</code></em>, <strong><code>stats</code></strong>=<em><code>['mean', 'median', 'rank', 'min', 'max', 'std']</code></em>, <strong><code>query_other_parameters</code></strong>=<em><code>False</code></em>)</p>
+<h4 id="query" class="doc_header"><code>query</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L51" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>query</code>(<strong><code>path_experiments</code></strong>=<em><code>None</code></em>, <strong><code>folder_experiments</code></strong>=<em><code>None</code></em>, <strong><code>intersection</code></strong>=<em><code>False</code></em>, <strong><code>experiments</code></strong>=<em><code>None</code></em>, <strong><code>suffix_results</code></strong>=<em><code>''</code></em>, <strong><code>min_results</code></strong>=<em><code>0</code></em>, <strong><code>classes</code></strong>=<em><code>None</code></em>, <strong><code>parameters_fixed</code></strong>=<em><code>{}</code></em>, <strong><code>parameters_variable</code></strong>=<em><code>{}</code></em>, <strong><code>parameters_all</code></strong>=<em><code>[]</code></em>, <strong><code>exact_match</code></strong>=<em><code>True</code></em>, <strong><code>output</code></strong>=<em><code>'all'</code></em>, <strong><code>ascending</code></strong>=<em><code>False</code></em>, <strong><code>suffix_test_set</code></strong>=<em><code>None</code></em>, <strong><code>stats</code></strong>=<em><code>['mean', 'median', 'rank', 'min', 'max', 'std']</code></em>, <strong><code>query_other_parameters</code></strong>=<em><code>False</code></em>)</p>
 </blockquote>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_experiment_data" class="doc_header"><code>get_experiment_data</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L98" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_experiment_data</code>(<strong><code>path_experiments</code></strong>=<em><code>None</code></em>, <strong><code>folder_experiments</code></strong>=<em><code>None</code></em>, <strong><code>experiments</code></strong>=<em><code>None</code></em>)</p>
-</blockquote>
-<p>Returns data stored from previous experiments in the form DataFrame.</p>
-<p>If path_experiments is not given, it uses the default one.</p>
 
 </div>
 

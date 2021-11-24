@@ -16,7 +16,7 @@ import hpsearch.utils.experiment_utils as ut
 
 
 def query (pv = {}, pf = {}, pall=[], pexact=False, root= None,
-           metric = None, experiments=None, runs = None, op = None, stats=['mean'],
+           metric=None, experiments=None, runs=None, op=None, stats=['mean'],
            results=0, other_parameters=False):
 
 
@@ -45,8 +45,8 @@ def do_query_and_show (pall=[], best=None, compact=0, exact=False, experiments=N
         op = default_operations.get('op', 'min')
 
 
-    df = query (pv = pv, pf = pf, pall=pall, pexact=exact, root= root,
-               metric = metric, experiments=experiments, runs = runs, op = op, stats=stats,
+    df = query (pv=pv, pf=pf, pall=pall, pexact=exact, root=root,
+               metric=metric, experiments=experiments, runs=runs, op=op, stats=stats,
                results=results, other_parameters=other_parameters)
     df = ut.replace_with_default_values (df)
     if sort is not None:
