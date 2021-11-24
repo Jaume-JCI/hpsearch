@@ -32,5 +32,6 @@ def main():
     if pars.list:
         change_manager (None)
     else:
-        assert pars.manager is not None
+        if pars.manager is None:
+            print ('you did not indicate any manager to change to, listing the managers available')
         change_manager (pars.manager)
