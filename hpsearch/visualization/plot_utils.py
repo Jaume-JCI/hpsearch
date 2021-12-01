@@ -3,11 +3,16 @@
 __all__ = ['imshow', 'plot', 'add_trace', 'symbol2marker', 'plot_df']
 
 # Cell
-import plotly.graph_objs as go
-import plotly.offline as offline
+try:
+    import plotly.graph_objs as go
+    import plotly.offline as offline
+    imported_plotly = True
+except ModuleNotFoundError:
+    imported_plotly = False
 import numpy as np
 
 def imshow (z, x=None, y=None, title=None, xlabel=None, ylabel=None):
+    assert imported_plotly, 'plotly must be installed to use imshow'
     offline.init_notebook_mode (connected=True)
 
     trace = go.Heatmap(x=x, y=y, z=z)
@@ -26,6 +31,7 @@ def imshow (z, x=None, y=None, title=None, xlabel=None, ylabel=None):
 def plot (x=None, y=None, style='b', label='', title=None, xlabel=None, ylabel=None, backend='plotly', figsize=(20,10),
           fontsize=24, lw=3, markersize=20, window=None, traces=[]):
     if backend=='plotly':
+        assert imported_plotly, 'plotly must be installed to this backend'
         offline.init_notebook_mode (connected=True)
     elif backend=='visdom':
         import visdom
@@ -86,8 +92,12 @@ def plot (x=None, y=None, style='b', label='', title=None, xlabel=None, ylabel=N
     elif backend=='matplotlib':
         legend = []
         for trace in traces:
-            plt.plot (trace['x'], trace['y'], trace['style'], label=trace['label'], **kw_lw)
-            legend += [trace['label']]
+            kw_plot = kw_lw.copy()
+            if (trace['label'] is not None) and (trace['label'] != ''):
+                kw_plot.update(label=trace['label'])
+                legend += [trace['label']]
+            plt.plot (trace['x'], trace['y'], trace['style'], **kw_plot)
+
         if fontsize is not None:
             plt.tick_params(axis='both', which='major', labelsize=fontsize)
         plt.legend (legend, **kw_font)
@@ -113,6 +123,7 @@ def add_trace (x, y=None, style='b', label='', backend='plotly', marker = None, 
     if marker is not None:
         d.update(marker=marker)
     if backend=='plotly':
+        assert imported_plotly, 'plotly must be installed to this backend'
         traces += [go.Scatter(x=x, y=y, name=label, **d)]
     elif backend=='visdom':
         traces += [dict(x=x, y=y, name=label, type='custom', **d)]

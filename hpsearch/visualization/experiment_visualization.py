@@ -67,7 +67,7 @@ def plot_multiple_histories (experiments, run_number=0, root_path=None, root_fol
                     else:
                         imin = int(np.array(history[metric]).argmax())
                     vmin = float(history[metric][imin])
-                    traces = plot_utils.add_trace ([imin], [vmin], style='.', label='', backend=backend,
+                    traces = plot_utils.add_trace ([imin], [vmin], style='.', label=None, backend=backend,
                                                    marker={'color': 'red', 'symbol': 104, 'size': 10},
                                                    traces=traces)
 
