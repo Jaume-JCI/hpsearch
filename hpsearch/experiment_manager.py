@@ -743,7 +743,7 @@ class ExperimentManager (object):
             return None
 
     def register_and_store_subclassed_manager (self):
-        print ('registering')
+        #self.logger.debug ('registering')
         self.manager_factory.register_manager (self)
         self.manager_factory.write_manager (self)
 

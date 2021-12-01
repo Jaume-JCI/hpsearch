@@ -21,7 +21,7 @@ class ManagerFactory (object):
             self.logger.setLevel('DEBUG')
         self.obtain_paths()
         self.method = 1
-        print (f'using import method {self.method}')
+        #print (f'using import method {self.method}')
         #pdb.set_trace()
 
     def register_manager (self, experiment_manager_to_register):
@@ -51,7 +51,7 @@ class ManagerFactory (object):
                 import_module_string = import_module_string.replace('/','.')
                 import_module_string = import_module_string.replace('.py', '')
             else:
-                print (f'current path {base_path} not found in source path {source_path}')
+                self.logger.warning (f'current path {base_path} not found in source path {source_path}')
                 import_module_string = 'hpsearch.app_config.subclassed_manager'
         self.import_module_string = import_module_string
         return import_module_string
@@ -72,7 +72,7 @@ class ManagerFactory (object):
             pickle.dump (self.class_two_import, open(self.class_two_import_file, 'wb'))
             pickle.dump (self.class_two_base, open(self.class_two_base_file, 'wb'))
         except Exception as e:
-            print (f'write_manager failed with exception {e}')
+            self.logger.warning (f'write_manager failed with exception {e}')
 
     def write_manager_subclass (self, name_subclass, source_path, base_path=None, import_module_string=None):
         if base_path is None:
@@ -100,7 +100,7 @@ class ManagerFactory (object):
             self.class_two_import = pickle.load (open(self.class_two_import_file,'rb'))
         else:
             self.class_two_import = {}
-            print ('class2import not found, switching to original method')
+            self.logger.warning ('class2import not found, switching to original method')
             self.method = 2
 
         if os.path.exists (self.class_two_base_file):
