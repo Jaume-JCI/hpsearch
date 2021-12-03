@@ -31,7 +31,7 @@ def imshow (z, x=None, y=None, title=None, xlabel=None, ylabel=None):
 def plot (x=None, y=None, style='b', label='', title=None, xlabel=None, ylabel=None, backend='plotly', figsize=(20,10),
           fontsize=24, lw=3, markersize=20, window=None, traces=[]):
     if backend=='plotly':
-        assert imported_plotly, 'plotly must be installed to this backend'
+        assert imported_plotly, 'plotly must be installed for using this backend'
         offline.init_notebook_mode (connected=True)
     elif backend=='visdom':
         import visdom
@@ -90,13 +90,17 @@ def plot (x=None, y=None, style='b', label='', title=None, xlabel=None, ylabel=N
             window = title
         vis._send({'data': traces, 'layout': dict_layout, 'win': window})
     elif backend=='matplotlib':
+        # split traces into those that are included in legend and those that don't
+        traces_legend = [trace for trace in traces
+                         if trace['label'] is not None and trace['label']!='']
+        traces_no_legend = [trace for trace in traces
+                         if trace['label'] is None or trace['label']=='']
         legend = []
-        for trace in traces:
-            kw_plot = kw_lw.copy()
-            if (trace['label'] is not None) and (trace['label'] != ''):
-                kw_plot.update(label=trace['label'])
-                legend += [trace['label']]
-            plt.plot (trace['x'], trace['y'], trace['style'], **kw_plot)
+        for trace in traces_legend:
+            plt.plot (trace['x'], trace['y'], trace['style'], label=trace['label'], **kw_lw)
+            legend += [trace['label']]
+        for trace in traces_no_legend:
+            plt.plot (trace['x'], trace['y'], trace['style'], **kw_lw)
 
         if fontsize is not None:
             plt.tick_params(axis='both', which='major', labelsize=fontsize)
@@ -123,7 +127,7 @@ def add_trace (x, y=None, style='b', label='', backend='plotly', marker = None, 
     if marker is not None:
         d.update(marker=marker)
     if backend=='plotly':
-        assert imported_plotly, 'plotly must be installed to this backend'
+        assert imported_plotly, 'plotly must be installed for using this backend'
         traces += [go.Scatter(x=x, y=y, name=label, **d)]
     elif backend=='visdom':
         traces += [dict(x=x, y=y, name=label, type='custom', **d)]

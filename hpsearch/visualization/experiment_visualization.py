@@ -48,7 +48,10 @@ def plot_multiple_histories (experiments, run_number=0, root_path=None, root_fol
     df_show = df.copy()
 
     for (imetric,metric) in enumerate(metrics):
-        title = metric
+        if imetric==0 and len(metrics_second)>0:
+            title = ''
+        else:
+            title = metric
         traces = []
         for experiment_id in experiments:
             path_results = get_path_results (experiment_id, run_number=run_number, root_path=root_path)
@@ -58,29 +61,36 @@ def plot_multiple_histories (experiments, run_number=0, root_path=None, root_fol
                 if compare and include_parameters_in_legend:
                     label = '{}-{}'.format(experiment_id, list(dict(df.loc[experiment_id]).values()))
                 else:
-                    label = '{}'.format(experiment_id)
+                    if (imetric==0) and (len(metrics_second)>0):
+                        label = f'{experiment_id} ({metric})'
+                    else:
+                        label = f'{experiment_id}'
                 traces = plot_utils.add_trace (history[metric], style='A.-', label=label, backend=backend, traces=traces)
 
-                if True:
-                    if op == 'min':
-                        imin = int(np.array(history[metric]).argmin())
-                    else:
-                        imin = int(np.array(history[metric]).argmax())
-                    vmin = float(history[metric][imin])
-                    traces = plot_utils.add_trace ([imin], [vmin], style='.', label=None, backend=backend,
-                                                   marker={'color': 'red', 'symbol': 104, 'size': 10},
-                                                   traces=traces)
 
-                    title += ' [%d]: %.2f' %(experiment_id, vmin)
-                    df_show.loc[experiment_id, metric] = vmin
-                    df2.loc[experiment_id, metric] = vmin
+                if op == 'min':
+                    imin = int(np.array(history[metric]).argmin())
+                else:
+                    imin = int(np.array(history[metric]).argmax())
+                vmin = float(history[metric][imin])
+                traces = plot_utils.add_trace ([imin], [vmin], style='A.', label=None, backend=backend,
+                                               marker={'color': 'red', 'symbol': 104, 'size': 10},
+                                               traces=traces)
+
+                if (imetric==0) and (len(metrics_second)>0):
+                    title += f' [{experiment_id} ({metric}): {vmin}]'
+                else:
+                    title += f' [{experiment_id}]: {vmin}'
+                df_show.loc[experiment_id, metric] = vmin
+                df2.loc[experiment_id, metric] = vmin
+
                 if (imetric == 0):
                     for metric_second in metrics_second:
                         #values = [float(x) for x in history[metric_second]]
                         if compare and include_parameters_in_legend:
                             label = '{}: {}-{}'.format(metric_second, experiment_id, list(dict(df.loc[experiment_id]).values()))
                         else:
-                            label = '{}: {}'.format(metric_second, experiment_id)
+                            label = f'{experiment_id} ({metric_second})'
                         traces = plot_utils.add_trace (history[metric_second], style='A.-', label=label, backend=backend, traces=traces)
 
                         if op == 'min':
@@ -88,10 +98,10 @@ def plot_multiple_histories (experiments, run_number=0, root_path=None, root_fol
                         else:
                             imin = int(np.array(history[metric_second]).argmax())
                         vmin = float(history[metric_second][imin])
-                        traces = plot_utils.add_trace ([imin], [vmin], style='.', label='', backend=backend,
+                        traces = plot_utils.add_trace ([imin], [vmin], style='A.', label=None, backend=backend,
                                                    marker={'color': 'red', 'symbol': 104, 'size': 10},
                                                    traces=traces)
-                        title += ' [%d]: %.2f' %(experiment_id, vmin)
+                        title += f' [{experiment_id} ({metric_second}): {vmin}]'
                         df_show.loc[experiment_id, metric_second] = vmin
                         df2.loc[experiment_id, metric_second] = vmin
 

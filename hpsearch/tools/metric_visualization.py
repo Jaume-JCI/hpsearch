@@ -17,6 +17,7 @@ import hpsearch.visualization.experiment_visualization as ev
 from ..config.hpconfig import get_path_experiments
 from ..config.hpconfig import get_default_operations
 
+# Cell
 def include_best_and_last_experiment (metrics, experiments=[-1, -2], root_folder=None, run_number=0, op='max'):
     for i in range(len(experiments)):
         if experiments[i] == -1:
@@ -41,9 +42,10 @@ def include_best_and_last_experiment (metrics, experiments=[-1, -2], root_folder
 
     return experiments
 
+# Cell
 def metric_visualization (experiments=[-1,-2], run_number=0, root_folder=None, metric=None, op = None,
                           parameters=None, name_file='model_history.pk', visualization_options = {},
-                          backend='plotly'):
+                          backend='plotly', **kwargs):
 
     default_operations = get_default_operations ()
     if root_folder is None:
@@ -62,6 +64,8 @@ def metric_visualization (experiments=[-1,-2], run_number=0, root_folder=None, m
     experiments = include_best_and_last_experiment (metrics, experiments=experiments, root_folder=root_folder,
                                                          run_number=run_number, op=op)
 
+    visualization_options = visualization_options.copy()
+    visualization_options.update(kwargs)
     if 'visualization' in visualization_options.keys():
         visualization = visualization_options.pop('visualization')
     else:
@@ -72,6 +76,7 @@ def metric_visualization (experiments=[-1,-2], run_number=0, root_folder=None, m
                              parameters=parameters, name_file=name_file, **visualization_options,
                              backend=backend)
 
+# Cell
 def parse_args(args):
     parser = argparse.ArgumentParser(description='show metrics about experiments')
     # Datasets
@@ -103,4 +108,3 @@ def parse_arguments_and_visualize (args):
 def main():
 
     parse_arguments_and_visualize (sys.argv[1:])
-
