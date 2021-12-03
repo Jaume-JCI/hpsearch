@@ -15,7 +15,7 @@ import pandas as pd
 import time
 import datetime
 from sklearn.model_selection import ParameterGrid
-from sklearn.datasets.base import Bunch
+from sklearn.utils import Bunch
 import platform
 import pprint
 import subprocess
