@@ -75,7 +75,7 @@ def do_query_and_show (pall=[], best=None, compact=0, exact=False, experiments=N
         display (df)
 
     print (f'experiments: {list(df.index)}')
-    print ('min experiment #: {}, max experiment #: {}'.format(df.index.min(), df.index.max()))
+    print (f'min experiment #: {df.index.min()}, max experiment #: {df.index.max()}')
 
     print ('result of query:')
     _, df2 = ut.get_parameters_unique(df)
@@ -84,7 +84,7 @@ def do_query_and_show (pall=[], best=None, compact=0, exact=False, experiments=N
         prev_cols = df2.columns.copy()
         df2, dict_rename = ut.compact_parameters (df2, compact)
         for k, kor in zip(df2.columns, prev_cols):
-            print ('{} => {}'.format(k, kor))
+            print (f'{k} => {kor}')
     display (df2)
 
     if show:

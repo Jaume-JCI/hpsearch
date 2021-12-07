@@ -6,6 +6,17 @@ __all__ = ['get_experiment_data', 'remove_defaults', 'query', 'summarize_results
            'get_parameters_unique', 'compact_parameters', 'replace_with_default_values']
 
 # Cell
+import pandas as pd
+import numpy as np
+import pickle
+import os
+import sys
+import time
+from sklearn.model_selection import ParameterGrid
+import warnings
+warnings.filterwarnings('ignore')
+
+# Cell
 def get_experiment_data (path_experiments = None, folder_experiments = None, experiments=None):
     ''' Returns data stored from previous experiments in the form DataFrame.
 
@@ -25,16 +36,6 @@ def get_experiment_data (path_experiments = None, folder_experiments = None, exp
     return experiment_data
 
 # Cell
-import pandas as pd
-import numpy as np
-import pickle
-import os
-import sys
-import time
-from sklearn.model_selection import ParameterGrid
-import warnings
-warnings.filterwarnings('ignore')
-
 ##############################################################
 # Routines for comparing results in experiments
 ##############################################################
@@ -48,6 +49,7 @@ def remove_defaults (parameters):
             del parameters[key]
     return parameters
 
+# Cell
 def query (path_experiments = None,
               folder_experiments = None,
               intersection = False,
@@ -69,11 +71,23 @@ def query (path_experiments = None,
         from ..config.hpconfig import get_path_experiments
         path_experiments = get_path_experiments(path_experiments=path_experiments, folder = folder_experiments)
 
+    path_pickle = None
     if query_other_parameters:
         path_csv = '%s/other_parameters.csv' %path_experiments
     else:
-        path_csv = '%s/experiments_data.csv' %path_experiments
-    experiment_data = pd.read_csv(path_csv, index_col=0)
+        path_pickle = '%s/experiments_data.pk' %path_experiments
+        if not os.path.exists(path_pickle):
+            path_pickle = None
+            path_csv = '%s/experiments_data.csv' %path_experiments
+    if path_pickle is not None:
+        experiment_data = pd.read_pickle(path_pickle)
+    else:
+        experiment_data = pd.read_csv(path_csv, index_col=0)
+
+    non_valid_pars = set(parameters_fixed.keys()).difference(set(experiment_data.columns))
+    if len(non_valid_pars) > 0:
+        print (f'\n**The following query parameters are not valid: {list(non_valid_pars)}**')
+        print (f'\nValid parameters:\n{sorted(get_parameters_columns(experiment_data))}\n')
 
     parameters_multiple_values_all = list(ParameterGrid(parameters_variable))
     experiment_numbers = []
@@ -157,16 +171,16 @@ def summarize_results(path_experiments = None,
     if min_results > 0:
         number_before = experiment_data.shape[0]
         experiment_data = experiment_data[experiment_data.num_results>=min_results]
-        print ('%d out of %d experiments have %d class_ids completed' %(experiment_data.shape[0], number_before, min_results))
+        print (f'{experiment_data.shape[0]} out of {number_before} experiments have {min_results} runs completed')
 
     # Take only those class_ids where all experiments provide some score
     if intersection:
         number_before = len(result_columns)
         all_have_results = ~experiment_data.loc[:,result_columns].isnull().any(axis=0)
         result_columns = (np.array(result_columns)[all_have_results]).tolist()
-        print ('%d out of %d runs for whom all the selected experiments have completed' %(len(result_columns), number_before))
+        print (f'{len(result_columns)} out of {number_before} runs for whom all the selected experiments have completed')
 
-    print ('total data examined: %d experiments with at least %d runs done for each one' %(experiment_data.shape[0],experiment_data['num_results'].min()))
+    print (f'total data examined: {experiment_data.shape[0]} experiments with at least {experiment_data["num_results"].min()} runs done for each one')
 
     scores = -experiment_data.loc[:,result_columns].values
     rank = np.argsort(scores,axis=0)
@@ -238,15 +252,18 @@ def summary (df, experiments = None, score=None, compact=True):
     df = df.rename (columns={'0_%s' %score: score})
     return df
 
+# Cell
 def get_parameters_columns (experiment_data, only_not_null=False):
     parameters =  [par for par in experiment_data.columns if not par[0].isdigit() and (par.find('time_')<0) and (par.find('date')<0)]
     if only_not_null:
         parameters = np.array(parameters)[~experiment_data.loc[:,parameters].isnull().all(axis=0)].tolist()
     return parameters
 
+# Cell
 def get_experiment_parameters (experiment_data, only_not_null=False):
     return experiment_data[get_parameters_columns (experiment_data, only_not_null=only_not_null)]
 
+# Cell
 def get_scores_columns (experiment_data=None, suffix_results='', class_ids = None):
     ''' Determine the columnns that provide evaluation scores. We assume that they start with the class number, and that the other columns do not start with a digit'''
     if class_ids is not None:
@@ -263,6 +280,7 @@ def get_scores_columns (experiment_data=None, suffix_results='', class_ids = Non
             scores_columns = [col for col in scores_columns if (len(col.split('_'))==1)]
     return scores_columns
 
+# Cell
 def get_experiment_scores (experiment_data = None, suffix_results = '', class_ids = None, remove_suffix=False):
     df = experiment_data[get_scores_columns (experiment_data, suffix_results=suffix_results, class_ids=class_ids)]
     if remove_suffix:
@@ -370,6 +388,7 @@ def get_classes_with_results (experiment_data = None, suffix_results = '', class
 
     return [int(x[:-len(suffix_results)]) for x in completed_results]
 
+# Cell
 def get_parameters_unique(df):
     parameters = []
     for k in df.columns:
@@ -377,6 +396,7 @@ def get_parameters_unique(df):
             parameters += [k]
     return parameters, df[parameters]
 
+# Cell
 def compact_parameters (df, number_characters=1):
     par_or = df.columns
     par_new = [''.join(y[0].upper()+y[1:number_characters] for y in x.split('_')) for x in par_or]
