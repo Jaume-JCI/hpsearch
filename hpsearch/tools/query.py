@@ -16,7 +16,7 @@ import pandas as pd
 # hpsearch api
 import hpsearch.utils.experiment_utils as ut
 
-
+# Cell
 def query (pv = {}, pf = {}, pall=[], pexact=False, root= None,
            metric=None, experiments=None, runs=None, op=None, stats=['mean'],
            results=0, other_parameters=False):
@@ -32,6 +32,7 @@ def query (pv = {}, pf = {}, pall=[], pexact=False, root= None,
 
     return result_query
 
+# Cell
 def do_query_and_show (pall=[], best=None, compact=0, exact=False, experiments=None, pf={}, last=None,
                        metric=None, op=None, other_parameters=False, input_range=None, results=0,
                        root=None, round=2, runs=None, show=False, stats=['mean'], pv={},
@@ -132,6 +133,7 @@ def parse_args(args):
 
     return pars
 
+# Cell
 def parse_arguments_and_query (args):
 
     pars = parse_args(args)
