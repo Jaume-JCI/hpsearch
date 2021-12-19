@@ -32,7 +32,7 @@ from .utils import experiment_utils
 from .utils.experiment_utils import remove_defaults
 from .utils.organize_experiments import remove_defaults_from_experiment_data
 
-
+# Cell
 class ExperimentManager (object):
 
     def __init__ (self, allow_base_class=False):
@@ -85,6 +85,12 @@ class ExperimentManager (object):
         path_experiment = self.get_path_experiment (experiment_id, root_path=root_path, root_folder=root_folder)
         path_results = '%s/%d' %(path_experiment,run_number)
         return path_results
+
+    def remove_previous_experiments (self, path_experiments = None, folder = None):
+        path_experiments = self.get_path_experiments (path_experiments=path_experiments,
+                                                      folder=folder)
+        if os.path.exists (path_experiments):
+            shutil.rmtree (path_experiments)
 
     def experiment_visualization (self, **kwargs):
         raise ValueError ('this type of experiment visualization is not recognized')
@@ -170,6 +176,9 @@ class ExperimentManager (object):
     # *************************************************************************
     # *************************************************************************
     def create_experiment_and_run (self, parameters = {}, other_parameters = {}, root_path=None, run_number=0, log_message=None):
+        """
+
+        """
 
         # ****************************************************
         #  preliminary set-up: logger and root_path
@@ -748,7 +757,7 @@ class ExperimentManager (object):
         self.manager_factory.write_manager (self)
 
 # Cell
-def get_git_revision_hash(root_path=None):
+def get_git_revision_hash (root_path=None):
     try:
         git_hash = subprocess.check_output(['git', 'rev-parse', 'HEAD'])
         git_hash = str(git_hash)
@@ -764,6 +773,7 @@ def get_git_revision_hash(root_path=None):
 
     return str(git_hash)
 
+# Cell
 def record_parameters (path_save, parameters, other_parameters=None):
     with open('%s/parameters.txt' %path_save, 'wt') as f:
         f.write('%s\n' %mypprint(parameters, dict_name='parameters'))
@@ -783,6 +793,7 @@ def record_parameters (path_save, parameters, other_parameters=None):
         except:
             pass
 
+# Cell
 def mypprint(parameters, dict_name=None):
     if dict_name is not None:
         text = '%s=dict(' %dict_name
@@ -804,6 +815,7 @@ def mypprint(parameters, dict_name=None):
 
     return text
 
+# Cell
 def mymakedirs (path, exist_ok=False):
     '''work around for python 2.7'''
     if exist_ok:
@@ -814,6 +826,7 @@ def mymakedirs (path, exist_ok=False):
     else:
         os.makedirs(path)
 
+# Cell
 def load_or_create_experiment_values (path_csv, parameters, precision=1e-15):
 
     logger = logging.getLogger("experiment_manager")
@@ -853,6 +866,7 @@ def load_or_create_experiment_values (path_csv, parameters, precision=1e-15):
 
     return experiment_number, experiment_data
 
+# Cell
 def store_parameters (root_path, experiment_number, parameters):
     """ Keeps track of dictionary to map experiment number and parameters values for the different experiments."""
     path_hp_dictionary = '%s/parameters.pk' %root_path
@@ -871,10 +885,11 @@ def store_parameters (root_path, experiment_number, parameters):
     # pickle number of current experiment, for visualization
     pickle.dump(experiment_number, open('%s/current_experiment_number.pkl' %root_path,'wb'))
 
+# Cell
 def isnull (experiment_data, experiment_number, name_column):
     return (name_column not in experiment_data.columns) or (experiment_data.loc[experiment_number, name_column] is None) or np.isnan(experiment_data.loc[experiment_number, name_column])
 
-
+# Cell
 def get_experiment_number (root_path, parameters = {}):
 
     path_csv = '%s/experiments_data.csv' %root_path
@@ -883,6 +898,7 @@ def get_experiment_number (root_path, parameters = {}):
 
     return experiment_number
 
+# Cell
 def get_experiment_numbers (path_results_base, parameters_single_value, parameters_multiple_values_all):
 
     experiment_numbers = []
@@ -899,6 +915,7 @@ def get_experiment_numbers (path_results_base, parameters_single_value, paramete
 
     return experiment_numbers
 
+# Cell
 def set_logger (name, path_results, stdout=True, mode='a', just_message = False, filename='logs.txt'):
 
     logger = logging.getLogger(name)
@@ -929,6 +946,7 @@ def set_logger (name, path_results, stdout=True, mode='a', just_message = False,
 
     return logger
 
+# Cell
 def insert_experiment_script_path (other_parameters, logger):
     if other_parameters.get('script_path') is None:
         stack_level = other_parameters.get('stack_level', -3)
@@ -939,8 +957,7 @@ def insert_experiment_script_path (other_parameters, logger):
         if 'stack_level' in other_parameters:
             del other_parameters['stack_level']
 
-
-#
+# Cell
 def load_parameters (experiment=None, root_path=None, root_folder = None, other_parameters={}, parameters = {}, check_experiment_matches=True):
 
     from .config.hpconfig import get_path_experiments, get_path_experiment
@@ -974,6 +991,7 @@ def load_parameters (experiment=None, root_path=None, root_folder = None, other_
 
     return parameters, other_parameters
 
+# Cell
 def save_other_parameters (experiment_number, other_parameters, root_path):
     parameters_to_save = {}
     for k in other_parameters.keys():
