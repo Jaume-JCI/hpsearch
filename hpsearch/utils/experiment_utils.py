@@ -17,23 +17,15 @@ import warnings
 warnings.filterwarnings('ignore')
 
 # Cell
-def get_experiment_data (path_experiments = None, folder_experiments = None, experiments=None):
-    ''' Returns data stored from previous experiments in the form DataFrame.
+def get_experiment_data (path_experiments=None, folder_experiments=None, experiments=None):
+    """
+    Returns data stored from previous experiments in the form DataFrame.
 
     If path_experiments is not given, it uses the default one.
-    '''
-    if path_experiments is None:
-        from ..config.hpconfig import get_path_experiments
-        path_experiments = get_path_experiments(path_experiments=path_experiments, folder = folder_experiments)
-    path_csv = '%s/experiments_data.csv' %path_experiments
-    path_pickle = path_csv.replace('csv', 'pk')
-    if os.path.exists (path_pickle):
-        experiment_data = pd.read_pickle (path_pickle)
-    else:
-        experiment_data = pd.read_csv(path_csv, index_col=0)
-    if experiments is not None:
-        experiment_data = experiment_data.loc[experiments,:]
-    return experiment_data
+    """
+    from ..config.hpconfig import get_experiment_data
+    return get_experiment_data (path_experiments=path_experiments, folder_experiments=folder_experiments,
+                                experiments=experiments)
 
 # Cell
 ##############################################################

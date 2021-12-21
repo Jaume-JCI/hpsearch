@@ -2,7 +2,7 @@
 
 __all__ = ['get_default_parameters', 'get_default_operations', 'get_path_experiments', 'get_path_alternative',
            'get_path_data', 'get_path_experiment', 'get_path_results', 'get_experiment_manager',
-           'experiment_visualization', 'manager_factory', 'experiment_manager']
+           'experiment_visualization', 'get_experiment_data', 'manager_factory', 'experiment_manager']
 
 # Cell
 import os
@@ -41,3 +41,8 @@ def get_experiment_manager ():
 
 def experiment_visualization (**kwargs):
     return mf.experiment_manager.experiment_visualization (**kwargs)
+
+def get_experiment_data (path_experiments=None, folder_experiments=None, experiments=None):
+    return mf.experiment_manager.get_experiment_data (path_experiments=path_experiments,
+                                                      folder_experiments=folder_experiments,
+                                                      experiments=experiments)

@@ -35,7 +35,25 @@ from .utils.organize_experiments import remove_defaults_from_experiment_data
 # Cell
 class ExperimentManager (object):
 
-    def __init__ (self, allow_base_class=False):
+    def __init__ (self,
+                  allow_base_class=False,
+                  path_experiments='results/hpsearch',
+                  defaults={},
+                  root='',
+                  metric='accuracy',
+                  op='max',
+                  path_alternative=None,
+                  path_data=None
+                  ):
+        self.path_experiments = path_experiments
+        self.defaults = defaults
+        self.default_operations = dict(root=root,
+                                       metric=metric,
+                                       op=op)
+        self.key_score = metric
+        self.path_alternative = path_alternative
+        self.path_data = path_data
+
         self.parameters_non_pickable = {}
         self.allow_base_class = allow_base_class
         self.manager_factory = ManagerFactory(allow_base_class=allow_base_class)
@@ -44,36 +62,33 @@ class ExperimentManager (object):
     def get_default_parameters (self, parameters):
         if not self.allow_base_class:
             raise ImportError ('call get_default_parameters from base class is not allowed')
-        return {}
+        return self.defaults
 
     def get_default_operations (self):
-        default_operations = dict (root='results',
-                                   metric='accuracy',
-                                   op='min')
-        return default_operations
+        return self.default_operations
 
     def get_path_experiments (self, path_experiments = None, folder = None):
         """Gives the root path to the folder where results of experiments are stored."""
 
-        if not self.allow_base_class:
-            raise ImportError ('call get_path_experiments from base class is not allowed')
-
-        path_experiments = 'results/hpsearch'
-        if folder != None:
-            path_experiments = f'{path_experiments}/{folder}'
+        path_experiments = (path_experiments if path_experiments is not None
+                            else self.path_experiments)
+        if folder != None: path_experiments = f'{path_experiments}/{folder}'
 
         return path_experiments
 
     def get_path_alternative (self, path_results):
-        #path_alternative = path_results.replace(root1, root2)
-        path_alternative = path_results
+        if self.path_alternative is None:
+            path_alternative = path_results
 
         return path_alternative
 
     def get_path_data (self, run_number, root_path=None, parameters={}):
-        if root_path is None:
-            root_path = self.get_path_experiments()
-        return f'{root_path}/data'
+        if self.path_data is None:
+            if root_path is None:
+                root_path = self.get_path_experiments()
+            return f'{root_path}/data'
+        else:
+            return self.path_data
 
     def get_path_experiment (self, experiment_id, root_path=None, root_folder=None):
         if root_path is None:
@@ -85,6 +100,20 @@ class ExperimentManager (object):
         path_experiment = self.get_path_experiment (experiment_id, root_path=root_path, root_folder=root_folder)
         path_results = '%s/%d' %(path_experiment,run_number)
         return path_results
+
+    def get_experiment_data (self, path_experiments=None, folder_experiments=None, experiments=None):
+        path_experiments = self.get_path_experiments(path_experiments=path_experiments,
+                                                    folder=folder_experiments)
+        path_csv = '%s/experiments_data.csv' %path_experiments
+        path_pickle = path_csv.replace('csv', 'pk')
+        if os.path.exists (path_pickle):
+            experiment_data = pd.read_pickle (path_pickle)
+        else:
+            experiment_data = pd.read_csv (path_csv, index_col=0)
+        if experiments is not None:
+            experiment_data = experiment_data.loc[experiments,:]
+
+        return experiment_data
 
     def remove_previous_experiments (self, path_experiments = None, folder = None):
         path_experiments = self.get_path_experiments (path_experiments=path_experiments,
@@ -175,7 +204,8 @@ class ExperimentManager (object):
 
     # *************************************************************************
     # *************************************************************************
-    def create_experiment_and_run (self, parameters = {}, other_parameters = {}, root_path=None, run_number=0, log_message=None):
+    def create_experiment_and_run (self, parameters = {}, other_parameters = {}, root_path=None,
+                                   run_number=0, log_message=None):
         """
 
         """
@@ -223,13 +253,18 @@ class ExperimentManager (object):
         # ****************************************************
         # get key_score and suffix_results
         # ****************************************************
-        if other_parameters.get('key_score') is not None:
-            other_parameters['suffix_results'] = '_' + other_parameters['key_score']
+        key_score = other_parameters.get('key_score')
         suffix_results = other_parameters.get('suffix_results', '')
-        if len(suffix_results) > 0 and suffix_results[0] == '_':
-            key_score = suffix_results[1:]
-        else:
-            key_score = suffix_results
+        if key_score is None and (len(suffix_results) > 0):
+            if suffix_results[0] == '_':
+                key_score = suffix_results[1:]
+            else:
+                key_score = suffix_results
+
+        key_score = self.key_score if key_score is None else key_score
+        if key_score is not None:
+            suffix_results = f'_{key_score}'
+            other_parameters['suffix_results'] = suffix_results
 
         # ****************************************************
         #   get run_id, if not given

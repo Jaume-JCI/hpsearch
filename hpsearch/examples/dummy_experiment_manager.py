@@ -114,8 +114,20 @@ from ..visualization import plot_utils
 
 class DummyExperimentManager (ExperimentManager):
 
-    def __init__ (self):
-        super().__init__()
+    def __init__ (self,
+                  path_experiments=None,
+                  root='',
+                  metric='validation_accuracy',
+                  op='max',
+                  **kwargs):
+
+        if path_experiments is None: path_experiments = f'{os.path.dirname(hpsearch.__file__)}/../results'
+
+        super().__init__ (path_experiments=path_experiments,
+                          root=root,
+                          metric=metric,
+                          op=op,
+                          **kwargs)
 
     def run_experiment (self, parameters={}, path_results='./results'):
         # extract hyper-parameters used by our model. All the parameters have default values if they are not passed.
@@ -164,22 +176,6 @@ class DummyExperimentManager (ExperimentManager):
             defaults.update (epochs=100)
 
         return defaults
-
-    # implementing the following method is not necessary but recommended
-    def get_path_experiments (self, path_experiments = None, folder = None):
-        """Gives the root path to the folder where results of experiments are stored."""
-        path_experiments = f'{os.path.dirname(hpsearch.__file__)}/../results'
-        if folder != None:
-            path_experiments = f'{path_experiments}/{folder}'
-        return path_experiments
-
-    # implementing the following method is not necessary but recommended
-    def get_default_operations (self):
-        default_operations = dict (root='',
-                                   metric='validation_accuracy',
-                                   op='max')
-
-        return default_operations
 
     def experiment_visualization (self, experiments=None, run_number=0, root_path=None, root_folder=None,
                                   name_file='model_history.pk', metric='test_accuracy', backend='matplotlib',
