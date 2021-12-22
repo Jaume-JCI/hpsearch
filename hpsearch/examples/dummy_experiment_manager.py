@@ -193,8 +193,9 @@ class DummyExperimentManager (ExperimentManager):
         plot_utils.plot(title=metric, xlabel='epoch', ylabel=metric, traces=traces, backend=backend)
 
 # Cell
-def run_multiple_experiments (nruns=1, noise=0.0, verbose=True, rate=0.03, values_to_explore=None):
-    em = DummyExperimentManager ()
+def run_multiple_experiments (nruns=1, noise=0.0, verbose=True, rate=0.03, values_to_explore=None,
+                              EM=DummyExperimentManager, **kwargs):
+    em = EM (**kwargs)
     parameters_single_value = dict(rate=rate, noise=noise)   # parameters where we use a fixed value
     if values_to_explore is None:
         parameters_multiple_values=dict(offset=[0.1, 0.3, 0.6], epochs=[5, 15, 30]) # parameters where we try multiple values
@@ -207,13 +208,10 @@ def run_multiple_experiments (nruns=1, noise=0.0, verbose=True, rate=0.03, value
             other_parameters=other_parameters,
             nruns=nruns)
 
-
 # Cell
 import shutil
 import os
 
-def remove_previous_experiments():
-    em = DummyExperimentManager ()
-    path_results = em.get_path_experiments()
-    if os.path.exists(path_results):
-        shutil.rmtree(path_results)
+def remove_previous_experiments (EM=DummyExperimentManager):
+    em = EM ()
+    em.remove_previous_experiments ()

@@ -241,7 +241,9 @@ class ExperimentManager (object):
 
         path_csv = '%s/experiments_data.csv' %root_path
         path_pickle = path_csv.replace('csv', 'pk')
-        experiment_number, experiment_data = load_or_create_experiment_values (path_csv, parameters)
+        experiment_number, experiment_data = load_or_create_experiment_values (
+            path_csv, parameters, precision=other_parameters.get('precision', 1e-15)
+        )
 
         #save_other_parameters (experiment_number, other_parameters, root_path)
 
@@ -879,7 +881,9 @@ def load_or_create_experiment_values (path_csv, parameters, precision=1e-15):
         experiment_data, removed_defaults = remove_defaults_from_experiment_data (experiment_data)
 
         # Finds rows that match parameters. If the dataframe doesn't have any parameter with that name, a new column is created and changed_dataframe is set to True
-        experiment_numbers, changed_dataframe, _ = experiment_utils.find_rows_with_parameters_dict (experiment_data, parameters, precision = precision)
+        experiment_numbers, changed_dataframe, _ = experiment_utils.find_rows_with_parameters_dict (
+            experiment_data, parameters, precision = precision
+        )
 
         changed_dataframe = changed_dataframe or removed_defaults
 

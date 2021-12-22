@@ -10,7 +10,16 @@ from ..visualization import plot_utils
 
 class ComplexDummyExperimentManager (DummyExperimentManager):
 
+    def __init__ (self, **kwargs):
+        super().__init__ (**kwargs)
+        self.raise_error_if_run = False
+
     def run_experiment (self, parameters={}, path_results='./results'):
+
+        # useful for testing: in some cases the experiment manager should not call run_experiment
+        if self.raise_error_if_run:
+            raise RuntimeError ('run_experiment should not be called')
+
         # extract hyper-parameters used by our model. All the parameters have default values if they are not passed.
         offset = parameters.get('offset', 0.5)   # default value: 0.5
         rate = parameters.get('rate', 0.01)   # default value: 0.01
@@ -57,20 +66,10 @@ class ComplexDummyExperimentManager (DummyExperimentManager):
 # Cell
 import shutil
 import os
+from .dummy_experiment_manager import run_multiple_experiments, remove_previous_experiments
 
-def run_multiple_experiments (nruns=1, noise=0.0, verbose=True, rate=0.03):
-    em = ComplexDummyExperimentManager ()
-    parameters_single_value = dict(rate=rate, noise=noise)   # parameters where we use a fixed value
-    parameters_multiple_values=dict(offset=[0.1, 0.3, 0.6], epochs=[5, 15, 30]) # parameters where we try multiple values
-    other_parameters = dict(verbose=verbose) # parameters that control other aspects that are not part of our experiment definition (a new experiment is not created if we assign different values for these parametsers)
-    em.grid_search (log_message='fixed rate, multiple epochs values',
-            parameters_single_value=parameters_single_value,
-            parameters_multiple_values=parameters_multiple_values,
-            other_parameters=other_parameters,
-            nruns=nruns)
+def run_multiple_experiments (**kwargs):
+    dummy_em.run_multiple_experiments (EM=ComplexDummyExperimentManager, **kwargs)
 
-def remove_previous_experiments():
-    em = ComplexDummyExperimentManager ()
-    path_results = em.get_path_experiments()
-    if os.path.exists(path_results):
-        shutil.rmtree(path_results)
+def remove_previous_experiments ():
+    dummy_em.remove_previous_experiments (EM=ComplexDummyExperimentManager)
