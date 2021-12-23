@@ -48,6 +48,10 @@ class ComplexDummyExperimentManager (DummyExperimentManager):
         # save model weights and evolution of accuracy metric across epochs
         model.save_model_and_history(path_results)
 
+        # simulate ctrl-c
+        if parameters.get ('halt', False):
+            raise KeyboardInterrupt ('stopped')
+
         # evaluate model with validation and test data
         validation_accuracy, test_accuracy = model.score()
 

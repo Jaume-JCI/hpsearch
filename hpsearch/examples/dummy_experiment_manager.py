@@ -74,6 +74,7 @@ class FakeModel (object):
 
     def load_model_and_history (self, path_results):
         if os.path.exists(f'{path_results}/model_weights.pk'):
+            print (f'reading model from {path_results}/model_weights.pk')
             self.weight = pickle.load (open(f'{path_results}/model_weights.pk','rb'))
             self.history = pickle.load (open(f'{path_results}/model_history.pk','rb'))
             self.current_epoch = len(self.history['accuracy'])

@@ -248,8 +248,10 @@ class ExperimentManager (object):
         #save_other_parameters (experiment_number, other_parameters, root_path)
 
         # if old experiment, we can require that given parameters match with experiment number
-        if other_parameters.get('experiment_number') is not None and experiment_number != other_parameters.get('experiment_number'):
-            raise ValueError ('expected number: {}, found: {}'.format (other_parameters.get('experiment_number'), experiment_number))
+        if (other_parameters.get('experiment_number') is not None
+            and experiment_number != other_parameters.get('experiment_number')):
+            raise ValueError (f'expected number: {other_parameters.get("experiment_number")}, '
+                              f'found: {experiment_number}')
         other_parameters['experiment_number'] = experiment_number
 
         # ****************************************************
@@ -296,12 +298,13 @@ class ExperimentManager (object):
             name_finished = '%d_finished' %run_number
             if not isnull(experiment_data, experiment_number, name_finished):
                 finished = experiment_data.loc[experiment_number, name_finished]
-                logger.info ('experiment {}, run number {}, finished {}'.format(experiment_number, run_number, finished))
+                logger.info (f'experiment {experiment_number}, run number {run_number}, finished {finished}')
                 if not finished:
                     experiment_data.loc[experiment_number, name_score] = None
                     experiment_data.to_csv (path_csv)
                     experiment_data.to_pickle (path_pickle)
-                    logger.info ('removed experiment {}, run number {}, finished {}'.format(experiment_number, run_number, finished))
+                    logger.info (f'removed experiment {experiment_number}, '
+                                 f'run number {run_number}, finished {finished}')
             if other_parameters.get('only_remove_not_finished', False):
                 return None, {}
 
@@ -310,14 +313,21 @@ class ExperimentManager (object):
         # ****************************************************
         #   check conditions for skipping experiment
         # ****************************************************
-        if not isnull(experiment_data, experiment_number, name_score) and not other_parameters.get('repeat_experiment', False) and not other_parameters.get('just_visualize', False):
-            if other_parameters.get('check_finished', False) and not finished_all_epochs(parameters, self.get_path_results (experiment_number, run_number=run_number, root_path=root_path), other_parameters.get('name_epoch','max_epoch')):
+        if (not isnull(experiment_data, experiment_number, name_score)
+            and not other_parameters.get('repeat_experiment', False)):
+            if (other_parameters.get('check_finished', False)
+                and not finished_all_epochs (
+                    parameters,
+                    self.get_path_results (experiment_number, run_number=run_number, root_path=root_path),
+                    other_parameters.get('name_epoch','max_epoch'))):
                 unfinished_flag = True
             else:
                 logger.info ('skipping...')
                 return previous_result, {key_score: previous_result}
-        elif isnull(experiment_data, experiment_number, name_score) and other_parameters.get('recompute_metrics', False) and not other_parameters.get('force_recompute_metrics', False):
-            logger.info ('experiment not found, skipping %d due to only recompute_metrics' %run_number)
+        elif (isnull(experiment_data, experiment_number, name_score)
+              and other_parameters.get('recompute_metrics', False)
+              and not other_parameters.get('force_recompute_metrics', False)):
+            logger.info (f'experiment not found, skipping {run_number} due to only recompute_metrics')
             return None, {}
 
         # ****************************************************
