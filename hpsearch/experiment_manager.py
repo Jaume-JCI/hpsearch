@@ -27,10 +27,11 @@ import shutil
 
 # hpsearch core API
 from .config.manager_factory import ManagerFactory
-from .utils.resume_from_checkpoint import make_resume_from_checkpoint, exists_current_checkpoint, finished_all_epochs, obtain_last_result
+from .utils.resume_from_checkpoint import make_resume_from_checkpoint, exists_current_checkpoint, obtain_last_result
 from .utils import experiment_utils
 from .utils.experiment_utils import remove_defaults
 from .utils.organize_experiments import remove_defaults_from_experiment_data
+import hpsearch.config.hp_defaults as dflt
 
 # Cell
 class ExperimentManager (object):
@@ -43,8 +44,8 @@ class ExperimentManager (object):
                   metric='accuracy',
                   op='max',
                   path_alternative=None,
-                  path_data=None
-                  ):
+                  path_data=None,
+                  name_model_history='model_history.pk'):
         self.path_experiments = path_experiments
         self.defaults = defaults
         self.default_operations = dict(root=root,
@@ -53,6 +54,7 @@ class ExperimentManager (object):
         self.key_score = metric
         self.path_alternative = path_alternative
         self.path_data = path_data
+        self.name_model_history = name_model_history
 
         self.parameters_non_pickable = {}
         self.allow_base_class = allow_base_class
@@ -114,6 +116,18 @@ class ExperimentManager (object):
             experiment_data = experiment_data.loc[experiments,:]
 
         return experiment_data
+
+    def get_key_score (self, other_parameters):
+        key_score = other_parameters.get('key_score')
+        suffix_results = other_parameters.get('suffix_results', '')
+        if key_score is None and (len(suffix_results) > 0):
+            if suffix_results[0] == '_':
+                key_score = suffix_results[1:]
+            else:
+                key_score = suffix_results
+        key_score = self.key_score if key_score is None else key_score
+
+        return key_score
 
     def remove_previous_experiments (self, path_experiments = None, folder = None):
         path_experiments = self.get_path_experiments (path_experiments=path_experiments,
@@ -257,15 +271,7 @@ class ExperimentManager (object):
         # ****************************************************
         # get key_score and suffix_results
         # ****************************************************
-        key_score = other_parameters.get('key_score')
-        suffix_results = other_parameters.get('suffix_results', '')
-        if key_score is None and (len(suffix_results) > 0):
-            if suffix_results[0] == '_':
-                key_score = suffix_results[1:]
-            else:
-                key_score = suffix_results
-
-        key_score = self.key_score if key_score is None else key_score
+        key_score = self.get_key_score (other_parameters)
         if key_score is not None:
             suffix_results = f'_{key_score}'
             other_parameters['suffix_results'] = suffix_results
@@ -316,10 +322,10 @@ class ExperimentManager (object):
         if (not isnull(experiment_data, experiment_number, name_score)
             and not other_parameters.get('repeat_experiment', False)):
             if (other_parameters.get('check_finished', False)
-                and not finished_all_epochs (
+                and not self.finished_all_epochs (
                     parameters,
                     self.get_path_results (experiment_number, run_number=run_number, root_path=root_path),
-                    other_parameters.get('name_epoch','max_epoch'))):
+                    other_parameters.get('name_epoch','epochs'))):
                 unfinished_flag = True
             else:
                 logger.info ('skipping...')
@@ -401,13 +407,14 @@ class ExperimentManager (object):
         resuming_from_prev_epoch_flag = False
         if parameters.get('prev_epoch', False):
             logger.info('trying prev_epoch')
-            name_epoch = parameters.get('name_epoch','max_epoch')
+            name_epoch = parameters.get('name_epoch',dflt.name_epoch)
             experiment_data2 = experiment_data.copy()
             if (((not unfinished_flag) and (other_parameters.get('repeat_experiment', False) or other_parameters.get('just_visualize', False)))
                 or other_parameters.get('avoid_resuming', False)
                 or isnull(experiment_data, experiment_number, name_score)):
                     experiment_data2 = experiment_data2.drop(experiment_number,axis=0)
-            prev_experiment_number = self.find_closest_epoch (experiment_data2, original_parameters, name_epoch=name_epoch)
+            prev_experiment_number = self.find_closest_epoch (experiment_data2, original_parameters,
+                                                              name_epoch=name_epoch)
             if prev_experiment_number is not None:
                 logger.info('using prev_epoch: %d' %prev_experiment_number)
                 prev_path_results = self.get_path_results (prev_experiment_number, run_number=run_number, root_path=root_path)
@@ -418,7 +425,7 @@ class ExperimentManager (object):
                         other_parameters['use_previous_best'] = parameters.get('use_previous_best', True)
                         logger.info ('using previous best')
                     else:
-                        name_epoch = parameters.get('name_epoch', 'max_epoch')
+                        name_epoch = parameters.get('name_epoch', dflt.name_epoch)
                         parameters[name_epoch] = parameters[name_epoch] - int(experiment_data.loc[prev_experiment_number, name_epoch])
 
                 resuming_from_prev_epoch_flag = found
@@ -776,7 +783,7 @@ class ExperimentManager (object):
             root_path=root_path, root_folder=root_folder,
             new_parameters=new_parameters)
 
-    def find_closest_epoch (self, experiment_data, parameters, name_epoch='max_epoch'):
+    def find_closest_epoch (self, experiment_data, parameters, name_epoch=dflt.name_epoch):
         '''Finds experiment with same parameters except for number of epochs, and takes the epochs that are closer but lower than the one in parameters.'''
 
         experiment_numbers, _, _ = experiment_utils.find_rows_with_parameters_dict (experiment_data, parameters, ignore_keys=[name_epoch,'prev_epoch'])
@@ -797,6 +804,33 @@ class ExperimentManager (object):
             return experiment_numbers[0]
         else:
             return None
+
+    def finished_all_epochs (self, parameters, path_results, name_epoch=dflt.name_epoch):
+        finished = True
+        defaults = self.get_default_parameters (parameters)
+        current_epoch = parameters.get(name_epoch, defaults.get(name_epoch))
+
+        name_model_history = parameters.get('name_model_history', self.name_model_history)
+        path_model_history = f'{path_results}/{name_model_history}'
+
+        if os.path.exists(path_model_history):
+            summary = pickle.load(open(path_model_history, 'rb'))
+            prev_epoch = summary.get('last_epoch')
+            if prev_epoch is None:
+                key_score = self.get_key_score (parameters)
+                if key_score in summary and (isinstance(summary[key_score], list)
+                                             or isinstance(summary[key_score], np.array)):
+                    prev_epoch = (~np.isnan(summary[key_score])).sum()
+                else:
+                    prev_epoch = 0
+            if prev_epoch >= current_epoch:
+                finished = True
+            else:
+                finished = False
+        else:
+            finished = False
+
+        return finished
 
     def register_and_store_subclassed_manager (self):
         #self.logger.debug ('registering')

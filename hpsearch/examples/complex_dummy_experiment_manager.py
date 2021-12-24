@@ -25,6 +25,8 @@ class ComplexDummyExperimentManager (DummyExperimentManager):
         rate = parameters.get('rate', 0.01)   # default value: 0.01
         epochs = parameters.get('epochs', 10) # default value: 10
         noise = parameters.get('noise', 0.0)
+        if parameters.get('actual_epochs') is not None:
+            epochs = parameters.get('actual_epochs')
 
         # other parameters that do not form part of our experiment definition
         # changing the values of these other parameters, does not make the ID of the experiment change
