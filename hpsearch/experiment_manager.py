@@ -794,12 +794,12 @@ class ExperimentManager (object):
             current_epoch = -1
         if len(experiment_numbers) > 1:
             epochs = experiment_data.loc[experiment_numbers,name_epoch]
-            epochs[epochs.isnull()]=current_epoch
+            epochs[epochs.isnull()]=defaults.get(name_epoch)
             epochs = epochs.loc[epochs<=current_epoch]
             if epochs.shape[0] == 0:
                 return None
             else:
-                return epochs.idxmax()
+                return epochs.astype(int).idxmax()
         elif len(experiment_numbers) == 1:
             return experiment_numbers[0]
         else:
