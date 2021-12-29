@@ -24,10 +24,11 @@ from multiprocessing import Process
 import logging
 import traceback
 import shutil
+from fastcore.utils import store_attr
 
 # hpsearch core API
 from .config.manager_factory import ManagerFactory
-from .utils.resume_from_checkpoint import make_resume_from_checkpoint, exists_current_checkpoint, obtain_last_result
+from .utils.resume_from_checkpoint import exists_current_checkpoint, obtain_last_result
 from .utils import experiment_utils
 from .utils.experiment_utils import remove_defaults
 from .utils.organize_experiments import remove_defaults_from_experiment_data
@@ -37,27 +38,35 @@ import hpsearch.config.hp_defaults as dflt
 class ExperimentManager (object):
 
     def __init__ (self,
-                  allow_base_class=False,
-                  path_experiments='results/hpsearch',
-                  defaults={},
-                  root='',
-                  metric='accuracy',
-                  op='max',
+                  allow_base_class=dflt.allow_base_class,
+                  path_experiments=dflt.path_experiments,
+                  defaults=dflt.defaults,
+                  root=dflt.root,
+                  metric=dflt.metric,
+                  op=dflt.op,
                   path_alternative=None,
                   path_data=None,
-                  name_model_history='model_history.pk'):
-        self.path_experiments = path_experiments
-        self.defaults = defaults
+                  name_model_history=dflt.name_model_history,
+                  model_file_name=dflt.model_file_name,
+                  name_epoch=dflt.name_epoch):
+
+        #store_attr ()
+        if True:
+            self.allow_base_class = allow_base_class
+            self.path_experiments = path_experiments
+            self.defaults = defaults
+            self.key_score = metric
+            self.path_alternative = path_alternative
+            self.path_data = path_data
+            self.name_model_history = name_model_history
+            self.model_file_name = model_file_name
+            self.name_epoch = name_epoch
+
+        self.key_score = metric
+        self.parameters_non_pickable = {}
         self.default_operations = dict(root=root,
                                        metric=metric,
                                        op=op)
-        self.key_score = metric
-        self.path_alternative = path_alternative
-        self.path_data = path_data
-        self.name_model_history = name_model_history
-
-        self.parameters_non_pickable = {}
-        self.allow_base_class = allow_base_class
         self.manager_factory = ManagerFactory(allow_base_class=allow_base_class)
         self.manager_factory.register_manager (self)
 
@@ -128,6 +137,9 @@ class ExperimentManager (object):
         key_score = self.key_score if key_score is None else key_score
 
         return key_score
+
+    def get_name_epoch (self, other_parameters):
+        return other_parameters.get ('name_epoch', self.name_epoch)
 
     def remove_previous_experiments (self, path_experiments = None, folder = None):
         path_experiments = self.get_path_experiments (path_experiments=path_experiments,
@@ -315,6 +327,7 @@ class ExperimentManager (object):
                 return None, {}
 
         unfinished_flag = False
+        name_epoch = self.get_name_epoch(other_parameters)
 
         # ****************************************************
         #   check conditions for skipping experiment
@@ -325,7 +338,7 @@ class ExperimentManager (object):
                 and not self.finished_all_epochs (
                     parameters,
                     self.get_path_results (experiment_number, run_number=run_number, root_path=root_path),
-                    other_parameters.get('name_epoch','epochs'))):
+                    name_epoch)):
                 unfinished_flag = True
             else:
                 logger.info ('skipping...')
@@ -407,7 +420,6 @@ class ExperimentManager (object):
         resuming_from_prev_epoch_flag = False
         if parameters.get('prev_epoch', False):
             logger.info('trying prev_epoch')
-            name_epoch = parameters.get('name_epoch',dflt.name_epoch)
             experiment_data2 = experiment_data.copy()
             if (((not unfinished_flag) and (other_parameters.get('repeat_experiment', False) or other_parameters.get('just_visualize', False)))
                 or other_parameters.get('avoid_resuming', False)
@@ -418,14 +430,13 @@ class ExperimentManager (object):
             if prev_experiment_number is not None:
                 logger.info('using prev_epoch: %d' %prev_experiment_number)
                 prev_path_results = self.get_path_results (prev_experiment_number, run_number=run_number, root_path=root_path)
-                found = make_resume_from_checkpoint (parameters, prev_path_results)
+                found = self.make_resume_from_checkpoint (parameters, prev_path_results)
                 if found:
                     logger.info ('found previous exp: %d' %prev_experiment_number)
                     if prev_experiment_number == experiment_number:
                         other_parameters['use_previous_best'] = parameters.get('use_previous_best', True)
                         logger.info ('using previous best')
                     else:
-                        name_epoch = parameters.get('name_epoch', dflt.name_epoch)
                         parameters[name_epoch] = parameters[name_epoch] - int(experiment_data.loc[prev_experiment_number, name_epoch])
 
                 resuming_from_prev_epoch_flag = found
@@ -435,7 +446,7 @@ class ExperimentManager (object):
             prev_experiment_number = parameters.get('from_exp', None)
             logger.info('using previous experiment %d' %prev_experiment_number)
             prev_path_results = self.get_path_results (prev_experiment_number, run_number=run_number, root_path=root_path)
-            make_resume_from_checkpoint (parameters, prev_path_results, use_best=True)
+            self.make_resume_from_checkpoint (parameters, prev_path_results, use_best=True)
 
         # ****************************************************************
         #   Analyze if experiment was interrupted
@@ -805,7 +816,8 @@ class ExperimentManager (object):
         else:
             return None
 
-    def finished_all_epochs (self, parameters, path_results, name_epoch=dflt.name_epoch):
+    def finished_all_epochs (self, parameters, path_results,
+                             name_epoch=dflt.name_epoch, name_last_epoch=dflt.name_last_epoch):
         finished = True
         defaults = self.get_default_parameters (parameters)
         current_epoch = parameters.get(name_epoch, defaults.get(name_epoch))
@@ -815,7 +827,7 @@ class ExperimentManager (object):
 
         if os.path.exists(path_model_history):
             summary = pickle.load(open(path_model_history, 'rb'))
-            prev_epoch = summary.get('last_epoch')
+            prev_epoch = summary.get(name_last_epoch)
             if prev_epoch is None:
                 key_score = self.get_key_score (parameters)
                 if key_score in summary and (isinstance(summary[key_score], list)
@@ -831,6 +843,52 @@ class ExperimentManager (object):
             finished = False
 
         return finished
+
+    def make_resume_from_checkpoint (self, parameters, prev_path_results, use_best=False):
+
+        if parameters.get('previous_model_file_name') is not None:
+            previous_model_file_name = parameters['previous_model_file_name']
+        else:
+            model_extension = parameters.get('model_extension', 'h5')
+            model_name = parameters.get('model_name', 'checkpoint_')
+            epoch_offset = parameters.get('epoch_offset', 0)
+            name_best_model = parameters.get('name_best_model', 'best_model')
+
+        found = False
+        name_model_history = parameters.get('name_model_history', 'model_history.pk')
+        name_last_epoch = parameters.get('name_last_epoch', dflt.name_last_epoch)
+        path_model_history = f'{prev_path_results}/{name_model_history}'
+        if os.path.exists(path_model_history):
+            parameters['resume_summary'] = path_model_history
+            found = True
+            parameters['prev_path_results'] = prev_path_results
+            if parameters.get('previous_model_file_name') is not None:
+                parameters['resume'] = f'{prev_path_results}/{previous_model_file_name}'
+            elif use_best:
+                parameters['resume'] = f'{prev_path_results}/{name_best_model}.{model_extension}'
+            else:
+                summary = pickle.load(open(path_model_history, 'rb'))
+                prev_epoch = summary.get(name_last_epoch)
+                key_score = self.get_key_score (parameters)
+                if prev_epoch is None:
+                    if key_score in summary and (isinstance(summary[key_score], list)
+                                                 or isinstance(summary[key_score], np.array)):
+                        prev_epoch = (~np.isnan(summary[key_score])).sum()
+                    else:
+                        prev_epoch = 0
+
+                if prev_epoch >= 0:
+                    parameters['resume'] = f'{prev_path_results}/{model_name}{prev_epoch+epoch_offset}.{model_extension}'
+            if not os.path.exists(parameters['resume']):
+                path_resume2 = f'{prev_path_results}/{self.model_file_name}'
+                if os.path.exists (path_resume2):
+                    parameters['resume'] = path_resume2
+                else:
+                    parameters['resume'] = ''
+                    parameters['prev_path_results'] = ''
+                    found = False
+
+        return found
 
     def register_and_store_subclassed_manager (self):
         #self.logger.debug ('registering')

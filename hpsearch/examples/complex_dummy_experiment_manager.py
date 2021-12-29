@@ -8,6 +8,7 @@ import hpsearch
 import os
 from ..visualization import plot_utils
 
+# Cell
 class ComplexDummyExperimentManager (DummyExperimentManager):
 
     def __init__ (self, **kwargs):
@@ -68,11 +69,10 @@ class ComplexDummyExperimentManager (DummyExperimentManager):
         return dict_results
 
 
-
 # Cell
 import shutil
 import os
-from .dummy_experiment_manager import run_multiple_experiments, remove_previous_experiments
+import hpsearch.examples.dummy_experiment_manager as dummy_em
 
 def run_multiple_experiments (**kwargs):
     dummy_em.run_multiple_experiments (EM=ComplexDummyExperimentManager, **kwargs)
