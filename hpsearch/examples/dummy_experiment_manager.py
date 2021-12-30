@@ -90,7 +90,7 @@ class FakeModel (object):
         validation_accuracy = self.accuracy + np.random.randn() * self.noise
 
         # test accuracy
-        if self.epochs < 10:
+        if self.current_epoch < 10:
             test_accuracy = self.accuracy + 0.1
         else:
             test_accuracy = self.accuracy - 0.1

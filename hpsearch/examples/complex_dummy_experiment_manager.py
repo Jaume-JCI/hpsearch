@@ -11,8 +11,8 @@ from ..visualization import plot_utils
 # Cell
 class ComplexDummyExperimentManager (DummyExperimentManager):
 
-    def __init__ (self, **kwargs):
-        super().__init__ (**kwargs)
+    def __init__ (self, model_file_name='model_weights.pk', **kwargs):
+        super().__init__ (model_file_name=model_file_name, **kwargs)
         self.raise_error_if_run = False
 
     def run_experiment (self, parameters={}, path_results='./results'):
@@ -39,10 +39,9 @@ class ComplexDummyExperimentManager (DummyExperimentManager):
         # load training, validation and test data (fake step)
         model.load_data()
 
-        # load previous model if exists
-        if not model.load_model_and_history (path_results):
-            # start from previous experiment if indicated by parameters
-            path_results_previous_experiment = parameters.get('prev_path_results','')
+        # start from previous experiment if indicated by parameters
+        path_results_previous_experiment = parameters.get('prev_path_results')
+        if path_results_previous_experiment is not None:
             model.load_model_and_history (path_results_previous_experiment)
 
         # fit model with training data
