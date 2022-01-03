@@ -167,18 +167,9 @@ class ExperimentManager (object):
         # #####################################
         # Evaluation
         # #####################################
-        if not parameters.get('just_visualize', False):
-            time_before = time.time()
-            score_dict = self._run_experiment (parameters=parameters, path_results=path_results, run_number=run_number)
-            logger.info ('time spent on this experiment: {}'.format(time.time()-time_before))
-        else:
-            score_dict = None
-
-        # #####################################
-        # Visualization
-        # #####################################
-        if parameters.get('visualization', False):
-            raise ValueError ('not implemented')
+        time_before = time.time()
+        score_dict = self._run_experiment (parameters=parameters, path_results=path_results, run_number=run_number)
+        logger.info ('time spent on this experiment: {}'.format(time.time()-time_before))
 
         # #####################################
         # Final scores
@@ -188,7 +179,7 @@ class ExperimentManager (object):
             if score_name[0] == '_':
                 score_name = score_name[1:]
             if score_dict.get(score_name) is not None:
-                logger.info ('score: %f' %(score_dict.get(score_name)))
+                logger.info (f'score: {score_dict.get(score_name)}')
 
         spent_time = time.time() - time_before
 
@@ -410,7 +401,8 @@ class ExperimentManager (object):
         parameters.update(other_parameters)
 
         # add default parameters - their values are overwritten by input values, if given
-        parameters_with_defaults = self.get_default_parameters(parameters)
+        defaults = self.get_default_parameters(parameters)
+        parameters_with_defaults = defaults.copy()
         parameters_with_defaults.update(parameters)
         parameters = parameters_with_defaults
 
@@ -421,23 +413,26 @@ class ExperimentManager (object):
         if parameters.get('prev_epoch', False):
             logger.info('trying prev_epoch')
             experiment_data2 = experiment_data.copy()
-            if (((not unfinished_flag) and (other_parameters.get('repeat_experiment', False) or other_parameters.get('just_visualize', False)))
-                or other_parameters.get('avoid_resuming', False)
+            if (((not unfinished_flag) and other_parameters.get('repeat_experiment', False))
                 or isnull(experiment_data, experiment_number, name_score)):
                     experiment_data2 = experiment_data2.drop(experiment_number,axis=0)
             prev_experiment_number = self.find_closest_epoch (experiment_data2, original_parameters,
                                                               name_epoch=name_epoch)
             if prev_experiment_number is not None:
-                logger.info('using prev_epoch: %d' %prev_experiment_number)
+                logger.info(f'using prev_epoch: {prev_experiment_number}')
                 prev_path_results = self.get_path_results (prev_experiment_number, run_number=run_number, root_path=root_path)
                 found = self.make_resume_from_checkpoint (parameters, prev_path_results)
                 if found:
-                    logger.info ('found previous exp: %d' %prev_experiment_number)
+                    logger.info (f'found previous exp: {prev_experiment_number}')
                     if prev_experiment_number == experiment_number:
-                        other_parameters['use_previous_best'] = parameters.get('use_previous_best', True)
+                        other_parameters['use_previous_best'] = parameters.get('use_previous_best',
+                                                                               True)
                         logger.info ('using previous best')
                     else:
-                        parameters[name_epoch] = parameters[name_epoch] - int(experiment_data.loc[prev_experiment_number, name_epoch])
+                        prev_epoch = experiment_data.loc[prev_experiment_number,name_epoch]
+                        prev_epoch = (int(prev_epoch) if prev_epoch is not None
+                                      else defaults.get(name_epoch))
+                        parameters[name_epoch] = parameters[name_epoch] - prev_epoch
 
                 resuming_from_prev_epoch_flag = found
 
@@ -482,8 +477,6 @@ class ExperimentManager (object):
         else:
             finished = False
 
-        if other_parameters.get('just_visualize', False):
-            return None, {}
         # ****************************************************************
         #  Retrieve and store results
         # ****************************************************************
@@ -804,7 +797,7 @@ class ExperimentManager (object):
         if current_epoch is None:
             current_epoch = -1
         if len(experiment_numbers) > 1:
-            epochs = experiment_data.loc[experiment_numbers,name_epoch]
+            epochs = experiment_data.loc[experiment_numbers,name_epoch].copy()
             epochs[epochs.isnull()]=defaults.get(name_epoch)
             epochs = epochs.loc[epochs<=current_epoch]
             if epochs.shape[0] == 0:
