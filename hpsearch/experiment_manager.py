@@ -28,7 +28,6 @@ from fastcore.utils import store_attr
 
 # hpsearch core API
 from .config.manager_factory import ManagerFactory
-from .utils.resume_from_checkpoint import exists_current_checkpoint, obtain_last_result
 from .utils import experiment_utils
 from .utils.experiment_utils import remove_defaults
 from .utils.organize_experiments import remove_defaults_from_experiment_data
@@ -48,7 +47,8 @@ class ExperimentManager (object):
                   path_data=None,
                   name_model_history=dflt.name_model_history,
                   model_file_name=dflt.model_file_name,
-                  name_epoch=dflt.name_epoch):
+                  name_epoch=dflt.name_epoch,
+                  result_file=dflt.result_file):
 
         #store_attr ()
         if True:
@@ -61,6 +61,7 @@ class ExperimentManager (object):
             self.name_model_history = name_model_history
             self.model_file_name = model_file_name
             self.name_epoch = name_epoch
+            self.result_file = result_file
 
         self.key_score = metric
         self.parameters_non_pickable = {}
@@ -440,15 +441,17 @@ class ExperimentManager (object):
         if not resuming_from_prev_epoch_flag and parameters.get('from_exp', None) is not None:
             prev_experiment_number = parameters.get('from_exp', None)
             logger.info('using previous experiment %d' %prev_experiment_number)
-            prev_path_results = self.get_path_results (prev_experiment_number, run_number=run_number, root_path=root_path)
+            prev_path_results = self.get_path_results (prev_experiment_number, run_number=run_number,
+                                                       root_path=root_path)
             self.make_resume_from_checkpoint (parameters, prev_path_results, use_best=True)
 
         # ****************************************************************
         #   Analyze if experiment was interrupted
         # ****************************************************************
         if parameters.get('skip_interrupted', False):
-            was_interrumpted = exists_current_checkpoint (parameters, path_experiment)
-            was_interrumpted = was_interrumpted or obtain_last_result (parameters, path_experiment) is not None
+            was_interrumpted = self.exists_current_checkpoint (parameters, path_experiment)
+            was_interrumpted = (was_interrumpted or
+                                self.obtain_last_result (parameters, path_experiment) is not None)
             if was_interrumpted:
                 logger.info ('found intermediate results, skipping...')
                 return None, {}
@@ -458,7 +461,7 @@ class ExperimentManager (object):
         # ****************************************************************
         run_pipeline = True
         if parameters.get('use_last_result', False):
-            experiment_result = obtain_last_result (parameters, path_experiment)
+            experiment_result = self.obtain_last_result (parameters, path_experiment)
             if experiment_result is None and parameters.get('run_if_not_interrumpted', False):
                 run_pipeline = True
             elif experiment_result is None:
@@ -882,6 +885,82 @@ class ExperimentManager (object):
                     found = False
 
         return found
+
+    def exists_current_checkpoint (self, parameters, path_results):
+        model_file_name = self.get_parameter (parameters, 'model_file_name')
+        return os.path.exists (f'{path_results}/{model_file_name}')
+
+    def get_parameter (self, parameters, key):
+        parameter = parameters.get(key)
+        return parameter if parameter is not None else getattr(self, key)
+
+    def obtain_last_result (self, parameters, path_results):
+
+        if parameters.get('use_last_result_from_dict', False):
+            return self.obtain_last_result_from_dict (parameters, path_results)
+        name_result_file = self.get_parameter (parameters, 'name_model_history')
+        path_results_file = f'{path_results}/{name_result_file}'
+        dict_results = None
+        if os.path.exists (path_results_file):
+            history = pickle.load(open(path_results_file, 'rb'))
+            metrics = parameters.get('key_scores')
+            if metrics is None:
+                metrics = history.keys()
+            ops = parameters.get('ops')
+            if ops is None:
+                ops = ['max'] * len(metrics)
+            if type(ops) is str:
+                ops = [ops] * len(metrics)
+            if type(ops) is dict:
+                ops_dict = ops
+                ops = ['max'] * len(metrics)
+                i = 0
+                for k in metrics:
+                    if k in ops_dict.keys():
+                        ops[i] = ops_dict[k]
+                    i += 1
+            dict_results = {}
+            max_last_position = -1
+            for metric, op in zip(metrics, ops):
+                if metric in history.keys():
+                    history_array = history[metric]
+                    score = min(history_array) if op == 'min' else max(history_array)
+                    last_position = np.where(np.array(history_array).ravel()==0)[0]
+                    if len(last_position) > 0:
+                        last_position = last_position[0] - 1
+                    else:
+                        last_position = len(history_array)
+                    dict_results[metric] = score
+                else:
+                    last_position = -1
+                max_last_position = max(last_position, max_last_position)
+
+            dict_results['last'] = max_last_position
+            if max_last_position < parameters.get('min_iterations', dflt.min_iterations):
+                dict_results = None
+                print (f'not storing result from {path_results} with iterations {max_last_position}')
+            else:
+                print (f'storing result from {path_results} with iterations {max_last_position}')
+
+        return dict_results
+
+    #export
+    def obtain_last_result_from_dict (self, parameters, path_results):
+        name_result_file = self.get_parameter(parameters, 'result_file')
+        path_results_file = '%s/%s' %(path_results, name_result_file)
+        dict_results = None
+        if os.path.exists (path_results_file):
+            dict_results = pickle.load(open(path_results_file, 'rb'))
+            if 'last' not in dict_results.keys() and 'epoch' in dict_results.keys():
+                dict_results['last'] = dict_results['epoch']
+            max_last_position = dict_results['last']
+            if max_last_position < parameters.get('min_iterations', dflt.min_iterations):
+                dict_results = None
+                print ('not storing result from {} with iterations {}'.format(path_results, max_last_position))
+            else:
+                print ('storing result from {} with iterations {}'.format(path_results, max_last_position))
+
+        return dict_results
 
     def register_and_store_subclassed_manager (self):
         #self.logger.debug ('registering')
