@@ -342,9 +342,9 @@ def find_rows_with_parameters_dict (experiment_data, parameters_dict, create_if_
                 matching_condition = experiment_data[parameter]==parameters_dict[parameter]
                 for idx, v in enumerate(experiment_data[parameter]):
                     if (type(v) == float or type(v) == np.float32 or type(v) == np.float64) and (np.abs(v-parameters_dict[parameter]) < precision):
-                        matching_condition[idx]=True
+                        matching_condition.iloc[idx]=True
                     else:
-                        matching_condition[idx]=False
+                        matching_condition.iloc[idx]=False
         else:
             matching_condition = experiment_data[parameter]==parameters_dict[parameter]
 

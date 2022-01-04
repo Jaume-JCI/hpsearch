@@ -320,6 +320,8 @@ class ExperimentManager (object):
 
         unfinished_flag = False
         name_epoch = self.get_name_epoch(other_parameters)
+        current_path_results = self.get_path_results (experiment_number, run_number=run_number,
+                                                      root_path=root_path)
 
         # ****************************************************
         #   check conditions for skipping experiment
@@ -327,10 +329,7 @@ class ExperimentManager (object):
         if (not isnull(experiment_data, experiment_number, name_score)
             and not other_parameters.get('repeat_experiment', False)):
             if (other_parameters.get('check_finished', False)
-                and not self.finished_all_epochs (
-                    parameters,
-                    self.get_path_results (experiment_number, run_number=run_number, root_path=root_path),
-                    name_epoch)):
+                and not self.finished_all_epochs (parameters, current_path_results, name_epoch)):
                 unfinished_flag = True
             else:
                 logger.info ('skipping...')
@@ -410,24 +409,39 @@ class ExperimentManager (object):
         # ***********************************************************
         # resume from previous experiment
         # ***********************************************************
+        if (isnull(experiment_data, experiment_number, name_score)
+            and other_parameters.get('check_finished_if_interrupted', False)
+            and not self.finished_all_epochs (parameters, current_path_results, name_epoch)):
+            unfinished_flag = True
+
         resuming_from_prev_epoch_flag = False
         if parameters.get('prev_epoch', False):
             logger.info('trying prev_epoch')
             experiment_data2 = experiment_data.copy()
-            if (((not unfinished_flag) and other_parameters.get('repeat_experiment', False))
-                or isnull(experiment_data, experiment_number, name_score)):
+            if (not unfinished_flag
+                and (other_parameters.get('repeat_experiment', False)
+                     or isnull(experiment_data, experiment_number, name_score))):
                     experiment_data2 = experiment_data2.drop(experiment_number,axis=0)
             prev_experiment_number = self.find_closest_epoch (experiment_data2, original_parameters,
                                                               name_epoch=name_epoch)
             if prev_experiment_number is not None:
                 logger.info(f'using prev_epoch: {prev_experiment_number}')
-                prev_path_results = self.get_path_results (prev_experiment_number, run_number=run_number, root_path=root_path)
+                prev_path_results = self.get_path_results (prev_experiment_number,
+                                                           run_number=run_number,
+                                                           root_path=root_path)
                 found = self.make_resume_from_checkpoint (parameters, prev_path_results)
                 if found:
                     logger.info (f'found previous exp: {prev_experiment_number}')
                     if prev_experiment_number == experiment_number:
-                        other_parameters['use_previous_best'] = parameters.get('use_previous_best',
-                                                                               True)
+                        if 'use_previous_best' not in other_parameters:
+                            other_parameters['use_previous_best'] = parameters.get('use_previous_best',
+                                                                                   dflt.use_previous_best)
+                        if not other_parameters['use_previous_best'] and unfinished_flag:
+                            prev_epoch = self.get_last_epoch (parameters,
+                                                              current_path_results,
+                                                              name_epoch)
+                            prev_epoch = max (int(prev_epoch), 0)
+                            parameters[name_epoch] = parameters[name_epoch] - prev_epoch
                         logger.info ('using previous best')
                     else:
                         prev_epoch = experiment_data.loc[prev_experiment_number,name_epoch]
@@ -812,15 +826,13 @@ class ExperimentManager (object):
         else:
             return None
 
-    def finished_all_epochs (self, parameters, path_results,
+    def get_last_epoch (self, parameters, path_results,
                              name_epoch=dflt.name_epoch, name_last_epoch=dflt.name_last_epoch):
-        finished = True
-        defaults = self.get_default_parameters (parameters)
-        current_epoch = parameters.get(name_epoch, defaults.get(name_epoch))
 
         name_model_history = parameters.get('name_model_history', self.name_model_history)
         path_model_history = f'{path_results}/{name_model_history}'
 
+        prev_epoch = -1
         if os.path.exists(path_model_history):
             summary = pickle.load(open(path_model_history, 'rb'))
             prev_epoch = summary.get(name_last_epoch)
@@ -829,12 +841,18 @@ class ExperimentManager (object):
                 if key_score in summary and (isinstance(summary[key_score], list)
                                              or isinstance(summary[key_score], np.array)):
                     prev_epoch = (~np.isnan(summary[key_score])).sum()
-                else:
-                    prev_epoch = 0
-            if prev_epoch >= current_epoch:
-                finished = True
-            else:
-                finished = False
+
+        return prev_epoch
+
+    def finished_all_epochs (self, parameters, path_results,
+                             name_epoch=dflt.name_epoch, name_last_epoch=dflt.name_last_epoch):
+        defaults = self.get_default_parameters (parameters)
+        current_epoch = parameters.get(name_epoch, defaults.get(name_epoch))
+        prev_epoch = self.get_last_epoch (parameters, path_results, name_epoch=name_epoch,
+                                          name_last_epoch=name_last_epoch)
+
+        if prev_epoch >= current_epoch:
+            finished = True
         else:
             finished = False
 
