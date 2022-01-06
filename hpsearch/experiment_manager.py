@@ -524,7 +524,7 @@ class ExperimentManager (object):
         logger.info ('finished experiment %d' %experiment_number)
 
         # return final score
-        result = dict_results.get(name_score)
+        result = dict_results.get(key_score)
         return result, dict_results
 
     def grid_search (self, parameters_multiple_values={}, parameters_single_value={}, other_parameters = {},
@@ -589,14 +589,19 @@ class ExperimentManager (object):
         if nruns is not None:
             run_numbers = range (nruns)
 
+        if root_path is None:
+            root_path = self.get_path_experiments(folder=other_parameters.get('root_folder'))
+        os.makedirs (root_path, exist_ok = True)
+
         logger = set_logger ("experiment_manager", root_path)
         results = np.zeros((len(run_numbers),))
         for (i_run, run_number) in enumerate(run_numbers):
                 logger.info('doing run %d out of %d' %(i_run, len(run_numbers)))
                 logger.info('%s' %log_message)
 
-                results[i_run], dict_results  = self.create_experiment_and_run (parameters=parameters, other_parameters = other_parameters,
-                                           run_number=run_number, root_path=root_path)
+                results[i_run], dict_results  = self.create_experiment_and_run (
+                    parameters=parameters, other_parameters = other_parameters,
+                    run_number=run_number, root_path=root_path)
                 if dict_results.get('is_pruned', False):
                     break
 
