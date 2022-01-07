@@ -56,6 +56,9 @@ class ExperimentManager (object):
             self.path_experiments = path_experiments
             self.defaults = defaults
             self.key_score = metric
+            self.root = root
+            self.metric = metric
+            self.op = op
             self.path_alternative = path_alternative
             self.path_data = path_data
             self.name_model_history = name_model_history
@@ -613,12 +616,15 @@ class ExperimentManager (object):
         return mu, std, dict_results
 
 
-    def hp_optimization (self, parameter_sampler = None, root_path=None, log_message=None, parameters={}, other_parameters={}, nruns=None):
+    def hp_optimization (self, parameter_sampler=None, root_path=None, log_message=None,
+                         parameters={}, other_parameters={}, nruns=None):
 
         import optuna
         from optuna.pruners import SuccessiveHalvingPruner, MedianPruner
         from optuna.samplers import RandomSampler, TPESampler
         from optuna.integration.skopt import SkoptSampler
+
+        optuna.logging.disable_propagation()
 
         if root_path is None:
             root_path = self.get_path_experiments(folder  = other_parameters.get('root_folder'))
@@ -639,7 +645,8 @@ class ExperimentManager (object):
         if sampler_method == 'random':
             sampler = RandomSampler(seed=seed)
         elif sampler_method == 'tpe':
-            sampler = TPESampler(n_startup_trials=other_parameters.get('n_startup_trials', 5), seed=seed)
+            sampler = TPESampler(n_startup_trials=other_parameters.get('n_startup_trials', 5),
+                                 seed=seed)
         elif sampler_method == 'skopt':
             # cf https://scikit-optimize.github.io/#skopt.Optimizer
             # GP: gaussian process
@@ -649,20 +656,28 @@ class ExperimentManager (object):
             raise ValueError('Unknown sampler: {}'.format(sampler_method))
 
         if pruner_method == 'halving':
-            pruner = SuccessiveHalvingPruner(min_resource=1, reduction_factor=4, min_early_stopping_rate=0)
+            pruner = SuccessiveHalvingPruner(min_resource=1, reduction_factor=4,
+                                             min_early_stopping_rate=0)
         elif pruner_method == 'median':
             pruner = MedianPruner(n_startup_trials=5, n_warmup_steps=n_evaluations // 3)
         elif pruner_method == 'none':
             # Do not prune
-            pruner = MedianPruner(n_startup_trials=other_parameters.get('n_trials', 10), n_warmup_steps=n_evaluations)
+            pruner = MedianPruner(n_startup_trials=other_parameters.get('n_trials', 10),
+                                  n_warmup_steps=n_evaluations)
         else:
-            raise ValueError('Unknown pruner: {}'.format(pruner_method))
+            raise ValueError(f'Unknown pruner: {pruner_method}')
 
-        logger.info ("Sampler: {} - Pruner: {}".format(sampler_method, pruner_method))
+        logger.info (f'Sampler: {sampler_method} - Pruner: {pruner_method}')
 
         #study = optuna.create_study(sampler=sampler, pruner=pruner)
         study_name = other_parameters.get('study_name', 'hp_study')  # Unique identifier of the study.
-        study = optuna.create_study(study_name=study_name, storage='sqlite:///%s/%s.db' %(root_path, study_name), sampler=sampler, pruner=pruner, load_if_exists=True)
+        direction = 'maximize' if self.op=='max' else 'minimize'
+        study = optuna.create_study(direction=direction,
+                                    study_name=study_name,
+                                    storage=f'sqlite:///{root_path}/{study_name}.db',
+                                    sampler=sampler, pruner=pruner, load_if_exists=True)
+
+        key_score = self.get_key_score (other_parameters)
 
         def objective(trial):
 
@@ -673,17 +688,25 @@ class ExperimentManager (object):
                 hp_parameters.update(parameter_sampler(trial))
 
             if nruns is None:
-                _, dict_results = self.create_experiment_and_run (parameters=hp_parameters, other_parameters = other_parameters, root_path=root_path, run_number=other_parameters.get('run_number'))
+                _, dict_results = self.create_experiment_and_run (
+                    parameters=hp_parameters, other_parameters=other_parameters,
+                    root_path=root_path, run_number=other_parameters.get('run_number')
+                )
             else:
-                mu_best, std_best, dict_results = self.run_multiple_repetitions (parameters=hp_parameters, other_parameters = other_parameters, root_path=root_path, nruns=nruns)
+                mu_best, std_best, dict_results = self.run_multiple_repetitions (
+                    parameters=hp_parameters, other_parameters=other_parameters,
+                    root_path=root_path, nruns=nruns
+                )
 
             if dict_results.get('is_pruned', False):
                 raise optuna.structs.TrialPruned()
 
-            return dict_results[other_parameters.get('key_score', 'cost')]
+            assert key_score in dict_results, f'metric {key_score} not found in results'
 
-        optuna.logging.disable_propagation()
-        study.optimize(objective, n_trials=other_parameters.get('n_trials', 10), n_jobs=other_parameters.get('n_jobs', 1))
+            return dict_results[key_score]
+
+        study.optimize(objective, n_trials=other_parameters.get('n_trials', 10),
+                       n_jobs=other_parameters.get('n_jobs', 1))
 
         logger.info ('Number of finished trials: {}'.format(len(study.trials)))
         logger.info ('Best trial:')
@@ -702,8 +725,9 @@ class ExperimentManager (object):
 
         return best_value
 
-    def rerun_experiment (self, experiments=[], run_numbers=[0], nruns = None, root_path=None, root_folder = None,
-                          other_parameters={}, parameters = {}, parameter_sampler = None, parameters_multiple_values = None,
+    def rerun_experiment (self, experiments=[], run_numbers=[0], nruns=None, root_path=None,
+                          root_folder = None, other_parameters={}, parameters={},
+                          parameter_sampler=None, parameters_multiple_values=None,
                           log_message='', only_if_exists=False):
 
         other_parameters = other_parameters.copy()
@@ -722,26 +746,35 @@ class ExperimentManager (object):
         parameters_original = parameters
         other_parameters_original = other_parameters
         for experiment_id in experiments:
-            check_experiment_matches = (parameters_multiple_values is None) and (parameter_sampler is None)
-            parameters, other_parameters = load_parameters (experiment=experiment_id, root_path=root_path, root_folder = root_folder,
-                                                            other_parameters=other_parameters_original, parameters = parameters_original,
-                                                            check_experiment_matches=check_experiment_matches)
+            check_experiment_matches = (parameters_multiple_values is None
+                                        and parameter_sampler is None)
+            parameters, other_parameters = load_parameters (
+                experiment=experiment_id, root_path=root_path, root_folder=root_folder,
+                other_parameters=other_parameters_original, parameters=parameters_original,
+                check_experiment_matches=check_experiment_matches
+            )
 
             # we need to set the following flag to False, since otherwise when we request to store the intermediate results
             # and the experiment did not start, we do not run the experiment
-            if other_parameters.get('use_last_result', False) and not other_parameters_original.get('use_last_result', False):
+            if (other_parameters.get('use_last_result', False)
+                and not other_parameters_original.get('use_last_result', False)):
                 logger.debug ('changing other_parameters["use_last_result"] to False')
                 other_parameters['use_last_result'] = False
-            logger.info (f'running experiment {experiment_id} with parameters:\n{parameters}\nother_parameters:\n{other_parameters}')
+            logger.info (f'running experiment {experiment_id} with parameters:\n{parameters}\n'
+                         f'other_parameters:\n{other_parameters}')
 
             if parameter_sampler is not None:
                 logger.info ('running hp_optimization')
                 insert_experiment_script_path (other_parameters, logger)
-                self.hp_optimization (parameter_sampler = parameter_sampler, root_path=root_path, log_message=log_message,
-                                        parameters=parameters, other_parameters=other_parameters)
+                self.hp_optimization (parameter_sampler=parameter_sampler, root_path=root_path,
+                                      log_message=log_message, parameters=parameters,
+                                      other_parameters=other_parameters)
             elif parameters_multiple_values is not None:
-                self.grid_search (parameters_multiple_values=parameters_multiple_values, parameters_single_value=parameters,
-                                    other_parameters = other_parameters, root_path=root_path, run_numbers=run_numbers, log_message=log_message)
+                self.grid_search (
+                    parameters_multiple_values=parameters_multiple_values,
+                    parameters_single_value=parameters, other_parameters=other_parameters,
+                    root_path=root_path, run_numbers=run_numbers, log_message=log_message
+                )
             else:
                 if only_if_exists:
                     run_numbers = [run_number for run_number in run_numbers if os.path.exists('%s/%d' %(path_root_experiment, run_number))]
@@ -749,24 +782,30 @@ class ExperimentManager (object):
                 script_parameters = {}
                 insert_experiment_script_path (script_parameters, logger)
                 other_parameters['rerun_script'] = script_parameters
-                self.run_multiple_repetitions (parameters=parameters, other_parameters = other_parameters, root_path=root_path,
-                                                log_message=log_message, run_numbers=run_numbers)
+                self.run_multiple_repetitions (
+                    parameters=parameters, other_parameters=other_parameters, root_path=root_path,
+                    log_message=log_message, run_numbers=run_numbers
+                )
 
-    def rerun_experiment_pipeline (self, experiments, run_numbers=None, root_path=None, root_folder=None, new_parameters={}, save_results=False):
+    def rerun_experiment_pipeline (self, experiments, run_numbers=None, root_path=None,
+                                   root_folder=None, new_parameters={}, save_results=False):
 
         if root_path is None:
             root_path = self.get_path_experiments(folder=root_folder)
         for experiment_id in experiments:
             path_root_experiment = self.get_path_experiment (experiment_id, root_path=root_path)
 
-            parameters, other_parameters=pickle.load(open('%s/parameters.pk' %path_root_experiment,'rb'))
+            parameters, other_parameters=pickle.load (
+                open(f'{path_root_experiment}/parameters.pk', 'rb')
+            )
             parameters = parameters.copy()
             parameters.update(other_parameters)
             parameters.update(new_parameters)
             for run_number in run_numbers:
                 path_experiment = '%s/%d/' %(path_root_experiment, run_number)
                 path_data = self.get_path_data (run_number, root_path, parameters)
-                score, _ = self.run_experiment_pipeline (run_number, path_experiment, parameters = parameters)
+                score, _ = self.run_experiment_pipeline (run_number, path_experiment,
+                                                         parameters=parameters)
 
                 if save_results:
                     experiment_number = experiment_id
@@ -787,7 +826,8 @@ class ExperimentManager (object):
                     experiment_data.to_csv(path_csv)
                     experiment_data.to_pickle(path_pickle)
 
-    def rerun_experiment_par (self, experiments, run_numbers=None, root_path=None, root_folder=None, parameters={}):
+    def rerun_experiment_par (self, experiments, run_numbers=None, root_path=None,
+                              root_folder=None, parameters={}):
 
         if root_path is None:
             root_path = self.get_path_experiments(folder=root_folder)
