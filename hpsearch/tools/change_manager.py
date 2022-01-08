@@ -9,19 +9,21 @@ import warnings
 import pdb
 warnings.filterwarnings('ignore')
 
+# Cell
 def change_manager (subclass=None):
     import hpsearch.config.manager_factory as mf
-    reload(mf)
+    reload (mf)
 
-    manager_factory = mf.ManagerFactory(verbose=2)
+    manager_factory = mf.ManagerFactory (verbose=2)
 
     if subclass is None:
-        manager_factory.list_subclasses()
+        manager_factory.list_subclasses ()
     else:
-        manager_factory.change_manager(subclass)
+        manager_factory.change_manager (subclass)
         manager_factory.import_written_manager ()
         change_manager (None)
 
+# Cell
 def main():
     parser = argparse.ArgumentParser(description='change experiment manager')
     parser.add_argument('-m','--manager', type=str, default=None, help="new experiment manager to use")

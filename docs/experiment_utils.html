@@ -33,6 +33,19 @@ nb_path: "nbs/utils/experiment_utils.ipynb"
     
 <div class="cell border-box-sizing code_cell rendered">
 
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="get_experiment_data">get_experiment_data<a class="anchor-link" href="#get_experiment_data"> </a></h2>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
 <div class="output_wrapper">
 <div class="output">
 
@@ -40,7 +53,7 @@ nb_path: "nbs/utils/experiment_utils.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_experiment_data" class="doc_header"><code>get_experiment_data</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L9" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_experiment_data</code>(<strong><code>path_experiments</code></strong>=<em><code>None</code></em>, <strong><code>folder_experiments</code></strong>=<em><code>None</code></em>, <strong><code>experiments</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="get_experiment_data" class="doc_header"><code>get_experiment_data</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L20" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_experiment_data</code>(<strong><code>path_experiments</code></strong>=<em><code>None</code></em>, <strong><code>folder_experiments</code></strong>=<em><code>None</code></em>, <strong><code>experiments</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 <p>Returns data stored from previous experiments in the form DataFrame.</p>
 <p>If path_experiments is not given, it uses the default one.</p>
@@ -1989,6 +2002,12 @@ finished experiment 17
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="remove_defaults">remove_defaults<a class="anchor-link" href="#remove_defaults"> </a></h2>
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -2000,31 +2019,7 @@ finished experiment 17
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="remove_defaults" class="doc_header"><code>remove_defaults</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L42" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>remove_defaults</code>(<strong><code>parameters</code></strong>)</p>
-</blockquote>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="query" class="doc_header"><code>query</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L51" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>query</code>(<strong><code>path_experiments</code></strong>=<em><code>None</code></em>, <strong><code>folder_experiments</code></strong>=<em><code>None</code></em>, <strong><code>intersection</code></strong>=<em><code>False</code></em>, <strong><code>experiments</code></strong>=<em><code>None</code></em>, <strong><code>suffix_results</code></strong>=<em><code>''</code></em>, <strong><code>min_results</code></strong>=<em><code>0</code></em>, <strong><code>classes</code></strong>=<em><code>None</code></em>, <strong><code>parameters_fixed</code></strong>=<em><code>{}</code></em>, <strong><code>parameters_variable</code></strong>=<em><code>{}</code></em>, <strong><code>parameters_all</code></strong>=<em><code>[]</code></em>, <strong><code>exact_match</code></strong>=<em><code>True</code></em>, <strong><code>output</code></strong>=<em><code>'all'</code></em>, <strong><code>ascending</code></strong>=<em><code>False</code></em>, <strong><code>suffix_test_set</code></strong>=<em><code>None</code></em>, <strong><code>stats</code></strong>=<em><code>['mean', 'median', 'rank', 'min', 'max', 'std']</code></em>, <strong><code>query_other_parameters</code></strong>=<em><code>False</code></em>)</p>
+<h4 id="remove_defaults" class="doc_header"><code>remove_defaults</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L35" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>remove_defaults</code>(<strong><code>parameters</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -2044,6 +2039,12 @@ finished experiment 17
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="query">query<a class="anchor-link" href="#query"> </a></h2>
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -2055,7 +2056,44 @@ finished experiment 17
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="summarize_results" class="doc_header"><code>summarize_results</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L117" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>summarize_results</code>(<strong><code>path_experiments</code></strong>=<em><code>None</code></em>, <strong><code>folder_experiments</code></strong>=<em><code>None</code></em>, <strong><code>intersection</code></strong>=<em><code>False</code></em>, <strong><code>experiments</code></strong>=<em><code>None</code></em>, <strong><code>suffix_results</code></strong>=<em><code>''</code></em>, <strong><code>min_results</code></strong>=<em><code>0</code></em>, <strong><code>class_ids</code></strong>=<em><code>None</code></em>, <strong><code>parameters</code></strong>=<em><code>None</code></em>, <strong><code>output</code></strong>=<em><code>'all'</code></em>, <strong><code>data</code></strong>=<em><code>None</code></em>, <strong><code>ascending</code></strong>=<em><code>False</code></em>, <strong><code>suffix_test_set</code></strong>=<em><code>None</code></em>, <strong><code>stats</code></strong>=<em><code>['mean', 'median', 'rank', 'min', 'max', 'std']</code></em>)</p>
+<h4 id="query" class="doc_header"><code>query</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L45" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>query</code>(<strong><code>path_experiments</code></strong>=<em><code>None</code></em>, <strong><code>folder_experiments</code></strong>=<em><code>None</code></em>, <strong><code>intersection</code></strong>=<em><code>False</code></em>, <strong><code>experiments</code></strong>=<em><code>None</code></em>, <strong><code>suffix_results</code></strong>=<em><code>''</code></em>, <strong><code>min_results</code></strong>=<em><code>0</code></em>, <strong><code>classes</code></strong>=<em><code>None</code></em>, <strong><code>parameters_fixed</code></strong>=<em><code>{}</code></em>, <strong><code>parameters_variable</code></strong>=<em><code>{}</code></em>, <strong><code>parameters_all</code></strong>=<em><code>[]</code></em>, <strong><code>exact_match</code></strong>=<em><code>True</code></em>, <strong><code>output</code></strong>=<em><code>'all'</code></em>, <strong><code>ascending</code></strong>=<em><code>False</code></em>, <strong><code>suffix_test_set</code></strong>=<em><code>None</code></em>, <strong><code>stats</code></strong>=<em><code>['mean', 'median', 'rank', 'min', 'max', 'std']</code></em>, <strong><code>query_other_parameters</code></strong>=<em><code>False</code></em>)</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="summarize_results">summarize_results<a class="anchor-link" href="#summarize_results"> </a></h2>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="summarize_results" class="doc_header"><code>summarize_results</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L123" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>summarize_results</code>(<strong><code>path_experiments</code></strong>=<em><code>None</code></em>, <strong><code>folder_experiments</code></strong>=<em><code>None</code></em>, <strong><code>intersection</code></strong>=<em><code>False</code></em>, <strong><code>experiments</code></strong>=<em><code>None</code></em>, <strong><code>suffix_results</code></strong>=<em><code>''</code></em>, <strong><code>min_results</code></strong>=<em><code>0</code></em>, <strong><code>class_ids</code></strong>=<em><code>None</code></em>, <strong><code>parameters</code></strong>=<em><code>None</code></em>, <strong><code>output</code></strong>=<em><code>'all'</code></em>, <strong><code>data</code></strong>=<em><code>None</code></em>, <strong><code>ascending</code></strong>=<em><code>False</code></em>, <strong><code>suffix_test_set</code></strong>=<em><code>None</code></em>, <strong><code>stats</code></strong>=<em><code>['mean', 'median', 'rank', 'min', 'max', 'std']</code></em>)</p>
 </blockquote>
 <p>Obtains summary scores for the desired list of experiments. Uses the experiment_data csv for that purpose</p>
 <p>Example use:</p>
@@ -2083,6 +2121,12 @@ finished experiment 17
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="summary">summary<a class="anchor-link" href="#summary"> </a></h2>
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -2094,7 +2138,7 @@ finished experiment 17
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="summary" class="doc_header"><code>summary</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L230" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>summary</code>(<strong><code>df</code></strong>, <strong><code>experiments</code></strong>=<em><code>None</code></em>, <strong><code>score</code></strong>=<em><code>None</code></em>, <strong><code>compact</code></strong>=<em><code>True</code></em>)</p>
+<h4 id="summary" class="doc_header"><code>summary</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L236" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>summary</code>(<strong><code>df</code></strong>, <strong><code>experiments</code></strong>=<em><code>None</code></em>, <strong><code>score</code></strong>=<em><code>None</code></em>, <strong><code>compact</code></strong>=<em><code>True</code></em>)</p>
 </blockquote>
 
 </div>
@@ -2111,6 +2155,19 @@ finished experiment 17
     
 <div class="cell border-box-sizing code_cell rendered">
 
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="get_parameters_columns">get_parameters_columns<a class="anchor-link" href="#get_parameters_columns"> </a></h2>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
 <div class="output_wrapper">
 <div class="output">
 
@@ -2118,7 +2175,7 @@ finished experiment 17
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_parameters_columns" class="doc_header"><code>get_parameters_columns</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L241" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_parameters_columns</code>(<strong><code>experiment_data</code></strong>, <strong><code>only_not_null</code></strong>=<em><code>False</code></em>)</p>
+<h4 id="get_parameters_columns" class="doc_header"><code>get_parameters_columns</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L248" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_parameters_columns</code>(<strong><code>experiment_data</code></strong>, <strong><code>only_not_null</code></strong>=<em><code>False</code></em>)</p>
 </blockquote>
 
 </div>
@@ -2135,6 +2192,19 @@ finished experiment 17
     
 <div class="cell border-box-sizing code_cell rendered">
 
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="get_experiment_parameters">get_experiment_parameters<a class="anchor-link" href="#get_experiment_parameters"> </a></h2>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
 <div class="output_wrapper">
 <div class="output">
 
@@ -2142,7 +2212,7 @@ finished experiment 17
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_experiment_parameters" class="doc_header"><code>get_experiment_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L247" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_experiment_parameters</code>(<strong><code>experiment_data</code></strong>, <strong><code>only_not_null</code></strong>=<em><code>False</code></em>)</p>
+<h4 id="get_experiment_parameters" class="doc_header"><code>get_experiment_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L255" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_experiment_parameters</code>(<strong><code>experiment_data</code></strong>, <strong><code>only_not_null</code></strong>=<em><code>False</code></em>)</p>
 </blockquote>
 
 </div>
@@ -2159,6 +2229,19 @@ finished experiment 17
     
 <div class="cell border-box-sizing code_cell rendered">
 
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="get_scores_columns">get_scores_columns<a class="anchor-link" href="#get_scores_columns"> </a></h2>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
 <div class="output_wrapper">
 <div class="output">
 
@@ -2166,7 +2249,7 @@ finished experiment 17
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_scores_columns" class="doc_header"><code>get_scores_columns</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L250" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_scores_columns</code>(<strong><code>experiment_data</code></strong>=<em><code>None</code></em>, <strong><code>suffix_results</code></strong>=<em><code>''</code></em>, <strong><code>class_ids</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="get_scores_columns" class="doc_header"><code>get_scores_columns</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L259" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_scores_columns</code>(<strong><code>experiment_data</code></strong>=<em><code>None</code></em>, <strong><code>suffix_results</code></strong>=<em><code>''</code></em>, <strong><code>class_ids</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 <p>Determine the columnns that provide evaluation scores. We assume that they start with the class number, and that the other columns do not start with a digit</p>
 
@@ -2184,6 +2267,19 @@ finished experiment 17
     
 <div class="cell border-box-sizing code_cell rendered">
 
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="get_experiment_scores">get_experiment_scores<a class="anchor-link" href="#get_experiment_scores"> </a></h2>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
 <div class="output_wrapper">
 <div class="output">
 
@@ -2191,7 +2287,7 @@ finished experiment 17
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_experiment_scores" class="doc_header"><code>get_experiment_scores</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L266" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_experiment_scores</code>(<strong><code>experiment_data</code></strong>=<em><code>None</code></em>, <strong><code>suffix_results</code></strong>=<em><code>''</code></em>, <strong><code>class_ids</code></strong>=<em><code>None</code></em>, <strong><code>remove_suffix</code></strong>=<em><code>False</code></em>)</p>
+<h4 id="get_experiment_scores" class="doc_header"><code>get_experiment_scores</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L276" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_experiment_scores</code>(<strong><code>experiment_data</code></strong>=<em><code>None</code></em>, <strong><code>suffix_results</code></strong>=<em><code>''</code></em>, <strong><code>class_ids</code></strong>=<em><code>None</code></em>, <strong><code>remove_suffix</code></strong>=<em><code>False</code></em>)</p>
 </blockquote>
 
 </div>
@@ -2211,6 +2307,12 @@ finished experiment 17
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="get_scores_names">get_scores_names<a class="anchor-link" href="#get_scores_names"> </a></h2>
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -2222,7 +2324,7 @@ finished experiment 17
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_scores_names" class="doc_header"><code>get_scores_names</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L273" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_scores_names</code>(<strong><code>experiment_data</code></strong>=<em><code>None</code></em>, <strong><code>run_number</code></strong>=<em><code>None</code></em>, <strong><code>experiment</code></strong>=<em><code>None</code></em>, <strong><code>only_valid</code></strong>=<em><code>True</code></em>)</p>
+<h4 id="get_scores_names" class="doc_header"><code>get_scores_names</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L283" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_scores_names</code>(<strong><code>experiment_data</code></strong>=<em><code>None</code></em>, <strong><code>run_number</code></strong>=<em><code>None</code></em>, <strong><code>experiment</code></strong>=<em><code>None</code></em>, <strong><code>only_valid</code></strong>=<em><code>True</code></em>)</p>
 </blockquote>
 <p>Determine the names of the scores included in experiment data.</p>
 <p>We assume that the score columns start with the class number, and that the other columns do not start with a digit.</p>
@@ -2321,6 +2423,12 @@ experiment number.</p>
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="get_monitored_training_metrics">get_monitored_training_metrics<a class="anchor-link" href="#get_monitored_training_metrics"> </a></h2>
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -2332,7 +2440,7 @@ experiment number.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_monitored_training_metrics" class="doc_header"><code>get_monitored_training_metrics</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L299" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_monitored_training_metrics</code>(<strong><code>experiment</code></strong>, <strong><code>run_number</code></strong>=<em><code>0</code></em>, <strong><code>history_file_name</code></strong>=<em><code>'model_history.pk'</code></em>, <strong><code>path_results</code></strong>=<em><code>None</code></em>, <strong><code>root_path</code></strong>=<em><code>None</code></em>, <strong><code>root_folder</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="get_monitored_training_metrics" class="doc_header"><code>get_monitored_training_metrics</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L309" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_monitored_training_metrics</code>(<strong><code>experiment</code></strong>, <strong><code>run_number</code></strong>=<em><code>0</code></em>, <strong><code>history_file_name</code></strong>=<em><code>'model_history.pk'</code></em>, <strong><code>path_results</code></strong>=<em><code>None</code></em>, <strong><code>root_path</code></strong>=<em><code>None</code></em>, <strong><code>root_folder</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 
 </div>
@@ -2385,6 +2493,12 @@ experiment number.</p>
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="find_rows_with_parameters_dict">find_rows_with_parameters_dict<a class="anchor-link" href="#find_rows_with_parameters_dict"> </a></h2>
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -2396,7 +2510,7 @@ experiment number.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="find_rows_with_parameters_dict" class="doc_header"><code>find_rows_with_parameters_dict</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L312" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>find_rows_with_parameters_dict</code>(<strong><code>experiment_data</code></strong>, <strong><code>parameters_dict</code></strong>, <strong><code>create_if_not_exists</code></strong>=<em><code>True</code></em>, <strong><code>exact_match</code></strong>=<em><code>True</code></em>, <strong><code>ignore_keys</code></strong>=<em><code>[]</code></em>, <strong><code>precision</code></strong>=<em><code>1e-10</code></em>)</p>
+<h4 id="find_rows_with_parameters_dict" class="doc_header"><code>find_rows_with_parameters_dict</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L322" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>find_rows_with_parameters_dict</code>(<strong><code>experiment_data</code></strong>, <strong><code>parameters_dict</code></strong>, <strong><code>create_if_not_exists</code></strong>=<em><code>True</code></em>, <strong><code>exact_match</code></strong>=<em><code>True</code></em>, <strong><code>ignore_keys</code></strong>=<em><code>[]</code></em>, <strong><code>precision</code></strong>=<em><code>1e-10</code></em>)</p>
 </blockquote>
 <p>Finds rows that match parameters. If the dataframe doesn't have any parameter with that name, a new column is created and changed_dataframe is set to True.</p>
 
@@ -2417,6 +2531,12 @@ experiment number.</p>
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="get_classes_with_results">get_classes_with_results<a class="anchor-link" href="#get_classes_with_results"> </a></h2>
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -2428,7 +2548,7 @@ experiment number.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_classes_with_results" class="doc_header"><code>get_classes_with_results</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L357" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_classes_with_results</code>(<strong><code>experiment_data</code></strong>=<em><code>None</code></em>, <strong><code>suffix_results</code></strong>=<em><code>''</code></em>, <strong><code>class_ids</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="get_classes_with_results" class="doc_header"><code>get_classes_with_results</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L367" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_classes_with_results</code>(<strong><code>experiment_data</code></strong>=<em><code>None</code></em>, <strong><code>suffix_results</code></strong>=<em><code>''</code></em>, <strong><code>class_ids</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 <p>Gets the list of class_ids for whom there are results in experiment_data.</p>
 <p>Example usage with summarize_results:
@@ -2450,26 +2570,15 @@ experiment number.</p>
     
 <div class="cell border-box-sizing code_cell rendered">
 
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_parameters_unique" class="doc_header"><code>get_parameters_unique</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L373" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_parameters_unique</code>(<strong><code>df</code></strong>)</p>
-</blockquote>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="get_parameters_unique">get_parameters_unique<a class="anchor-link" href="#get_parameters_unique"> </a></h2>
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -2481,7 +2590,7 @@ experiment number.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="compact_parameters" class="doc_header"><code>compact_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L380" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>compact_parameters</code>(<strong><code>df</code></strong>, <strong><code>number_characters</code></strong>=<em><code>1</code></em>)</p>
+<h4 id="get_parameters_unique" class="doc_header"><code>get_parameters_unique</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L384" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_parameters_unique</code>(<strong><code>df</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -2503,7 +2612,7 @@ experiment number.</p>
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Replace-with-default-values">Replace with default values<a class="anchor-link" href="#Replace-with-default-values"> </a></h3>
+<h2 id="compact_parameters">compact_parameters<a class="anchor-link" href="#compact_parameters"> </a></h2>
 </div>
 </div>
 </div>
@@ -2518,7 +2627,44 @@ experiment number.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="replace_with_default_values" class="doc_header"><code>replace_with_default_values</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L389" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>replace_with_default_values</code>(<strong><code>df</code></strong>, <strong><code>parameters</code></strong>=<em><code>{}</code></em>)</p>
+<h4 id="compact_parameters" class="doc_header"><code>compact_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L392" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>compact_parameters</code>(<strong><code>df</code></strong>, <strong><code>number_characters</code></strong>=<em><code>1</code></em>)</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="replace_with_default_values">replace_with_default_values<a class="anchor-link" href="#replace_with_default_values"> </a></h2>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="replace_with_default_values" class="doc_header"><code>replace_with_default_values</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L401" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>replace_with_default_values</code>(<strong><code>df</code></strong>, <strong><code>parameters</code></strong>=<em><code>{}</code></em>)</p>
 </blockquote>
 
 </div>

@@ -16,6 +16,7 @@ from ..utils.organize_experiments import remove_experiments
 from ..config.hpconfig import get_path_experiments
 from ..config.hpconfig import get_default_operations
 
+# Cell
 def remove (experiments=[], root_folder=None):
 
     default_operations = get_default_operations ()
@@ -25,6 +26,7 @@ def remove (experiments=[], root_folder=None):
     print (experiments, root_folder)
     remove_experiments (experiments=experiments, root_folder=root_folder)
 
+# Cell
 def parse_args(args):
     parser = argparse.ArgumentParser(description='show metrics about experiments')
     # Datasets
@@ -45,4 +47,3 @@ def parse_arguments_and_remove (args):
 def main():
 
     parse_arguments_and_remove (sys.argv[1:])
-

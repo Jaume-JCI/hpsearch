@@ -33,20 +33,23 @@ nb_path: "nbs/tools/change_manager.ipynb"
     
 <div class="cell border-box-sizing code_cell rendered">
 
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="change_manager" class="doc_header"><code>change_manager</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tools/change_manager.py#L12" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>change_manager</code>(<strong><code>subclass</code></strong>=<em><code>None</code></em>)</p>
-</blockquote>
-
 </div>
+    {% endraw %}
 
-</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pytest</span>
+<span class="kn">from</span> <span class="nn">hpsearch.config.manager_factory</span> <span class="kn">import</span> <span class="n">ManagerFactory</span>
+<span class="kn">from</span> <span class="nn">hpsearch.examples.example_experiment_manager</span> <span class="kn">import</span> <span class="n">ExampleExperimentManager</span>
+<span class="kn">from</span> <span class="nn">hpsearch.examples.dummy_experiment_manager</span> <span class="kn">import</span> <span class="n">DummyExperimentManager</span>
+</pre></div>
+
+    </div>
 </div>
 </div>
 
@@ -64,7 +67,44 @@ nb_path: "nbs/tools/change_manager.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="main" class="doc_header"><code>main</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tools/change_manager.py#L25" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>main</code>()</p>
+<h4 id="change_manager" class="doc_header"><code>change_manager</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tools/change_manager.py#L13" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>change_manager</code>(<strong><code>subclass</code></strong>=<em><code>None</code></em>)</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="example-usage">example usage<a class="anchor-link" href="#example-usage"> </a></h3>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="test_change_manager_list" class="doc_header"><code>test_change_manager_list</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/tools/test_change_manager.py#L20" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_change_manager_list</code>()</p>
 </blockquote>
 
 </div>
@@ -91,17 +131,7 @@ nb_path: "nbs/tools/change_manager.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">hpsearch.config.manager_factory</span> <span class="kn">import</span> <span class="n">ManagerFactory</span>
-<span class="n">manager_factory</span> <span class="o">=</span> <span class="n">ManagerFactory</span><span class="p">()</span>
-<span class="n">manager_factory</span><span class="o">.</span><span class="n">delete_and_reset_all</span><span class="p">()</span>
-<span class="n">change_manager</span> <span class="p">(</span><span class="kc">None</span><span class="p">)</span>
-
-<span class="kn">from</span> <span class="nn">hpsearch.examples.example_experiment_manager</span> <span class="kn">import</span> <span class="n">ExampleExperimentManager</span>
-<span class="n">em</span> <span class="o">=</span> <span class="n">ExampleExperimentManager</span><span class="p">()</span>
-<span class="n">manager_factory</span><span class="o">.</span><span class="n">register_manager</span><span class="p">(</span><span class="n">em</span><span class="p">)</span>
-<span class="n">manager_factory</span><span class="o">.</span><span class="n">write_manager</span><span class="p">(</span><span class="n">em</span><span class="p">)</span>
-
-<span class="n">change_manager</span> <span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_change_manager_list</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -113,86 +143,31 @@ nb_path: "nbs/tools/change_manager.ipynb"
 
 <div class="output_area">
 
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>class2import not found, switching to original method
+class2import not found, switching to original method
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>current path: /mnt/athena/hpsearch/nbs/tools
+<pre>running test_change_manager_list
+
+initial list
 subclasses: dict_keys([])
 experiment manager registered: ExperimentManager
-current path: /mnt/athena/hpsearch/nbs/tools
+
+list after storing ExampleExperimentManager
 subclasses: dict_keys([&#39;ExampleExperimentManager&#39;])
 experiment manager registered: ExampleExperimentManager
-</pre>
-</div>
-</div>
 
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">hpsearch.examples.dummy_experiment_manager</span> <span class="kn">import</span> <span class="n">DummyExperimentManager</span>
-
-<span class="n">em</span> <span class="o">=</span> <span class="n">DummyExperimentManager</span><span class="p">()</span>
-<span class="n">manager_factory</span><span class="o">.</span><span class="n">register_manager</span><span class="p">(</span><span class="n">em</span><span class="p">)</span>
-<span class="n">manager_factory</span><span class="o">.</span><span class="n">write_manager</span><span class="p">(</span><span class="n">em</span><span class="p">)</span>
-<span class="k">assert</span> <span class="n">manager_factory</span><span class="o">.</span><span class="n">get_experiment_manager</span><span class="p">()</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;DummyExperimentManager&#39;</span>
-<span class="n">change_manager</span> <span class="p">(</span><span class="kc">None</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>current path: /mnt/athena/hpsearch/nbs/tools
+list after storing DummyExperimentManager
 subclasses: dict_keys([&#39;ExampleExperimentManager&#39;, &#39;DummyExperimentManager&#39;])
-experiment manager registered: ExperimentManager
-</pre>
-</div>
-</div>
+experiment manager registered: DummyExperimentManager
 
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">change_manager</span><span class="p">(</span><span class="s1">&#39;ExampleExperimentManager&#39;</span><span class="p">)</span>
-<span class="k">assert</span> <span class="n">manager_factory</span><span class="o">.</span><span class="n">get_experiment_manager</span><span class="p">()</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;ExampleExperimentManager&#39;</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>current path: /mnt/athena/hpsearch/nbs/tools
-current path: /mnt/athena/hpsearch/nbs/tools
-current path: /mnt/athena/hpsearch/nbs/tools
+list after changing manager
 subclasses: dict_keys([&#39;ExampleExperimentManager&#39;, &#39;DummyExperimentManager&#39;])
 experiment manager registered: ExampleExperimentManager
 </pre>
@@ -201,6 +176,37 @@ experiment manager registered: ExampleExperimentManager
 
 </div>
 </div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="main" class="doc_header"><code>main</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tools/change_manager.py#L27" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>main</code>()</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
 
 </div>
     {% endraw %}

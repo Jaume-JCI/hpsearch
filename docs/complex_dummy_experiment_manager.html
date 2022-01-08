@@ -26,88 +26,22 @@ nb_path: "nbs/examples/complex_dummy_experiment_manager.ipynb"
     
 <div class="cell border-box-sizing code_cell rendered">
 
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>/anaconda/envs/athena_gpu/lib/python3.7/site-packages/sklearn/utils/deprecation.py:144: FutureWarning: The sklearn.datasets.base module is  deprecated in version 0.22 and will be removed in version 0.24. The corresponding classes / functions should instead be imported from sklearn.datasets. Anything that cannot be imported from sklearn.datasets is now part of the private API.
-  warnings.warn(message, FutureWarning)
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
 </div>
     {% endraw %}
 
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">load_ext</span> autoreload
-<span class="o">%</span><span class="k">autoreload</span> 2
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>current path: /mnt/athena/hpsearch/nbs/examples
-The autoreload extension is already loaded. To reload it, use:
-  %reload_ext autoreload
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>[autoreload of hpsearch.config.hpconfig failed: Traceback (most recent call last):
-  File &#34;/anaconda/envs/athena_gpu/lib/python3.7/site-packages/IPython/extensions/autoreload.py&#34;, line 245, in check
-    superreload(m, reload, self.old_objects)
-  File &#34;/anaconda/envs/athena_gpu/lib/python3.7/site-packages/IPython/extensions/autoreload.py&#34;, line 394, in superreload
-    module = reload(module)
-  File &#34;/anaconda/envs/athena_gpu/lib/python3.7/imp.py&#34;, line 314, in reload
-    return importlib.reload(module)
-  File &#34;/anaconda/envs/athena_gpu/lib/python3.7/importlib/__init__.py&#34;, line 169, in reload
-    _bootstrap._exec(spec, module)
-  File &#34;&lt;frozen importlib._bootstrap&gt;&#34;, line 630, in _exec
-  File &#34;&lt;frozen importlib._bootstrap_external&gt;&#34;, line 728, in exec_module
-  File &#34;&lt;frozen importlib._bootstrap&gt;&#34;, line 219, in _call_with_frames_removed
-  File &#34;/mnt/athena/hpsearch/hpsearch/config/hpconfig.py&#34;, line 14, in &lt;module&gt;
-    experiment_manager = manager_factory.get_experiment_manager()
-  File &#34;/mnt/athena/hpsearch/hpsearch/config/manager_factory.py&#34;, line 132, in get_experiment_manager
-    self.import_written_manager()
-  File &#34;/mnt/athena/hpsearch/hpsearch/config/manager_factory.py&#34;, line 109, in import_written_manager
-    import hpsearch.app_config.subclassed_manager_import as subclass_module
-  File &#34;/mnt/athena/hpsearch/hpsearch/app_config/subclassed_manager.py&#34;, line 21
-    for epoch in range(number_epochs):
-      ^
-IndentationError: expected an indented block
-]
-</pre>
-</div>
-</div>
-
-</div>
-</div>
 
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="ComplexDummyExperimentManager">ComplexDummyExperimentManager<a class="anchor-link" href="#ComplexDummyExperimentManager"> </a></h2>
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -119,7 +53,7 @@ IndentationError: expected an indented block
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="ComplexDummyExperimentManager" class="doc_header"><code>class</code> <code>ComplexDummyExperimentManager</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/examples/complex_dummy_experiment_manager.py#L11" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ComplexDummyExperimentManager</code>() :: <a href="/hpsearch/dummy_experiment_manager.html#DummyExperimentManager"><code>DummyExperimentManager</code></a></p>
+<h2 id="ComplexDummyExperimentManager" class="doc_header"><code>class</code> <code>ComplexDummyExperimentManager</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/examples/complex_dummy_experiment_manager.py#L12" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ComplexDummyExperimentManager</code>(<strong><code>model_file_name</code></strong>=<em><code>'model_weights.pk'</code></em>, <strong>**<code>kwargs</code></strong>) :: <a href="/hpsearch/dummy_experiment_manager.html#DummyExperimentManager"><code>DummyExperimentManager</code></a></p>
 </blockquote>
 
 </div>
@@ -156,7 +90,7 @@ IndentationError: expected an indented block
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="run_multiple_experiments" class="doc_header"><code>run_multiple_experiments</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/examples/complex_dummy_experiment_manager.py#L61" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>run_multiple_experiments</code>(<strong><code>nruns</code></strong>=<em><code>1</code></em>, <strong><code>noise</code></strong>=<em><code>0.0</code></em>, <strong><code>verbose</code></strong>=<em><code>True</code></em>, <strong><code>rate</code></strong>=<em><code>0.03</code></em>)</p>
+<h4 id="run_multiple_experiments" class="doc_header"><code>run_multiple_experiments</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/examples/complex_dummy_experiment_manager.py#L76" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>run_multiple_experiments</code>(<strong>**<code>kwargs</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -180,7 +114,7 @@ IndentationError: expected an indented block
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="remove_previous_experiments" class="doc_header"><code>remove_previous_experiments</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/examples/complex_dummy_experiment_manager.py#L72" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>remove_previous_experiments</code>()</p>
+<h4 id="remove_previous_experiments" class="doc_header"><code>remove_previous_experiments</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/examples/complex_dummy_experiment_manager.py#L79" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>remove_previous_experiments</code>()</p>
 </blockquote>
 
 </div>
@@ -237,8 +171,9 @@ IndentationError: expected an indented block
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Example-use">Example use<a class="anchor-link" href="#Example-use"> </a></h2><h3 id="1.--Creating-new-experiment-that-extends-previous-experiment-by-using-a-larger-number-of-epochs">1.- Creating new experiment that extends previous experiment by using a larger number of epochs<a class="anchor-link" href="#1.--Creating-new-experiment-that-extends-previous-experiment-by-using-a-larger-number-of-epochs"> </a></h3><p>We see how to create a experiment that is the same as a previous experiment, only increasing the number of epochs.</p>
-<h5 id="1.a.-For-test-purposes,-we-first-run-the-full-number-of-epochs,-30,-take-note-of-the-accuracy,-and-remove-the-experiment">1.a. For test purposes, we first run the full number of epochs, 30, take note of the accuracy, and remove the experiment<a class="anchor-link" href="#1.a.-For-test-purposes,-we-first-run-the-full-number-of-epochs,-30,-take-note-of-the-accuracy,-and-remove-the-experiment"> </a></h5>
+<h2 id="Example-use">Example use<a class="anchor-link" href="#Example-use"> </a></h2><h3 id="Extend-previous-experiment-by-using-a-larger-number-of-epochs">Extend previous experiment by using a larger number of epochs<a class="anchor-link" href="#Extend-previous-experiment-by-using-a-larger-number-of-epochs"> </a></h3><p>We see how to create a experiment that is the same as a previous experiment, only increasing the number of epochs.</p>
+<p>1.a. For test purposes, we first run the full number of epochs, 30, take note of the accuracy, and remove the experiment</p>
+
 </div>
 </div>
 </div>
@@ -334,9 +269,9 @@ epoch 29: accuracy: 0.6000000000000001
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="n">path_experiments</span> <span class="o">=</span> <span class="n">get_path_experiments</span> <span class="p">()</span>
-<span class="nb">print</span> <span class="p">(</span><span class="sa">f</span><span class="s1">&#39;experiments folders: {os.listdir(f&quot;</span><span class="si">{path_experiments}</span><span class="s1">/experiments&quot;)}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="sa">f</span><span class="s1">&#39;experiments folders: </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">path_experiments</span><span class="si">}</span><span class="s2">/experiments&quot;</span><span class="p">)</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
 
-<span class="n">experiments_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_pickle</span> <span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{path_experiments}</span><span class="s1">/experiments_data.pk&#39;</span><span class="p">)</span>
+<span class="n">experiments_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_pickle</span> <span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">path_experiments</span><span class="si">}</span><span class="s1">/experiments_data.pk&#39;</span><span class="p">)</span>
 <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;csv data&#39;</span><span class="p">)</span>
 <span class="n">experiments_data</span>
 </pre></div>
@@ -413,7 +348,8 @@ csv data
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h5 id="we-plot-the-history">we plot the history<a class="anchor-link" href="#we-plot-the-history"> </a></h5>
+<p>we plot the history</p>
+
 </div>
 </div>
 </div>
@@ -493,7 +429,9 @@ csv data
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="1.b.-Now-we-run-two-experiments:">1.b. Now we run two experiments:<a class="anchor-link" href="#1.b.-Now-we-run-two-experiments:"> </a></h4><h5 id="We-run-the-first-experiment--with-20-epochs:">We run the first experiment  with 20 epochs:<a class="anchor-link" href="#We-run-the-first-experiment--with-20-epochs:"> </a></h5>
+<p>1.b. Now we run two experiments:</p>
+<p>We run the first experiment  with 20 epochs:</p>
+
 </div>
 </div>
 </div>
@@ -571,12 +509,12 @@ epoch 19: accuracy: 0.7000000000000002
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span>
-<span class="nb">print</span> <span class="p">(</span><span class="sa">f</span><span class="s1">&#39;experiments folders: {os.listdir(f&quot;</span><span class="si">{path_experiments}</span><span class="s1">/experiments&quot;)}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="sa">f</span><span class="s1">&#39;experiments folders: </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">path_experiments</span><span class="si">}</span><span class="s2">/experiments&quot;</span><span class="p">)</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
 
-<span class="n">experiments_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_pickle</span> <span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{path_experiments}</span><span class="s1">/experiments_data.pk&#39;</span><span class="p">)</span>
+<span class="n">experiments_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_pickle</span> <span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">path_experiments</span><span class="si">}</span><span class="s1">/experiments_data.pk&#39;</span><span class="p">)</span>
 <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;csv data&#39;</span><span class="p">)</span>
 <span class="n">display</span><span class="p">(</span><span class="n">experiments_data</span><span class="p">)</span>
-<span class="nb">print</span> <span class="p">(</span><span class="sa">f</span><span class="s1">&#39;weight: </span><span class="si">{em.model.weight}</span><span class="s1">, accuracy: </span><span class="si">{em.model.accuracy}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="sa">f</span><span class="s1">&#39;weight: </span><span class="si">{</span><span class="n">em</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">weight</span><span class="si">}</span><span class="s1">, accuracy: </span><span class="si">{</span><span class="n">em</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">accuracy</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -659,7 +597,8 @@ csv data
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h6 id="We-run-the-second-experiment--resumes-from-the-previous-one-and-increases-the-epochs-to-30">We run the second experiment  resumes from the previous one and increases the epochs to 30<a class="anchor-link" href="#We-run-the-second-experiment--resumes-from-the-previous-one-and-increases-the-epochs-to-30"> </a></h6>
+<p>We run the second experiment  resumes from the previous one and increases the epochs to 30</p>
+
 </div>
 </div>
 </div>
@@ -724,7 +663,7 @@ epoch 9: accuracy: 0.6000000000000001
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">experiments_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_pickle</span> <span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{path_experiments}</span><span class="s1">/experiments_data.pk&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">experiments_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_pickle</span> <span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">path_experiments</span><span class="si">}</span><span class="s1">/experiments_data.pk&#39;</span><span class="p">)</span>
 <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;csv data&#39;</span><span class="p">)</span>
 <span class="n">display</span><span class="p">(</span><span class="n">experiments_data</span><span class="p">)</span>
 
@@ -734,7 +673,7 @@ epoch 9: accuracy: 0.6000000000000001
 <span class="k">assert</span> <span class="n">new_weight</span><span class="o">==</span><span class="n">reference_weight</span>
 <span class="k">assert</span> <span class="n">new_accuracy</span><span class="o">==</span><span class="n">reference_accuracy</span>
 
-<span class="nb">print</span> <span class="p">(</span><span class="sa">f</span><span class="s1">&#39;weight: </span><span class="si">{new_weight}</span><span class="s1">, accuracy: </span><span class="si">{new_accuracy}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="sa">f</span><span class="s1">&#39;weight: </span><span class="si">{</span><span class="n">new_weight</span><span class="si">}</span><span class="s1">, accuracy: </span><span class="si">{</span><span class="n">new_accuracy</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -824,7 +763,8 @@ epoch 9: accuracy: 0.6000000000000001
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h5 id="we-plot-the-history">we plot the history<a class="anchor-link" href="#we-plot-the-history"> </a></h5>
+<p>We plot the history</p>
+
 </div>
 </div>
 </div>

@@ -1,6 +1,15 @@
 {
   "hpsearch": {
     "Overview": "/",
+    "Test change manager": "tst.change_manager.html",
+    "Test metric visualization": "tst.print_info.html",
+    "Test print parameters": "tst.print_parameters.html",
+    "Test print table": "tst.print_table.html",
+    "Test query": "tst.query.html",
+    "Test remove experiments": "tst.remove_experiments.html",
+    "Test nbdev_utils": "tst.experiment_manager.html",
+    "Test visualization": "tst.plot_utils.html",
+    "Default parameter values": "hp_defaults.html",
     "Parameter configuration": "hpconfig.html",
     "Manager factory": "manager_factory.html",
     "Complex Dummy Experiment Manager": "complex_dummy_experiment_manager.html",
@@ -15,9 +24,9 @@
     "Print table": "print_table.html",
     "Query": "query.html",
     "Remove experiments": "remove_experiments.html",
+    "Visualization": "visualization.html",
     "Experiment Utils": "experiment_utils.html",
     "Organize experiments": "organize_experiments.html",
-    "Resume utilities": "resume_from_checkpoint.html",
     "Visualization utils": "experiment_visualization.html",
     "Plot utilities": "plot_utils.html"
   }

@@ -10,6 +10,33 @@ entries:
       title: Overview
       url: /
     - output: web,pdf
+      title: Test change manager
+      url: tst.change_manager.html
+    - output: web,pdf
+      title: Test metric visualization
+      url: tst.print_info.html
+    - output: web,pdf
+      title: Test print parameters
+      url: tst.print_parameters.html
+    - output: web,pdf
+      title: Test print table
+      url: tst.print_table.html
+    - output: web,pdf
+      title: Test query
+      url: tst.query.html
+    - output: web,pdf
+      title: Test remove experiments
+      url: tst.remove_experiments.html
+    - output: web,pdf
+      title: Test nbdev_utils
+      url: tst.experiment_manager.html
+    - output: web,pdf
+      title: Test visualization
+      url: tst.plot_utils.html
+    - output: web,pdf
+      title: Default parameter values
+      url: hp_defaults.html
+    - output: web,pdf
       title: Parameter configuration
       url: hpconfig.html
     - output: web,pdf
@@ -52,14 +79,14 @@ entries:
       title: Remove experiments
       url: remove_experiments.html
     - output: web,pdf
+      title: Visualization
+      url: visualization.html
+    - output: web,pdf
       title: Experiment Utils
       url: experiment_utils.html
     - output: web,pdf
       title: Organize experiments
       url: organize_experiments.html
-    - output: web,pdf
-      title: Resume utilities
-      url: resume_from_checkpoint.html
     - output: web,pdf
       title: Visualization utils
       url: experiment_visualization.html
