@@ -16,7 +16,7 @@ from . import plot_utils
 import warnings
 warnings.filterwarnings('ignore')
 
-
+# Cell
 def plot_multiple_histories (experiments, run_number=0, root_path=None, root_folder=None, metrics='all',
                              metrics_second=[], parameters = None, compare = True,
                              ylegend=0.5, name_file='model_history.pk',
@@ -111,9 +111,7 @@ def plot_multiple_histories (experiments, run_number=0, root_path=None, root_fol
             vis.text (df_show.to_html(justify='left', col_space=100), win= f'{metric}_parameters')
         display(df2)
 
-
 # Cell
-
 def plot_metric_relationship (metric_1, metric_2, folder_experiments=None, run_numbers=None,
                               experiments=None, experiment_subset=None,
                               backend='visdom', **kwargs):

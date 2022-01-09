@@ -7,10 +7,11 @@ from ..experiment_manager import ExperimentManager
 import hpsearch
 import os
 
+# Cell
 class ExampleExperimentManager (ExperimentManager):
 
-    def __init__ (self):
-        super().__init__()
+    def __init__ (self, **kwargs):
+        super().__init__(**kwargs)
 
     def run_experiment (self, parameters={}, path_results='./results'):
         dict_results = {}

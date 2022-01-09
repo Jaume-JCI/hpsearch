@@ -28,10 +28,6 @@ def get_experiment_data (path_experiments=None, folder_experiments=None, experim
                                 experiments=experiments)
 
 # Cell
-##############################################################
-# Routines for comparing results in experiments
-##############################################################
-
 def remove_defaults (parameters):
     from ..config.hpconfig import get_default_parameters
 

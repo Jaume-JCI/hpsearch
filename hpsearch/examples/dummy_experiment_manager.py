@@ -7,6 +7,7 @@ __all__ = ['FakeModel', 'DummyExperimentManager', 'run_multiple_experiments', 'g
 import numpy as np
 import pickle
 
+# Cell
 class FakeModel (object):
 
     overfitting_epochs = 20
