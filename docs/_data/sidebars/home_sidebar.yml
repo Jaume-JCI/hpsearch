@@ -10,6 +10,18 @@ entries:
       title: Overview
       url: /
     - output: web,pdf
+      title: Test manager factory
+      url: tst.manager_factory.html
+    - output: web,pdf
+      title: Test complex dummy experiment manager
+      url: tst.complex_dummy_experiment_manager.html
+    - output: web,pdf
+      title: Test dummy experiment manager
+      url: tst.dummy_experiment_manager.html
+    - output: web,pdf
+      title: Test example experiment manager
+      url: tst.example_experiment_manager.html
+    - output: web,pdf
       title: Test change manager
       url: tst.change_manager.html
     - output: web,pdf
@@ -31,6 +43,15 @@ entries:
       title: Test nbdev_utils
       url: tst.experiment_manager.html
     - output: web,pdf
+      title: Test experiment utils
+      url: tst.experiment_utils.html
+    - output: web,pdf
+      title: Test organize experiments
+      url: tst.organize_experiments.html
+    - output: web,pdf
+      title: Test experiment visualization
+      url: tst.experiment_visualization.html
+    - output: web,pdf
       title: Test visualization
       url: tst.plot_utils.html
     - output: web,pdf
@@ -48,9 +69,6 @@ entries:
     - output: web,pdf
       title: Dummy Experiment Manager
       url: dummy_experiment_manager.html
-    - output: web,pdf
-      title: Experiment
-      url: example_experiment.html
     - output: web,pdf
       title: Example Experiment Manager
       url: example_experiment_manager.html

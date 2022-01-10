@@ -36,6 +36,26 @@ nb_path: "nbs/utils/experiment_utils.ipynb"
 </div>
     {% endraw %}
 
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pytest</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">hpsearch.examples.dummy_experiment_manager</span> <span class="kn">import</span> <span class="p">(</span><span class="n">DummyExperimentManager</span><span class="p">,</span> 
+                                                        <span class="n">run_multiple_experiments</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="get_experiment_data">get_experiment_data<a class="anchor-link" href="#get_experiment_data"> </a></h2>
@@ -75,6 +95,36 @@ nb_path: "nbs/utils/experiment_utils.ipynb"
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="generate_data_exp_utils">generate_data_exp_utils<a class="anchor-link" href="#generate_data_exp_utils"> </a></h3>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="generate_data_exp_utils" class="doc_header"><code>generate_data_exp_utils</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/utils/test_experiment_utils.py#L19" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>generate_data_exp_utils</code>(<strong><code>name_folder</code></strong>)</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -82,1923 +132,20 @@ nb_path: "nbs/utils/experiment_utils.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># populate data for testing</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">hpsearch.examples.dummy_experiment_manager</span> <span class="kn">import</span> <span class="n">remove_previous_experiments</span><span class="p">,</span> <span class="n">run_multiple_experiments</span>
-
-<span class="n">remove_previous_experiments</span><span class="p">()</span>
-<span class="n">run_multiple_experiments</span><span class="p">(</span><span class="n">nruns</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                        <span class="n">values_to_explore</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">offset</span><span class="o">=</span><span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">],</span> <span class="n">epochs</span><span class="o">=</span><span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">]))</span>
-
-<span class="n">run_multiple_experiments</span><span class="p">(</span><span class="n">nruns</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="mf">0.0001</span><span class="p">,</span>
-                        <span class="n">values_to_explore</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">offset</span><span class="o">=</span><span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">],</span> <span class="n">epochs</span><span class="o">=</span><span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">]))</span>
-
-<span class="n">df</span> <span class="o">=</span> <span class="n">get_experiment_data</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">generate_data_exp_utils</span> <span class="p">(</span><span class="n">name_folder</span><span class="p">):</span>
+    <span class="n">em</span> <span class="o">=</span> <span class="n">DummyExperimentManager</span> <span class="p">(</span><span class="n">path_experiments</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;test_</span><span class="si">{</span><span class="n">name_folder</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">em</span><span class="o">.</span><span class="n">remove_previous_experiments</span> <span class="p">()</span>
+    <span class="n">run_multiple_experiments</span><span class="p">(</span><span class="n">em</span><span class="o">=</span><span class="n">em</span><span class="p">,</span> <span class="n">nruns</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                             <span class="n">values_to_explore</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">offset</span><span class="o">=</span><span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">],</span> <span class="n">epochs</span><span class="o">=</span><span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">]))</span>
+    <span class="n">run_multiple_experiments</span><span class="p">(</span><span class="n">em</span><span class="o">=</span><span class="n">em</span><span class="p">,</span> <span class="n">nruns</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="mf">0.0001</span><span class="p">,</span>
+                             <span class="n">values_to_explore</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">offset</span><span class="o">=</span><span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">],</span> <span class="n">epochs</span><span class="o">=</span><span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">]))</span>
+    <span class="k">return</span> <span class="n">em</span>
 </pre></div>
 
     </div>
 </div>
 </div>
-<details class="description">
-      <summary data-open="Hide Output" data-close="Show Output"></summary>
-        <summary></summary>
-        
-<div class="output_wrapper">
-<div class="output">
 
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>experiment script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line: 208
-processing hyper-parameter 0 out of 9
-doing run 0 out of 5
-fixed rate, multiple epochs values
-running experiment 0
-run number: 0
-
-parameters:
-	epochs=5,
-	noise=0.1,
-	offset=0.1,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00025200843811035156
-0 - validation_accuracy: 0.15266689578632928
-0 - test_accuracy: 0.22414728586662405
-finished experiment 0
-processing hyper-parameter 0 out of 9
-doing run 1 out of 5
-fixed rate, multiple epochs values
-running experiment 0
-run number: 1
-
-parameters:
-	epochs=5,
-	noise=0.1,
-	offset=0.1,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.000225067138671875
-1 - validation_accuracy: 0.3360969674400924
-1 - test_accuracy: 0.34119369526599813
-finished experiment 0
-processing hyper-parameter 0 out of 9
-doing run 2 out of 5
-fixed rate, multiple epochs values
-running experiment 0
-run number: 2
-
-parameters:
-	epochs=5,
-	noise=0.1,
-	offset=0.1,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00025582313537597656
-2 - validation_accuracy: 0.3632296637060181
-2 - test_accuracy: 0.32439068915159414
-finished experiment 0
-processing hyper-parameter 0 out of 9
-doing run 3 out of 5
-fixed rate, multiple epochs values
-running experiment 0
-run number: 3
-
-parameters:
-	epochs=5,
-	noise=0.1,
-	offset=0.1,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002295970916748047
-3 - validation_accuracy: 0.3224226912895627
-3 - test_accuracy: 0.20721671600365893
-finished experiment 0
-processing hyper-parameter 0 out of 9
-doing run 4 out of 5
-fixed rate, multiple epochs values
-running experiment 0
-run number: 4
-
-parameters:
-	epochs=5,
-	noise=0.1,
-	offset=0.1,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002319812774658203
-4 - validation_accuracy: 0.22291017457739787
-4 - test_accuracy: 0.35656824380590046
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>using import method 1
-using import method 1
-registering
-registering
-registering
-registering
-registering
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>finished experiment 0
-processing hyper-parameter 1 out of 9
-doing run 0 out of 5
-fixed rate, multiple epochs values
-running experiment 1
-run number: 0
-
-parameters:
-	epochs=5,
-	noise=0.1,
-	offset=0.3,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00027489662170410156
-0 - validation_accuracy: 0.39716960779641236
-0 - test_accuracy: 0.5513162107001803
-finished experiment 1
-processing hyper-parameter 1 out of 9
-doing run 1 out of 5
-fixed rate, multiple epochs values
-running experiment 1
-run number: 1
-
-parameters:
-	epochs=5,
-	noise=0.1,
-	offset=0.3,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.000225067138671875
-1 - validation_accuracy: 0.47170100276171284
-1 - test_accuracy: 0.39902230762809854
-finished experiment 1
-processing hyper-parameter 1 out of 9
-doing run 2 out of 5
-fixed rate, multiple epochs values
-running experiment 1
-run number: 2
-
-parameters:
-	epochs=5,
-	noise=0.1,
-	offset=0.3,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00029158592224121094
-2 - validation_accuracy: 0.4622654461280188
-2 - test_accuracy: 0.4694834802578932
-finished experiment 1
-processing hyper-parameter 1 out of 9
-doing run 3 out of 5
-fixed rate, multiple epochs values
-running experiment 1
-run number: 3
-
-parameters:
-	epochs=5,
-	noise=0.1,
-	offset=0.3,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00023651123046875
-3 - validation_accuracy: 0.43200153485801773
-3 - test_accuracy: 0.31628098764360213
-finished experiment 1
-processing hyper-parameter 1 out of 9
-doing run 4 out of 5
-fixed rate, multiple epochs values
-running experiment 1
-run number: 4
-
-parameters:
-	epochs=5,
-	noise=0.1,
-	offset=0.3,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00023603439331054688
-4 - validation_accuracy: 0.4867202633727114
-4 - test_accuracy: 0.5394530368357544
-finished experiment 1
-processing hyper-parameter 2 out of 9
-doing run 0 out of 5
-fixed rate, multiple epochs values
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>registering
-registering
-registering
-registering
-registering
-registering
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>running experiment 2
-run number: 0
-
-parameters:
-	epochs=5,
-	noise=0.1,
-	offset=0.6,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002951622009277344
-0 - validation_accuracy: 0.7191028503388301
-0 - test_accuracy: 0.8977844699113078
-finished experiment 2
-processing hyper-parameter 2 out of 9
-doing run 1 out of 5
-fixed rate, multiple epochs values
-running experiment 2
-run number: 1
-
-parameters:
-	epochs=5,
-	noise=0.1,
-	offset=0.6,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002510547637939453
-1 - validation_accuracy: 0.6672526577873056
-1 - test_accuracy: 0.8600352971770913
-finished experiment 2
-processing hyper-parameter 2 out of 9
-doing run 2 out of 5
-fixed rate, multiple epochs values
-running experiment 2
-run number: 2
-
-parameters:
-	epochs=5,
-	noise=0.1,
-	offset=0.6,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00024271011352539062
-2 - validation_accuracy: 0.8681626504472708
-2 - test_accuracy: 0.8706116222244603
-finished experiment 2
-processing hyper-parameter 2 out of 9
-doing run 3 out of 5
-fixed rate, multiple epochs values
-running experiment 2
-run number: 3
-
-parameters:
-	epochs=5,
-	noise=0.1,
-	offset=0.6,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00023365020751953125
-3 - validation_accuracy: 0.7168535072803944
-3 - test_accuracy: 0.7932790827862133
-finished experiment 2
-processing hyper-parameter 2 out of 9
-doing run 4 out of 5
-fixed rate, multiple epochs values
-running experiment 2
-run number: 4
-
-parameters:
-	epochs=5,
-	noise=0.1,
-	offset=0.6,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00022745132446289062
-4 - validation_accuracy: 0.7256267613865433
-4 - test_accuracy: 0.7128405184477872
-finished experiment 2
-processing hyper-parameter 3 out of 9
-doing run 0 out of 5
-fixed rate, multiple epochs values
-running experiment 3
-run number: 0
-
-parameters:
-	noise=0.1,
-	offset=0.1,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002658367156982422
-0 - validation_accuracy: 0.28211964591969596
-0 - test_accuracy: 0.40006660002903605
-finished experiment 3
-processing hyper-parameter 3 out of 9
-doing run 1 out of 5
-fixed rate, multiple epochs values
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>registering
-registering
-registering
-registering
-registering
-registering
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>running experiment 3
-run number: 1
-
-parameters:
-	noise=0.1,
-	offset=0.1,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0003070831298828125
-1 - validation_accuracy: 0.23846410399794138
-1 - test_accuracy: 0.3336684811816314
-finished experiment 3
-processing hyper-parameter 3 out of 9
-doing run 2 out of 5
-fixed rate, multiple epochs values
-running experiment 3
-run number: 2
-
-parameters:
-	noise=0.1,
-	offset=0.1,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00026917457580566406
-2 - validation_accuracy: 0.33508343999448764
-2 - test_accuracy: 0.1478355897005293
-finished experiment 3
-processing hyper-parameter 3 out of 9
-doing run 3 out of 5
-fixed rate, multiple epochs values
-running experiment 3
-run number: 3
-
-parameters:
-	noise=0.1,
-	offset=0.1,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002675056457519531
-3 - validation_accuracy: 0.5420937291946821
-3 - test_accuracy: 0.30625355285840516
-finished experiment 3
-processing hyper-parameter 3 out of 9
-doing run 4 out of 5
-fixed rate, multiple epochs values
-running experiment 3
-run number: 4
-
-parameters:
-	noise=0.1,
-	offset=0.1,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00025534629821777344
-4 - validation_accuracy: 0.3881877593875343
-4 - test_accuracy: 0.4041429999523872
-finished experiment 3
-processing hyper-parameter 4 out of 9
-doing run 0 out of 5
-fixed rate, multiple epochs values
-running experiment 4
-run number: 0
-
-parameters:
-	noise=0.1,
-	offset=0.3,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00025773048400878906
-0 - validation_accuracy: 0.7148138530110053
-0 - test_accuracy: 0.4124257392297318
-finished experiment 4
-processing hyper-parameter 4 out of 9
-doing run 1 out of 5
-fixed rate, multiple epochs values
-running experiment 4
-run number: 1
-
-parameters:
-	noise=0.1,
-	offset=0.3,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002758502960205078
-1 - validation_accuracy: 0.4928996250891281
-1 - test_accuracy: 0.4774884246768475
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>registering
-registering
-registering
-registering
-registering
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>finished experiment 4
-processing hyper-parameter 4 out of 9
-doing run 2 out of 5
-fixed rate, multiple epochs values
-running experiment 4
-run number: 2
-
-parameters:
-	noise=0.1,
-	offset=0.3,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002512931823730469
-2 - validation_accuracy: 0.6966074754233561
-2 - test_accuracy: 0.56251762801707
-finished experiment 4
-processing hyper-parameter 4 out of 9
-doing run 3 out of 5
-fixed rate, multiple epochs values
-running experiment 4
-run number: 3
-
-parameters:
-	noise=0.1,
-	offset=0.3,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00027370452880859375
-3 - validation_accuracy: 0.33597191847470337
-3 - test_accuracy: 0.5485116240636105
-finished experiment 4
-processing hyper-parameter 4 out of 9
-doing run 4 out of 5
-fixed rate, multiple epochs values
-running experiment 4
-run number: 4
-
-parameters:
-	noise=0.1,
-	offset=0.3,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002758502960205078
-4 - validation_accuracy: 0.5696821309812252
-4 - test_accuracy: 0.5933082420817203
-finished experiment 4
-processing hyper-parameter 5 out of 9
-doing run 0 out of 5
-fixed rate, multiple epochs values
-running experiment 5
-run number: 0
-
-parameters:
-	noise=0.1,
-	offset=0.6,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00039124488830566406
-0 - validation_accuracy: 0.8820793556587345
-0 - test_accuracy: 0.6442930474629986
-finished experiment 5
-processing hyper-parameter 5 out of 9
-doing run 1 out of 5
-fixed rate, multiple epochs values
-running experiment 5
-run number: 1
-
-parameters:
-	noise=0.1,
-	offset=0.6,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002593994140625
-1 - validation_accuracy: 1.0
-1 - test_accuracy: 0.8699747106164485
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>registering
-registering
-registering
-registering
-registering
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>finished experiment 5
-processing hyper-parameter 5 out of 9
-doing run 2 out of 5
-fixed rate, multiple epochs values
-running experiment 5
-run number: 2
-
-parameters:
-	noise=0.1,
-	offset=0.6,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002608299255371094
-2 - validation_accuracy: 0.946025559970333
-2 - test_accuracy: 0.7944906778954153
-finished experiment 5
-processing hyper-parameter 5 out of 9
-doing run 3 out of 5
-fixed rate, multiple epochs values
-running experiment 5
-run number: 3
-
-parameters:
-	noise=0.1,
-	offset=0.6,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002598762512207031
-3 - validation_accuracy: 0.8526294061750216
-3 - test_accuracy: 0.8205318504252314
-finished experiment 5
-processing hyper-parameter 5 out of 9
-doing run 4 out of 5
-fixed rate, multiple epochs values
-running experiment 5
-run number: 4
-
-parameters:
-	noise=0.1,
-	offset=0.6,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002574920654296875
-4 - validation_accuracy: 0.9556060018201905
-4 - test_accuracy: 0.8026396453339764
-finished experiment 5
-processing hyper-parameter 6 out of 9
-doing run 0 out of 5
-fixed rate, multiple epochs values
-running experiment 6
-run number: 0
-
-parameters:
-	epochs=100,
-	noise=0.1,
-	offset=0.1,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0005457401275634766
-0 - validation_accuracy: 0.0
-0 - test_accuracy: 0.0
-finished experiment 6
-processing hyper-parameter 6 out of 9
-doing run 1 out of 5
-fixed rate, multiple epochs values
-running experiment 6
-run number: 1
-
-parameters:
-	epochs=100,
-	noise=0.1,
-	offset=0.1,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>registering
-registering
-registering
-registering
-registering
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>time spent on this experiment: 0.0005657672882080078
-1 - validation_accuracy: 0.0
-1 - test_accuracy: 0.0
-finished experiment 6
-processing hyper-parameter 6 out of 9
-doing run 2 out of 5
-fixed rate, multiple epochs values
-running experiment 6
-run number: 2
-
-parameters:
-	epochs=100,
-	noise=0.1,
-	offset=0.1,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0005605220794677734
-2 - validation_accuracy: 0.0
-2 - test_accuracy: 0.0
-finished experiment 6
-processing hyper-parameter 6 out of 9
-doing run 3 out of 5
-fixed rate, multiple epochs values
-running experiment 6
-run number: 3
-
-parameters:
-	epochs=100,
-	noise=0.1,
-	offset=0.1,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0005776882171630859
-3 - validation_accuracy: 0.0
-3 - test_accuracy: 0.0
-finished experiment 6
-processing hyper-parameter 6 out of 9
-doing run 4 out of 5
-fixed rate, multiple epochs values
-running experiment 6
-run number: 4
-
-parameters:
-	epochs=100,
-	noise=0.1,
-	offset=0.1,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0005445480346679688
-4 - validation_accuracy: 0.0
-4 - test_accuracy: 0.0
-finished experiment 6
-processing hyper-parameter 7 out of 9
-doing run 0 out of 5
-fixed rate, multiple epochs values
-running experiment 7
-run number: 0
-
-parameters:
-	epochs=100,
-	noise=0.1,
-	offset=0.3,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0005726814270019531
-0 - validation_accuracy: 0.0
-0 - test_accuracy: 0.0
-finished experiment 7
-processing hyper-parameter 7 out of 9
-doing run 1 out of 5
-fixed rate, multiple epochs values
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>registering
-registering
-registering
-registering
-registering
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>running experiment 7
-run number: 1
-
-parameters:
-	epochs=100,
-	noise=0.1,
-	offset=0.3,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0005476474761962891
-1 - validation_accuracy: 0.0
-1 - test_accuracy: 0.0
-finished experiment 7
-processing hyper-parameter 7 out of 9
-doing run 2 out of 5
-fixed rate, multiple epochs values
-running experiment 7
-run number: 2
-
-parameters:
-	epochs=100,
-	noise=0.1,
-	offset=0.3,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.000682830810546875
-2 - validation_accuracy: 0.0
-2 - test_accuracy: 0.0
-finished experiment 7
-processing hyper-parameter 7 out of 9
-doing run 3 out of 5
-fixed rate, multiple epochs values
-running experiment 7
-run number: 3
-
-parameters:
-	epochs=100,
-	noise=0.1,
-	offset=0.3,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0007450580596923828
-3 - validation_accuracy: 0.0
-3 - test_accuracy: 0.0
-finished experiment 7
-processing hyper-parameter 7 out of 9
-doing run 4 out of 5
-fixed rate, multiple epochs values
-running experiment 7
-run number: 4
-
-parameters:
-	epochs=100,
-	noise=0.1,
-	offset=0.3,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0005419254302978516
-4 - validation_accuracy: 0.0
-4 - test_accuracy: 0.0
-finished experiment 7
-processing hyper-parameter 8 out of 9
-doing run 0 out of 5
-fixed rate, multiple epochs values
-running experiment 8
-run number: 0
-
-parameters:
-	epochs=100,
-	noise=0.1,
-	offset=0.6,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0005519390106201172
-0 - validation_accuracy: 0.0
-0 - test_accuracy: 0.0
-finished experiment 8
-processing hyper-parameter 8 out of 9
-doing run 1 out of 5
-fixed rate, multiple epochs values
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>registering
-registering
-registering
-registering
-registering
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>running experiment 8
-run number: 1
-
-parameters:
-	epochs=100,
-	noise=0.1,
-	offset=0.6,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0006034374237060547
-1 - validation_accuracy: 0.0
-1 - test_accuracy: 0.0
-finished experiment 8
-processing hyper-parameter 8 out of 9
-doing run 2 out of 5
-fixed rate, multiple epochs values
-running experiment 8
-run number: 2
-
-parameters:
-	epochs=100,
-	noise=0.1,
-	offset=0.6,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0005445480346679688
-2 - validation_accuracy: 0.0
-2 - test_accuracy: 0.0
-finished experiment 8
-processing hyper-parameter 8 out of 9
-doing run 3 out of 5
-fixed rate, multiple epochs values
-running experiment 8
-run number: 3
-
-parameters:
-	epochs=100,
-	noise=0.1,
-	offset=0.6,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0005865097045898438
-3 - validation_accuracy: 0.0
-3 - test_accuracy: 0.0
-finished experiment 8
-processing hyper-parameter 8 out of 9
-doing run 4 out of 5
-fixed rate, multiple epochs values
-running experiment 8
-run number: 4
-
-parameters:
-	epochs=100,
-	noise=0.1,
-	offset=0.6,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0005438327789306641
-4 - validation_accuracy: 0.0
-4 - test_accuracy: 0.0
-finished experiment 8
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>registering
-registering
-registering
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>experiment script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line: 208
-processing hyper-parameter 0 out of 9
-doing run 0 out of 5
-fixed rate, multiple epochs values
-running experiment 9
-run number: 0
-
-parameters:
-	epochs=5,
-	noise=0.1,
-	offset=0.1,
-	rate=0.0001
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002536773681640625
-0 - validation_accuracy: 0.09896520077513671
-0 - test_accuracy: 0.1429448560553782
-finished experiment 9
-processing hyper-parameter 0 out of 9
-doing run 1 out of 5
-fixed rate, multiple epochs values
-running experiment 9
-run number: 1
-
-parameters:
-	epochs=5,
-	noise=0.1,
-	offset=0.1,
-	rate=0.0001
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002636909484863281
-1 - validation_accuracy: 0.29094232169160816
-1 - test_accuracy: 0.06820371679913417
-finished experiment 9
-processing hyper-parameter 0 out of 9
-doing run 2 out of 5
-fixed rate, multiple epochs values
-running experiment 9
-run number: 2
-
-parameters:
-	epochs=5,
-	noise=0.1,
-	offset=0.1,
-	rate=0.0001
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00023412704467773438
-2 - validation_accuracy: 0.09050097806217536
-2 - test_accuracy: 0.24118282743322353
-finished experiment 9
-processing hyper-parameter 0 out of 9
-doing run 3 out of 5
-fixed rate, multiple epochs values
-running experiment 9
-run number: 3
-
-parameters:
-	epochs=5,
-	noise=0.1,
-	offset=0.1,
-	rate=0.0001
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002434253692626953
-3 - validation_accuracy: 0.1357619580873862
-3 - test_accuracy: 0.1277123577176299
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>using import method 1
-registering
-registering
-registering
-registering
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>finished experiment 9
-processing hyper-parameter 0 out of 9
-doing run 4 out of 5
-fixed rate, multiple epochs values
-running experiment 9
-run number: 4
-
-parameters:
-	epochs=5,
-	noise=0.1,
-	offset=0.1,
-	rate=0.0001
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002231597900390625
-4 - validation_accuracy: 0.19700113864369304
-4 - test_accuracy: 0.2364927812206559
-finished experiment 9
-processing hyper-parameter 1 out of 9
-doing run 0 out of 5
-fixed rate, multiple epochs values
-running experiment 10
-run number: 0
-
-parameters:
-	epochs=5,
-	noise=0.1,
-	offset=0.3,
-	rate=0.0001
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00022983551025390625
-0 - validation_accuracy: 0.2762110027008862
-0 - test_accuracy: 0.1538028592750314
-finished experiment 10
-processing hyper-parameter 1 out of 9
-doing run 1 out of 5
-fixed rate, multiple epochs values
-running experiment 10
-run number: 1
-
-parameters:
-	epochs=5,
-	noise=0.1,
-	offset=0.3,
-	rate=0.0001
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00026106834411621094
-1 - validation_accuracy: 0.3118694311541041
-1 - test_accuracy: 0.5322847223532259
-finished experiment 10
-processing hyper-parameter 1 out of 9
-doing run 2 out of 5
-fixed rate, multiple epochs values
-running experiment 10
-run number: 2
-
-parameters:
-	epochs=5,
-	noise=0.1,
-	offset=0.3,
-	rate=0.0001
-
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>registering
-registering
-registering
-registering
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00027298927307128906
-2 - validation_accuracy: 0.2824791885113888
-2 - test_accuracy: 0.5488555492997031
-finished experiment 10
-processing hyper-parameter 1 out of 9
-doing run 3 out of 5
-fixed rate, multiple epochs values
-running experiment 10
-run number: 3
-
-parameters:
-	epochs=5,
-	noise=0.1,
-	offset=0.3,
-	rate=0.0001
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00025391578674316406
-3 - validation_accuracy: 0.3542108445440566
-3 - test_accuracy: 0.29594442703234025
-finished experiment 10
-processing hyper-parameter 1 out of 9
-doing run 4 out of 5
-fixed rate, multiple epochs values
-running experiment 10
-run number: 4
-
-parameters:
-	epochs=5,
-	noise=0.1,
-	offset=0.3,
-	rate=0.0001
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00023484230041503906
-4 - validation_accuracy: 0.17774350013350784
-4 - test_accuracy: 0.27922115331820174
-finished experiment 10
-processing hyper-parameter 2 out of 9
-doing run 0 out of 5
-fixed rate, multiple epochs values
-running experiment 11
-run number: 0
-
-parameters:
-	epochs=5,
-	noise=0.1,
-	offset=0.6,
-	rate=0.0001
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00023651123046875
-0 - validation_accuracy: 0.7449750829699029
-0 - test_accuracy: 0.6106967681815832
-finished experiment 11
-processing hyper-parameter 2 out of 9
-doing run 1 out of 5
-fixed rate, multiple epochs values
-running experiment 11
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>registering
-registering
-registering
-registering
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>run number: 1
-
-parameters:
-	epochs=5,
-	noise=0.1,
-	offset=0.6,
-	rate=0.0001
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002689361572265625
-1 - validation_accuracy: 0.5266615252610372
-1 - test_accuracy: 0.6113805962175347
-finished experiment 11
-processing hyper-parameter 2 out of 9
-doing run 2 out of 5
-fixed rate, multiple epochs values
-running experiment 11
-run number: 2
-
-parameters:
-	epochs=5,
-	noise=0.1,
-	offset=0.6,
-	rate=0.0001
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002422332763671875
-2 - validation_accuracy: 0.6701665507505248
-2 - test_accuracy: 0.6979460528571291
-finished experiment 11
-processing hyper-parameter 2 out of 9
-doing run 3 out of 5
-fixed rate, multiple epochs values
-running experiment 11
-run number: 3
-
-parameters:
-	epochs=5,
-	noise=0.1,
-	offset=0.6,
-	rate=0.0001
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002295970916748047
-3 - validation_accuracy: 0.6325131473982049
-3 - test_accuracy: 1.0
-finished experiment 11
-processing hyper-parameter 2 out of 9
-doing run 4 out of 5
-fixed rate, multiple epochs values
-running experiment 11
-run number: 4
-
-parameters:
-	epochs=5,
-	noise=0.1,
-	offset=0.6,
-	rate=0.0001
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00022411346435546875
-4 - validation_accuracy: 0.5537033928503765
-4 - test_accuracy: 0.6623624860136151
-finished experiment 11
-processing hyper-parameter 3 out of 9
-doing run 0 out of 5
-fixed rate, multiple epochs values
-running experiment 12
-run number: 0
-
-parameters:
-	epochs=10,
-	noise=0.1,
-	offset=0.1,
-	rate=0.0001
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002837181091308594
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>registering
-registering
-registering
-registering
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>0 - validation_accuracy: 0.04952188204693862
-0 - test_accuracy: 0.0
-finished experiment 12
-processing hyper-parameter 3 out of 9
-doing run 1 out of 5
-fixed rate, multiple epochs values
-running experiment 12
-run number: 1
-
-parameters:
-	epochs=10,
-	noise=0.1,
-	offset=0.1,
-	rate=0.0001
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002827644348144531
-1 - validation_accuracy: 0.2254282949295951
-1 - test_accuracy: 0.0
-finished experiment 12
-processing hyper-parameter 3 out of 9
-doing run 2 out of 5
-fixed rate, multiple epochs values
-running experiment 12
-run number: 2
-
-parameters:
-	epochs=10,
-	noise=0.1,
-	offset=0.1,
-	rate=0.0001
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002791881561279297
-2 - validation_accuracy: 0.09139587110249203
-2 - test_accuracy: 0.0
-finished experiment 12
-processing hyper-parameter 3 out of 9
-doing run 3 out of 5
-fixed rate, multiple epochs values
-running experiment 12
-run number: 3
-
-parameters:
-	epochs=10,
-	noise=0.1,
-	offset=0.1,
-	rate=0.0001
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00025343894958496094
-3 - validation_accuracy: 0.08369893072167195
-3 - test_accuracy: 0.0
-finished experiment 12
-processing hyper-parameter 3 out of 9
-doing run 4 out of 5
-fixed rate, multiple epochs values
-running experiment 12
-run number: 4
-
-parameters:
-	epochs=10,
-	noise=0.1,
-	offset=0.1,
-	rate=0.0001
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0006406307220458984
-4 - validation_accuracy: 0.3157410492005387
-4 - test_accuracy: 0.015465026968653608
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>registering
-registering
-registering
-registering
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>finished experiment 12
-processing hyper-parameter 4 out of 9
-doing run 0 out of 5
-fixed rate, multiple epochs values
-running experiment 13
-run number: 0
-
-parameters:
-	epochs=10,
-	noise=0.1,
-	offset=0.3,
-	rate=0.0001
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00028133392333984375
-0 - validation_accuracy: 0.35045612766303835
-0 - test_accuracy: 0.14014553959417575
-finished experiment 13
-processing hyper-parameter 4 out of 9
-doing run 1 out of 5
-fixed rate, multiple epochs values
-running experiment 13
-run number: 1
-
-parameters:
-	epochs=10,
-	noise=0.1,
-	offset=0.3,
-	rate=0.0001
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00025534629821777344
-1 - validation_accuracy: 0.25505444215342143
-1 - test_accuracy: 0.23363258688736716
-finished experiment 13
-processing hyper-parameter 4 out of 9
-doing run 2 out of 5
-fixed rate, multiple epochs values
-running experiment 13
-run number: 2
-
-parameters:
-	epochs=10,
-	noise=0.1,
-	offset=0.3,
-	rate=0.0001
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002715587615966797
-2 - validation_accuracy: 0.45664223983173
-2 - test_accuracy: 0.26110344921209705
-finished experiment 13
-processing hyper-parameter 4 out of 9
-doing run 3 out of 5
-fixed rate, multiple epochs values
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>registering
-registering
-registering
-registering
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>running experiment 13
-run number: 3
-
-parameters:
-	epochs=10,
-	noise=0.1,
-	offset=0.3,
-	rate=0.0001
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00024628639221191406
-3 - validation_accuracy: 0.27094650906487855
-3 - test_accuracy: 0.2979338107213556
-finished experiment 13
-processing hyper-parameter 4 out of 9
-doing run 4 out of 5
-fixed rate, multiple epochs values
-running experiment 13
-run number: 4
-
-parameters:
-	epochs=10,
-	noise=0.1,
-	offset=0.3,
-	rate=0.0001
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002446174621582031
-4 - validation_accuracy: 0.31013020620298576
-4 - test_accuracy: 0.19649721078921792
-finished experiment 13
-processing hyper-parameter 5 out of 9
-doing run 0 out of 5
-fixed rate, multiple epochs values
-running experiment 14
-run number: 0
-
-parameters:
-	epochs=10,
-	noise=0.1,
-	offset=0.6,
-	rate=0.0001
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00024366378784179688
-0 - validation_accuracy: 0.5681066975163386
-0 - test_accuracy: 0.463205962343943
-finished experiment 14
-processing hyper-parameter 5 out of 9
-doing run 1 out of 5
-fixed rate, multiple epochs values
-running experiment 14
-run number: 1
-
-parameters:
-	epochs=10,
-	noise=0.1,
-	offset=0.6,
-	rate=0.0001
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002636909484863281
-1 - validation_accuracy: 0.6464914740697283
-1 - test_accuracy: 0.3643199706662177
-finished experiment 14
-processing hyper-parameter 5 out of 9
-doing run 2 out of 5
-fixed rate, multiple epochs values
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>registering
-registering
-registering
-registering
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>running experiment 14
-run number: 2
-
-parameters:
-	epochs=10,
-	noise=0.1,
-	offset=0.6,
-	rate=0.0001
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0002639293670654297
-2 - validation_accuracy: 0.6321302596279039
-2 - test_accuracy: 0.5178861334947883
-finished experiment 14
-processing hyper-parameter 5 out of 9
-doing run 3 out of 5
-fixed rate, multiple epochs values
-running experiment 14
-run number: 3
-
-parameters:
-	epochs=10,
-	noise=0.1,
-	offset=0.6,
-	rate=0.0001
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00028395652770996094
-3 - validation_accuracy: 0.533554069688769
-3 - test_accuracy: 0.5889073125831905
-finished experiment 14
-processing hyper-parameter 5 out of 9
-doing run 4 out of 5
-fixed rate, multiple epochs values
-running experiment 14
-run number: 4
-
-parameters:
-	epochs=10,
-	noise=0.1,
-	offset=0.6,
-	rate=0.0001
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.00023674964904785156
-4 - validation_accuracy: 0.6210084595923386
-4 - test_accuracy: 0.6465632808255075
-finished experiment 14
-processing hyper-parameter 6 out of 9
-doing run 0 out of 5
-fixed rate, multiple epochs values
-running experiment 15
-run number: 0
-
-parameters:
-	noise=0.1,
-	offset=0.1,
-	rate=0.0001
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0005505084991455078
-0 - validation_accuracy: 0.13631776781504923
-0 - test_accuracy: 0.13103000481008314
-finished experiment 15
-processing hyper-parameter 6 out of 9
-doing run 1 out of 5
-fixed rate, multiple epochs values
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>registering
-registering
-registering
-registering
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>running experiment 15
-run number: 1
-
-parameters:
-	noise=0.1,
-	offset=0.1,
-	rate=0.0001
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0005736351013183594
-1 - validation_accuracy: 0.0
-1 - test_accuracy: 0.0
-finished experiment 15
-processing hyper-parameter 6 out of 9
-doing run 2 out of 5
-fixed rate, multiple epochs values
-running experiment 15
-run number: 2
-
-parameters:
-	noise=0.1,
-	offset=0.1,
-	rate=0.0001
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0005764961242675781
-2 - validation_accuracy: 0.20993379268416448
-2 - test_accuracy: 0.09162735213882556
-finished experiment 15
-processing hyper-parameter 6 out of 9
-doing run 3 out of 5
-fixed rate, multiple epochs values
-running experiment 15
-run number: 3
-
-parameters:
-	noise=0.1,
-	offset=0.1,
-	rate=0.0001
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0005595684051513672
-3 - validation_accuracy: 0.04732594468109938
-3 - test_accuracy: 0.04669841243405413
-finished experiment 15
-processing hyper-parameter 6 out of 9
-doing run 4 out of 5
-fixed rate, multiple epochs values
-running experiment 15
-run number: 4
-
-parameters:
-	noise=0.1,
-	offset=0.1,
-	rate=0.0001
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0005652904510498047
-4 - validation_accuracy: 0.02844958120661982
-4 - test_accuracy: 0.06619082703799394
-finished experiment 15
-processing hyper-parameter 7 out of 9
-doing run 0 out of 5
-fixed rate, multiple epochs values
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>registering
-registering
-registering
-registering
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>running experiment 16
-run number: 0
-
-parameters:
-	noise=0.1,
-	offset=0.3,
-	rate=0.0001
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0005609989166259766
-0 - validation_accuracy: 0.5364942774550069
-0 - test_accuracy: 0.20969020110026101
-finished experiment 16
-processing hyper-parameter 7 out of 9
-doing run 1 out of 5
-fixed rate, multiple epochs values
-running experiment 16
-run number: 1
-
-parameters:
-	noise=0.1,
-	offset=0.3,
-	rate=0.0001
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0005686283111572266
-1 - validation_accuracy: 0.2650501760467349
-1 - test_accuracy: 0.3309456908633217
-finished experiment 16
-processing hyper-parameter 7 out of 9
-doing run 2 out of 5
-fixed rate, multiple epochs values
-running experiment 16
-run number: 2
-
-parameters:
-	noise=0.1,
-	offset=0.3,
-	rate=0.0001
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.000560760498046875
-2 - validation_accuracy: 0.21541797244846772
-2 - test_accuracy: 0.3114364379114165
-finished experiment 16
-processing hyper-parameter 7 out of 9
-doing run 3 out of 5
-fixed rate, multiple epochs values
-running experiment 16
-run number: 3
-
-parameters:
-	noise=0.1,
-	offset=0.3,
-	rate=0.0001
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0005602836608886719
-3 - validation_accuracy: 0.28698172275496536
-3 - test_accuracy: 0.265568241571796
-finished experiment 16
-processing hyper-parameter 7 out of 9
-doing run 4 out of 5
-fixed rate, multiple epochs values
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>registering
-registering
-registering
-registering
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>running experiment 16
-run number: 4
-
-parameters:
-	noise=0.1,
-	offset=0.3,
-	rate=0.0001
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0005648136138916016
-4 - validation_accuracy: 0.3282727582579871
-4 - test_accuracy: 0.15398647440429333
-finished experiment 16
-processing hyper-parameter 8 out of 9
-doing run 0 out of 5
-fixed rate, multiple epochs values
-running experiment 17
-run number: 0
-
-parameters:
-	noise=0.1,
-	offset=0.6,
-	rate=0.0001
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0005669593811035156
-0 - validation_accuracy: 0.6187024612832258
-0 - test_accuracy: 0.4426267965254723
-finished experiment 17
-processing hyper-parameter 8 out of 9
-doing run 1 out of 5
-fixed rate, multiple epochs values
-running experiment 17
-run number: 1
-
-parameters:
-	noise=0.1,
-	offset=0.6,
-	rate=0.0001
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0006165504455566406
-1 - validation_accuracy: 0.6578885435983082
-1 - test_accuracy: 0.6160814844138441
-finished experiment 17
-processing hyper-parameter 8 out of 9
-doing run 2 out of 5
-fixed rate, multiple epochs values
-running experiment 17
-run number: 2
-
-parameters:
-	noise=0.1,
-	offset=0.6,
-	rate=0.0001
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0005555152893066406
-2 - validation_accuracy: 0.5348487601906166
-2 - test_accuracy: 0.4305613918752504
-finished experiment 17
-processing hyper-parameter 8 out of 9
-doing run 3 out of 5
-fixed rate, multiple epochs values
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>registering
-registering
-registering
-registering
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>running experiment 17
-run number: 3
-
-parameters:
-	noise=0.1,
-	offset=0.6,
-	rate=0.0001
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0005712509155273438
-3 - validation_accuracy: 0.8920098752421158
-3 - test_accuracy: 0.37111766315723477
-finished experiment 17
-processing hyper-parameter 8 out of 9
-doing run 4 out of 5
-fixed rate, multiple epochs values
-running experiment 17
-run number: 4
-
-parameters:
-	noise=0.1,
-	offset=0.6,
-	rate=0.0001
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 208
-time spent on this experiment: 0.0005617141723632812
-4 - validation_accuracy: 0.43750509123185477
-4 - test_accuracy: 0.7226835064642162
-finished experiment 17
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>registering
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-    </details>
 </div>
     {% endraw %}
 
@@ -2019,7 +166,7 @@ finished experiment 17
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="remove_defaults" class="doc_header"><code>remove_defaults</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L35" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>remove_defaults</code>(<strong><code>parameters</code></strong>)</p>
+<h4 id="remove_defaults" class="doc_header"><code>remove_defaults</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L31" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>remove_defaults</code>(<strong><code>parameters</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -2056,7 +203,7 @@ finished experiment 17
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="query" class="doc_header"><code>query</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L45" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>query</code>(<strong><code>path_experiments</code></strong>=<em><code>None</code></em>, <strong><code>folder_experiments</code></strong>=<em><code>None</code></em>, <strong><code>intersection</code></strong>=<em><code>False</code></em>, <strong><code>experiments</code></strong>=<em><code>None</code></em>, <strong><code>suffix_results</code></strong>=<em><code>''</code></em>, <strong><code>min_results</code></strong>=<em><code>0</code></em>, <strong><code>classes</code></strong>=<em><code>None</code></em>, <strong><code>parameters_fixed</code></strong>=<em><code>{}</code></em>, <strong><code>parameters_variable</code></strong>=<em><code>{}</code></em>, <strong><code>parameters_all</code></strong>=<em><code>[]</code></em>, <strong><code>exact_match</code></strong>=<em><code>True</code></em>, <strong><code>output</code></strong>=<em><code>'all'</code></em>, <strong><code>ascending</code></strong>=<em><code>False</code></em>, <strong><code>suffix_test_set</code></strong>=<em><code>None</code></em>, <strong><code>stats</code></strong>=<em><code>['mean', 'median', 'rank', 'min', 'max', 'std']</code></em>, <strong><code>query_other_parameters</code></strong>=<em><code>False</code></em>)</p>
+<h4 id="query" class="doc_header"><code>query</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L41" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>query</code>(<strong><code>path_experiments</code></strong>=<em><code>None</code></em>, <strong><code>folder_experiments</code></strong>=<em><code>None</code></em>, <strong><code>intersection</code></strong>=<em><code>False</code></em>, <strong><code>experiments</code></strong>=<em><code>None</code></em>, <strong><code>suffix_results</code></strong>=<em><code>''</code></em>, <strong><code>min_results</code></strong>=<em><code>0</code></em>, <strong><code>classes</code></strong>=<em><code>None</code></em>, <strong><code>parameters_fixed</code></strong>=<em><code>{}</code></em>, <strong><code>parameters_variable</code></strong>=<em><code>{}</code></em>, <strong><code>parameters_all</code></strong>=<em><code>[]</code></em>, <strong><code>exact_match</code></strong>=<em><code>True</code></em>, <strong><code>output</code></strong>=<em><code>'all'</code></em>, <strong><code>ascending</code></strong>=<em><code>False</code></em>, <strong><code>suffix_test_set</code></strong>=<em><code>None</code></em>, <strong><code>stats</code></strong>=<em><code>['mean', 'median', 'rank', 'min', 'max', 'std']</code></em>, <strong><code>query_other_parameters</code></strong>=<em><code>False</code></em>)</p>
 </blockquote>
 
 </div>
@@ -2093,7 +240,7 @@ finished experiment 17
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="summarize_results" class="doc_header"><code>summarize_results</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L123" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>summarize_results</code>(<strong><code>path_experiments</code></strong>=<em><code>None</code></em>, <strong><code>folder_experiments</code></strong>=<em><code>None</code></em>, <strong><code>intersection</code></strong>=<em><code>False</code></em>, <strong><code>experiments</code></strong>=<em><code>None</code></em>, <strong><code>suffix_results</code></strong>=<em><code>''</code></em>, <strong><code>min_results</code></strong>=<em><code>0</code></em>, <strong><code>class_ids</code></strong>=<em><code>None</code></em>, <strong><code>parameters</code></strong>=<em><code>None</code></em>, <strong><code>output</code></strong>=<em><code>'all'</code></em>, <strong><code>data</code></strong>=<em><code>None</code></em>, <strong><code>ascending</code></strong>=<em><code>False</code></em>, <strong><code>suffix_test_set</code></strong>=<em><code>None</code></em>, <strong><code>stats</code></strong>=<em><code>['mean', 'median', 'rank', 'min', 'max', 'std']</code></em>)</p>
+<h4 id="summarize_results" class="doc_header"><code>summarize_results</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L119" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>summarize_results</code>(<strong><code>path_experiments</code></strong>=<em><code>None</code></em>, <strong><code>folder_experiments</code></strong>=<em><code>None</code></em>, <strong><code>intersection</code></strong>=<em><code>False</code></em>, <strong><code>experiments</code></strong>=<em><code>None</code></em>, <strong><code>suffix_results</code></strong>=<em><code>''</code></em>, <strong><code>min_results</code></strong>=<em><code>0</code></em>, <strong><code>class_ids</code></strong>=<em><code>None</code></em>, <strong><code>parameters</code></strong>=<em><code>None</code></em>, <strong><code>output</code></strong>=<em><code>'all'</code></em>, <strong><code>data</code></strong>=<em><code>None</code></em>, <strong><code>ascending</code></strong>=<em><code>False</code></em>, <strong><code>suffix_test_set</code></strong>=<em><code>None</code></em>, <strong><code>stats</code></strong>=<em><code>['mean', 'median', 'rank', 'min', 'max', 'std']</code></em>)</p>
 </blockquote>
 <p>Obtains summary scores for the desired list of experiments. Uses the experiment_data csv for that purpose</p>
 <p>Example use:</p>
@@ -2138,7 +285,7 @@ finished experiment 17
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="summary" class="doc_header"><code>summary</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L236" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>summary</code>(<strong><code>df</code></strong>, <strong><code>experiments</code></strong>=<em><code>None</code></em>, <strong><code>score</code></strong>=<em><code>None</code></em>, <strong><code>compact</code></strong>=<em><code>True</code></em>)</p>
+<h4 id="summary" class="doc_header"><code>summary</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L232" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>summary</code>(<strong><code>df</code></strong>, <strong><code>experiments</code></strong>=<em><code>None</code></em>, <strong><code>score</code></strong>=<em><code>None</code></em>, <strong><code>compact</code></strong>=<em><code>True</code></em>)</p>
 </blockquote>
 
 </div>
@@ -2175,7 +322,7 @@ finished experiment 17
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_parameters_columns" class="doc_header"><code>get_parameters_columns</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L248" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_parameters_columns</code>(<strong><code>experiment_data</code></strong>, <strong><code>only_not_null</code></strong>=<em><code>False</code></em>)</p>
+<h4 id="get_parameters_columns" class="doc_header"><code>get_parameters_columns</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L244" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_parameters_columns</code>(<strong><code>experiment_data</code></strong>, <strong><code>only_not_null</code></strong>=<em><code>False</code></em>)</p>
 </blockquote>
 
 </div>
@@ -2212,7 +359,7 @@ finished experiment 17
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_experiment_parameters" class="doc_header"><code>get_experiment_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L255" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_experiment_parameters</code>(<strong><code>experiment_data</code></strong>, <strong><code>only_not_null</code></strong>=<em><code>False</code></em>)</p>
+<h4 id="get_experiment_parameters" class="doc_header"><code>get_experiment_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L251" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_experiment_parameters</code>(<strong><code>experiment_data</code></strong>, <strong><code>only_not_null</code></strong>=<em><code>False</code></em>)</p>
 </blockquote>
 
 </div>
@@ -2249,7 +396,7 @@ finished experiment 17
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_scores_columns" class="doc_header"><code>get_scores_columns</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L259" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_scores_columns</code>(<strong><code>experiment_data</code></strong>=<em><code>None</code></em>, <strong><code>suffix_results</code></strong>=<em><code>''</code></em>, <strong><code>class_ids</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="get_scores_columns" class="doc_header"><code>get_scores_columns</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L255" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_scores_columns</code>(<strong><code>experiment_data</code></strong>=<em><code>None</code></em>, <strong><code>suffix_results</code></strong>=<em><code>''</code></em>, <strong><code>class_ids</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 <p>Determine the columnns that provide evaluation scores. We assume that they start with the class number, and that the other columns do not start with a digit</p>
 
@@ -2287,7 +434,7 @@ finished experiment 17
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_experiment_scores" class="doc_header"><code>get_experiment_scores</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L276" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_experiment_scores</code>(<strong><code>experiment_data</code></strong>=<em><code>None</code></em>, <strong><code>suffix_results</code></strong>=<em><code>''</code></em>, <strong><code>class_ids</code></strong>=<em><code>None</code></em>, <strong><code>remove_suffix</code></strong>=<em><code>False</code></em>)</p>
+<h4 id="get_experiment_scores" class="doc_header"><code>get_experiment_scores</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L272" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_experiment_scores</code>(<strong><code>experiment_data</code></strong>=<em><code>None</code></em>, <strong><code>suffix_results</code></strong>=<em><code>''</code></em>, <strong><code>class_ids</code></strong>=<em><code>None</code></em>, <strong><code>remove_suffix</code></strong>=<em><code>False</code></em>)</p>
 </blockquote>
 
 </div>
@@ -2324,7 +471,7 @@ finished experiment 17
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_scores_names" class="doc_header"><code>get_scores_names</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L283" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_scores_names</code>(<strong><code>experiment_data</code></strong>=<em><code>None</code></em>, <strong><code>run_number</code></strong>=<em><code>None</code></em>, <strong><code>experiment</code></strong>=<em><code>None</code></em>, <strong><code>only_valid</code></strong>=<em><code>True</code></em>)</p>
+<h4 id="get_scores_names" class="doc_header"><code>get_scores_names</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L279" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_scores_names</code>(<strong><code>experiment_data</code></strong>=<em><code>None</code></em>, <strong><code>run_number</code></strong>=<em><code>None</code></em>, <strong><code>experiment</code></strong>=<em><code>None</code></em>, <strong><code>only_valid</code></strong>=<em><code>True</code></em>)</p>
 </blockquote>
 <p>Determine the names of the scores included in experiment data.</p>
 <p>We assume that the score columns start with the class number, and that the other columns do not start with a digit.</p>
@@ -2349,31 +496,28 @@ experiment number.</p>
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Usage">Usage<a class="anchor-link" href="#Usage"> </a></h3>
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">scores_names</span> <span class="o">=</span> <span class="n">get_scores_names</span> <span class="p">(</span><span class="n">df</span><span class="p">)</span>
-<span class="nb">print</span> <span class="p">(</span><span class="n">scores_names</span><span class="p">)</span>
-<span class="k">assert</span> <span class="n">scores_names</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;test_accuracy&#39;</span><span class="p">,</span> <span class="s1">&#39;validation_accuracy&#39;</span><span class="p">]</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
 
 <div class="output_wrapper">
 <div class="output">
 
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[&#39;test_accuracy&#39;, &#39;validation_accuracy&#39;]
-</pre>
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="test_get_scores_names" class="doc_header"><code>test_get_scores_names</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/utils/test_experiment_utils.py#L29" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_get_scores_names</code>()</p>
+</blockquote>
+
 </div>
+
 </div>
 
 </div>
@@ -2389,16 +533,43 @@ experiment number.</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">scores_names</span><span class="o">=</span><span class="n">get_scores_names</span> <span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">run_number</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">experiment</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">scores_names</span><span class="p">)</span>
-<span class="k">assert</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">scores_names</span><span class="p">))</span><span class="o">==</span><span class="p">[</span><span class="s1">&#39;test_accuracy&#39;</span><span class="p">,</span> <span class="s1">&#39;validation_accuracy&#39;</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">test_get_scores_names</span> <span class="p">():</span>
+    <span class="n">em</span> <span class="o">=</span> <span class="n">generate_data_exp_utils</span> <span class="p">(</span><span class="s1">&#39;get_scores_names&#39;</span><span class="p">)</span>
+    
+    <span class="n">df</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">get_experiment_data</span> <span class="p">()</span>
+    <span class="n">scores_names</span> <span class="o">=</span> <span class="n">get_scores_names</span> <span class="p">(</span><span class="n">df</span><span class="p">)</span>
+    <span class="nb">print</span> <span class="p">(</span><span class="n">scores_names</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">scores_names</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;test_accuracy&#39;</span><span class="p">,</span> <span class="s1">&#39;validation_accuracy&#39;</span><span class="p">]</span>
+    
+    <span class="n">scores_names</span><span class="o">=</span><span class="n">get_scores_names</span> <span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">run_number</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">experiment</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">scores_names</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">scores_names</span><span class="p">))</span><span class="o">==</span><span class="p">[</span><span class="s1">&#39;test_accuracy&#39;</span><span class="p">,</span> <span class="s1">&#39;validation_accuracy&#39;</span><span class="p">]</span>
 
-<span class="c1"># test when only some scores are valid</span>
-<span class="n">df2</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-<span class="n">df2</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="s1">&#39;3_test_accuracy&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span>
-<span class="n">scores_names</span><span class="o">=</span><span class="n">get_scores_names</span> <span class="p">(</span><span class="n">df2</span><span class="p">,</span> <span class="n">run_number</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">experiment</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
-<span class="nb">print</span> <span class="p">(</span><span class="n">scores_names</span><span class="p">)</span>
-<span class="k">assert</span> <span class="n">scores_names</span><span class="o">==</span><span class="p">[</span><span class="s1">&#39;validation_accuracy&#39;</span><span class="p">]</span>
+    <span class="c1"># test when only some scores are valid</span>
+    <span class="n">df2</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">df2</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="s1">&#39;3_test_accuracy&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    <span class="n">scores_names</span><span class="o">=</span><span class="n">get_scores_names</span> <span class="p">(</span><span class="n">df2</span><span class="p">,</span> <span class="n">run_number</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">experiment</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+    <span class="nb">print</span> <span class="p">(</span><span class="n">scores_names</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">scores_names</span><span class="o">==</span><span class="p">[</span><span class="s1">&#39;validation_accuracy&#39;</span><span class="p">]</span>
+    
+    <span class="n">em</span><span class="o">.</span><span class="n">remove_previous_experiments</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_get_scores_names</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -2411,7 +582,9 @@ experiment number.</p>
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>[&#39;test_accuracy&#39;, &#39;validation_accuracy&#39;]
+<pre>running test_get_scores_names
+[&#39;test_accuracy&#39;, &#39;validation_accuracy&#39;]
+[&#39;test_accuracy&#39;, &#39;validation_accuracy&#39;]
 [&#39;validation_accuracy&#39;]
 </pre>
 </div>
@@ -2440,7 +613,7 @@ experiment number.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_monitored_training_metrics" class="doc_header"><code>get_monitored_training_metrics</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L309" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_monitored_training_metrics</code>(<strong><code>experiment</code></strong>, <strong><code>run_number</code></strong>=<em><code>0</code></em>, <strong><code>history_file_name</code></strong>=<em><code>'model_history.pk'</code></em>, <strong><code>path_results</code></strong>=<em><code>None</code></em>, <strong><code>root_path</code></strong>=<em><code>None</code></em>, <strong><code>root_folder</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="get_monitored_training_metrics" class="doc_header"><code>get_monitored_training_metrics</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L305" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_monitored_training_metrics</code>(<strong><code>experiment</code></strong>, <strong><code>run_number</code></strong>=<em><code>0</code></em>, <strong><code>history_file_name</code></strong>=<em><code>'model_history.pk'</code></em>, <strong><code>path_results</code></strong>=<em><code>None</code></em>, <strong><code>root_path</code></strong>=<em><code>None</code></em>, <strong><code>root_folder</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 
 </div>
@@ -2460,6 +633,36 @@ experiment number.</p>
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Usage">Usage<a class="anchor-link" href="#Usage"> </a></h3>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="test_get_monitored_training_metrics" class="doc_header"><code>test_get_monitored_training_metrics</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/utils/test_experiment_utils.py#L51" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_get_monitored_training_metrics</code>()</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -2467,9 +670,31 @@ experiment number.</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">monitored_metrics</span> <span class="o">=</span> <span class="n">get_monitored_training_metrics</span> <span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="nb">print</span> <span class="p">(</span><span class="n">monitored_metrics</span><span class="p">)</span>
-<span class="k">assert</span> <span class="n">monitored_metrics</span><span class="o">==</span><span class="p">[</span><span class="s1">&#39;validation_accuracy&#39;</span><span class="p">,</span> <span class="s1">&#39;test_accuracy&#39;</span><span class="p">,</span> <span class="s1">&#39;accuracy&#39;</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">test_get_monitored_training_metrics</span> <span class="p">():</span>
+    <span class="n">em</span> <span class="o">=</span> <span class="n">generate_data_exp_utils</span> <span class="p">(</span><span class="s1">&#39;get_monitored_training_metrics&#39;</span><span class="p">)</span>
+    
+    <span class="n">monitored_metrics</span> <span class="o">=</span> <span class="n">get_monitored_training_metrics</span> <span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="nb">print</span> <span class="p">(</span><span class="n">monitored_metrics</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">monitored_metrics</span><span class="o">==</span><span class="p">[</span><span class="s1">&#39;validation_accuracy&#39;</span><span class="p">,</span> <span class="s1">&#39;test_accuracy&#39;</span><span class="p">,</span> <span class="s1">&#39;accuracy&#39;</span><span class="p">]</span>
+    
+    <span class="n">em</span><span class="o">.</span><span class="n">remove_previous_experiments</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_get_monitored_training_metrics</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -2482,7 +707,8 @@ experiment number.</p>
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>[&#39;validation_accuracy&#39;, &#39;test_accuracy&#39;, &#39;accuracy&#39;]
+<pre>running test_get_monitored_training_metrics
+[&#39;validation_accuracy&#39;, &#39;test_accuracy&#39;, &#39;accuracy&#39;]
 </pre>
 </div>
 </div>
@@ -2510,7 +736,7 @@ experiment number.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="find_rows_with_parameters_dict" class="doc_header"><code>find_rows_with_parameters_dict</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L322" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>find_rows_with_parameters_dict</code>(<strong><code>experiment_data</code></strong>, <strong><code>parameters_dict</code></strong>, <strong><code>create_if_not_exists</code></strong>=<em><code>True</code></em>, <strong><code>exact_match</code></strong>=<em><code>True</code></em>, <strong><code>ignore_keys</code></strong>=<em><code>[]</code></em>, <strong><code>precision</code></strong>=<em><code>1e-10</code></em>)</p>
+<h4 id="find_rows_with_parameters_dict" class="doc_header"><code>find_rows_with_parameters_dict</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L318" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>find_rows_with_parameters_dict</code>(<strong><code>experiment_data</code></strong>, <strong><code>parameters_dict</code></strong>, <strong><code>create_if_not_exists</code></strong>=<em><code>True</code></em>, <strong><code>exact_match</code></strong>=<em><code>True</code></em>, <strong><code>ignore_keys</code></strong>=<em><code>[]</code></em>, <strong><code>precision</code></strong>=<em><code>1e-10</code></em>)</p>
 </blockquote>
 <p>Finds rows that match parameters. If the dataframe doesn't have any parameter with that name, a new column is created and changed_dataframe is set to True.</p>
 
@@ -2548,7 +774,7 @@ experiment number.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_classes_with_results" class="doc_header"><code>get_classes_with_results</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L367" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_classes_with_results</code>(<strong><code>experiment_data</code></strong>=<em><code>None</code></em>, <strong><code>suffix_results</code></strong>=<em><code>''</code></em>, <strong><code>class_ids</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="get_classes_with_results" class="doc_header"><code>get_classes_with_results</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L363" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_classes_with_results</code>(<strong><code>experiment_data</code></strong>=<em><code>None</code></em>, <strong><code>suffix_results</code></strong>=<em><code>''</code></em>, <strong><code>class_ids</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 <p>Gets the list of class_ids for whom there are results in experiment_data.</p>
 <p>Example usage with summarize_results:
@@ -2590,7 +816,7 @@ experiment number.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_parameters_unique" class="doc_header"><code>get_parameters_unique</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L384" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_parameters_unique</code>(<strong><code>df</code></strong>)</p>
+<h4 id="get_parameters_unique" class="doc_header"><code>get_parameters_unique</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L380" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_parameters_unique</code>(<strong><code>df</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -2627,7 +853,7 @@ experiment number.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="compact_parameters" class="doc_header"><code>compact_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L392" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>compact_parameters</code>(<strong><code>df</code></strong>, <strong><code>number_characters</code></strong>=<em><code>1</code></em>)</p>
+<h4 id="compact_parameters" class="doc_header"><code>compact_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L388" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>compact_parameters</code>(<strong><code>df</code></strong>, <strong><code>number_characters</code></strong>=<em><code>1</code></em>)</p>
 </blockquote>
 
 </div>
@@ -2664,7 +890,7 @@ experiment number.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="replace_with_default_values" class="doc_header"><code>replace_with_default_values</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L401" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>replace_with_default_values</code>(<strong><code>df</code></strong>, <strong><code>parameters</code></strong>=<em><code>{}</code></em>)</p>
+<h4 id="replace_with_default_values" class="doc_header"><code>replace_with_default_values</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/utils/experiment_utils.py#L397" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>replace_with_default_values</code>(<strong><code>df</code></strong>, <strong><code>parameters</code></strong>=<em><code>{}</code></em>)</p>
 </blockquote>
 
 </div>
@@ -2684,6 +910,36 @@ experiment number.</p>
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Usage">Usage<a class="anchor-link" href="#Usage"> </a></h3>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="test_replace_with_default_values" class="doc_header"><code>test_replace_with_default_values</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/utils/test_experiment_utils.py#L61" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_replace_with_default_values</code>()</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -2691,11 +947,48 @@ experiment number.</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">=</span><span class="n">replace_with_default_values</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-<span class="k">assert</span> <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">epochs</span><span class="o">.</span><span class="n">values</span> <span class="o">==</span> <span class="p">([</span><span class="mf">5.</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span> <span class="o">+</span> <span class="p">[</span><span class="mf">10.</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span> <span class="o">+</span> <span class="p">[</span><span class="mf">100.</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">test_replace_with_default_values</span> <span class="p">():</span>
+    <span class="n">em</span> <span class="o">=</span> <span class="n">generate_data_exp_utils</span> <span class="p">(</span><span class="s1">&#39;replace_with_default_values&#39;</span><span class="p">)</span>
+    
+    <span class="n">df</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">get_experiment_data</span> <span class="p">()</span>
+    <span class="n">df</span><span class="o">=</span><span class="n">replace_with_default_values</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">epochs</span><span class="o">.</span><span class="n">values</span> <span class="o">==</span> <span class="p">([</span><span class="mf">5.</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span> <span class="o">+</span> <span class="p">[</span><span class="mf">10.</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span> <span class="o">+</span> <span class="p">[</span><span class="mf">100.</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+    
+    <span class="n">em</span><span class="o">.</span><span class="n">remove_previous_experiments</span><span class="p">()</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_replace_with_default_values</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>running test_replace_with_default_values
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
