@@ -17,29 +17,17 @@ import warnings
 warnings.filterwarnings('ignore')
 
 # Cell
-def get_experiment_data (path_experiments = None, folder_experiments = None, experiments=None):
-    ''' Returns data stored from previous experiments in the form DataFrame.
+def get_experiment_data (path_experiments=None, folder_experiments=None, experiments=None):
+    """
+    Returns data stored from previous experiments in the form DataFrame.
 
     If path_experiments is not given, it uses the default one.
-    '''
-    if path_experiments is None:
-        from ..config.hpconfig import get_path_experiments
-        path_experiments = get_path_experiments(path_experiments=path_experiments, folder = folder_experiments)
-    path_csv = '%s/experiments_data.csv' %path_experiments
-    path_pickle = path_csv.replace('csv', 'pk')
-    if os.path.exists (path_pickle):
-        experiment_data = pd.read_pickle (path_pickle)
-    else:
-        experiment_data = pd.read_csv(path_csv, index_col=0)
-    if experiments is not None:
-        experiment_data = experiment_data.loc[experiments,:]
-    return experiment_data
+    """
+    from ..config.hpconfig import get_experiment_data
+    return get_experiment_data (path_experiments=path_experiments, folder_experiments=folder_experiments,
+                                experiments=experiments)
 
 # Cell
-##############################################################
-# Routines for comparing results in experiments
-##############################################################
-
 def remove_defaults (parameters):
     from ..config.hpconfig import get_default_parameters
 
@@ -350,9 +338,9 @@ def find_rows_with_parameters_dict (experiment_data, parameters_dict, create_if_
                 matching_condition = experiment_data[parameter]==parameters_dict[parameter]
                 for idx, v in enumerate(experiment_data[parameter]):
                     if (type(v) == float or type(v) == np.float32 or type(v) == np.float64) and (np.abs(v-parameters_dict[parameter]) < precision):
-                        matching_condition[idx]=True
+                        matching_condition.iloc[idx]=True
                     else:
-                        matching_condition[idx]=False
+                        matching_condition.iloc[idx]=False
         else:
             matching_condition = experiment_data[parameter]==parameters_dict[parameter]
 

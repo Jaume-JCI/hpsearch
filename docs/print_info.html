@@ -26,24 +26,40 @@ nb_path: "nbs/tools/print_info.ipynb"
     
 <div class="cell border-box-sizing code_cell rendered">
 
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>using import method 1
-using import method 1
-</pre>
 </div>
-</div>
+    {% endraw %}
 
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pytest</span>
+<span class="kn">from</span> <span class="nn">hpsearch.examples.dummy_experiment_manager</span> <span class="kn">import</span> <span class="n">generate_data</span>
+</pre></div>
+
+    </div>
 </div>
 </div>
 
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="print_info">print_info<a class="anchor-link" href="#print_info"> </a></h2>
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -75,6 +91,43 @@ using import method 1
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="usage">usage<a class="anchor-link" href="#usage"> </a></h3>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="test_print_info" class="doc_header"><code>test_print_info</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/tools/test_print_info.py#L17" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_print_info</code>()</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -82,7 +135,7 @@ using import method 1
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">print_info</span> <span class="p">();</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_print_info</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -95,7 +148,8 @@ using import method 1
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>
+<pre>running test_print_info
+
 *****************************
 
 parameters for 8:
@@ -112,7 +166,7 @@ parameters for 8:
 noise                       0.1
 offset                      0.6
 rate                       0.03
-validation_accuracy    0.784366
+validation_accuracy    0.945403
 Name: 8, dtype: object</pre>
 </div>
 
@@ -158,11 +212,11 @@ Name: 8, dtype: object</pre>
   <tbody>
     <tr>
       <th>8</th>
-      <td>0.78</td>
-      <td>0.97</td>
+      <td>0.95</td>
+      <td>0.91</td>
+      <td>0.9</td>
+      <td>0.89</td>
       <td>0.8</td>
-      <td>0.68</td>
-      <td>1.0</td>
     </tr>
   </tbody>
 </table>
@@ -174,7 +228,7 @@ Name: 8, dtype: object</pre>
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>path to results: /mnt/athena/hpsearch/hpsearch/../results//experiments/00008/0
+<pre>path to results: test_print_info//experiments/00008/0
 scores names: [&#39;test_accuracy&#39;, &#39;validation_accuracy&#39;]
 monitored metrics: [&#39;validation_accuracy&#39;, &#39;test_accuracy&#39;, &#39;accuracy&#39;]
 
@@ -189,6 +243,12 @@ monitored metrics: [&#39;validation_accuracy&#39;, &#39;test_accuracy&#39;, &#39
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="parse_args">parse_args<a class="anchor-link" href="#parse_args"> </a></h2>
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -268,6 +328,43 @@ monitored metrics: [&#39;validation_accuracy&#39;, &#39;test_accuracy&#39;, &#39
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="usage">usage<a class="anchor-link" href="#usage"> </a></h3>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="test_parse_args" class="doc_header"><code>test_parse_args</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/tools/test_print_info.py#L25" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_parse_args</code>()</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -275,10 +372,7 @@ monitored metrics: [&#39;validation_accuracy&#39;, &#39;test_accuracy&#39;, &#39
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;-e&#39;</span><span class="p">,</span> <span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span>
-       <span class="s1">&#39;--compact&#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span>
-       <span class="s1">&#39;--round&#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">]</span>
-<span class="n">parse_arguments_and_run</span> <span class="p">(</span><span class="n">args</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_parse_args</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -291,7 +385,8 @@ monitored metrics: [&#39;validation_accuracy&#39;, &#39;test_accuracy&#39;, &#39
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>
+<pre>running test_parse_args
+
 *****************************
 
 parameters for 4:
@@ -308,7 +403,7 @@ parameters for 4:
 noise                       0.1
 offset                      0.3
 rate                       0.03
-validation_accuracy    0.755395
+validation_accuracy    0.815981
 Name: 4, dtype: object</pre>
 </div>
 
@@ -354,11 +449,11 @@ Name: 4, dtype: object</pre>
   <tbody>
     <tr>
       <th>4</th>
-      <td>0.755</td>
-      <td>0.838</td>
-      <td>0.784</td>
-      <td>0.589</td>
+      <td>0.816</td>
+      <td>0.656</td>
+      <td>0.8</td>
       <td>1.0</td>
+      <td>0.819</td>
     </tr>
   </tbody>
 </table>
@@ -370,7 +465,7 @@ Name: 4, dtype: object</pre>
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>path to results: /mnt/athena/hpsearch/hpsearch/../results//experiments/00004/0
+<pre>path to results: test_parse_args//experiments/00004/0
 scores names: [&#39;test_accuracy&#39;, &#39;validation_accuracy&#39;]
 monitored metrics: [&#39;validation_accuracy&#39;, &#39;test_accuracy&#39;, &#39;accuracy&#39;]
 
@@ -390,7 +485,7 @@ parameters for 3:
 noise                      0.1
 offset                     0.1
 rate                      0.03
-validation_accuracy    0.60187
+validation_accuracy    0.54907
 Name: 3, dtype: object</pre>
 </div>
 
@@ -436,11 +531,11 @@ Name: 3, dtype: object</pre>
   <tbody>
     <tr>
       <th>3</th>
-      <td>0.602</td>
-      <td>0.831</td>
-      <td>0.407</td>
-      <td>0.554</td>
-      <td>0.562</td>
+      <td>0.549</td>
+      <td>0.604</td>
+      <td>0.471</td>
+      <td>0.492</td>
+      <td>0.491</td>
     </tr>
   </tbody>
 </table>
@@ -452,7 +547,7 @@ Name: 3, dtype: object</pre>
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>path to results: /mnt/athena/hpsearch/hpsearch/../results//experiments/00003/0
+<pre>path to results: test_parse_args//experiments/00003/0
 scores names: [&#39;test_accuracy&#39;, &#39;validation_accuracy&#39;]
 monitored metrics: [&#39;validation_accuracy&#39;, &#39;test_accuracy&#39;, &#39;accuracy&#39;]
 

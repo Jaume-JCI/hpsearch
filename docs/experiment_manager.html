@@ -26,24 +26,46 @@ nb_path: "nbs/experiment_manager.ipynb"
     
 <div class="cell border-box-sizing code_cell rendered">
 
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>/anaconda/envs/athena_old/lib/python3.7/site-packages/sklearn/utils/deprecation.py:144: FutureWarning: The sklearn.datasets.base module is  deprecated in version 0.22 and will be removed in version 0.24. The corresponding classes / functions should instead be imported from sklearn.datasets. Anything that cannot be imported from sklearn.datasets is now part of the private API.
-  warnings.warn(message, FutureWarning)
-</pre>
 </div>
-</div>
+    {% endraw %}
 
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pytest</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">optuna</span>
+
+<span class="kn">from</span> <span class="nn">block_types.utils.nbdev_utils</span> <span class="kn">import</span> <span class="n">md</span>
+
+<span class="kn">from</span> <span class="nn">hpsearch.examples.complex_dummy_experiment_manager</span> <span class="kn">import</span> <span class="n">ComplexDummyExperimentManager</span>
+</pre></div>
+
+    </div>
 </div>
 </div>
 
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="ExperimentManager">ExperimentManager<a class="anchor-link" href="#ExperimentManager"> </a></h2>
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -55,7 +77,7 @@ nb_path: "nbs/experiment_manager.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="ExperimentManager" class="doc_header"><code>class</code> <code>ExperimentManager</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L36" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ExperimentManager</code>(<strong><code>allow_base_class</code></strong>=<em><code>False</code></em>)</p>
+<h2 id="ExperimentManager" class="doc_header"><code>class</code> <code>ExperimentManager</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L38" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ExperimentManager</code>(<strong><code>allow_base_class</code></strong>=<em><code>False</code></em>, <strong><code>path_experiments</code></strong>=<em><code>'results/hpsearch'</code></em>, <strong><code>defaults</code></strong>=<em><code>{}</code></em>, <strong><code>root</code></strong>=<em><code>''</code></em>, <strong><code>metric</code></strong>=<em><code>'accuracy'</code></em>, <strong><code>op</code></strong>=<em><code>'max'</code></em>, <strong><code>path_alternative</code></strong>=<em><code>None</code></em>, <strong><code>path_data</code></strong>=<em><code>None</code></em>, <strong><code>name_model_history</code></strong>=<em><code>'model_history.pk'</code></em>, <strong><code>model_file_name</code></strong>=<em><code>'model.h5'</code></em>, <strong><code>name_epoch</code></strong>=<em><code>'epochs'</code></em>, <strong><code>result_file</code></strong>=<em><code>'dict_results.pk'</code></em>, <strong><code>logger</code></strong>=<em><code>None</code></em>, <strong><code>verbose</code></strong>:<code>int</code>=<em><code>0</code></em>, <strong><code>name_logger</code></strong>:<code>str</code>=<em><code>'experiment_manager'</code></em>)</p>
 </blockquote>
 
 </div>
@@ -77,7 +99,13 @@ nb_path: "nbs/experiment_manager.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Functions">Functions<a class="anchor-link" href="#Functions"> </a></h2>
+<h3 id="create_experiment_and_run">create_experiment_and_run<a class="anchor-link" href="#create_experiment_and_run"> </a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Setting-up-the-experiment-manager">Setting up the experiment manager<a class="anchor-link" href="#Setting-up-the-experiment-manager"> </a></h4>
 </div>
 </div>
 </div>
@@ -92,7 +120,4164 @@ nb_path: "nbs/experiment_manager.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_git_revision_hash" class="doc_header"><code>get_git_revision_hash</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L751" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_git_revision_hash</code>(<strong><code>root_path</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="init_em" class="doc_header"><code>init_em</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L31" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>init_em</code>(<strong><code>name_folder</code></strong>)</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Basic-usage">Basic usage<a class="anchor-link" href="#Basic-usage"> </a></h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><code>create_experiment_and_run</code> is the main function of the <a href="/hpsearch/experiment_manager.html#ExperimentManager"><code>ExperimentManager</code></a>. All other functions make use of it adding additional functionalities.</p>
+<p>In order to call <code>create_experiment_and_run</code>, we pass a dictionary of parameters characterizing the experiment we want to run, as follows:</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="test_basic_usage" class="doc_header"><code>test_basic_usage</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L42" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_basic_usage</code>()</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_basic_usage</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>script: /tmp/ipykernel_17968/587345255.py, line number: 5
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>running test_basic_usage
+fitting model with 10 epochs
+epoch 0: accuracy: 0.15000000000000002
+epoch 1: accuracy: 0.2
+epoch 2: accuracy: 0.25
+epoch 3: accuracy: 0.3
+epoch 4: accuracy: 0.35
+epoch 5: accuracy: 0.39999999999999997
+epoch 6: accuracy: 0.44999999999999996
+epoch 7: accuracy: 0.49999999999999994
+epoch 8: accuracy: 0.5499999999999999
+epoch 9: accuracy: 0.6
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea ">
+<pre>[&#39;current_experiment_number.pkl&#39;,
+ &#39;experiments&#39;,
+ &#39;experiments_data.csv&#39;,
+ &#39;experiments_data.pk&#39;,
+ &#39;git_hash.json&#39;,
+ &#39;other_parameters.csv&#39;,
+ &#39;parameters.pk&#39;,
+ &#39;parameters.txt&#39;,
+ &#39;summary.txt&#39;]</pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<p>experiment dataframe:</p>
+
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>offset</th>
+      <th>rate</th>
+      <th>0_validation_accuracy</th>
+      <th>0_test_accuracy</th>
+      <th>time_0</th>
+      <th>date</th>
+      <th>0_finished</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.1</td>
+      <td>0.05</td>
+      <td>0.6</td>
+      <td>0.5</td>
+      <td>0.001688</td>
+      <td>23:03:16.385757</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>folder created in `test_basic/experiments`:
+[&#39;00000&#39;]
+This folder has one sub-folder per run, since multiple runs can be done with the same parameters.
+contents of current run at `test_basic/experiments/00000`:
+[&#39;other_parameters.json&#39;, &#39;parameters.pk&#39;, &#39;parameters.txt&#39;, &#39;0&#39;, &#39;parameters.json&#39;]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Running-second-experiment-with-same-parameter-values">Running second experiment with same parameter values<a class="anchor-link" href="#Running-second-experiment-with-same-parameter-values"> </a></h4>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="test_same_values" class="doc_header"><code>test_same_values</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L106" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_same_values</code>()</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_same_values</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>script: /tmp/ipykernel_17968/314616621.py, line number: 7
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>running test_same_values
+fitting model with 10 epochs
+epoch 0: accuracy: 0.15000000000000002
+epoch 1: accuracy: 0.2
+epoch 2: accuracy: 0.25
+epoch 3: accuracy: 0.3
+epoch 4: accuracy: 0.35
+epoch 5: accuracy: 0.39999999999999997
+epoch 6: accuracy: 0.44999999999999996
+epoch 7: accuracy: 0.49999999999999994
+epoch 8: accuracy: 0.5499999999999999
+epoch 9: accuracy: 0.6
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<p>experiment dataframe:</p>
+
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>offset</th>
+      <th>rate</th>
+      <th>0_validation_accuracy</th>
+      <th>0_test_accuracy</th>
+      <th>time_0</th>
+      <th>date</th>
+      <th>0_finished</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.1</td>
+      <td>0.05</td>
+      <td>0.6</td>
+      <td>0.5</td>
+      <td>0.001651</td>
+      <td>23:03:16.487347</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>folders created in `test_same_values/experiments`:
+[&#39;00000&#39;]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Running-second-experiment-with-almost-same-parameter-values">Running second experiment with <em>almost</em> same parameter values<a class="anchor-link" href="#Running-second-experiment-with-almost-same-parameter-values"> </a></h4>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="test_almost_same_values" class="doc_header"><code>test_almost_same_values</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L136" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_almost_same_values</code>()</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_almost_same_values</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>script: /tmp/ipykernel_17968/2249530880.py, line number: 7
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>running test_almost_same_values
+fitting model with 10 epochs
+epoch 0: accuracy: 0.15000000000000002
+epoch 1: accuracy: 0.2
+epoch 2: accuracy: 0.25
+epoch 3: accuracy: 0.3
+epoch 4: accuracy: 0.35
+epoch 5: accuracy: 0.39999999999999997
+epoch 6: accuracy: 0.44999999999999996
+epoch 7: accuracy: 0.49999999999999994
+epoch 8: accuracy: 0.5499999999999999
+epoch 9: accuracy: 0.6
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>script: /tmp/ipykernel_17968/2249530880.py, line number: 24
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>fitting model with 10 epochs
+epoch 0: accuracy: 0.1500000000000001
+epoch 1: accuracy: 0.2000000000000002
+epoch 2: accuracy: 0.25000000000000033
+epoch 3: accuracy: 0.30000000000000043
+epoch 4: accuracy: 0.35000000000000053
+epoch 5: accuracy: 0.40000000000000063
+epoch 6: accuracy: 0.45000000000000073
+epoch 7: accuracy: 0.5000000000000009
+epoch 8: accuracy: 0.5500000000000009
+epoch 9: accuracy: 0.600000000000001
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>offset</th>
+      <th>rate</th>
+      <th>0_validation_accuracy</th>
+      <th>0_test_accuracy</th>
+      <th>time_0</th>
+      <th>date</th>
+      <th>0_finished</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.1</td>
+      <td>0.05</td>
+      <td>0.6</td>
+      <td>0.5</td>
+      <td>0.001508</td>
+      <td>23:03:16.595396</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.1</td>
+      <td>0.05</td>
+      <td>0.6</td>
+      <td>0.5</td>
+      <td>0.001606</td>
+      <td>23:03:16.633961</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Adding-new-runs-on-previous-experiment">Adding new runs on previous experiment<a class="anchor-link" href="#Adding-new-runs-on-previous-experiment"> </a></h4>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="test_new_runs" class="doc_header"><code>test_new_runs</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L171" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_new_runs</code>()</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_new_runs</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>script: /tmp/ipykernel_17968/3459580111.py, line number: 7
+script: /tmp/ipykernel_17968/3459580111.py, line number: 12
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>running test_new_runs
+fitting model with 10 epochs
+epoch 0: accuracy: 0.15000000000000002
+epoch 1: accuracy: 0.2
+epoch 2: accuracy: 0.25
+epoch 3: accuracy: 0.3
+epoch 4: accuracy: 0.35
+epoch 5: accuracy: 0.39999999999999997
+epoch 6: accuracy: 0.44999999999999996
+epoch 7: accuracy: 0.49999999999999994
+epoch 8: accuracy: 0.5499999999999999
+epoch 9: accuracy: 0.6
+fitting model with 10 epochs
+epoch 0: accuracy: 0.15000000000000002
+epoch 1: accuracy: 0.2
+epoch 2: accuracy: 0.25
+epoch 3: accuracy: 0.3
+epoch 4: accuracy: 0.35
+epoch 5: accuracy: 0.39999999999999997
+epoch 6: accuracy: 0.44999999999999996
+epoch 7: accuracy: 0.49999999999999994
+epoch 8: accuracy: 0.5499999999999999
+epoch 9: accuracy: 0.6
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<p>experiment dataframe:</p>
+
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>offset</th>
+      <th>rate</th>
+      <th>0_validation_accuracy</th>
+      <th>0_test_accuracy</th>
+      <th>time_0</th>
+      <th>date</th>
+      <th>0_finished</th>
+      <th>1_validation_accuracy</th>
+      <th>1_test_accuracy</th>
+      <th>time_1</th>
+      <th>1_finished</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.1</td>
+      <td>0.05</td>
+      <td>0.6</td>
+      <td>0.5</td>
+      <td>0.001906</td>
+      <td>23:03:16.766153</td>
+      <td>True</td>
+      <td>0.6</td>
+      <td>0.5</td>
+      <td>0.001509</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>script: /tmp/ipykernel_17968/3459580111.py, line number: 26
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>fitting model with 10 epochs
+epoch 0: accuracy: 0.15000000000000002
+epoch 1: accuracy: 0.2
+epoch 2: accuracy: 0.25
+epoch 3: accuracy: 0.3
+epoch 4: accuracy: 0.35
+epoch 5: accuracy: 0.39999999999999997
+epoch 6: accuracy: 0.44999999999999996
+epoch 7: accuracy: 0.49999999999999994
+epoch 8: accuracy: 0.5499999999999999
+epoch 9: accuracy: 0.6
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<p>experiment dataframe:</p>
+
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>offset</th>
+      <th>rate</th>
+      <th>0_validation_accuracy</th>
+      <th>0_test_accuracy</th>
+      <th>time_0</th>
+      <th>date</th>
+      <th>0_finished</th>
+      <th>1_validation_accuracy</th>
+      <th>1_test_accuracy</th>
+      <th>time_1</th>
+      <th>1_finished</th>
+      <th>2_validation_accuracy</th>
+      <th>2_test_accuracy</th>
+      <th>time_2</th>
+      <th>2_finished</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.1</td>
+      <td>0.05</td>
+      <td>0.6</td>
+      <td>0.5</td>
+      <td>0.001906</td>
+      <td>23:03:16.812915</td>
+      <td>True</td>
+      <td>0.6</td>
+      <td>0.5</td>
+      <td>0.001509</td>
+      <td>True</td>
+      <td>0.6</td>
+      <td>0.5</td>
+      <td>0.001535</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>folders created in `test_new_runs/experiments`:
+[&#39;00000&#39;]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Adding-second-experiment">Adding second experiment<a class="anchor-link" href="#Adding-second-experiment"> </a></h4>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="test_second_experiment" class="doc_header"><code>test_second_experiment</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L232" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_second_experiment</code>()</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_second_experiment</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>running test_second_experiment
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>script: /tmp/ipykernel_17968/3126725428.py, line number: 7
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>fitting model with 10 epochs
+epoch 0: accuracy: 0.15000000000000002
+epoch 1: accuracy: 0.2
+epoch 2: accuracy: 0.25
+epoch 3: accuracy: 0.3
+epoch 4: accuracy: 0.35
+epoch 5: accuracy: 0.39999999999999997
+epoch 6: accuracy: 0.44999999999999996
+epoch 7: accuracy: 0.49999999999999994
+epoch 8: accuracy: 0.5499999999999999
+epoch 9: accuracy: 0.6
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<p>If we run a second experiment with new parameters, a new row is added to the dataframe, and a new folder is created:</p>
+
+</div>
+
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>script: /tmp/ipykernel_17968/3126725428.py, line number: 13
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>fitting model with 10 epochs
+epoch 0: accuracy: 0.8999999999999999
+epoch 1: accuracy: 1.0999999999999999
+epoch 2: accuracy: 1.2999999999999998
+epoch 3: accuracy: 1.4999999999999998
+epoch 4: accuracy: 1.6999999999999997
+epoch 5: accuracy: 1.8999999999999997
+epoch 6: accuracy: 2.0999999999999996
+epoch 7: accuracy: 2.3
+epoch 8: accuracy: 2.5
+epoch 9: accuracy: 2.7
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<p>experiment dataframe:</p>
+
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>offset</th>
+      <th>rate</th>
+      <th>0_validation_accuracy</th>
+      <th>0_test_accuracy</th>
+      <th>time_0</th>
+      <th>date</th>
+      <th>0_finished</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.1</td>
+      <td>0.05</td>
+      <td>0.6</td>
+      <td>0.5</td>
+      <td>0.002351</td>
+      <td>23:03:16.936540</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.7</td>
+      <td>0.20</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.001715</td>
+      <td>23:03:16.969515</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<p>folders created in <code>test_second/experiments</code>:</p>
+
+</div>
+
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[&#39;00000&#39;, &#39;00001&#39;]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Adding-another-parameter">Adding another parameter<a class="anchor-link" href="#Adding-another-parameter"> </a></h4>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;a&#39;</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span><span class="s1">&#39;b&#39;</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span><span class="kc">None</span><span class="p">,</span><span class="mi">3</span><span class="p">]})</span>
+<span class="n">df</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>a</th>
+      <th>b</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>3.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>True</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="test_new_parameter" class="doc_header"><code>test_new_parameter</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L261" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_new_parameter</code>()</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_new_parameter</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>script: /tmp/ipykernel_17968/2342689092.py, line number: 7
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>running test_new_parameter
+fitting model with 10 epochs
+epoch 0: accuracy: 0.15000000000000002
+epoch 1: accuracy: 0.2
+epoch 2: accuracy: 0.25
+epoch 3: accuracy: 0.3
+epoch 4: accuracy: 0.35
+epoch 5: accuracy: 0.39999999999999997
+epoch 6: accuracy: 0.44999999999999996
+epoch 7: accuracy: 0.49999999999999994
+epoch 8: accuracy: 0.5499999999999999
+epoch 9: accuracy: 0.6
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>script: /tmp/ipykernel_17968/2342689092.py, line number: 11
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>fitting model with 5 epochs
+epoch 0: accuracy: 0.15000000000000002
+epoch 1: accuracy: 0.2
+epoch 2: accuracy: 0.25
+epoch 3: accuracy: 0.3
+epoch 4: accuracy: 0.35
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<p>experiment dataframe:</p>
+
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>offset</th>
+      <th>rate</th>
+      <th>0_validation_accuracy</th>
+      <th>0_test_accuracy</th>
+      <th>time_0</th>
+      <th>date</th>
+      <th>0_finished</th>
+      <th>epochs</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.1</td>
+      <td>0.05</td>
+      <td>0.60</td>
+      <td>0.50</td>
+      <td>0.001476</td>
+      <td>23:03:17.170410</td>
+      <td>True</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.1</td>
+      <td>0.05</td>
+      <td>0.35</td>
+      <td>0.45</td>
+      <td>0.001106</td>
+      <td>23:03:17.202045</td>
+      <td>True</td>
+      <td>5.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Adding-another-parameter-with-default-value">Adding another parameter with default value<a class="anchor-link" href="#Adding-another-parameter-with-default-value"> </a></h4>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="test_new_parameter_default" class="doc_header"><code>test_new_parameter_default</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L294" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_new_parameter_default</code>()</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_new_parameter_default</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>script: /tmp/ipykernel_17968/2374034115.py, line number: 7
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>running test_new_parameter_default
+fitting model with 10 epochs
+epoch 0: accuracy: 0.15000000000000002
+epoch 1: accuracy: 0.2
+epoch 2: accuracy: 0.25
+epoch 3: accuracy: 0.3
+epoch 4: accuracy: 0.35
+epoch 5: accuracy: 0.39999999999999997
+epoch 6: accuracy: 0.44999999999999996
+epoch 7: accuracy: 0.49999999999999994
+epoch 8: accuracy: 0.5499999999999999
+epoch 9: accuracy: 0.6
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<p>experiment dataframe:</p>
+
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>offset</th>
+      <th>rate</th>
+      <th>0_validation_accuracy</th>
+      <th>0_test_accuracy</th>
+      <th>time_0</th>
+      <th>date</th>
+      <th>0_finished</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.1</td>
+      <td>0.05</td>
+      <td>0.6</td>
+      <td>0.5</td>
+      <td>0.001513</td>
+      <td>23:03:17.296610</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Indicating-parameters-that-don't-affect-the-experiment">Indicating parameters that don't affect the experiment<a class="anchor-link" href="#Indicating-parameters-that-don't-affect-the-experiment"> </a></h4>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="test_other_parameters" class="doc_header"><code>test_other_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L319" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_other_parameters</code>()</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_other_parameters</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>script: /tmp/ipykernel_17968/1875725149.py, line number: 11
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>running test_other_parameters
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<p>experiment dataframe:</p>
+
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>offset</th>
+      <th>rate</th>
+      <th>0_validation_accuracy</th>
+      <th>0_test_accuracy</th>
+      <th>time_0</th>
+      <th>date</th>
+      <th>0_finished</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.1</td>
+      <td>0.05</td>
+      <td>0.6</td>
+      <td>0.5</td>
+      <td>0.000668</td>
+      <td>23:03:17.435932</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="remove_not_finished">remove_not_finished<a class="anchor-link" href="#remove_not_finished"> </a></h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In order to use this functionality, we need to indicate the name of the parameter that specifies the number of epochs. This can be done either passing this when constructing the object:</p>
+<div class="highlight"><pre><span></span><span class="n">em</span> <span class="o">=</span> <span class="n">MyExperimentManager</span> <span class="p">(</span><span class="n">name_epoch</span><span class="o">=</span><span class="s1">&#39;epochs&#39;</span><span class="p">)</span>
+</pre></div>
+<p>or indicating it in the <code>other_parameters</code> dictionary:</p>
+<div class="highlight"><pre><span></span><span class="n">other_parameters</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">name_epoch</span><span class="o">=</span><span class="s1">&#39;epochs&#39;</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="test_remove_not_finished" class="doc_header"><code>test_remove_not_finished</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L352" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_remove_not_finished</code>()</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_remove_not_finished</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>script: /tmp/ipykernel_17968/2801524373.py, line number: 8
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>running test_remove_not_finished
+fitting model with 10 epochs
+epoch 0: accuracy: 0.15000000000000002
+epoch 1: accuracy: 0.2
+epoch 2: accuracy: 0.25
+epoch 3: accuracy: 0.3
+epoch 4: accuracy: 0.35
+epoch 5: accuracy: 0.39999999999999997
+epoch 6: accuracy: 0.44999999999999996
+epoch 7: accuracy: 0.49999999999999994
+epoch 8: accuracy: 0.5499999999999999
+epoch 9: accuracy: 0.6
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>offset</th>
+      <th>rate</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.1</td>
+      <td>0.05</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>script: /tmp/ipykernel_17968/2801524373.py, line number: 15
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>fitting model with 10 epochs
+epoch 0: accuracy: 1.2
+epoch 1: accuracy: 1.4
+epoch 2: accuracy: 1.5999999999999999
+epoch 3: accuracy: 1.7999999999999998
+epoch 4: accuracy: 1.9999999999999998
+epoch 5: accuracy: 2.1999999999999997
+epoch 6: accuracy: 2.4
+epoch 7: accuracy: 2.6
+epoch 8: accuracy: 2.8000000000000003
+epoch 9: accuracy: 3.0000000000000004
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>offset</th>
+      <th>rate</th>
+      <th>0_validation_accuracy</th>
+      <th>0_test_accuracy</th>
+      <th>time_0</th>
+      <th>date</th>
+      <th>0_finished</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.1</td>
+      <td>0.05</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1.0</td>
+      <td>0.20</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.001539</td>
+      <td>23:03:17.573406</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>script: /tmp/ipykernel_17968/2801524373.py, line number: 20
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>fitting model with 10 epochs
+epoch 0: accuracy: 1.3
+epoch 1: accuracy: 1.6
+epoch 2: accuracy: 1.9000000000000001
+epoch 3: accuracy: 2.2
+epoch 4: accuracy: 2.5
+epoch 5: accuracy: 2.8
+epoch 6: accuracy: 3.0999999999999996
+epoch 7: accuracy: 3.3999999999999995
+epoch 8: accuracy: 3.6999999999999993
+epoch 9: accuracy: 3.999999999999999
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>offset</th>
+      <th>rate</th>
+      <th>0_validation_accuracy</th>
+      <th>0_test_accuracy</th>
+      <th>time_0</th>
+      <th>date</th>
+      <th>0_finished</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.1</td>
+      <td>0.05</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1.0</td>
+      <td>0.20</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.001539</td>
+      <td>23:03:17.573406</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1.0</td>
+      <td>0.30</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.001799</td>
+      <td>23:03:17.613941</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="repeat_experiment">repeat_experiment<a class="anchor-link" href="#repeat_experiment"> </a></h4>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="test_repeat_experiment" class="doc_header"><code>test_repeat_experiment</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L382" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_repeat_experiment</code>()</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_repeat_experiment</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>script: /tmp/ipykernel_17968/1962307353.py, line number: 7
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>running test_repeat_experiment
+fitting model with 10 epochs
+epoch 0: accuracy: 0.15000000000000002
+epoch 1: accuracy: 0.2
+epoch 2: accuracy: 0.25
+epoch 3: accuracy: 0.3
+epoch 4: accuracy: 0.35
+epoch 5: accuracy: 0.39999999999999997
+epoch 6: accuracy: 0.44999999999999996
+epoch 7: accuracy: 0.49999999999999994
+epoch 8: accuracy: 0.5499999999999999
+epoch 9: accuracy: 0.6
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>offset</th>
+      <th>rate</th>
+      <th>0_validation_accuracy</th>
+      <th>0_test_accuracy</th>
+      <th>time_0</th>
+      <th>date</th>
+      <th>0_finished</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.1</td>
+      <td>0.05</td>
+      <td>0.6</td>
+      <td>0.5</td>
+      <td>0.001501</td>
+      <td>23:03:17.712281</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>script: /tmp/ipykernel_17968/1962307353.py, line number: 14
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>fitting model with 10 epochs
+epoch 0: accuracy: 0.15000000000000002
+epoch 1: accuracy: 0.2
+epoch 2: accuracy: 0.25
+epoch 3: accuracy: 0.3
+epoch 4: accuracy: 0.35
+epoch 5: accuracy: 0.39999999999999997
+epoch 6: accuracy: 0.44999999999999996
+epoch 7: accuracy: 0.49999999999999994
+epoch 8: accuracy: 0.5499999999999999
+epoch 9: accuracy: 0.6
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>offset</th>
+      <th>rate</th>
+      <th>0_validation_accuracy</th>
+      <th>0_test_accuracy</th>
+      <th>time_0</th>
+      <th>date</th>
+      <th>0_finished</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.1</td>
+      <td>0.05</td>
+      <td>0.6</td>
+      <td>0.5</td>
+      <td>0.001501</td>
+      <td>23:03:17.747980</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="check_finished">check_finished<a class="anchor-link" href="#check_finished"> </a></h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In order to use this functionality, we need to indicate the name of the parameter that specifies the number of epochs. This can be done either passing this when constructing the object:</p>
+<div class="highlight"><pre><span></span><span class="n">em</span> <span class="o">=</span> <span class="n">MyExperimentManager</span> <span class="p">(</span><span class="n">name_epoch</span><span class="o">=</span><span class="s1">&#39;epochs&#39;</span><span class="p">)</span>
+</pre></div>
+<p>or indicating it in the <code>other_parameters</code> dictionary:</p>
+<div class="highlight"><pre><span></span><span class="n">other_parameters</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">name_epoch</span><span class="o">=</span><span class="s1">&#39;epochs&#39;</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="test_check_finished" class="doc_header"><code>test_check_finished</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L412" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_check_finished</code>()</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_check_finished</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>script: /tmp/ipykernel_17968/2482338563.py, line number: 7
+script: /tmp/ipykernel_17968/2482338563.py, line number: 22
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>running test_check_finished
+fitting model with 5 epochs
+epoch 0: accuracy: 0.15000000000000002
+epoch 1: accuracy: 0.2
+epoch 2: accuracy: 0.25
+epoch 3: accuracy: 0.3
+epoch 4: accuracy: 0.35
+fitting model with 10 epochs
+epoch 0: accuracy: 0.15000000000000002
+epoch 1: accuracy: 0.2
+epoch 2: accuracy: 0.25
+epoch 3: accuracy: 0.3
+epoch 4: accuracy: 0.35
+epoch 5: accuracy: 0.39999999999999997
+epoch 6: accuracy: 0.44999999999999996
+epoch 7: accuracy: 0.49999999999999994
+epoch 8: accuracy: 0.5499999999999999
+epoch 9: accuracy: 0.6
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="recompute_metrics">recompute_metrics<a class="anchor-link" href="#recompute_metrics"> </a></h4>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="test_recompute_metrics" class="doc_header"><code>test_recompute_metrics</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L444" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_recompute_metrics</code>()</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_recompute_metrics</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>script: /tmp/ipykernel_17968/2340212191.py, line number: 7
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>running test_recompute_metrics
+fitting model with 10 epochs
+epoch 0: accuracy: 0.15000000000000002
+epoch 1: accuracy: 0.2
+epoch 2: accuracy: 0.25
+epoch 3: accuracy: 0.3
+epoch 4: accuracy: 0.35
+epoch 5: accuracy: 0.39999999999999997
+epoch 6: accuracy: 0.44999999999999996
+epoch 7: accuracy: 0.49999999999999994
+epoch 8: accuracy: 0.5499999999999999
+epoch 9: accuracy: 0.6
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>script: /tmp/ipykernel_17968/2340212191.py, line number: 22
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>fitting model with 10 epochs
+epoch 0: accuracy: 0.12000000000000001
+epoch 1: accuracy: 0.14
+epoch 2: accuracy: 0.16
+epoch 3: accuracy: 0.18
+epoch 4: accuracy: 0.19999999999999998
+epoch 5: accuracy: 0.21999999999999997
+epoch 6: accuracy: 0.23999999999999996
+epoch 7: accuracy: 0.25999999999999995
+epoch 8: accuracy: 0.27999999999999997
+epoch 9: accuracy: 0.3
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="prev_epoch">prev_epoch<a class="anchor-link" href="#prev_epoch"> </a></h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In order to use this functionality, we need to indicate:</p>
+<ol>
+<li>The name of the parameter that specifies the number of epochs. </li>
+<li>The name of the file where the model is stored.
+This can be done either passing this when constructing the object:<div class="highlight"><pre><span></span><span class="n">em</span> <span class="o">=</span> <span class="n">MyExperimentManager</span> <span class="p">(</span><span class="n">name_epoch</span><span class="o">=</span><span class="s1">&#39;epochs&#39;</span><span class="p">,</span> <span class="n">model_file_name</span><span class="o">=</span><span class="s1">&#39;model_weights.pk&#39;</span><span class="p">)</span>
+</pre></div>
+or indicating it in the <code>other_parameters</code> dictionary:<div class="highlight"><pre><span></span><span class="n">other_parameters</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">name_epoch</span><span class="o">=</span><span class="s1">&#39;epochs&#39;</span><span class="p">,</span> <span class="n">model_file_name</span><span class="o">=</span><span class="s1">&#39;model_weights.pk&#39;</span><span class="p">)</span>
+</pre></div>
+</li>
+</ol>
+<p>Furthermore, in order to work, we need our experiment manager to make use of the parameter <code>resume</code> or the parameter <code>prev_path_results</code>. In particular, we need it to load the model file whose path is indicated in <code>parameters['resume']</code>, or whose path is indicated in <code>f'{parameters["prev_path_results"]}/{self.model_file_name}'</code></p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="test_prev_epoch" class="doc_header"><code>test_prev_epoch</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L477" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_prev_epoch</code>()</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_prev_epoch</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>script: /tmp/ipykernel_17968/1621658181.py, line number: 6
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>running test_prev_epoch
+fitting model with 17 epochs
+epoch 0: accuracy: 0.15000000000000002
+epoch 1: accuracy: 0.2
+epoch 2: accuracy: 0.25
+epoch 3: accuracy: 0.3
+epoch 4: accuracy: 0.35
+epoch 5: accuracy: 0.39999999999999997
+epoch 6: accuracy: 0.44999999999999996
+epoch 7: accuracy: 0.49999999999999994
+epoch 8: accuracy: 0.5499999999999999
+epoch 9: accuracy: 0.6
+epoch 10: accuracy: 0.65
+epoch 11: accuracy: 0.7000000000000001
+epoch 12: accuracy: 0.7500000000000001
+epoch 13: accuracy: 0.8000000000000002
+epoch 14: accuracy: 0.8500000000000002
+epoch 15: accuracy: 0.9000000000000002
+epoch 16: accuracy: 0.9500000000000003
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>offset</th>
+      <th>rate</th>
+      <th>epochs</th>
+      <th>0_validation_accuracy</th>
+      <th>0_test_accuracy</th>
+      <th>time_0</th>
+      <th>date</th>
+      <th>0_finished</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.1</td>
+      <td>0.05</td>
+      <td>17.0</td>
+      <td>0.95</td>
+      <td>0.85</td>
+      <td>0.00219</td>
+      <td>23:03:18.132084</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>script: /tmp/ipykernel_17968/1621658181.py, line number: 14
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>fitting model with 10 epochs
+epoch 0: accuracy: 0.15000000000000002
+epoch 1: accuracy: 0.2
+epoch 2: accuracy: 0.25
+epoch 3: accuracy: 0.3
+epoch 4: accuracy: 0.35
+epoch 5: accuracy: 0.39999999999999997
+epoch 6: accuracy: 0.44999999999999996
+epoch 7: accuracy: 0.49999999999999994
+epoch 8: accuracy: 0.5499999999999999
+epoch 9: accuracy: 0.6
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>script: /tmp/ipykernel_17968/1621658181.py, line number: 15
+script: /tmp/ipykernel_17968/1621658181.py, line number: 16
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>fitting model with 20 epochs
+epoch 0: accuracy: 0.15000000000000002
+epoch 1: accuracy: 0.2
+epoch 2: accuracy: 0.25
+epoch 3: accuracy: 0.3
+epoch 4: accuracy: 0.35
+epoch 5: accuracy: 0.39999999999999997
+epoch 6: accuracy: 0.44999999999999996
+epoch 7: accuracy: 0.49999999999999994
+epoch 8: accuracy: 0.5499999999999999
+epoch 9: accuracy: 0.6
+epoch 10: accuracy: 0.65
+epoch 11: accuracy: 0.7000000000000001
+epoch 12: accuracy: 0.7500000000000001
+epoch 13: accuracy: 0.8000000000000002
+epoch 14: accuracy: 0.8500000000000002
+epoch 15: accuracy: 0.9000000000000002
+epoch 16: accuracy: 0.9500000000000003
+epoch 17: accuracy: 1.0000000000000002
+epoch 18: accuracy: 1.0500000000000003
+epoch 19: accuracy: 1.1000000000000003
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>script: /tmp/ipykernel_17968/1621658181.py, line number: 24
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>fitting model with 15 epochs
+epoch 0: accuracy: 0.15000000000000002
+epoch 1: accuracy: 0.2
+epoch 2: accuracy: 0.25
+epoch 3: accuracy: 0.3
+epoch 4: accuracy: 0.35
+epoch 5: accuracy: 0.39999999999999997
+epoch 6: accuracy: 0.44999999999999996
+epoch 7: accuracy: 0.49999999999999994
+epoch 8: accuracy: 0.5499999999999999
+epoch 9: accuracy: 0.6
+epoch 10: accuracy: 0.65
+epoch 11: accuracy: 0.7000000000000001
+epoch 12: accuracy: 0.7500000000000001
+epoch 13: accuracy: 0.8000000000000002
+epoch 14: accuracy: 0.8500000000000002
+reading model from test_prev_epoch/experiments/00002/0/model_weights.pk
+fitting model with 2 epochs
+epoch 0: accuracy: 0.9000000000000002
+epoch 1: accuracy: 0.9500000000000003
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>script: /tmp/ipykernel_17968/1621658181.py, line number: 34
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>fitting model with 17 epochs
+epoch 0: accuracy: 0.15000000000000002
+epoch 1: accuracy: 0.2
+epoch 2: accuracy: 0.25
+epoch 3: accuracy: 0.3
+epoch 4: accuracy: 0.35
+epoch 5: accuracy: 0.39999999999999997
+epoch 6: accuracy: 0.44999999999999996
+epoch 7: accuracy: 0.49999999999999994
+epoch 8: accuracy: 0.5499999999999999
+epoch 9: accuracy: 0.6
+epoch 10: accuracy: 0.65
+epoch 11: accuracy: 0.7000000000000001
+epoch 12: accuracy: 0.7500000000000001
+epoch 13: accuracy: 0.8000000000000002
+epoch 14: accuracy: 0.8500000000000002
+epoch 15: accuracy: 0.9000000000000002
+epoch 16: accuracy: 0.9500000000000003
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="test_prev_epoch2" class="doc_header"><code>test_prev_epoch2</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L519" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_prev_epoch2</code>()</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_prev_epoch2</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>running test_prev_epoch2
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>script: /tmp/ipykernel_17968/813877249.py, line number: 6
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>fitting model with 2 epochs
+epoch 0: accuracy: 0.13
+epoch 1: accuracy: 0.16
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>script: /tmp/ipykernel_17968/813877249.py, line number: 13
+script: /tmp/ipykernel_17968/813877249.py, line number: 18
+script: /tmp/ipykernel_17968/813877249.py, line number: 33
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>fitting model with 5 epochs
+epoch 0: accuracy: 0.14
+epoch 1: accuracy: 0.18000000000000002
+epoch 2: accuracy: 0.22000000000000003
+epoch 3: accuracy: 0.26
+epoch 4: accuracy: 0.3
+reading model from test_prev_epoch2/experiments/00000/0/model_weights.pk
+fitting model with 3 epochs
+epoch 0: accuracy: 0.19
+epoch 1: accuracy: 0.22
+epoch 2: accuracy: 0.25
+fitting model with 2 epochs
+epoch 0: accuracy: 0.13
+epoch 1: accuracy: 0.16
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>script: /tmp/ipykernel_17968/813877249.py, line number: 36
+script: /tmp/ipykernel_17968/813877249.py, line number: 40
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>fitting model with 5 epochs
+epoch 0: accuracy: 0.14
+epoch 1: accuracy: 0.18000000000000002
+epoch 2: accuracy: 0.22000000000000003
+epoch 3: accuracy: 0.26
+epoch 4: accuracy: 0.3
+reading model from test_prev_epoch2/experiments/00000/0/model_weights.pk
+fitting model with 3 epochs
+epoch 0: accuracy: 0.19
+epoch 1: accuracy: 0.22
+epoch 2: accuracy: 0.25
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="from_exp">from_exp<a class="anchor-link" href="#from_exp"> </a></h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In order to work, we need our experiment manager to make use of the parameter <code>prev_path_results</code>. In particular, we need it to load the model file whose path is indicated in <code>f'{parameters["prev_path_results"]}/{self.model_file_name}'</code></p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="test_from_exp" class="doc_header"><code>test_from_exp</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L569" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_from_exp</code>()</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_from_exp</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>script: /tmp/ipykernel_17968/3213666507.py, line number: 7
+script: /tmp/ipykernel_17968/3213666507.py, line number: 13
+script: /tmp/ipykernel_17968/3213666507.py, line number: 14
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>running test_from_exp
+fitting model with 5 epochs
+epoch 0: accuracy: 0.15000000000000002
+epoch 1: accuracy: 0.2
+epoch 2: accuracy: 0.25
+epoch 3: accuracy: 0.3
+epoch 4: accuracy: 0.35
+fitting model with 2 epochs
+epoch 0: accuracy: 0.13
+epoch 1: accuracy: 0.16
+fitting model with 2 epochs
+epoch 0: accuracy: 0.14
+epoch 1: accuracy: 0.18000000000000002
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>script: /tmp/ipykernel_17968/3213666507.py, line number: 18
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>reading model from test_from_exp/experiments/00000/0/model_weights.pk
+fitting model with 5 epochs
+epoch 0: accuracy: 0.21000000000000002
+epoch 1: accuracy: 0.26
+epoch 2: accuracy: 0.31
+epoch 3: accuracy: 0.36
+epoch 4: accuracy: 0.41
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="skip_interrupted">skip_interrupted<a class="anchor-link" href="#skip_interrupted"> </a></h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In order to use this functionality, we need to indicate the name of the file where the model is stored.
+This can be done either passing this when constructing the object:</p>
+<div class="highlight"><pre><span></span><span class="n">em</span> <span class="o">=</span> <span class="n">MyExperimentManager</span> <span class="p">(</span><span class="n">model_file_name</span><span class="o">=</span><span class="s1">&#39;model_weights.pk&#39;</span><span class="p">)</span>
+</pre></div>
+<p>or indicating it in the <code>other_parameters</code> dictionary:</p>
+<div class="highlight"><pre><span></span><span class="n">other_parameters</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">model_file_name</span><span class="o">=</span><span class="s1">&#39;model_weights.pk&#39;</span><span class="p">)</span>
+</pre></div>
+<p>Alternatively, we can indicate the name of the file where the model history exists. This can be done either passing this when constructing the object:</p>
+<div class="highlight"><pre><span></span><span class="n">em</span> <span class="o">=</span> <span class="n">MyExperimentManager</span> <span class="p">(</span><span class="n">name_model_history</span><span class="o">=</span><span class="s1">&#39;history.pk&#39;</span><span class="p">)</span>
+</pre></div>
+<p>or indicating it in the <code>other_parameters</code> dictionary:</p>
+<div class="highlight"><pre><span></span><span class="n">other_parameters</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">model_file_name</span><span class="o">=</span><span class="s1">&#39;history.pk&#39;</span><span class="p">)</span>
+</pre></div>
+<p>If not indicated, the experiment manager tries to find the model history in a file named <code>model_history.pk</code>. In order to consider the history good enough, the experiment manager checks if the length of the arrays stored in the model_history dictionary is at least <code>parameters.get('min_iterations', dflt.min_iterations)</code></p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="test_skip_interrupted" class="doc_header"><code>test_skip_interrupted</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L598" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_skip_interrupted</code>()</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_skip_interrupted</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>script: /tmp/ipykernel_17968/2789182944.py, line number: 8
+script: /tmp/ipykernel_17968/2789182944.py, line number: 11
+script: /tmp/ipykernel_17968/2789182944.py, line number: 14
+script: /tmp/ipykernel_17968/2789182944.py, line number: 20
+script: /tmp/ipykernel_17968/2789182944.py, line number: 29
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>running test_skip_interrupted
+fitting model with 5 epochs
+epoch 0: accuracy: 0.13
+epoch 1: accuracy: 0.16
+epoch 2: accuracy: 0.19
+epoch 3: accuracy: 0.22
+epoch 4: accuracy: 0.25
+fitting model with 5 epochs
+epoch 0: accuracy: 0.14
+epoch 1: accuracy: 0.18000000000000002
+epoch 2: accuracy: 0.22000000000000003
+epoch 3: accuracy: 0.26
+epoch 4: accuracy: 0.3
+storing result from test_skip_interrupted/experiments/00000/0 with iterations 5
+not storing result from test_skip_interrupted/experiments/00000/0 with iterations 5
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>offset</th>
+      <th>rate</th>
+      <th>epochs</th>
+      <th>0_validation_accuracy</th>
+      <th>0_test_accuracy</th>
+      <th>time_0</th>
+      <th>date</th>
+      <th>0_finished</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.1</td>
+      <td>0.03</td>
+      <td>5.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.1</td>
+      <td>0.04</td>
+      <td>5.0</td>
+      <td>0.3</td>
+      <td>0.4</td>
+      <td>0.000943</td>
+      <td>23:03:18.913938</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="use_last_result">use_last_result<a class="anchor-link" href="#use_last_result"> </a></h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In order to use this functionality, we need to indicate the name of the file where the model history exists. This can be done either passing this when constructing the object:</p>
+<div class="highlight"><pre><span></span><span class="n">em</span> <span class="o">=</span> <span class="n">MyExperimentManager</span> <span class="p">(</span><span class="n">name_model_history</span><span class="o">=</span><span class="s1">&#39;history.pk&#39;</span><span class="p">)</span>
+</pre></div>
+<p>or indicating it in the <code>other_parameters</code> dictionary:</p>
+<div class="highlight"><pre><span></span><span class="n">other_parameters</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">model_file_name</span><span class="o">=</span><span class="s1">&#39;history.pk&#39;</span><span class="p">)</span>
+</pre></div>
+<p>If not indicated, the experiment manager tries to find the model history in a file named <code>model_history.pk</code>. In order to consider the history good enough, the experiment manager checks if the length of the arrays stored in the model_history dictionary is at least <code>parameters.get('min_iterations', dflt.min_iterations)</code></p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="test_use_last_result" class="doc_header"><code>test_use_last_result</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L637" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_use_last_result</code>()</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_use_last_result</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>script: /tmp/ipykernel_17968/2930722641.py, line number: 8
+script: /tmp/ipykernel_17968/2930722641.py, line number: 11
+script: /tmp/ipykernel_17968/2930722641.py, line number: 18
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>running test_use_last_result
+fitting model with 5 epochs
+epoch 0: accuracy: 0.13
+epoch 1: accuracy: 0.16
+epoch 2: accuracy: 0.19
+epoch 3: accuracy: 0.22
+epoch 4: accuracy: 0.25
+fitting model with 5 epochs
+epoch 0: accuracy: 0.14
+epoch 1: accuracy: 0.18000000000000002
+epoch 2: accuracy: 0.22000000000000003
+epoch 3: accuracy: 0.26
+epoch 4: accuracy: 0.3
+not storing result from test_use_last_result/experiments/00000/0 with iterations 5
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>offset</th>
+      <th>rate</th>
+      <th>epochs</th>
+      <th>0_validation_accuracy</th>
+      <th>0_test_accuracy</th>
+      <th>time_0</th>
+      <th>date</th>
+      <th>0_finished</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.1</td>
+      <td>0.03</td>
+      <td>5.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.1</td>
+      <td>0.04</td>
+      <td>5.0</td>
+      <td>0.3</td>
+      <td>0.4</td>
+      <td>0.000973</td>
+      <td>23:03:19.123819</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>script: /tmp/ipykernel_17968/2930722641.py, line number: 28
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>storing result from test_use_last_result/experiments/00000/0 with iterations 5
+0.25 {&#39;validation_accuracy&#39;: 0.25, &#39;test_accuracy&#39;: 0.35, &#39;accuracy&#39;: 0.25, &#39;last&#39;: 5}
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>offset</th>
+      <th>rate</th>
+      <th>epochs</th>
+      <th>0_validation_accuracy</th>
+      <th>0_test_accuracy</th>
+      <th>time_0</th>
+      <th>date</th>
+      <th>0_finished</th>
+      <th>0_accuracy</th>
+      <th>0_last</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.1</td>
+      <td>0.03</td>
+      <td>5.0</td>
+      <td>0.25</td>
+      <td>0.35</td>
+      <td>NaN</td>
+      <td>23:03:19.187088</td>
+      <td>False</td>
+      <td>0.25</td>
+      <td>5.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.1</td>
+      <td>0.04</td>
+      <td>5.0</td>
+      <td>0.30</td>
+      <td>0.40</td>
+      <td>0.000973</td>
+      <td>23:03:19.123819</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>0.25 {&#39;validation_accuracy&#39;: 0.25}
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>offset</th>
+      <th>rate</th>
+      <th>epochs</th>
+      <th>0_validation_accuracy</th>
+      <th>0_test_accuracy</th>
+      <th>time_0</th>
+      <th>date</th>
+      <th>0_finished</th>
+      <th>0_accuracy</th>
+      <th>0_last</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.1</td>
+      <td>0.03</td>
+      <td>5.0</td>
+      <td>0.25</td>
+      <td>0.35</td>
+      <td>NaN</td>
+      <td>23:03:19.187088</td>
+      <td>False</td>
+      <td>0.25</td>
+      <td>5.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.1</td>
+      <td>0.04</td>
+      <td>5.0</td>
+      <td>0.30</td>
+      <td>0.40</td>
+      <td>0.000973</td>
+      <td>23:03:19.123819</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h5 id="second-case">second case<a class="anchor-link" href="#second-case"> </a></h5>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="test_use_last_result_run_interrupted" class="doc_header"><code>test_use_last_result_run_interrupted</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L690" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_use_last_result_run_interrupted</code>()</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_use_last_result_run_interrupted</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>script: /tmp/ipykernel_17968/3294322140.py, line number: 8
+script: /tmp/ipykernel_17968/3294322140.py, line number: 11
+script: /tmp/ipykernel_17968/3294322140.py, line number: 19
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>running test_use_last_result_run_interrupted
+fitting model with 2 epochs
+epoch 0: accuracy: 0.13
+epoch 1: accuracy: 0.16
+fitting model with 5 epochs
+epoch 0: accuracy: 0.14
+epoch 1: accuracy: 0.18000000000000002
+epoch 2: accuracy: 0.22000000000000003
+epoch 3: accuracy: 0.26
+epoch 4: accuracy: 0.3
+not storing result from test_use_last_result_run_interrupted/experiments/00000/0 with iterations 2
+fitting model with 5 epochs
+epoch 0: accuracy: 0.13
+epoch 1: accuracy: 0.16
+epoch 2: accuracy: 0.19
+epoch 3: accuracy: 0.22
+epoch 4: accuracy: 0.25
+0.25 {&#39;validation_accuracy&#39;: 0.25, &#39;test_accuracy&#39;: 0.35}
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="grid_search">grid_search<a class="anchor-link" href="#grid_search"> </a></h3>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="test_grid_search" class="doc_header"><code>test_grid_search</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L722" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_grid_search</code>()</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_grid_search</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>experiment script: /tmp/ipykernel_17968/546716936.py, line: 8
+processing hyper-parameter 0 out of 4
+doing run 0 out of 1
+
+running experiment 0
+run number: 0
+
+parameters:
+	epochs=5,
+	offset=0.1,
+	rate=0.03
+
+script: /tmp/ipykernel_17968/546716936.py, line number: 8
+time spent on this experiment: 0.0002505779266357422
+score: 0.25
+0 - validation_accuracy: 0.25
+0 - test_accuracy: 0.35
+finished experiment 0
+processing hyper-parameter 1 out of 4
+doing run 0 out of 1
+
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>running test_grid_search
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>running experiment 1
+run number: 0
+
+parameters:
+	epochs=5,
+	offset=0.1
+
+script: /tmp/ipykernel_17968/546716936.py, line number: 8
+time spent on this experiment: 0.00022721290588378906
+score: 0.15000000000000002
+0 - validation_accuracy: 0.15000000000000002
+0 - test_accuracy: 0.25
+finished experiment 1
+processing hyper-parameter 2 out of 4
+doing run 0 out of 1
+
+running experiment 2
+run number: 0
+
+parameters:
+	epochs=7,
+	offset=0.1,
+	rate=0.03
+
+script: /tmp/ipykernel_17968/546716936.py, line number: 8
+time spent on this experiment: 0.0002541542053222656
+score: 0.31000000000000005
+0 - validation_accuracy: 0.31000000000000005
+0 - test_accuracy: 0.41000000000000003
+finished experiment 2
+processing hyper-parameter 3 out of 4
+doing run 0 out of 1
+
+running experiment 3
+run number: 0
+
+parameters:
+	epochs=7,
+	offset=0.1
+
+script: /tmp/ipykernel_17968/546716936.py, line number: 8
+time spent on this experiment: 0.00023746490478515625
+score: 0.17000000000000004
+0 - validation_accuracy: 0.17000000000000004
+0 - test_accuracy: 0.27
+finished experiment 3
+experiment script: /tmp/ipykernel_17968/546716936.py, line: 23
+processing hyper-parameter 0 out of 4
+doing run 0 out of 1
+
+found completed: experiment number: 3, run number: 0 - score: 0.170000
+{&#39;epochs&#39;: 7, &#39;offset&#39;: 0.1}
+skipping...
+processing hyper-parameter 1 out of 4
+doing run 0 out of 1
+
+found completed: experiment number: 2, run number: 0 - score: 0.310000
+{&#39;epochs&#39;: 7, &#39;rate&#39;: 0.03, &#39;offset&#39;: 0.1}
+skipping...
+processing hyper-parameter 2 out of 4
+doing run 0 out of 1
+
+found completed: experiment number: 1, run number: 0 - score: 0.150000
+{&#39;epochs&#39;: 5, &#39;offset&#39;: 0.1}
+skipping...
+processing hyper-parameter 3 out of 4
+doing run 0 out of 1
+
+found completed: experiment number: 0, run number: 0 - score: 0.250000
+{&#39;epochs&#39;: 5, &#39;rate&#39;: 0.03, &#39;offset&#39;: 0.1}
+skipping...
+experiment script: /tmp/ipykernel_17968/546716936.py, line: 36
+processing hyper-parameter 0 out of 4
+doing run 0 out of 2
+
+running experiment 0
+run number: 0
+
+parameters:
+	epochs=7,
+	noise=0.0001,
+	offset=0.1
+
+script: /tmp/ipykernel_17968/546716936.py, line number: 36
+time spent on this experiment: 0.0012292861938476562
+score: 0.1700361395605509
+0 - validation_accuracy: 0.1700361395605509
+0 - test_accuracy: 0.2701538036566466
+finished experiment 0
+processing hyper-parameter 0 out of 4
+doing run 1 out of 2
+
+running experiment 0
+run number: 1
+
+parameters:
+	epochs=7,
+	noise=0.0001,
+	offset=0.1
+
+script: /tmp/ipykernel_17968/546716936.py, line number: 36
+time spent on this experiment: 0.001239776611328125
+score: 0.17009154021177025
+1 - validation_accuracy: 0.17009154021177025
+1 - test_accuracy: 0.27003287511096596
+finished experiment 0
+processing hyper-parameter 1 out of 4
+doing run 0 out of 2
+
+running experiment 1
+run number: 0
+
+parameters:
+	epochs=7,
+	noise=0.0001,
+	offset=0.1,
+	rate=0.03
+
+script: /tmp/ipykernel_17968/546716936.py, line number: 36
+time spent on this experiment: 0.001501321792602539
+score: 0.30996572854834736
+0 - validation_accuracy: 0.30996572854834736
+0 - test_accuracy: 0.40991977227307785
+finished experiment 1
+processing hyper-parameter 1 out of 4
+doing run 1 out of 2
+
+running experiment 1
+run number: 1
+
+parameters:
+	epochs=7,
+	noise=0.0001,
+	offset=0.1,
+	rate=0.03
+
+script: /tmp/ipykernel_17968/546716936.py, line number: 36
+time spent on this experiment: 0.001220703125
+score: 0.31011428228145155
+1 - validation_accuracy: 0.31011428228145155
+1 - test_accuracy: 0.4100751933032687
+finished experiment 1
+processing hyper-parameter 2 out of 4
+doing run 0 out of 2
+
+running experiment 2
+run number: 0
+
+parameters:
+	epochs=5,
+	noise=0.0001,
+	offset=0.1
+
+script: /tmp/ipykernel_17968/546716936.py, line number: 36
+time spent on this experiment: 0.001016378402709961
+score: 0.14984493365689341
+0 - validation_accuracy: 0.14984493365689341
+0 - test_accuracy: 0.2500068562974806
+finished experiment 2
+processing hyper-parameter 2 out of 4
+doing run 1 out of 2
+
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>fitting model with 7 epochs
+epoch 0: accuracy: 0.11
+epoch 1: accuracy: 0.12
+epoch 2: accuracy: 0.13
+epoch 3: accuracy: 0.14
+epoch 4: accuracy: 0.15000000000000002
+epoch 5: accuracy: 0.16000000000000003
+epoch 6: accuracy: 0.17000000000000004
+fitting model with 7 epochs
+epoch 0: accuracy: 0.11
+epoch 1: accuracy: 0.12
+epoch 2: accuracy: 0.13
+epoch 3: accuracy: 0.14
+epoch 4: accuracy: 0.15000000000000002
+epoch 5: accuracy: 0.16000000000000003
+epoch 6: accuracy: 0.17000000000000004
+fitting model with 7 epochs
+epoch 0: accuracy: 0.13
+epoch 1: accuracy: 0.16
+epoch 2: accuracy: 0.19
+epoch 3: accuracy: 0.22
+epoch 4: accuracy: 0.25
+epoch 5: accuracy: 0.28
+epoch 6: accuracy: 0.31000000000000005
+fitting model with 7 epochs
+epoch 0: accuracy: 0.13
+epoch 1: accuracy: 0.16
+epoch 2: accuracy: 0.19
+epoch 3: accuracy: 0.22
+epoch 4: accuracy: 0.25
+epoch 5: accuracy: 0.28
+epoch 6: accuracy: 0.31000000000000005
+fitting model with 5 epochs
+epoch 0: accuracy: 0.11
+epoch 1: accuracy: 0.12
+epoch 2: accuracy: 0.13
+epoch 3: accuracy: 0.14
+epoch 4: accuracy: 0.15000000000000002
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>running experiment 2
+run number: 1
+
+parameters:
+	epochs=5,
+	noise=0.0001,
+	offset=0.1
+
+script: /tmp/ipykernel_17968/546716936.py, line number: 36
+time spent on this experiment: 0.0010807514190673828
+score: 0.1498392516765439
+1 - validation_accuracy: 0.1498392516765439
+1 - test_accuracy: 0.2500184633858532
+finished experiment 2
+processing hyper-parameter 3 out of 4
+doing run 0 out of 2
+
+running experiment 3
+run number: 0
+
+parameters:
+	epochs=5,
+	noise=0.0001,
+	offset=0.1,
+	rate=0.03
+
+script: /tmp/ipykernel_17968/546716936.py, line number: 36
+time spent on this experiment: 0.0010292530059814453
+score: 0.25002930724732986
+0 - validation_accuracy: 0.25002930724732986
+0 - test_accuracy: 0.34992856485819734
+finished experiment 3
+processing hyper-parameter 3 out of 4
+doing run 1 out of 2
+
+running experiment 3
+run number: 1
+
+parameters:
+	epochs=5,
+	noise=0.0001,
+	offset=0.1,
+	rate=0.03
+
+script: /tmp/ipykernel_17968/546716936.py, line number: 36
+time spent on this experiment: 0.0009410381317138672
+score: 0.25008220601599945
+1 - validation_accuracy: 0.25008220601599945
+1 - test_accuracy: 0.3501896792982654
+finished experiment 3
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>fitting model with 5 epochs
+epoch 0: accuracy: 0.11
+epoch 1: accuracy: 0.12
+epoch 2: accuracy: 0.13
+epoch 3: accuracy: 0.14
+epoch 4: accuracy: 0.15000000000000002
+fitting model with 5 epochs
+epoch 0: accuracy: 0.13
+epoch 1: accuracy: 0.16
+epoch 2: accuracy: 0.19
+epoch 3: accuracy: 0.22
+epoch 4: accuracy: 0.25
+fitting model with 5 epochs
+epoch 0: accuracy: 0.13
+epoch 1: accuracy: 0.16
+epoch 2: accuracy: 0.19
+epoch 3: accuracy: 0.22
+epoch 4: accuracy: 0.25
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>experiment script: /tmp/ipykernel_17968/546716936.py, line: 50
+processing hyper-parameter 0 out of 4
+doing run 0 out of 1
+
+running experiment 0
+run number: 0
+
+parameters:
+	epochs=7,
+	offset=0.1,
+	rate=0.03
+
+script: /tmp/ipykernel_17968/546716936.py, line number: 50
+time spent on this experiment: 0.00023627281188964844
+score: 0.31000000000000005
+0 - validation_accuracy: 0.31000000000000005
+0 - test_accuracy: 0.41000000000000003
+finished experiment 0
+processing hyper-parameter 1 out of 4
+doing run 0 out of 1
+
+running experiment 1
+run number: 0
+
+parameters:
+	epochs=7,
+	offset=0.1
+
+script: /tmp/ipykernel_17968/546716936.py, line number: 50
+time spent on this experiment: 0.00023031234741210938
+score: 0.17000000000000004
+0 - validation_accuracy: 0.17000000000000004
+0 - test_accuracy: 0.27
+finished experiment 1
+processing hyper-parameter 2 out of 4
+doing run 0 out of 1
+
+running experiment 2
+run number: 0
+
+parameters:
+	epochs=5,
+	offset=0.1
+
+script: /tmp/ipykernel_17968/546716936.py, line number: 50
+time spent on this experiment: 0.0002288818359375
+score: 0.15000000000000002
+0 - validation_accuracy: 0.15000000000000002
+0 - test_accuracy: 0.25
+finished experiment 2
+processing hyper-parameter 3 out of 4
+doing run 0 out of 1
+
+running experiment 3
+run number: 0
+
+parameters:
+	epochs=5,
+	offset=0.1,
+	rate=0.03
+
+script: /tmp/ipykernel_17968/546716936.py, line number: 50
+time spent on this experiment: 0.00024771690368652344
+score: 0.25
+0 - validation_accuracy: 0.25
+0 - test_accuracy: 0.35
+finished experiment 3
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="run_multiple_repetitions">run_multiple_repetitions<a class="anchor-link" href="#run_multiple_repetitions"> </a></h3>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="test_run_multiple_repetitions" class="doc_header"><code>test_run_multiple_repetitions</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L784" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_run_multiple_repetitions</code>()</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_run_multiple_repetitions</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>doing run 0 out of 5
+
+experiment script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line: 605
+running experiment 0
+run number: 0
+
+parameters:
+	epochs=5,
+	offset=0.1,
+	rate=0.03
+
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line number: 605
+time spent on this experiment: 0.000225067138671875
+score: 0.24953658230718753
+0 - validation_accuracy: 0.24953658230718753
+0 - test_accuracy: 0.34953427024642975
+finished experiment 0
+doing run 1 out of 5
+
+experiment script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line: 605
+running experiment 0
+run number: 1
+
+parameters:
+	epochs=5,
+	offset=0.1,
+	rate=0.03
+
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line number: 605
+time spent on this experiment: 0.00023818016052246094
+score: 0.2500675282046879
+1 - validation_accuracy: 0.2500675282046879
+1 - test_accuracy: 0.3485752518137865
+finished experiment 0
+doing run 2 out of 5
+
+experiment script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line: 605
+running experiment 0
+run number: 2
+
+parameters:
+	epochs=5,
+	offset=0.1,
+	rate=0.03
+
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line number: 605
+time spent on this experiment: 0.00023865699768066406
+score: 0.2508225449121032
+2 - validation_accuracy: 0.2508225449121032
+2 - test_accuracy: 0.34877915635002893
+finished experiment 0
+doing run 3 out of 5
+
+experiment script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line: 605
+running experiment 0
+run number: 3
+
+parameters:
+	epochs=5,
+	offset=0.1,
+	rate=0.03
+
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line number: 605
+time spent on this experiment: 0.0002448558807373047
+score: 0.24953936122904022
+3 - validation_accuracy: 0.24953936122904022
+3 - test_accuracy: 0.3510571222262189
+finished experiment 0
+doing run 4 out of 5
+
+experiment script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line: 605
+running experiment 0
+run number: 4
+
+parameters:
+	epochs=5,
+	offset=0.1,
+	rate=0.03
+
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line number: 605
+time spent on this experiment: 0.000247955322265625
+score: 0.25033126343140355
+4 - validation_accuracy: 0.25033126343140355
+4 - test_accuracy: 0.3509755451271223
+finished experiment 0
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>running test_run_multiple_repetitions
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>mean : 0.2500594560168845, std: 0.000489927463497328
+doing run 0 out of 1
+
+experiment script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line: 605
+running experiment 0
+run number: 0
+
+parameters:
+	epochs=5,
+	offset=0.1,
+	rate=0.03
+
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line number: 605
+time spent on this experiment: 0.0002410411834716797
+score: 0.25
+0 - validation_accuracy: 0.25
+0 - test_accuracy: 0.35
+finished experiment 0
+mean : 0.25, std: 0.0
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="hp_optimization">hp_optimization<a class="anchor-link" href="#hp_optimization"> </a></h3>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="parameter_sampler" class="doc_header"><code>parameter_sampler</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L842" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>parameter_sampler</code>(<strong><code>trial</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -116,7 +4301,399 @@ nb_path: "nbs/experiment_manager.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="record_parameters" class="doc_header"><code>record_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L767" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>record_parameters</code>(<strong><code>path_save</code></strong>, <strong><code>parameters</code></strong>, <strong><code>other_parameters</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="test_hp_optimization" class="doc_header"><code>test_hp_optimization</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L820" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_hp_optimization</code>()</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_hp_optimization</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>experiment script: /tmp/ipykernel_17968/4246270235.py, line: 20
+Sampler: random - Pruner: halving
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>running test_hp_optimization
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre><span class="ansi-green-fg">[I 2022-01-07 23:03:21,947]</span> A new study created in RDB with name: test_hp_optimization_study
+starting experiment 0 with run number 0
+running experiment 0
+run number: 0
+
+parameters:
+	epochs=12,
+	offset=0.01,
+	rate=0.005939321535345923
+
+script: /tmp/ipykernel_17968/4246270235.py, line number: 20
+time spent on this experiment: 0.0017962455749511719
+score: 0.08127185842415106
+0 - validation_accuracy: 0.08127185842415106
+0 - test_accuracy: 0.0
+finished experiment 0
+<span class="ansi-green-fg">[I 2022-01-07 23:03:22,292]</span> Trial 0 finished with value: 0.08127185842415106 and parameters: {&#39;rate&#39;: 0.005939321535345923, &#39;offset&#39;: 0.01}. Best is trial 0 with value: 0.08127185842415106.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>fitting model with 12 epochs
+epoch 0: accuracy: 0.015939321535345923
+epoch 1: accuracy: 0.021878643070691844
+epoch 2: accuracy: 0.02781796460603777
+epoch 3: accuracy: 0.033757286141383694
+epoch 4: accuracy: 0.03969660767672962
+epoch 5: accuracy: 0.04563592921207554
+epoch 6: accuracy: 0.05157525074742147
+epoch 7: accuracy: 0.05751457228276739
+epoch 8: accuracy: 0.06345389381811331
+epoch 9: accuracy: 0.06939321535345923
+epoch 10: accuracy: 0.07533253688880515
+epoch 11: accuracy: 0.08127185842415106
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>starting experiment 1 with run number 0
+running experiment 1
+run number: 0
+
+parameters:
+	epochs=12,
+	offset=0.1,
+	rate=0.004812893194050143
+
+script: /tmp/ipykernel_17968/4246270235.py, line number: 20
+time spent on this experiment: 0.001783609390258789
+score: 0.1577547183286018
+0 - validation_accuracy: 0.1577547183286018
+0 - test_accuracy: 0.057754718328601795
+finished experiment 1
+<span class="ansi-green-fg">[I 2022-01-07 23:03:22,565]</span> Trial 1 finished with value: 0.1577547183286018 and parameters: {&#39;rate&#39;: 0.004812893194050143, &#39;offset&#39;: 0.1}. Best is trial 1 with value: 0.1577547183286018.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>fitting model with 12 epochs
+epoch 0: accuracy: 0.10481289319405016
+epoch 1: accuracy: 0.1096257863881003
+epoch 2: accuracy: 0.11443867958215045
+epoch 3: accuracy: 0.1192515727762006
+epoch 4: accuracy: 0.12406446597025075
+epoch 5: accuracy: 0.1288773591643009
+epoch 6: accuracy: 0.13369025235835105
+epoch 7: accuracy: 0.1385031455524012
+epoch 8: accuracy: 0.14331603874645135
+epoch 9: accuracy: 0.1481289319405015
+epoch 10: accuracy: 0.15294182513455165
+epoch 11: accuracy: 0.1577547183286018
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>starting experiment 2 with run number 0
+running experiment 2
+run number: 0
+
+parameters:
+	epochs=12,
+	offset=0.05,
+	rate=0.009672964844509264
+
+script: /tmp/ipykernel_17968/4246270235.py, line number: 20
+time spent on this experiment: 0.001718759536743164
+score: 0.1660755781341112
+0 - validation_accuracy: 0.1660755781341112
+0 - test_accuracy: 0.06607557813411119
+finished experiment 2
+<span class="ansi-green-fg">[I 2022-01-07 23:03:22,813]</span> Trial 2 finished with value: 0.1660755781341112 and parameters: {&#39;rate&#39;: 0.009672964844509264, &#39;offset&#39;: 0.05}. Best is trial 2 with value: 0.1660755781341112.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>fitting model with 12 epochs
+epoch 0: accuracy: 0.05967296484450926
+epoch 1: accuracy: 0.06934592968901852
+epoch 2: accuracy: 0.07901889453352778
+epoch 3: accuracy: 0.08869185937803704
+epoch 4: accuracy: 0.0983648242225463
+epoch 5: accuracy: 0.10803778906705556
+epoch 6: accuracy: 0.11771075391156482
+epoch 7: accuracy: 0.1273837187560741
+epoch 8: accuracy: 0.13705668360058337
+epoch 9: accuracy: 0.14672964844509265
+epoch 10: accuracy: 0.15640261328960192
+epoch 11: accuracy: 0.1660755781341112
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>starting experiment 3 with run number 0
+running experiment 3
+run number: 0
+
+parameters:
+	epochs=12,
+	offset=0.01,
+	rate=0.006112401049845392
+
+script: /tmp/ipykernel_17968/4246270235.py, line number: 20
+time spent on this experiment: 0.0020475387573242188
+score: 0.08334881259814472
+0 - validation_accuracy: 0.08334881259814472
+0 - test_accuracy: 0.0
+finished experiment 3
+<span class="ansi-green-fg">[I 2022-01-07 23:03:23,061]</span> Trial 3 finished with value: 0.08334881259814472 and parameters: {&#39;rate&#39;: 0.006112401049845392, &#39;offset&#39;: 0.01}. Best is trial 2 with value: 0.1660755781341112.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>fitting model with 12 epochs
+epoch 0: accuracy: 0.01611240104984539
+epoch 1: accuracy: 0.022224802099690782
+epoch 2: accuracy: 0.028337203149536173
+epoch 3: accuracy: 0.03444960419938156
+epoch 4: accuracy: 0.04056200524922696
+epoch 5: accuracy: 0.04667440629907235
+epoch 6: accuracy: 0.05278680734891775
+epoch 7: accuracy: 0.05889920839876314
+epoch 8: accuracy: 0.06501160944860854
+epoch 9: accuracy: 0.07112401049845393
+epoch 10: accuracy: 0.07723641154829933
+epoch 11: accuracy: 0.08334881259814472
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>starting experiment 4 with run number 0
+running experiment 4
+run number: 0
+
+parameters:
+	epochs=12,
+	offset=0.1,
+	rate=0.0011819655769629315
+
+script: /tmp/ipykernel_17968/4246270235.py, line number: 20
+time spent on this experiment: 0.0018162727355957031
+score: 0.11418358692355515
+0 - validation_accuracy: 0.11418358692355515
+0 - test_accuracy: 0.014183586923555147
+finished experiment 4
+<span class="ansi-green-fg">[I 2022-01-07 23:03:23,340]</span> Trial 4 finished with value: 0.11418358692355515 and parameters: {&#39;rate&#39;: 0.0011819655769629315, &#39;offset&#39;: 0.1}. Best is trial 2 with value: 0.1660755781341112.
+Number of finished trials: 5
+Best trial:
+Value: 0.1660755781341112
+best params: {&#39;offset&#39;: 0.05, &#39;rate&#39;: 0.009672964844509264}
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>fitting model with 12 epochs
+epoch 0: accuracy: 0.10118196557696293
+epoch 1: accuracy: 0.10236393115392586
+epoch 2: accuracy: 0.10354589673088879
+epoch 3: accuracy: 0.10472786230785172
+epoch 4: accuracy: 0.10590982788481465
+epoch 5: accuracy: 0.10709179346177758
+epoch 6: accuracy: 0.10827375903874051
+epoch 7: accuracy: 0.10945572461570344
+epoch 8: accuracy: 0.11063769019266637
+epoch 9: accuracy: 0.1118196557696293
+epoch 10: accuracy: 0.11300162134659222
+epoch 11: accuracy: 0.11418358692355515
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>epochs</th>
+      <th>rate</th>
+      <th>offset</th>
+      <th>0_validation_accuracy</th>
+      <th>0_test_accuracy</th>
+      <th>time_0</th>
+      <th>date</th>
+      <th>0_finished</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>12.0</td>
+      <td>0.005939</td>
+      <td>0.01</td>
+      <td>0.081272</td>
+      <td>0.000000</td>
+      <td>0.002821</td>
+      <td>23:03:22.210886</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>12.0</td>
+      <td>0.004813</td>
+      <td>0.10</td>
+      <td>0.157755</td>
+      <td>0.057755</td>
+      <td>0.002794</td>
+      <td>23:03:22.479159</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>12.0</td>
+      <td>0.009673</td>
+      <td>0.05</td>
+      <td>0.166076</td>
+      <td>0.066076</td>
+      <td>0.002721</td>
+      <td>23:03:22.743439</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>12.0</td>
+      <td>0.006112</td>
+      <td>0.01</td>
+      <td>0.083349</td>
+      <td>0.000000</td>
+      <td>0.003307</td>
+      <td>23:03:22.992142</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>12.0</td>
+      <td>0.001182</td>
+      <td>0.10</td>
+      <td>0.114184</td>
+      <td>0.014184</td>
+      <td>0.002832</td>
+      <td>23:03:23.256664</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="rerun_experiment">rerun_experiment<a class="anchor-link" href="#rerun_experiment"> </a></h3>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="parameter_sampler" class="doc_header"><code>parameter_sampler</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L842" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>parameter_sampler</code>(<strong><code>trial</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -140,7 +4717,7 @@ nb_path: "nbs/experiment_manager.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="mypprint" class="doc_header"><code>mypprint</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L786" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>mypprint</code>(<strong><code>parameters</code></strong>, <strong><code>dict_name</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="test_rerun_experiment" class="doc_header"><code>test_rerun_experiment</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L851" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_rerun_experiment</code>()</p>
 </blockquote>
 
 </div>
@@ -157,6 +4734,766 @@ nb_path: "nbs/experiment_manager.ipynb"
     
 <div class="cell border-box-sizing code_cell rendered">
 
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_rerun_experiment</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>experiment script: /tmp/ipykernel_17968/1270020730.py, line: 16
+running experiment 0
+run number: 0
+
+parameters:
+	epochs=5,
+	offset=0.1,
+	rate=0.05
+
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>running test_rerun_experiment
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>script: /tmp/ipykernel_17968/1270020730.py, line number: 16
+experiment script: /tmp/ipykernel_17968/1270020730.py, line: 18
+running experiment 1
+run number: 0
+
+parameters:
+	epochs=2,
+	offset=0.1,
+	rate=0.03
+
+script: /tmp/ipykernel_17968/1270020730.py, line number: 18
+time spent on this experiment: 0.0007839202880859375
+score: 0.16
+0 - validation_accuracy: 0.16
+0 - test_accuracy: 0.26
+finished experiment 1
+experiment script: /tmp/ipykernel_17968/1270020730.py, line: 19
+running experiment 2
+run number: 0
+
+parameters:
+	rate=0.04
+
+script: /tmp/ipykernel_17968/1270020730.py, line number: 19
+time spent on this experiment: 0.0021576881408691406
+score: 0.9000000000000004
+0 - validation_accuracy: 0.9000000000000004
+0 - test_accuracy: 0.8000000000000004
+finished experiment 2
+requiring experiment number to be 1
+running experiment 1 with parameters:
+{&#39;offset&#39;: 0.1, &#39;rate&#39;: 0.03, &#39;epochs&#39;: 2}
+other_parameters:
+{&#39;script_path&#39;: &#39;/tmp/ipykernel_17968/1270020730.py&#39;, &#39;lineno&#39;: 18, &#39;experiment_number&#39;: 1, &#39;suffix_results&#39;: &#39;_validation_accuracy&#39;, &#39;path_results_big&#39;: &#39;test_rerun_experiment/experiments/00001/0&#39;, &#39;git_hash&#39;: &#34;b&#39;1314053a6166d51cb2713a9356811095a91da6c8\\n&#39;&#34;}
+experiment script: /tmp/ipykernel_17968/1270020730.py, line: 27
+doing run 0 out of 1
+
+found completed: experiment number: 1, run number: 0 - score: 0.160000
+{&#39;offset&#39;: 0.1, &#39;rate&#39;: 0.03, &#39;epochs&#39;: 2}
+skipping...
+mean : 0.16, std: 0.0
+requiring experiment number to be 0
+running experiment 0 with parameters:
+{&#39;offset&#39;: 0.1, &#39;rate&#39;: 0.05, &#39;epochs&#39;: 5}
+other_parameters:
+{&#39;halt&#39;: False, &#39;script_path&#39;: &#39;/tmp/ipykernel_17968/1270020730.py&#39;, &#39;lineno&#39;: 16, &#39;experiment_number&#39;: 0, &#39;suffix_results&#39;: &#39;_validation_accuracy&#39;, &#39;path_results_big&#39;: &#39;test_rerun_experiment/experiments/00000/0&#39;, &#39;git_hash&#39;: &#34;b&#39;1314053a6166d51cb2713a9356811095a91da6c8\\n&#39;&#34;, &#39;verbose&#39;: False}
+experiment script: /tmp/ipykernel_17968/1270020730.py, line: 33
+doing run 0 out of 1
+
+running experiment 0
+run number: 0
+
+parameters:
+	epochs=5,
+	offset=0.1,
+	rate=0.05
+
+script: /tmp/ipykernel_17968/1270020730.py, line number: 16
+time spent on this experiment: 0.0003070831298828125
+score: 0.35
+0 - validation_accuracy: 0.35
+0 - test_accuracy: 0.44999999999999996
+finished experiment 0
+mean : 0.35, std: 0.0
+requiring experiment number to be 1
+running experiment 1 with parameters:
+{&#39;offset&#39;: 0.1, &#39;rate&#39;: 0.03, &#39;epochs&#39;: 2}
+other_parameters:
+{&#39;script_path&#39;: &#39;/tmp/ipykernel_17968/1270020730.py&#39;, &#39;lineno&#39;: 18, &#39;experiment_number&#39;: 1, &#39;suffix_results&#39;: &#39;_validation_accuracy&#39;, &#39;path_results_big&#39;: &#39;test_rerun_experiment/experiments/00001/0&#39;, &#39;git_hash&#39;: &#34;b&#39;1314053a6166d51cb2713a9356811095a91da6c8\\n&#39;&#34;, &#39;noise&#39;: 0.001, &#39;verbose&#39;: False}
+experiment script: /tmp/ipykernel_17968/1270020730.py, line: 40
+doing run 0 out of 5
+
+found completed: experiment number: 1, run number: 0 - score: 0.160000
+{&#39;offset&#39;: 0.1, &#39;rate&#39;: 0.03, &#39;epochs&#39;: 2}
+skipping...
+doing run 1 out of 5
+
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>fitting model with 5 epochs
+epoch 0: accuracy: 0.15000000000000002
+epoch 1: accuracy: 0.2
+epoch 2: accuracy: 0.25
+epoch 3: accuracy: 0.3
+epoch 4: accuracy: 0.35
+fitting model with 2 epochs
+epoch 0: accuracy: 0.13
+epoch 1: accuracy: 0.16
+fitting model with 10 epochs
+epoch 0: accuracy: 0.54
+epoch 1: accuracy: 0.5800000000000001
+epoch 2: accuracy: 0.6200000000000001
+epoch 3: accuracy: 0.6600000000000001
+epoch 4: accuracy: 0.7000000000000002
+epoch 5: accuracy: 0.7400000000000002
+epoch 6: accuracy: 0.7800000000000002
+epoch 7: accuracy: 0.8200000000000003
+epoch 8: accuracy: 0.8600000000000003
+epoch 9: accuracy: 0.9000000000000004
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>running experiment 1
+run number: 1
+
+parameters:
+	epochs=2,
+	offset=0.1,
+	rate=0.03
+
+script: /tmp/ipykernel_17968/1270020730.py, line number: 18
+time spent on this experiment: 0.00024080276489257812
+score: 0.15977653721467416
+1 - validation_accuracy: 0.15977653721467416
+1 - test_accuracy: 0.2607140004940921
+finished experiment 1
+doing run 2 out of 5
+
+running experiment 1
+run number: 2
+
+parameters:
+	epochs=2,
+	offset=0.1,
+	rate=0.03
+
+script: /tmp/ipykernel_17968/1270020730.py, line number: 18
+time spent on this experiment: 0.00023031234741210938
+score: 0.15955348504793299
+2 - validation_accuracy: 0.15955348504793299
+2 - test_accuracy: 0.2608563987943235
+finished experiment 1
+doing run 3 out of 5
+
+running experiment 1
+run number: 3
+
+parameters:
+	epochs=2,
+	offset=0.1,
+	rate=0.03
+
+script: /tmp/ipykernel_17968/1270020730.py, line number: 18
+time spent on this experiment: 0.0002415180206298828
+score: 0.15911614256379886
+3 - validation_accuracy: 0.15911614256379886
+3 - test_accuracy: 0.26015372510594553
+finished experiment 1
+doing run 4 out of 5
+
+running experiment 1
+run number: 4
+
+parameters:
+	epochs=2,
+	offset=0.1,
+	rate=0.03
+
+script: /tmp/ipykernel_17968/1270020730.py, line number: 18
+time spent on this experiment: 0.0002465248107910156
+score: 0.1610830512431753
+4 - validation_accuracy: 0.1610830512431753
+4 - test_accuracy: 0.26105380205203493
+finished experiment 1
+mean : 0.15990584321391627, std: 0.0006571434668150468
+running experiment 2 with parameters:
+{&#39;rate&#39;: 0.04}
+other_parameters:
+{&#39;script_path&#39;: &#39;/tmp/ipykernel_17968/1270020730.py&#39;, &#39;lineno&#39;: 19, &#39;suffix_results&#39;: &#39;_validation_accuracy&#39;, &#39;path_results_big&#39;: &#39;test_rerun_experiment/experiments/00002/0&#39;, &#39;git_hash&#39;: &#34;b&#39;1314053a6166d51cb2713a9356811095a91da6c8\\n&#39;&#34;, &#39;verbose&#39;: False}
+processing hyper-parameter 0 out of 4
+doing run 0 out of 2
+
+running experiment 3
+run number: 0
+
+parameters:
+	epochs=3,
+	offset=0.01,
+	rate=0.04
+
+script: /tmp/ipykernel_17968/1270020730.py, line number: 19
+time spent on this experiment: 0.0002465248107910156
+score: 0.13
+0 - validation_accuracy: 0.13
+0 - test_accuracy: 0.23
+finished experiment 3
+processing hyper-parameter 0 out of 4
+doing run 1 out of 2
+
+running experiment 3
+run number: 1
+
+parameters:
+	epochs=3,
+	offset=0.01,
+	rate=0.04
+
+script: /tmp/ipykernel_17968/1270020730.py, line number: 19
+time spent on this experiment: 0.0002498626708984375
+score: 0.13
+1 - validation_accuracy: 0.13
+1 - test_accuracy: 0.23
+finished experiment 3
+processing hyper-parameter 1 out of 4
+doing run 0 out of 2
+
+running experiment 4
+run number: 0
+
+parameters:
+	epochs=3,
+	offset=0.05,
+	rate=0.04
+
+script: /tmp/ipykernel_17968/1270020730.py, line number: 19
+time spent on this experiment: 0.0003306865692138672
+score: 0.17
+0 - validation_accuracy: 0.17
+0 - test_accuracy: 0.27
+finished experiment 4
+processing hyper-parameter 1 out of 4
+doing run 1 out of 2
+
+running experiment 4
+run number: 1
+
+parameters:
+	epochs=3,
+	offset=0.05,
+	rate=0.04
+
+script: /tmp/ipykernel_17968/1270020730.py, line number: 19
+time spent on this experiment: 0.0002810955047607422
+score: 0.17
+1 - validation_accuracy: 0.17
+1 - test_accuracy: 0.27
+finished experiment 4
+processing hyper-parameter 2 out of 4
+doing run 0 out of 2
+
+running experiment 5
+run number: 0
+
+parameters:
+	epochs=5,
+	offset=0.01,
+	rate=0.04
+
+script: /tmp/ipykernel_17968/1270020730.py, line number: 19
+time spent on this experiment: 0.00025534629821777344
+score: 0.21000000000000002
+0 - validation_accuracy: 0.21000000000000002
+0 - test_accuracy: 0.31000000000000005
+finished experiment 5
+processing hyper-parameter 2 out of 4
+doing run 1 out of 2
+
+running experiment 5
+run number: 1
+
+parameters:
+	epochs=5,
+	offset=0.01,
+	rate=0.04
+
+script: /tmp/ipykernel_17968/1270020730.py, line number: 19
+time spent on this experiment: 0.0003008842468261719
+score: 0.21000000000000002
+1 - validation_accuracy: 0.21000000000000002
+1 - test_accuracy: 0.31000000000000005
+finished experiment 5
+processing hyper-parameter 3 out of 4
+doing run 0 out of 2
+
+running experiment 6
+run number: 0
+
+parameters:
+	epochs=5,
+	offset=0.05,
+	rate=0.04
+
+script: /tmp/ipykernel_17968/1270020730.py, line number: 19
+time spent on this experiment: 0.0002739429473876953
+score: 0.25
+0 - validation_accuracy: 0.25
+0 - test_accuracy: 0.35
+finished experiment 6
+processing hyper-parameter 3 out of 4
+doing run 1 out of 2
+
+running experiment 6
+run number: 1
+
+parameters:
+	epochs=5,
+	offset=0.05,
+	rate=0.04
+
+script: /tmp/ipykernel_17968/1270020730.py, line number: 19
+time spent on this experiment: 0.00023126602172851562
+score: 0.25
+1 - validation_accuracy: 0.25
+1 - test_accuracy: 0.35
+finished experiment 6
+running experiment 2 with parameters:
+{&#39;rate&#39;: 0.04}
+other_parameters:
+{&#39;script_path&#39;: &#39;/tmp/ipykernel_17968/1270020730.py&#39;, &#39;lineno&#39;: 19, &#39;suffix_results&#39;: &#39;_validation_accuracy&#39;, &#39;path_results_big&#39;: &#39;test_rerun_experiment/experiments/00002/0&#39;, &#39;git_hash&#39;: &#34;b&#39;1314053a6166d51cb2713a9356811095a91da6c8\\n&#39;&#34;, &#39;n_trials&#39;: 4, &#39;verbose&#39;: False, &#39;sampler_method&#39;: &#39;skopt&#39;}
+running hp_optimization
+Sampler: skopt - Pruner: halving
+<span class="ansi-green-fg">[I 2022-01-07 23:03:25,202]</span> A new study created in RDB with name: hp_study
+starting experiment 7 with run number 0
+running experiment 7
+run number: 0
+
+parameters:
+	epochs=2,
+	offset=0.02,
+	rate=0.04
+
+script: /tmp/ipykernel_17968/1270020730.py, line number: 19
+time spent on this experiment: 0.0002543926239013672
+score: 0.1
+0 - validation_accuracy: 0.1
+0 - test_accuracy: 0.2
+finished experiment 7
+<span class="ansi-green-fg">[I 2022-01-07 23:03:25,592]</span> Trial 0 finished with value: 0.1 and parameters: {&#39;epochs&#39;: 2, &#39;offset&#39;: 0.02}. Best is trial 0 with value: 0.1.
+starting experiment 8 with run number 0
+running experiment 8
+run number: 0
+
+parameters:
+	epochs=4,
+	offset=0.02,
+	rate=0.04
+
+script: /tmp/ipykernel_17968/1270020730.py, line number: 19
+time spent on this experiment: 0.0003159046173095703
+score: 0.18000000000000002
+0 - validation_accuracy: 0.18000000000000002
+0 - test_accuracy: 0.28
+finished experiment 8
+<span class="ansi-green-fg">[I 2022-01-07 23:03:25,882]</span> Trial 1 finished with value: 0.18000000000000002 and parameters: {&#39;epochs&#39;: 4, &#39;offset&#39;: 0.02}. Best is trial 1 with value: 0.18000000000000002.
+starting experiment 9 with run number 0
+running experiment 9
+run number: 0
+
+parameters:
+	epochs=4,
+	offset=0.06,
+	rate=0.04
+
+script: /tmp/ipykernel_17968/1270020730.py, line number: 19
+time spent on this experiment: 0.00029277801513671875
+score: 0.22000000000000003
+0 - validation_accuracy: 0.22000000000000003
+0 - test_accuracy: 0.32000000000000006
+finished experiment 9
+<span class="ansi-green-fg">[I 2022-01-07 23:03:26,177]</span> Trial 2 finished with value: 0.22000000000000003 and parameters: {&#39;epochs&#39;: 4, &#39;offset&#39;: 0.06}. Best is trial 2 with value: 0.22000000000000003.
+found previous run for experiment number 7, run 0, with score validation_accuracy = 0.1
+starting experiment 7 with run number 1
+running experiment 7
+run number: 1
+
+parameters:
+	epochs=2,
+	offset=0.02,
+	rate=0.04
+
+script: /tmp/ipykernel_17968/1270020730.py, line number: 19
+time spent on this experiment: 0.00029087066650390625
+score: 0.1
+1 - validation_accuracy: 0.1
+1 - test_accuracy: 0.2
+finished experiment 7
+<span class="ansi-green-fg">[I 2022-01-07 23:03:26,456]</span> Trial 3 finished with value: 0.1 and parameters: {&#39;epochs&#39;: 2, &#39;offset&#39;: 0.02}. Best is trial 2 with value: 0.22000000000000003.
+Number of finished trials: 4
+Best trial:
+Value: 0.22000000000000003
+best params: {&#39;epochs&#39;: 4, &#39;offset&#39;: 0.06}
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>offset</th>
+      <th>rate</th>
+      <th>epochs</th>
+      <th>0_validation_accuracy</th>
+      <th>0_test_accuracy</th>
+      <th>time_0</th>
+      <th>date</th>
+      <th>0_finished</th>
+      <th>1_validation_accuracy</th>
+      <th>1_test_accuracy</th>
+      <th>...</th>
+      <th>time_2</th>
+      <th>2_finished</th>
+      <th>3_validation_accuracy</th>
+      <th>3_test_accuracy</th>
+      <th>time_3</th>
+      <th>3_finished</th>
+      <th>4_validation_accuracy</th>
+      <th>4_test_accuracy</th>
+      <th>time_4</th>
+      <th>4_finished</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.10</td>
+      <td>0.05</td>
+      <td>5.0</td>
+      <td>0.35</td>
+      <td>0.45</td>
+      <td>0.001425</td>
+      <td>23:03:23.605901</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.10</td>
+      <td>0.03</td>
+      <td>2.0</td>
+      <td>0.16</td>
+      <td>0.26</td>
+      <td>0.001879</td>
+      <td>23:03:23.801889</td>
+      <td>True</td>
+      <td>0.159777</td>
+      <td>0.260714</td>
+      <td>...</td>
+      <td>0.001259</td>
+      <td>True</td>
+      <td>0.159116</td>
+      <td>0.260154</td>
+      <td>0.00132</td>
+      <td>True</td>
+      <td>0.161083</td>
+      <td>0.261054</td>
+      <td>0.001281</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>NaN</td>
+      <td>0.04</td>
+      <td>NaN</td>
+      <td>0.90</td>
+      <td>0.80</td>
+      <td>0.003241</td>
+      <td>23:03:23.543798</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.01</td>
+      <td>0.04</td>
+      <td>3.0</td>
+      <td>0.13</td>
+      <td>0.23</td>
+      <td>0.001298</td>
+      <td>23:03:23.901293</td>
+      <td>True</td>
+      <td>0.130000</td>
+      <td>0.230000</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.05</td>
+      <td>0.04</td>
+      <td>3.0</td>
+      <td>0.17</td>
+      <td>0.27</td>
+      <td>0.001418</td>
+      <td>23:03:24.000448</td>
+      <td>True</td>
+      <td>0.170000</td>
+      <td>0.270000</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.01</td>
+      <td>0.04</td>
+      <td>5.0</td>
+      <td>0.21</td>
+      <td>0.31</td>
+      <td>0.001335</td>
+      <td>23:03:24.105126</td>
+      <td>True</td>
+      <td>0.210000</td>
+      <td>0.310000</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0.05</td>
+      <td>0.04</td>
+      <td>5.0</td>
+      <td>0.25</td>
+      <td>0.35</td>
+      <td>0.001387</td>
+      <td>23:03:24.208955</td>
+      <td>True</td>
+      <td>0.250000</td>
+      <td>0.350000</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0.02</td>
+      <td>0.04</td>
+      <td>2.0</td>
+      <td>0.10</td>
+      <td>0.20</td>
+      <td>0.001314</td>
+      <td>23:03:26.377771</td>
+      <td>True</td>
+      <td>0.100000</td>
+      <td>0.200000</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>0.02</td>
+      <td>0.04</td>
+      <td>4.0</td>
+      <td>0.18</td>
+      <td>0.28</td>
+      <td>0.001367</td>
+      <td>23:03:25.807008</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>0.06</td>
+      <td>0.04</td>
+      <td>4.0</td>
+      <td>0.22</td>
+      <td>0.32</td>
+      <td>0.001762</td>
+      <td>23:03:26.089913</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>10 rows × 24 columns</p>
+</div>
+</div>
+
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>(10, 24)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="rerun_experiment_pipeline">rerun_experiment_pipeline<a class="anchor-link" href="#rerun_experiment_pipeline"> </a></h3><p>Allows to update some of the parameters on previous experiments and re-run them with those updated parameters, keeping the experiment number unchanged. Optionally, it can save the result to the csv file.</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
 <div class="output_wrapper">
 <div class="output">
 
@@ -164,7 +5501,1028 @@ nb_path: "nbs/experiment_manager.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="mymakedirs" class="doc_header"><code>mymakedirs</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L807" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>mymakedirs</code>(<strong><code>path</code></strong>, <strong><code>exist_ok</code></strong>=<em><code>False</code></em>)</p>
+<h4 id="test_rerun_experiment_pipeline" class="doc_header"><code>test_rerun_experiment_pipeline</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L918" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_rerun_experiment_pipeline</code>()</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_rerun_experiment_pipeline</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>experiment script: /tmp/ipykernel_17968/258747340.py, line: 7
+running experiment 0
+run number: 0
+
+parameters:
+	epochs=5,
+	offset=0.1,
+	rate=0.05
+
+script: /tmp/ipykernel_17968/258747340.py, line number: 7
+experiment script: /tmp/ipykernel_17968/258747340.py, line: 9
+running experiment 1
+run number: 0
+
+parameters:
+	epochs=2,
+	offset=0.1,
+	rate=0.03
+
+script: /tmp/ipykernel_17968/258747340.py, line number: 9
+time spent on this experiment: 0.0006632804870605469
+score: 0.16
+0 - validation_accuracy: 0.16
+0 - test_accuracy: 0.26
+finished experiment 1
+doing run 0 out of 5
+
+experiment script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line: 605
+running experiment 2
+run number: 0
+
+parameters:
+	rate=0.04
+
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line number: 605
+time spent on this experiment: 0.0015058517456054688
+score: 0.9000000000000004
+0 - validation_accuracy: 0.9000000000000004
+0 - test_accuracy: 0.8000000000000004
+finished experiment 2
+doing run 1 out of 5
+
+experiment script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line: 605
+running experiment 2
+run number: 1
+
+parameters:
+	rate=0.04
+
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>running test_rerun_experiment_pipeline
+fitting model with 5 epochs
+epoch 0: accuracy: 0.15000000000000002
+epoch 1: accuracy: 0.2
+epoch 2: accuracy: 0.25
+epoch 3: accuracy: 0.3
+epoch 4: accuracy: 0.35
+fitting model with 2 epochs
+epoch 0: accuracy: 0.13
+epoch 1: accuracy: 0.16
+fitting model with 10 epochs
+epoch 0: accuracy: 0.54
+epoch 1: accuracy: 0.5800000000000001
+epoch 2: accuracy: 0.6200000000000001
+epoch 3: accuracy: 0.6600000000000001
+epoch 4: accuracy: 0.7000000000000002
+epoch 5: accuracy: 0.7400000000000002
+epoch 6: accuracy: 0.7800000000000002
+epoch 7: accuracy: 0.8200000000000003
+epoch 8: accuracy: 0.8600000000000003
+epoch 9: accuracy: 0.9000000000000004
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line number: 605
+time spent on this experiment: 0.0016970634460449219
+score: 0.9000000000000004
+1 - validation_accuracy: 0.9000000000000004
+1 - test_accuracy: 0.8000000000000004
+finished experiment 2
+doing run 2 out of 5
+
+experiment script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line: 605
+running experiment 2
+run number: 2
+
+parameters:
+	rate=0.04
+
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line number: 605
+time spent on this experiment: 0.0015330314636230469
+score: 0.9000000000000004
+2 - validation_accuracy: 0.9000000000000004
+2 - test_accuracy: 0.8000000000000004
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>fitting model with 10 epochs
+epoch 0: accuracy: 0.54
+epoch 1: accuracy: 0.5800000000000001
+epoch 2: accuracy: 0.6200000000000001
+epoch 3: accuracy: 0.6600000000000001
+epoch 4: accuracy: 0.7000000000000002
+epoch 5: accuracy: 0.7400000000000002
+epoch 6: accuracy: 0.7800000000000002
+epoch 7: accuracy: 0.8200000000000003
+epoch 8: accuracy: 0.8600000000000003
+epoch 9: accuracy: 0.9000000000000004
+fitting model with 10 epochs
+epoch 0: accuracy: 0.54
+epoch 1: accuracy: 0.5800000000000001
+epoch 2: accuracy: 0.6200000000000001
+epoch 3: accuracy: 0.6600000000000001
+epoch 4: accuracy: 0.7000000000000002
+epoch 5: accuracy: 0.7400000000000002
+epoch 6: accuracy: 0.7800000000000002
+epoch 7: accuracy: 0.8200000000000003
+epoch 8: accuracy: 0.8600000000000003
+epoch 9: accuracy: 0.9000000000000004
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>finished experiment 2
+doing run 3 out of 5
+
+experiment script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line: 605
+running experiment 2
+run number: 3
+
+parameters:
+	rate=0.04
+
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line number: 605
+time spent on this experiment: 0.0015239715576171875
+score: 0.9000000000000004
+3 - validation_accuracy: 0.9000000000000004
+3 - test_accuracy: 0.8000000000000004
+finished experiment 2
+doing run 4 out of 5
+
+experiment script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line: 605
+running experiment 2
+run number: 4
+
+parameters:
+	rate=0.04
+
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line number: 605
+time spent on this experiment: 0.0015299320220947266
+score: 0.9000000000000004
+4 - validation_accuracy: 0.9000000000000004
+4 - test_accuracy: 0.8000000000000004
+finished experiment 2
+mean : 0.9000000000000004, std: 0.0
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>fitting model with 10 epochs
+epoch 0: accuracy: 0.54
+epoch 1: accuracy: 0.5800000000000001
+epoch 2: accuracy: 0.6200000000000001
+epoch 3: accuracy: 0.6600000000000001
+epoch 4: accuracy: 0.7000000000000002
+epoch 5: accuracy: 0.7400000000000002
+epoch 6: accuracy: 0.7800000000000002
+epoch 7: accuracy: 0.8200000000000003
+epoch 8: accuracy: 0.8600000000000003
+epoch 9: accuracy: 0.9000000000000004
+fitting model with 10 epochs
+epoch 0: accuracy: 0.54
+epoch 1: accuracy: 0.5800000000000001
+epoch 2: accuracy: 0.6200000000000001
+epoch 3: accuracy: 0.6600000000000001
+epoch 4: accuracy: 0.7000000000000002
+epoch 5: accuracy: 0.7400000000000002
+epoch 6: accuracy: 0.7800000000000002
+epoch 7: accuracy: 0.8200000000000003
+epoch 8: accuracy: 0.8600000000000003
+epoch 9: accuracy: 0.9000000000000004
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>offset</th>
+      <th>rate</th>
+      <th>epochs</th>
+      <th>0_validation_accuracy</th>
+      <th>0_test_accuracy</th>
+      <th>time_0</th>
+      <th>date</th>
+      <th>0_finished</th>
+      <th>1_validation_accuracy</th>
+      <th>1_test_accuracy</th>
+      <th>...</th>
+      <th>time_2</th>
+      <th>2_finished</th>
+      <th>3_validation_accuracy</th>
+      <th>3_test_accuracy</th>
+      <th>time_3</th>
+      <th>3_finished</th>
+      <th>4_validation_accuracy</th>
+      <th>4_test_accuracy</th>
+      <th>time_4</th>
+      <th>4_finished</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.1</td>
+      <td>0.05</td>
+      <td>5.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.1</td>
+      <td>0.03</td>
+      <td>2.0</td>
+      <td>0.16</td>
+      <td>0.26</td>
+      <td>0.001702</td>
+      <td>23:03:26.631063</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>NaN</td>
+      <td>0.04</td>
+      <td>NaN</td>
+      <td>0.90</td>
+      <td>0.80</td>
+      <td>0.002523</td>
+      <td>23:03:26.856945</td>
+      <td>True</td>
+      <td>0.9</td>
+      <td>0.8</td>
+      <td>...</td>
+      <td>0.002529</td>
+      <td>True</td>
+      <td>0.9</td>
+      <td>0.8</td>
+      <td>0.002537</td>
+      <td>True</td>
+      <td>0.9</td>
+      <td>0.8</td>
+      <td>0.002591</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+<p>3 rows × 24 columns</p>
+</div>
+</div>
+
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>time spent on this experiment: 0.0006670951843261719
+score: 0.18000000000000002
+time spent on this experiment: 0.0007505416870117188
+score: 0.16
+time spent on this experiment: 0.0014848709106445312
+score: 0.9000000000000004
+time spent on this experiment: 0.0017549991607666016
+score: 0.9000000000000004
+time spent on this experiment: 0.0014443397521972656
+score: 0.9000000000000004
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>fitting model with 2 epochs
+epoch 0: accuracy: 0.14
+epoch 1: accuracy: 0.18000000000000002
+fitting model with 5 epochs
+epoch 0: accuracy: 0.15000000000000002
+epoch 1: accuracy: 0.2
+epoch 2: accuracy: 0.25
+epoch 3: accuracy: 0.3
+epoch 4: accuracy: 0.35
+fitting model with 2 epochs
+epoch 0: accuracy: 0.13
+epoch 1: accuracy: 0.16
+fitting model with 10 epochs
+epoch 0: accuracy: 0.54
+epoch 1: accuracy: 0.5800000000000001
+epoch 2: accuracy: 0.6200000000000001
+epoch 3: accuracy: 0.6600000000000001
+epoch 4: accuracy: 0.7000000000000002
+epoch 5: accuracy: 0.7400000000000002
+epoch 6: accuracy: 0.7800000000000002
+epoch 7: accuracy: 0.8200000000000003
+epoch 8: accuracy: 0.8600000000000003
+epoch 9: accuracy: 0.9000000000000004
+fitting model with 10 epochs
+epoch 0: accuracy: 0.54
+epoch 1: accuracy: 0.5800000000000001
+epoch 2: accuracy: 0.6200000000000001
+epoch 3: accuracy: 0.6600000000000001
+epoch 4: accuracy: 0.7000000000000002
+epoch 5: accuracy: 0.7400000000000002
+epoch 6: accuracy: 0.7800000000000002
+epoch 7: accuracy: 0.8200000000000003
+epoch 8: accuracy: 0.8600000000000003
+epoch 9: accuracy: 0.9000000000000004
+fitting model with 10 epochs
+epoch 0: accuracy: 0.54
+epoch 1: accuracy: 0.5800000000000001
+epoch 2: accuracy: 0.6200000000000001
+epoch 3: accuracy: 0.6600000000000001
+epoch 4: accuracy: 0.7000000000000002
+epoch 5: accuracy: 0.7400000000000002
+epoch 6: accuracy: 0.7800000000000002
+epoch 7: accuracy: 0.8200000000000003
+epoch 8: accuracy: 0.8600000000000003
+epoch 9: accuracy: 0.9000000000000004
+fitting model with 10 epochs
+epoch 0: accuracy: 0.54
+epoch 1: accuracy: 0.5800000000000001
+epoch 2: accuracy: 0.6200000000000001
+epoch 3: accuracy: 0.6600000000000001
+epoch 4: accuracy: 0.7000000000000002
+epoch 5: accuracy: 0.7400000000000002
+epoch 6: accuracy: 0.7800000000000002
+epoch 7: accuracy: 0.8200000000000003
+epoch 8: accuracy: 0.8600000000000003
+epoch 9: accuracy: 0.9000000000000004
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>time spent on this experiment: 0.0020360946655273438
+score: 0.9000000000000004
+time spent on this experiment: 0.00164794921875
+score: 0.9000000000000004
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>fitting model with 10 epochs
+epoch 0: accuracy: 0.54
+epoch 1: accuracy: 0.5800000000000001
+epoch 2: accuracy: 0.6200000000000001
+epoch 3: accuracy: 0.6600000000000001
+epoch 4: accuracy: 0.7000000000000002
+epoch 5: accuracy: 0.7400000000000002
+epoch 6: accuracy: 0.7800000000000002
+epoch 7: accuracy: 0.8200000000000003
+epoch 8: accuracy: 0.8600000000000003
+epoch 9: accuracy: 0.9000000000000004
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="rerun_experiment_par">rerun_experiment_par<a class="anchor-link" href="#rerun_experiment_par"> </a></h3><p>The only difference with <code>rerun_experiment_pipeline</code> is that now we need to introduce all the parameters to be used. Therefore, <code>rerun_experiment_par</code> is not about updating <em>some</em> of the parameters but about using entirely new parameters. There is no saving.</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="test_rerun_experiment_par" class="doc_header"><code>test_rerun_experiment_par</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L973" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_rerun_experiment_par</code>()</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_rerun_experiment_par</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>experiment script: /tmp/ipykernel_17968/2626610475.py, line: 7
+running experiment 0
+run number: 0
+
+parameters:
+	epochs=5,
+	offset=0.1,
+	rate=0.05
+
+script: /tmp/ipykernel_17968/2626610475.py, line number: 7
+experiment script: /tmp/ipykernel_17968/2626610475.py, line: 9
+running experiment 1
+run number: 0
+
+parameters:
+	epochs=2,
+	offset=0.1,
+	rate=0.03
+
+script: /tmp/ipykernel_17968/2626610475.py, line number: 9
+time spent on this experiment: 0.0006229877471923828
+score: 0.16
+0 - validation_accuracy: 0.16
+0 - test_accuracy: 0.26
+finished experiment 1
+doing run 0 out of 5
+
+experiment script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line: 605
+running experiment 2
+run number: 0
+
+parameters:
+	rate=0.04
+
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line number: 605
+time spent on this experiment: 0.0024886131286621094
+score: 0.9000000000000004
+0 - validation_accuracy: 0.9000000000000004
+0 - test_accuracy: 0.8000000000000004
+finished experiment 2
+doing run 1 out of 5
+
+experiment script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line: 605
+running experiment 2
+run number: 1
+
+parameters:
+	rate=0.04
+
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line number: 605
+time spent on this experiment: 0.001641988754272461
+score: 0.9000000000000004
+1 - validation_accuracy: 0.9000000000000004
+1 - test_accuracy: 0.8000000000000004
+finished experiment 2
+doing run 2 out of 5
+
+experiment script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line: 605
+running experiment 2
+run number: 2
+
+parameters:
+	rate=0.04
+
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line number: 605
+time spent on this experiment: 0.0015268325805664062
+score: 0.9000000000000004
+2 - validation_accuracy: 0.9000000000000004
+2 - test_accuracy: 0.8000000000000004
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>running test_rerun_experiment_par
+fitting model with 5 epochs
+epoch 0: accuracy: 0.15000000000000002
+epoch 1: accuracy: 0.2
+epoch 2: accuracy: 0.25
+epoch 3: accuracy: 0.3
+epoch 4: accuracy: 0.35
+fitting model with 2 epochs
+epoch 0: accuracy: 0.13
+epoch 1: accuracy: 0.16
+fitting model with 10 epochs
+epoch 0: accuracy: 0.54
+epoch 1: accuracy: 0.5800000000000001
+epoch 2: accuracy: 0.6200000000000001
+epoch 3: accuracy: 0.6600000000000001
+epoch 4: accuracy: 0.7000000000000002
+epoch 5: accuracy: 0.7400000000000002
+epoch 6: accuracy: 0.7800000000000002
+epoch 7: accuracy: 0.8200000000000003
+epoch 8: accuracy: 0.8600000000000003
+epoch 9: accuracy: 0.9000000000000004
+fitting model with 10 epochs
+epoch 0: accuracy: 0.54
+epoch 1: accuracy: 0.5800000000000001
+epoch 2: accuracy: 0.6200000000000001
+epoch 3: accuracy: 0.6600000000000001
+epoch 4: accuracy: 0.7000000000000002
+epoch 5: accuracy: 0.7400000000000002
+epoch 6: accuracy: 0.7800000000000002
+epoch 7: accuracy: 0.8200000000000003
+epoch 8: accuracy: 0.8600000000000003
+epoch 9: accuracy: 0.9000000000000004
+fitting model with 10 epochs
+epoch 0: accuracy: 0.54
+epoch 1: accuracy: 0.5800000000000001
+epoch 2: accuracy: 0.6200000000000001
+epoch 3: accuracy: 0.6600000000000001
+epoch 4: accuracy: 0.7000000000000002
+epoch 5: accuracy: 0.7400000000000002
+epoch 6: accuracy: 0.7800000000000002
+epoch 7: accuracy: 0.8200000000000003
+epoch 8: accuracy: 0.8600000000000003
+epoch 9: accuracy: 0.9000000000000004
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>finished experiment 2
+doing run 3 out of 5
+
+experiment script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line: 605
+running experiment 2
+run number: 3
+
+parameters:
+	rate=0.04
+
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line number: 605
+time spent on this experiment: 0.0015747547149658203
+score: 0.9000000000000004
+3 - validation_accuracy: 0.9000000000000004
+3 - test_accuracy: 0.8000000000000004
+finished experiment 2
+doing run 4 out of 5
+
+experiment script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line: 605
+running experiment 2
+run number: 4
+
+parameters:
+	rate=0.04
+
+script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line number: 605
+time spent on this experiment: 0.0017032623291015625
+score: 0.9000000000000004
+4 - validation_accuracy: 0.9000000000000004
+4 - test_accuracy: 0.8000000000000004
+finished experiment 2
+mean : 0.9000000000000004, std: 0.0
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>fitting model with 10 epochs
+epoch 0: accuracy: 0.54
+epoch 1: accuracy: 0.5800000000000001
+epoch 2: accuracy: 0.6200000000000001
+epoch 3: accuracy: 0.6600000000000001
+epoch 4: accuracy: 0.7000000000000002
+epoch 5: accuracy: 0.7400000000000002
+epoch 6: accuracy: 0.7800000000000002
+epoch 7: accuracy: 0.8200000000000003
+epoch 8: accuracy: 0.8600000000000003
+epoch 9: accuracy: 0.9000000000000004
+fitting model with 10 epochs
+epoch 0: accuracy: 0.54
+epoch 1: accuracy: 0.5800000000000001
+epoch 2: accuracy: 0.6200000000000001
+epoch 3: accuracy: 0.6600000000000001
+epoch 4: accuracy: 0.7000000000000002
+epoch 5: accuracy: 0.7400000000000002
+epoch 6: accuracy: 0.7800000000000002
+epoch 7: accuracy: 0.8200000000000003
+epoch 8: accuracy: 0.8600000000000003
+epoch 9: accuracy: 0.9000000000000004
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>offset</th>
+      <th>rate</th>
+      <th>epochs</th>
+      <th>0_validation_accuracy</th>
+      <th>0_test_accuracy</th>
+      <th>time_0</th>
+      <th>date</th>
+      <th>0_finished</th>
+      <th>1_validation_accuracy</th>
+      <th>1_test_accuracy</th>
+      <th>...</th>
+      <th>time_2</th>
+      <th>2_finished</th>
+      <th>3_validation_accuracy</th>
+      <th>3_test_accuracy</th>
+      <th>time_3</th>
+      <th>3_finished</th>
+      <th>4_validation_accuracy</th>
+      <th>4_test_accuracy</th>
+      <th>time_4</th>
+      <th>4_finished</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.1</td>
+      <td>0.05</td>
+      <td>5.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.1</td>
+      <td>0.03</td>
+      <td>2.0</td>
+      <td>0.16</td>
+      <td>0.26</td>
+      <td>0.001598</td>
+      <td>23:12:45.584655</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>NaN</td>
+      <td>0.04</td>
+      <td>NaN</td>
+      <td>0.90</td>
+      <td>0.80</td>
+      <td>0.003520</td>
+      <td>23:12:45.810447</td>
+      <td>True</td>
+      <td>0.9</td>
+      <td>0.8</td>
+      <td>...</td>
+      <td>0.002526</td>
+      <td>True</td>
+      <td>0.9</td>
+      <td>0.8</td>
+      <td>0.002574</td>
+      <td>True</td>
+      <td>0.9</td>
+      <td>0.8</td>
+      <td>0.00264</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+<p>3 rows × 24 columns</p>
+</div>
+</div>
+
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>time spent on this experiment: 0.0016181468963623047
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>fitting model with 10 epochs
+epoch 0: accuracy: 0.54
+epoch 1: accuracy: 0.5800000000000001
+epoch 2: accuracy: 0.6200000000000001
+epoch 3: accuracy: 0.6600000000000001
+epoch 4: accuracy: 0.7000000000000002
+epoch 5: accuracy: 0.7400000000000002
+epoch 6: accuracy: 0.7800000000000002
+epoch 7: accuracy: 0.8200000000000003
+epoch 8: accuracy: 0.8600000000000003
+epoch 9: accuracy: 0.9000000000000004
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="get_git_revision_hash">get_git_revision_hash<a class="anchor-link" href="#get_git_revision_hash"> </a></h2>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="get_git_revision_hash" class="doc_header"><code>get_git_revision_hash</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1039" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_git_revision_hash</code>(<strong><code>root_path</code></strong>=<em><code>None</code></em>)</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="record_parameters">record_parameters<a class="anchor-link" href="#record_parameters"> </a></h2>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="record_parameters" class="doc_header"><code>record_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1056" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>record_parameters</code>(<strong><code>path_save</code></strong>, <strong><code>parameters</code></strong>, <strong><code>other_parameters</code></strong>=<em><code>None</code></em>)</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="mypprint">mypprint<a class="anchor-link" href="#mypprint"> </a></h2>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="mypprint" class="doc_header"><code>mypprint</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1076" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>mypprint</code>(<strong><code>parameters</code></strong>, <strong><code>dict_name</code></strong>=<em><code>None</code></em>)</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="mymakedirs">mymakedirs<a class="anchor-link" href="#mymakedirs"> </a></h2>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="mymakedirs" class="doc_header"><code>mymakedirs</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1098" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>mymakedirs</code>(<strong><code>path</code></strong>, <strong><code>exist_ok</code></strong>=<em><code>False</code></em>)</p>
 </blockquote>
 <p>work around for python 2.7</p>
 
@@ -182,6 +6540,19 @@ nb_path: "nbs/experiment_manager.ipynb"
     
 <div class="cell border-box-sizing code_cell rendered">
 
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="load_or_create_experiment_values">load_or_create_experiment_values<a class="anchor-link" href="#load_or_create_experiment_values"> </a></h2>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
 <div class="output_wrapper">
 <div class="output">
 
@@ -189,7 +6560,7 @@ nb_path: "nbs/experiment_manager.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="load_or_create_experiment_values" class="doc_header"><code>load_or_create_experiment_values</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L817" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>load_or_create_experiment_values</code>(<strong><code>path_csv</code></strong>, <strong><code>parameters</code></strong>, <strong><code>precision</code></strong>=<em><code>1e-15</code></em>)</p>
+<h4 id="load_or_create_experiment_values" class="doc_header"><code>load_or_create_experiment_values</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1109" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>load_or_create_experiment_values</code>(<strong><code>path_csv</code></strong>, <strong><code>parameters</code></strong>, <strong><code>precision</code></strong>=<em><code>1e-15</code></em>)</p>
 </blockquote>
 
 </div>
@@ -206,6 +6577,19 @@ nb_path: "nbs/experiment_manager.ipynb"
     
 <div class="cell border-box-sizing code_cell rendered">
 
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="store_parameters">store_parameters<a class="anchor-link" href="#store_parameters"> </a></h2>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
 <div class="output_wrapper">
 <div class="output">
 
@@ -213,7 +6597,7 @@ nb_path: "nbs/experiment_manager.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="store_parameters" class="doc_header"><code>store_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L856" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>store_parameters</code>(<strong><code>root_path</code></strong>, <strong><code>experiment_number</code></strong>, <strong><code>parameters</code></strong>)</p>
+<h4 id="store_parameters" class="doc_header"><code>store_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1151" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>store_parameters</code>(<strong><code>root_path</code></strong>, <strong><code>experiment_number</code></strong>, <strong><code>parameters</code></strong>)</p>
 </blockquote>
 <p>Keeps track of dictionary to map experiment number and parameters values for the different experiments.</p>
 
@@ -231,6 +6615,19 @@ nb_path: "nbs/experiment_manager.ipynb"
     
 <div class="cell border-box-sizing code_cell rendered">
 
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="isnull">isnull<a class="anchor-link" href="#isnull"> </a></h2>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
 <div class="output_wrapper">
 <div class="output">
 
@@ -238,7 +6635,7 @@ nb_path: "nbs/experiment_manager.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="isnull" class="doc_header"><code>isnull</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L874" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>isnull</code>(<strong><code>experiment_data</code></strong>, <strong><code>experiment_number</code></strong>, <strong><code>name_column</code></strong>)</p>
+<h4 id="isnull" class="doc_header"><code>isnull</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1170" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>isnull</code>(<strong><code>experiment_data</code></strong>, <strong><code>experiment_number</code></strong>, <strong><code>name_column</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -255,6 +6652,19 @@ nb_path: "nbs/experiment_manager.ipynb"
     
 <div class="cell border-box-sizing code_cell rendered">
 
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="get_experiment_number">get_experiment_number<a class="anchor-link" href="#get_experiment_number"> </a></h2>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
 <div class="output_wrapper">
 <div class="output">
 
@@ -262,7 +6672,7 @@ nb_path: "nbs/experiment_manager.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_experiment_number" class="doc_header"><code>get_experiment_number</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L878" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_experiment_number</code>(<strong><code>root_path</code></strong>, <strong><code>parameters</code></strong>=<em><code>{}</code></em>)</p>
+<h4 id="get_experiment_number" class="doc_header"><code>get_experiment_number</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1174" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_experiment_number</code>(<strong><code>root_path</code></strong>, <strong><code>parameters</code></strong>=<em><code>{}</code></em>)</p>
 </blockquote>
 
 </div>
@@ -279,6 +6689,19 @@ nb_path: "nbs/experiment_manager.ipynb"
     
 <div class="cell border-box-sizing code_cell rendered">
 
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="get_experiment_numbers">get_experiment_numbers<a class="anchor-link" href="#get_experiment_numbers"> </a></h2>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
 <div class="output_wrapper">
 <div class="output">
 
@@ -286,7 +6709,7 @@ nb_path: "nbs/experiment_manager.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_experiment_numbers" class="doc_header"><code>get_experiment_numbers</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L886" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_experiment_numbers</code>(<strong><code>path_results_base</code></strong>, <strong><code>parameters_single_value</code></strong>, <strong><code>parameters_multiple_values_all</code></strong>)</p>
+<h4 id="get_experiment_numbers" class="doc_header"><code>get_experiment_numbers</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1183" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_experiment_numbers</code>(<strong><code>path_results_base</code></strong>, <strong><code>parameters_single_value</code></strong>, <strong><code>parameters_multiple_values_all</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -303,6 +6726,19 @@ nb_path: "nbs/experiment_manager.ipynb"
     
 <div class="cell border-box-sizing code_cell rendered">
 
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="insert_experiment_script_path">insert_experiment_script_path<a class="anchor-link" href="#insert_experiment_script_path"> </a></h2>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
 <div class="output_wrapper">
 <div class="output">
 
@@ -310,7 +6746,7 @@ nb_path: "nbs/experiment_manager.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="set_logger" class="doc_header"><code>set_logger</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L902" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>set_logger</code>(<strong><code>name</code></strong>, <strong><code>path_results</code></strong>, <strong><code>stdout</code></strong>=<em><code>True</code></em>, <strong><code>mode</code></strong>=<em><code>'a'</code></em>, <strong><code>just_message</code></strong>=<em><code>False</code></em>, <strong><code>filename</code></strong>=<em><code>'logs.txt'</code></em>)</p>
+<h4 id="insert_experiment_script_path" class="doc_header"><code>insert_experiment_script_path</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1200" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>insert_experiment_script_path</code>(<strong><code>other_parameters</code></strong>, <strong><code>logger</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -327,6 +6763,19 @@ nb_path: "nbs/experiment_manager.ipynb"
     
 <div class="cell border-box-sizing code_cell rendered">
 
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="load_parameters">load_parameters<a class="anchor-link" href="#load_parameters"> </a></h2>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
 <div class="output_wrapper">
 <div class="output">
 
@@ -334,7 +6783,7 @@ nb_path: "nbs/experiment_manager.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="insert_experiment_script_path" class="doc_header"><code>insert_experiment_script_path</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L932" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>insert_experiment_script_path</code>(<strong><code>other_parameters</code></strong>, <strong><code>logger</code></strong>)</p>
+<h4 id="load_parameters" class="doc_header"><code>load_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1211" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>load_parameters</code>(<strong><code>experiment</code></strong>=<em><code>None</code></em>, <strong><code>root_path</code></strong>=<em><code>None</code></em>, <strong><code>root_folder</code></strong>=<em><code>None</code></em>, <strong><code>other_parameters</code></strong>=<em><code>{}</code></em>, <strong><code>parameters</code></strong>=<em><code>{}</code></em>, <strong><code>check_experiment_matches</code></strong>=<em><code>True</code></em>)</p>
 </blockquote>
 
 </div>
@@ -351,26 +6800,15 @@ nb_path: "nbs/experiment_manager.ipynb"
     
 <div class="cell border-box-sizing code_cell rendered">
 
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="load_parameters" class="doc_header"><code>load_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L944" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>load_parameters</code>(<strong><code>experiment</code></strong>=<em><code>None</code></em>, <strong><code>root_path</code></strong>=<em><code>None</code></em>, <strong><code>root_folder</code></strong>=<em><code>None</code></em>, <strong><code>other_parameters</code></strong>=<em><code>{}</code></em>, <strong><code>parameters</code></strong>=<em><code>{}</code></em>, <strong><code>check_experiment_matches</code></strong>=<em><code>True</code></em>)</p>
-</blockquote>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="save_other_parameters">save_other_parameters<a class="anchor-link" href="#save_other_parameters"> </a></h2>
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -382,7 +6820,7 @@ nb_path: "nbs/experiment_manager.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="save_other_parameters" class="doc_header"><code>save_other_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L977" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>save_other_parameters</code>(<strong><code>experiment_number</code></strong>, <strong><code>other_parameters</code></strong>, <strong><code>root_path</code></strong>)</p>
+<h4 id="save_other_parameters" class="doc_header"><code>save_other_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1245" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>save_other_parameters</code>(<strong><code>experiment_number</code></strong>, <strong><code>other_parameters</code></strong>, <strong><code>root_path</code></strong>)</p>
 </blockquote>
 
 </div>

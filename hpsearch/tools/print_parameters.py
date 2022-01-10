@@ -10,9 +10,8 @@ import argparse
 import sys
 sys.path.append('.')
 from IPython.display import display
-# hpsearch api
-import hpsearch.utils.experiment_utils as ut
 
+# Cell
 def print_parameters (experiment, root=None):
 
     from ..config.hpconfig import get_default_operations, get_path_experiment

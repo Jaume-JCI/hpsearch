@@ -94,7 +94,6 @@ def do_query_and_show (pall=[], best=None, compact=0, exact=False, experiments=N
     return df2
 
 # Cell
-
 def parse_args(args):
     default_always = ''
 

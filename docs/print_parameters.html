@@ -33,124 +33,9 @@ nb_path: "nbs/tools/print_parameters.ipynb"
     
 <div class="cell border-box-sizing code_cell rendered">
 
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="print_parameters" class="doc_header"><code>print_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tools/print_parameters.py#L16" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>print_parameters</code>(<strong><code>experiment</code></strong>, <strong><code>root</code></strong>=<em><code>None</code></em>)</p>
-</blockquote>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
 </div>
     {% endraw %}
 
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="parse_args" class="doc_header"><code>parse_args</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tools/print_parameters.py#L30" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>parse_args</code>(<strong><code>args</code></strong>)</p>
-</blockquote>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="parse_arguments_and_print" class="doc_header"><code>parse_arguments_and_print</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tools/print_parameters.py#L38" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>parse_arguments_and_print</code>(<strong><code>args</code></strong>)</p>
-</blockquote>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="main" class="doc_header"><code>main</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tools/print_parameters.py#L44" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>main</code>()</p>
-</blockquote>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Test">Test<a class="anchor-link" href="#Test"> </a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Produce-data">Produce data<a class="anchor-link" href="#Produce-data"> </a></h3>
-</div>
-</div>
-</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -158,1797 +43,91 @@ nb_path: "nbs/tools/print_parameters.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">hpsearch.examples.dummy_experiment_manager</span> <span class="kn">import</span> <span class="n">remove_previous_experiments</span><span class="p">,</span> <span class="n">run_multiple_experiments</span>
-
-<span class="n">remove_previous_experiments</span><span class="p">()</span>
-<span class="n">run_multiple_experiments</span><span class="p">(</span><span class="n">nruns</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pytest</span>
+<span class="kn">from</span> <span class="nn">hpsearch.examples.dummy_experiment_manager</span> <span class="kn">import</span> <span class="n">generate_data</span>
 </pre></div>
 
     </div>
 </div>
 </div>
-<details class="description">
-      <summary data-open="Hide Output" data-close="Show Output"></summary>
-        <summary></summary>
-        
-<div class="output_wrapper">
-<div class="output">
 
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>experiment script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line: 134
-processing hyper-parameter 0 out of 9
-doing run 0 out of 5
-fixed rate, multiple epochs values
-running experiment 0
-run number: 0
-
-parameters:
-	epochs=5,
-	offset=0.1,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 134
-time spent on this experiment: 0.0002803802490234375
-0 - validation_accuracy: 0.31471967783955485
-0 - test_accuracy: 0.4390248526124768
-finished experiment 0
-processing hyper-parameter 0 out of 9
-doing run 1 out of 5
-fixed rate, multiple epochs values
-running experiment 0
-run number: 1
-
-parameters:
-	epochs=5,
-	offset=0.1,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 134
-time spent on this experiment: 0.00035381317138671875
-1 - validation_accuracy: 0.037794756578223454
-1 - test_accuracy: 0.2311250766136984
-finished experiment 0
-processing hyper-parameter 0 out of 9
-doing run 2 out of 5
-fixed rate, multiple epochs values
-running experiment 0
-run number: 2
-
-parameters:
-	epochs=5,
-	offset=0.1,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 134
-time spent on this experiment: 0.0002722740173339844
-2 - validation_accuracy: 0.17941755013793098
-2 - test_accuracy: 0.3689069435872698
-finished experiment 0
-processing hyper-parameter 0 out of 9
-doing run 3 out of 5
-fixed rate, multiple epochs values
-running experiment 0
-run number: 3
-
-parameters:
-	epochs=5,
-	offset=0.1,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 134
-time spent on this experiment: 0.0002970695495605469
-3 - validation_accuracy: 0.2929908397097245
-3 - test_accuracy: 0.43786184800069083
-finished experiment 0
-processing hyper-parameter 0 out of 9
-doing run 4 out of 5
-fixed rate, multiple epochs values
-running experiment 0
-run number: 4
-
-parameters:
-	epochs=5,
-	offset=0.1,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 134
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>current path: /mnt/athena/hpsearch/nbs/tools
-current path: /mnt/athena/hpsearch/nbs/tools
-current path: /mnt/athena/hpsearch/nbs/tools
-fitting model with 5 epochs
-epoch 0: accuracy: 0.13
-epoch 1: accuracy: 0.16
-epoch 2: accuracy: 0.19
-epoch 3: accuracy: 0.22
-epoch 4: accuracy: 0.25
-noise: 0.1
-current path: /mnt/athena/hpsearch/nbs/tools
-fitting model with 5 epochs
-epoch 0: accuracy: 0.13
-epoch 1: accuracy: 0.16
-epoch 2: accuracy: 0.19
-epoch 3: accuracy: 0.22
-epoch 4: accuracy: 0.25
-noise: 0.1
-current path: /mnt/athena/hpsearch/nbs/tools
-fitting model with 5 epochs
-epoch 0: accuracy: 0.13
-epoch 1: accuracy: 0.16
-epoch 2: accuracy: 0.19
-epoch 3: accuracy: 0.22
-epoch 4: accuracy: 0.25
-noise: 0.1
-current path: /mnt/athena/hpsearch/nbs/tools
-fitting model with 5 epochs
-epoch 0: accuracy: 0.13
-epoch 1: accuracy: 0.16
-epoch 2: accuracy: 0.19
-epoch 3: accuracy: 0.22
-epoch 4: accuracy: 0.25
-noise: 0.1
-current path: /mnt/athena/hpsearch/nbs/tools
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>time spent on this experiment: 0.00028204917907714844
-4 - validation_accuracy: 0.3527631731911049
-4 - test_accuracy: 0.5307355805726665
-finished experiment 0
-processing hyper-parameter 1 out of 9
-doing run 0 out of 5
-fixed rate, multiple epochs values
-running experiment 1
-run number: 0
-
-parameters:
-	epochs=5,
-	offset=0.3,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 134
-time spent on this experiment: 0.0003192424774169922
-0 - validation_accuracy: 0.4289848536383349
-0 - test_accuracy: 0.5243642655942593
-finished experiment 1
-processing hyper-parameter 1 out of 9
-doing run 1 out of 5
-fixed rate, multiple epochs values
-running experiment 1
-run number: 1
-
-parameters:
-	epochs=5,
-	offset=0.3,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 134
-time spent on this experiment: 0.0002789497375488281
-1 - validation_accuracy: 0.42905342232505816
-1 - test_accuracy: 0.6974692411508485
-finished experiment 1
-processing hyper-parameter 1 out of 9
-doing run 2 out of 5
-fixed rate, multiple epochs values
-running experiment 1
-run number: 2
-
-parameters:
-	epochs=5,
-	offset=0.3,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 134
-time spent on this experiment: 0.0002856254577636719
-2 - validation_accuracy: 0.36526356801407345
-2 - test_accuracy: 0.4222849559393653
-finished experiment 1
-processing hyper-parameter 1 out of 9
-doing run 3 out of 5
-fixed rate, multiple epochs values
-running experiment 1
-run number: 3
-
-parameters:
-	epochs=5,
-	offset=0.3,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 134
-time spent on this experiment: 0.0002841949462890625
-3 - validation_accuracy: 0.45707362465722123
-3 - test_accuracy: 0.5279256815347976
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>fitting model with 5 epochs
-epoch 0: accuracy: 0.13
-epoch 1: accuracy: 0.16
-epoch 2: accuracy: 0.19
-epoch 3: accuracy: 0.22
-epoch 4: accuracy: 0.25
-noise: 0.1
-current path: /mnt/athena/hpsearch/nbs/tools
-fitting model with 5 epochs
-epoch 0: accuracy: 0.32999999999999996
-epoch 1: accuracy: 0.36
-epoch 2: accuracy: 0.39
-epoch 3: accuracy: 0.42000000000000004
-epoch 4: accuracy: 0.45000000000000007
-noise: 0.1
-current path: /mnt/athena/hpsearch/nbs/tools
-fitting model with 5 epochs
-epoch 0: accuracy: 0.32999999999999996
-epoch 1: accuracy: 0.36
-epoch 2: accuracy: 0.39
-epoch 3: accuracy: 0.42000000000000004
-epoch 4: accuracy: 0.45000000000000007
-noise: 0.1
-current path: /mnt/athena/hpsearch/nbs/tools
-fitting model with 5 epochs
-epoch 0: accuracy: 0.32999999999999996
-epoch 1: accuracy: 0.36
-epoch 2: accuracy: 0.39
-epoch 3: accuracy: 0.42000000000000004
-epoch 4: accuracy: 0.45000000000000007
-noise: 0.1
-current path: /mnt/athena/hpsearch/nbs/tools
-fitting model with 5 epochs
-epoch 0: accuracy: 0.32999999999999996
-epoch 1: accuracy: 0.36
-epoch 2: accuracy: 0.39
-epoch 3: accuracy: 0.42000000000000004
-epoch 4: accuracy: 0.45000000000000007
-noise: 0.1
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>finished experiment 1
-processing hyper-parameter 1 out of 9
-doing run 4 out of 5
-fixed rate, multiple epochs values
-running experiment 1
-run number: 4
-
-parameters:
-	epochs=5,
-	offset=0.3,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 134
-time spent on this experiment: 0.0002930164337158203
-4 - validation_accuracy: 0.4681504336941872
-4 - test_accuracy: 0.5936495098202544
-finished experiment 1
-processing hyper-parameter 2 out of 9
-doing run 0 out of 5
-fixed rate, multiple epochs values
-running experiment 2
-run number: 0
-
-parameters:
-	epochs=5,
-	offset=0.6,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 134
-time spent on this experiment: 0.0002722740173339844
-0 - validation_accuracy: 0.6745978819730228
-0 - test_accuracy: 0.7841304576441712
-finished experiment 2
-processing hyper-parameter 2 out of 9
-doing run 1 out of 5
-fixed rate, multiple epochs values
-running experiment 2
-run number: 1
-
-parameters:
-	epochs=5,
-	offset=0.6,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 134
-time spent on this experiment: 0.000293731689453125
-1 - validation_accuracy: 0.6751994535718948
-1 - test_accuracy: 0.7969514379785289
-finished experiment 2
-processing hyper-parameter 2 out of 9
-doing run 2 out of 5
-fixed rate, multiple epochs values
-running experiment 2
-run number: 2
-
-parameters:
-	epochs=5,
-	offset=0.6,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 134
-time spent on this experiment: 0.0002970695495605469
-2 - validation_accuracy: 0.7720505611988455
-2 - test_accuracy: 0.7449300867991338
-finished experiment 2
-processing hyper-parameter 2 out of 9
-doing run 3 out of 5
-fixed rate, multiple epochs values
-running experiment 2
-run number: 3
-
-parameters:
-	epochs=5,
-	offset=0.6,
-	rate=0.03
-
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>current path: /mnt/athena/hpsearch/nbs/tools
-fitting model with 5 epochs
-epoch 0: accuracy: 0.32999999999999996
-epoch 1: accuracy: 0.36
-epoch 2: accuracy: 0.39
-epoch 3: accuracy: 0.42000000000000004
-epoch 4: accuracy: 0.45000000000000007
-noise: 0.1
-current path: /mnt/athena/hpsearch/nbs/tools
-fitting model with 5 epochs
-epoch 0: accuracy: 0.63
-epoch 1: accuracy: 0.66
-epoch 2: accuracy: 0.6900000000000001
-epoch 3: accuracy: 0.7200000000000001
-epoch 4: accuracy: 0.7500000000000001
-noise: 0.1
-current path: /mnt/athena/hpsearch/nbs/tools
-fitting model with 5 epochs
-epoch 0: accuracy: 0.63
-epoch 1: accuracy: 0.66
-epoch 2: accuracy: 0.6900000000000001
-epoch 3: accuracy: 0.7200000000000001
-epoch 4: accuracy: 0.7500000000000001
-noise: 0.1
-current path: /mnt/athena/hpsearch/nbs/tools
-fitting model with 5 epochs
-epoch 0: accuracy: 0.63
-epoch 1: accuracy: 0.66
-epoch 2: accuracy: 0.6900000000000001
-epoch 3: accuracy: 0.7200000000000001
-epoch 4: accuracy: 0.7500000000000001
-noise: 0.1
-current path: /mnt/athena/hpsearch/nbs/tools
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 134
-time spent on this experiment: 0.00028634071350097656
-3 - validation_accuracy: 0.8092106860520011
-3 - test_accuracy: 0.8739059657554981
-finished experiment 2
-processing hyper-parameter 2 out of 9
-doing run 4 out of 5
-fixed rate, multiple epochs values
-running experiment 2
-run number: 4
-
-parameters:
-	epochs=5,
-	offset=0.6,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 134
-time spent on this experiment: 0.0002818107604980469
-4 - validation_accuracy: 0.6758950935540704
-4 - test_accuracy: 0.8972130139088526
-finished experiment 2
-processing hyper-parameter 3 out of 9
-doing run 0 out of 5
-fixed rate, multiple epochs values
-running experiment 3
-run number: 0
-
-parameters:
-	epochs=15,
-	offset=0.1,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 134
-time spent on this experiment: 0.0005064010620117188
-0 - validation_accuracy: 0.5153911562551668
-0 - test_accuracy: 0.5413507307528216
-finished experiment 3
-processing hyper-parameter 3 out of 9
-doing run 1 out of 5
-fixed rate, multiple epochs values
-running experiment 3
-run number: 1
-
-parameters:
-	epochs=15,
-	offset=0.1,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 134
-time spent on this experiment: 0.0004980564117431641
-1 - validation_accuracy: 0.6786574614923707
-1 - test_accuracy: 0.4654178993317274
-finished experiment 3
-processing hyper-parameter 3 out of 9
-doing run 2 out of 5
-fixed rate, multiple epochs values
-running experiment 3
-run number: 2
-
-parameters:
-	epochs=15,
-	offset=0.1,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 134
-time spent on this experiment: 0.0005052089691162109
-2 - validation_accuracy: 0.4446376252686161
-2 - test_accuracy: 0.3987203625160143
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>fitting model with 5 epochs
-epoch 0: accuracy: 0.63
-epoch 1: accuracy: 0.66
-epoch 2: accuracy: 0.6900000000000001
-epoch 3: accuracy: 0.7200000000000001
-epoch 4: accuracy: 0.7500000000000001
-noise: 0.1
-current path: /mnt/athena/hpsearch/nbs/tools
-fitting model with 5 epochs
-epoch 0: accuracy: 0.63
-epoch 1: accuracy: 0.66
-epoch 2: accuracy: 0.6900000000000001
-epoch 3: accuracy: 0.7200000000000001
-epoch 4: accuracy: 0.7500000000000001
-noise: 0.1
-current path: /mnt/athena/hpsearch/nbs/tools
-fitting model with 15 epochs
-epoch 0: accuracy: 0.13
-epoch 1: accuracy: 0.16
-epoch 2: accuracy: 0.19
-epoch 3: accuracy: 0.22
-epoch 4: accuracy: 0.25
-epoch 5: accuracy: 0.28
-epoch 6: accuracy: 0.31000000000000005
-epoch 7: accuracy: 0.3400000000000001
-epoch 8: accuracy: 0.3700000000000001
-epoch 9: accuracy: 0.40000000000000013
-epoch 10: accuracy: 0.43000000000000016
-epoch 11: accuracy: 0.4600000000000002
-epoch 12: accuracy: 0.4900000000000002
-epoch 13: accuracy: 0.5200000000000002
-epoch 14: accuracy: 0.5500000000000003
-noise: 0.1
-current path: /mnt/athena/hpsearch/nbs/tools
-fitting model with 15 epochs
-epoch 0: accuracy: 0.13
-epoch 1: accuracy: 0.16
-epoch 2: accuracy: 0.19
-epoch 3: accuracy: 0.22
-epoch 4: accuracy: 0.25
-epoch 5: accuracy: 0.28
-epoch 6: accuracy: 0.31000000000000005
-epoch 7: accuracy: 0.3400000000000001
-epoch 8: accuracy: 0.3700000000000001
-epoch 9: accuracy: 0.40000000000000013
-epoch 10: accuracy: 0.43000000000000016
-epoch 11: accuracy: 0.4600000000000002
-epoch 12: accuracy: 0.4900000000000002
-epoch 13: accuracy: 0.5200000000000002
-epoch 14: accuracy: 0.5500000000000003
-noise: 0.1
-current path: /mnt/athena/hpsearch/nbs/tools
-fitting model with 15 epochs
-epoch 0: accuracy: 0.13
-epoch 1: accuracy: 0.16
-epoch 2: accuracy: 0.19
-epoch 3: accuracy: 0.22
-epoch 4: accuracy: 0.25
-epoch 5: accuracy: 0.28
-epoch 6: accuracy: 0.31000000000000005
-epoch 7: accuracy: 0.3400000000000001
-epoch 8: accuracy: 0.3700000000000001
-epoch 9: accuracy: 0.40000000000000013
-epoch 10: accuracy: 0.43000000000000016
-epoch 11: accuracy: 0.4600000000000002
-epoch 12: accuracy: 0.4900000000000002
-epoch 13: accuracy: 0.5200000000000002
-epoch 14: accuracy: 0.5500000000000003
-noise: 0.1
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>finished experiment 3
-processing hyper-parameter 3 out of 9
-doing run 3 out of 5
-fixed rate, multiple epochs values
-running experiment 3
-run number: 3
-
-parameters:
-	epochs=15,
-	offset=0.1,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 134
-time spent on this experiment: 0.0005645751953125
-3 - validation_accuracy: 0.46057120556247655
-3 - test_accuracy: 0.5026318993634498
-finished experiment 3
-processing hyper-parameter 3 out of 9
-doing run 4 out of 5
-fixed rate, multiple epochs values
-running experiment 3
-run number: 4
-
-parameters:
-	epochs=15,
-	offset=0.1,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 134
-time spent on this experiment: 0.0005238056182861328
-4 - validation_accuracy: 0.4497774794860475
-4 - test_accuracy: 0.31605484094249825
-finished experiment 3
-processing hyper-parameter 4 out of 9
-doing run 0 out of 5
-fixed rate, multiple epochs values
-running experiment 4
-run number: 0
-
-parameters:
-	epochs=15,
-	offset=0.3,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 134
-time spent on this experiment: 0.0006880760192871094
-0 - validation_accuracy: 0.7731749757539091
-0 - test_accuracy: 0.5077602307647225
-finished experiment 4
-processing hyper-parameter 4 out of 9
-doing run 1 out of 5
-fixed rate, multiple epochs values
-running experiment 4
-run number: 1
-
-parameters:
-	epochs=15,
-	offset=0.3,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 134
-time spent on this experiment: 0.00051116943359375
-1 - validation_accuracy: 0.746482867092745
-1 - test_accuracy: 0.6461817474656709
-finished experiment 4
-processing hyper-parameter 4 out of 9
-doing run 2 out of 5
-fixed rate, multiple epochs values
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>current path: /mnt/athena/hpsearch/nbs/tools
-fitting model with 15 epochs
-epoch 0: accuracy: 0.13
-epoch 1: accuracy: 0.16
-epoch 2: accuracy: 0.19
-epoch 3: accuracy: 0.22
-epoch 4: accuracy: 0.25
-epoch 5: accuracy: 0.28
-epoch 6: accuracy: 0.31000000000000005
-epoch 7: accuracy: 0.3400000000000001
-epoch 8: accuracy: 0.3700000000000001
-epoch 9: accuracy: 0.40000000000000013
-epoch 10: accuracy: 0.43000000000000016
-epoch 11: accuracy: 0.4600000000000002
-epoch 12: accuracy: 0.4900000000000002
-epoch 13: accuracy: 0.5200000000000002
-epoch 14: accuracy: 0.5500000000000003
-noise: 0.1
-current path: /mnt/athena/hpsearch/nbs/tools
-fitting model with 15 epochs
-epoch 0: accuracy: 0.13
-epoch 1: accuracy: 0.16
-epoch 2: accuracy: 0.19
-epoch 3: accuracy: 0.22
-epoch 4: accuracy: 0.25
-epoch 5: accuracy: 0.28
-epoch 6: accuracy: 0.31000000000000005
-epoch 7: accuracy: 0.3400000000000001
-epoch 8: accuracy: 0.3700000000000001
-epoch 9: accuracy: 0.40000000000000013
-epoch 10: accuracy: 0.43000000000000016
-epoch 11: accuracy: 0.4600000000000002
-epoch 12: accuracy: 0.4900000000000002
-epoch 13: accuracy: 0.5200000000000002
-epoch 14: accuracy: 0.5500000000000003
-noise: 0.1
-current path: /mnt/athena/hpsearch/nbs/tools
-fitting model with 15 epochs
-epoch 0: accuracy: 0.32999999999999996
-epoch 1: accuracy: 0.36
-epoch 2: accuracy: 0.39
-epoch 3: accuracy: 0.42000000000000004
-epoch 4: accuracy: 0.45000000000000007
-epoch 5: accuracy: 0.4800000000000001
-epoch 6: accuracy: 0.5100000000000001
-epoch 7: accuracy: 0.5400000000000001
-epoch 8: accuracy: 0.5700000000000002
-epoch 9: accuracy: 0.6000000000000002
-epoch 10: accuracy: 0.6300000000000002
-epoch 11: accuracy: 0.6600000000000003
-epoch 12: accuracy: 0.6900000000000003
-epoch 13: accuracy: 0.7200000000000003
-epoch 14: accuracy: 0.7500000000000003
-noise: 0.1
-current path: /mnt/athena/hpsearch/nbs/tools
-fitting model with 15 epochs
-epoch 0: accuracy: 0.32999999999999996
-epoch 1: accuracy: 0.36
-epoch 2: accuracy: 0.39
-epoch 3: accuracy: 0.42000000000000004
-epoch 4: accuracy: 0.45000000000000007
-epoch 5: accuracy: 0.4800000000000001
-epoch 6: accuracy: 0.5100000000000001
-epoch 7: accuracy: 0.5400000000000001
-epoch 8: accuracy: 0.5700000000000002
-epoch 9: accuracy: 0.6000000000000002
-epoch 10: accuracy: 0.6300000000000002
-epoch 11: accuracy: 0.6600000000000003
-epoch 12: accuracy: 0.6900000000000003
-epoch 13: accuracy: 0.7200000000000003
-epoch 14: accuracy: 0.7500000000000003
-noise: 0.1
-current path: /mnt/athena/hpsearch/nbs/tools
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>running experiment 4
-run number: 2
-
-parameters:
-	epochs=15,
-	offset=0.3,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 134
-time spent on this experiment: 0.0006184577941894531
-2 - validation_accuracy: 0.7950216716332678
-2 - test_accuracy: 0.6733257613597545
-finished experiment 4
-processing hyper-parameter 4 out of 9
-doing run 3 out of 5
-fixed rate, multiple epochs values
-running experiment 4
-run number: 3
-
-parameters:
-	epochs=15,
-	offset=0.3,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 134
-time spent on this experiment: 0.0005135536193847656
-3 - validation_accuracy: 0.7233366089621536
-3 - test_accuracy: 0.5473360227255372
-finished experiment 4
-processing hyper-parameter 4 out of 9
-doing run 4 out of 5
-fixed rate, multiple epochs values
-running experiment 4
-run number: 4
-
-parameters:
-	epochs=15,
-	offset=0.3,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 134
-time spent on this experiment: 0.0005125999450683594
-4 - validation_accuracy: 0.7219150973626787
-4 - test_accuracy: 0.5527482681117607
-finished experiment 4
-processing hyper-parameter 5 out of 9
-doing run 0 out of 5
-fixed rate, multiple epochs values
-running experiment 5
-run number: 0
-
-parameters:
-	epochs=15,
-	offset=0.6,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 134
-time spent on this experiment: 0.0004999637603759766
-0 - validation_accuracy: 1.0
-0 - test_accuracy: 1.0
-finished experiment 5
-processing hyper-parameter 5 out of 9
-doing run 1 out of 5
-fixed rate, multiple epochs values
-running experiment 5
-run number: 1
-
-parameters:
-	epochs=15,
-	offset=0.6,
-	rate=0.03
-
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>fitting model with 15 epochs
-epoch 0: accuracy: 0.32999999999999996
-epoch 1: accuracy: 0.36
-epoch 2: accuracy: 0.39
-epoch 3: accuracy: 0.42000000000000004
-epoch 4: accuracy: 0.45000000000000007
-epoch 5: accuracy: 0.4800000000000001
-epoch 6: accuracy: 0.5100000000000001
-epoch 7: accuracy: 0.5400000000000001
-epoch 8: accuracy: 0.5700000000000002
-epoch 9: accuracy: 0.6000000000000002
-epoch 10: accuracy: 0.6300000000000002
-epoch 11: accuracy: 0.6600000000000003
-epoch 12: accuracy: 0.6900000000000003
-epoch 13: accuracy: 0.7200000000000003
-epoch 14: accuracy: 0.7500000000000003
-noise: 0.1
-current path: /mnt/athena/hpsearch/nbs/tools
-fitting model with 15 epochs
-epoch 0: accuracy: 0.32999999999999996
-epoch 1: accuracy: 0.36
-epoch 2: accuracy: 0.39
-epoch 3: accuracy: 0.42000000000000004
-epoch 4: accuracy: 0.45000000000000007
-epoch 5: accuracy: 0.4800000000000001
-epoch 6: accuracy: 0.5100000000000001
-epoch 7: accuracy: 0.5400000000000001
-epoch 8: accuracy: 0.5700000000000002
-epoch 9: accuracy: 0.6000000000000002
-epoch 10: accuracy: 0.6300000000000002
-epoch 11: accuracy: 0.6600000000000003
-epoch 12: accuracy: 0.6900000000000003
-epoch 13: accuracy: 0.7200000000000003
-epoch 14: accuracy: 0.7500000000000003
-noise: 0.1
-current path: /mnt/athena/hpsearch/nbs/tools
-fitting model with 15 epochs
-epoch 0: accuracy: 0.32999999999999996
-epoch 1: accuracy: 0.36
-epoch 2: accuracy: 0.39
-epoch 3: accuracy: 0.42000000000000004
-epoch 4: accuracy: 0.45000000000000007
-epoch 5: accuracy: 0.4800000000000001
-epoch 6: accuracy: 0.5100000000000001
-epoch 7: accuracy: 0.5400000000000001
-epoch 8: accuracy: 0.5700000000000002
-epoch 9: accuracy: 0.6000000000000002
-epoch 10: accuracy: 0.6300000000000002
-epoch 11: accuracy: 0.6600000000000003
-epoch 12: accuracy: 0.6900000000000003
-epoch 13: accuracy: 0.7200000000000003
-epoch 14: accuracy: 0.7500000000000003
-noise: 0.1
-current path: /mnt/athena/hpsearch/nbs/tools
-fitting model with 15 epochs
-epoch 0: accuracy: 0.63
-epoch 1: accuracy: 0.66
-epoch 2: accuracy: 0.6900000000000001
-epoch 3: accuracy: 0.7200000000000001
-epoch 4: accuracy: 0.7500000000000001
-epoch 5: accuracy: 0.7800000000000001
-epoch 6: accuracy: 0.8100000000000002
-epoch 7: accuracy: 0.8400000000000002
-epoch 8: accuracy: 0.8700000000000002
-epoch 9: accuracy: 0.9000000000000002
-epoch 10: accuracy: 0.9300000000000003
-epoch 11: accuracy: 0.9600000000000003
-epoch 12: accuracy: 0.9900000000000003
-epoch 13: accuracy: 1.0200000000000002
-epoch 14: accuracy: 1.0500000000000003
-noise: 0.1
-current path: /mnt/athena/hpsearch/nbs/tools
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 134
-time spent on this experiment: 0.0006880760192871094
-1 - validation_accuracy: 0.9072770197933384
-1 - test_accuracy: 0.9273013594969085
-finished experiment 5
-processing hyper-parameter 5 out of 9
-doing run 2 out of 5
-fixed rate, multiple epochs values
-running experiment 5
-run number: 2
-
-parameters:
-	epochs=15,
-	offset=0.6,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 134
-time spent on this experiment: 0.0016679763793945312
-2 - validation_accuracy: 0.9124061769109952
-2 - test_accuracy: 0.9157800561457685
-finished experiment 5
-processing hyper-parameter 5 out of 9
-doing run 3 out of 5
-fixed rate, multiple epochs values
-running experiment 5
-run number: 3
-
-parameters:
-	epochs=15,
-	offset=0.6,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 134
-time spent on this experiment: 0.00052642822265625
-3 - validation_accuracy: 1.0
-3 - test_accuracy: 1.0
-finished experiment 5
-processing hyper-parameter 5 out of 9
-doing run 4 out of 5
-fixed rate, multiple epochs values
-running experiment 5
-run number: 4
-
-parameters:
-	epochs=15,
-	offset=0.6,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 134
-time spent on this experiment: 0.0005195140838623047
-4 - validation_accuracy: 0.9636899484703506
-4 - test_accuracy: 1.0
-finished experiment 5
-processing hyper-parameter 6 out of 9
-doing run 0 out of 5
-fixed rate, multiple epochs values
-running experiment 6
-run number: 0
-
-parameters:
-	epochs=30,
-	offset=0.1,
-	rate=0.03
-
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>fitting model with 15 epochs
-epoch 0: accuracy: 0.63
-epoch 1: accuracy: 0.66
-epoch 2: accuracy: 0.6900000000000001
-epoch 3: accuracy: 0.7200000000000001
-epoch 4: accuracy: 0.7500000000000001
-epoch 5: accuracy: 0.7800000000000001
-epoch 6: accuracy: 0.8100000000000002
-epoch 7: accuracy: 0.8400000000000002
-epoch 8: accuracy: 0.8700000000000002
-epoch 9: accuracy: 0.9000000000000002
-epoch 10: accuracy: 0.9300000000000003
-epoch 11: accuracy: 0.9600000000000003
-epoch 12: accuracy: 0.9900000000000003
-epoch 13: accuracy: 1.0200000000000002
-epoch 14: accuracy: 1.0500000000000003
-noise: 0.1
-current path: /mnt/athena/hpsearch/nbs/tools
-fitting model with 15 epochs
-epoch 0: accuracy: 0.63
-epoch 1: accuracy: 0.66
-epoch 2: accuracy: 0.6900000000000001
-epoch 3: accuracy: 0.7200000000000001
-epoch 4: accuracy: 0.7500000000000001
-epoch 5: accuracy: 0.7800000000000001
-epoch 6: accuracy: 0.8100000000000002
-epoch 7: accuracy: 0.8400000000000002
-epoch 8: accuracy: 0.8700000000000002
-epoch 9: accuracy: 0.9000000000000002
-epoch 10: accuracy: 0.9300000000000003
-epoch 11: accuracy: 0.9600000000000003
-epoch 12: accuracy: 0.9900000000000003
-epoch 13: accuracy: 1.0200000000000002
-epoch 14: accuracy: 1.0500000000000003
-noise: 0.1
-current path: /mnt/athena/hpsearch/nbs/tools
-fitting model with 15 epochs
-epoch 0: accuracy: 0.63
-epoch 1: accuracy: 0.66
-epoch 2: accuracy: 0.6900000000000001
-epoch 3: accuracy: 0.7200000000000001
-epoch 4: accuracy: 0.7500000000000001
-epoch 5: accuracy: 0.7800000000000001
-epoch 6: accuracy: 0.8100000000000002
-epoch 7: accuracy: 0.8400000000000002
-epoch 8: accuracy: 0.8700000000000002
-epoch 9: accuracy: 0.9000000000000002
-epoch 10: accuracy: 0.9300000000000003
-epoch 11: accuracy: 0.9600000000000003
-epoch 12: accuracy: 0.9900000000000003
-epoch 13: accuracy: 1.0200000000000002
-epoch 14: accuracy: 1.0500000000000003
-noise: 0.1
-current path: /mnt/athena/hpsearch/nbs/tools
-fitting model with 15 epochs
-epoch 0: accuracy: 0.63
-epoch 1: accuracy: 0.66
-epoch 2: accuracy: 0.6900000000000001
-epoch 3: accuracy: 0.7200000000000001
-epoch 4: accuracy: 0.7500000000000001
-epoch 5: accuracy: 0.7800000000000001
-epoch 6: accuracy: 0.8100000000000002
-epoch 7: accuracy: 0.8400000000000002
-epoch 8: accuracy: 0.8700000000000002
-epoch 9: accuracy: 0.9000000000000002
-epoch 10: accuracy: 0.9300000000000003
-epoch 11: accuracy: 0.9600000000000003
-epoch 12: accuracy: 0.9900000000000003
-epoch 13: accuracy: 1.0200000000000002
-epoch 14: accuracy: 1.0500000000000003
-noise: 0.1
-current path: /mnt/athena/hpsearch/nbs/tools
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 134
-time spent on this experiment: 0.0010275840759277344
-0 - validation_accuracy: 0.23474208529147822
-0 - test_accuracy: 0.5761259798079976
-finished experiment 6
-processing hyper-parameter 6 out of 9
-doing run 1 out of 5
-fixed rate, multiple epochs values
-running experiment 6
-run number: 1
-
-parameters:
-	epochs=30,
-	offset=0.1,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 134
-time spent on this experiment: 0.0008826255798339844
-1 - validation_accuracy: 0.4032284846498333
-1 - test_accuracy: 0.4691405961682817
-finished experiment 6
-processing hyper-parameter 6 out of 9
-doing run 2 out of 5
-fixed rate, multiple epochs values
-running experiment 6
-run number: 2
-
-parameters:
-	epochs=30,
-	offset=0.1,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 134
-time spent on this experiment: 0.0009706020355224609
-2 - validation_accuracy: 0.40767931810318103
-2 - test_accuracy: 0.4085377540260074
-finished experiment 6
-processing hyper-parameter 6 out of 9
-doing run 3 out of 5
-fixed rate, multiple epochs values
-running experiment 6
-run number: 3
-
-parameters:
-	epochs=30,
-	offset=0.1,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 134
-time spent on this experiment: 0.0008463859558105469
-3 - validation_accuracy: 0.3127339258548566
-3 - test_accuracy: 0.23618300956032456
-finished experiment 6
-processing hyper-parameter 6 out of 9
-doing run 4 out of 5
-fixed rate, multiple epochs values
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>fitting model with 30 epochs
-epoch 0: accuracy: 0.13
-epoch 1: accuracy: 0.16
-epoch 2: accuracy: 0.19
-epoch 3: accuracy: 0.22
-epoch 4: accuracy: 0.25
-epoch 5: accuracy: 0.28
-epoch 6: accuracy: 0.31000000000000005
-epoch 7: accuracy: 0.3400000000000001
-epoch 8: accuracy: 0.3700000000000001
-epoch 9: accuracy: 0.40000000000000013
-epoch 10: accuracy: 0.43000000000000016
-epoch 11: accuracy: 0.4600000000000002
-epoch 12: accuracy: 0.4900000000000002
-epoch 13: accuracy: 0.5200000000000002
-epoch 14: accuracy: 0.5500000000000003
-epoch 15: accuracy: 0.5800000000000003
-epoch 16: accuracy: 0.6100000000000003
-epoch 17: accuracy: 0.6400000000000003
-epoch 18: accuracy: 0.6700000000000004
-epoch 19: accuracy: 0.7000000000000004
-epoch 20: accuracy: 0.6700000000000004
-epoch 21: accuracy: 0.6400000000000003
-epoch 22: accuracy: 0.6100000000000003
-epoch 23: accuracy: 0.5800000000000003
-epoch 24: accuracy: 0.5500000000000003
-epoch 25: accuracy: 0.5200000000000002
-epoch 26: accuracy: 0.4900000000000002
-epoch 27: accuracy: 0.4600000000000002
-epoch 28: accuracy: 0.43000000000000016
-epoch 29: accuracy: 0.40000000000000013
-noise: 0.1
-current path: /mnt/athena/hpsearch/nbs/tools
-fitting model with 30 epochs
-epoch 0: accuracy: 0.13
-epoch 1: accuracy: 0.16
-epoch 2: accuracy: 0.19
-epoch 3: accuracy: 0.22
-epoch 4: accuracy: 0.25
-epoch 5: accuracy: 0.28
-epoch 6: accuracy: 0.31000000000000005
-epoch 7: accuracy: 0.3400000000000001
-epoch 8: accuracy: 0.3700000000000001
-epoch 9: accuracy: 0.40000000000000013
-epoch 10: accuracy: 0.43000000000000016
-epoch 11: accuracy: 0.4600000000000002
-epoch 12: accuracy: 0.4900000000000002
-epoch 13: accuracy: 0.5200000000000002
-epoch 14: accuracy: 0.5500000000000003
-epoch 15: accuracy: 0.5800000000000003
-epoch 16: accuracy: 0.6100000000000003
-epoch 17: accuracy: 0.6400000000000003
-epoch 18: accuracy: 0.6700000000000004
-epoch 19: accuracy: 0.7000000000000004
-epoch 20: accuracy: 0.6700000000000004
-epoch 21: accuracy: 0.6400000000000003
-epoch 22: accuracy: 0.6100000000000003
-epoch 23: accuracy: 0.5800000000000003
-epoch 24: accuracy: 0.5500000000000003
-epoch 25: accuracy: 0.5200000000000002
-epoch 26: accuracy: 0.4900000000000002
-epoch 27: accuracy: 0.4600000000000002
-epoch 28: accuracy: 0.43000000000000016
-epoch 29: accuracy: 0.40000000000000013
-noise: 0.1
-current path: /mnt/athena/hpsearch/nbs/tools
-fitting model with 30 epochs
-epoch 0: accuracy: 0.13
-epoch 1: accuracy: 0.16
-epoch 2: accuracy: 0.19
-epoch 3: accuracy: 0.22
-epoch 4: accuracy: 0.25
-epoch 5: accuracy: 0.28
-epoch 6: accuracy: 0.31000000000000005
-epoch 7: accuracy: 0.3400000000000001
-epoch 8: accuracy: 0.3700000000000001
-epoch 9: accuracy: 0.40000000000000013
-epoch 10: accuracy: 0.43000000000000016
-epoch 11: accuracy: 0.4600000000000002
-epoch 12: accuracy: 0.4900000000000002
-epoch 13: accuracy: 0.5200000000000002
-epoch 14: accuracy: 0.5500000000000003
-epoch 15: accuracy: 0.5800000000000003
-epoch 16: accuracy: 0.6100000000000003
-epoch 17: accuracy: 0.6400000000000003
-epoch 18: accuracy: 0.6700000000000004
-epoch 19: accuracy: 0.7000000000000004
-epoch 20: accuracy: 0.6700000000000004
-epoch 21: accuracy: 0.6400000000000003
-epoch 22: accuracy: 0.6100000000000003
-epoch 23: accuracy: 0.5800000000000003
-epoch 24: accuracy: 0.5500000000000003
-epoch 25: accuracy: 0.5200000000000002
-epoch 26: accuracy: 0.4900000000000002
-epoch 27: accuracy: 0.4600000000000002
-epoch 28: accuracy: 0.43000000000000016
-epoch 29: accuracy: 0.40000000000000013
-noise: 0.1
-current path: /mnt/athena/hpsearch/nbs/tools
-fitting model with 30 epochs
-epoch 0: accuracy: 0.13
-epoch 1: accuracy: 0.16
-epoch 2: accuracy: 0.19
-epoch 3: accuracy: 0.22
-epoch 4: accuracy: 0.25
-epoch 5: accuracy: 0.28
-epoch 6: accuracy: 0.31000000000000005
-epoch 7: accuracy: 0.3400000000000001
-epoch 8: accuracy: 0.3700000000000001
-epoch 9: accuracy: 0.40000000000000013
-epoch 10: accuracy: 0.43000000000000016
-epoch 11: accuracy: 0.4600000000000002
-epoch 12: accuracy: 0.4900000000000002
-epoch 13: accuracy: 0.5200000000000002
-epoch 14: accuracy: 0.5500000000000003
-epoch 15: accuracy: 0.5800000000000003
-epoch 16: accuracy: 0.6100000000000003
-epoch 17: accuracy: 0.6400000000000003
-epoch 18: accuracy: 0.6700000000000004
-epoch 19: accuracy: 0.7000000000000004
-epoch 20: accuracy: 0.6700000000000004
-epoch 21: accuracy: 0.6400000000000003
-epoch 22: accuracy: 0.6100000000000003
-epoch 23: accuracy: 0.5800000000000003
-epoch 24: accuracy: 0.5500000000000003
-epoch 25: accuracy: 0.5200000000000002
-epoch 26: accuracy: 0.4900000000000002
-epoch 27: accuracy: 0.4600000000000002
-epoch 28: accuracy: 0.43000000000000016
-epoch 29: accuracy: 0.40000000000000013
-noise: 0.1
-current path: /mnt/athena/hpsearch/nbs/tools
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>running experiment 6
-run number: 4
-
-parameters:
-	epochs=30,
-	offset=0.1,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 134
-time spent on this experiment: 0.0010828971862792969
-4 - validation_accuracy: 0.49677556583269106
-4 - test_accuracy: 0.44594993121182186
-finished experiment 6
-processing hyper-parameter 7 out of 9
-doing run 0 out of 5
-fixed rate, multiple epochs values
-running experiment 7
-run number: 0
-
-parameters:
-	epochs=30,
-	offset=0.3,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 134
-time spent on this experiment: 0.0018241405487060547
-0 - validation_accuracy: 0.48867359572532265
-0 - test_accuracy: 0.6121542996330867
-finished experiment 7
-processing hyper-parameter 7 out of 9
-doing run 1 out of 5
-fixed rate, multiple epochs values
-running experiment 7
-run number: 1
-
-parameters:
-	epochs=30,
-	offset=0.3,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 134
-time spent on this experiment: 0.0008749961853027344
-1 - validation_accuracy: 0.5539464919006435
-1 - test_accuracy: 0.5332164068263058
-finished experiment 7
-processing hyper-parameter 7 out of 9
-doing run 2 out of 5
-fixed rate, multiple epochs values
-running experiment 7
-run number: 2
-
-parameters:
-	epochs=30,
-	offset=0.3,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 134
-time spent on this experiment: 0.0008738040924072266
-2 - validation_accuracy: 0.7301103799520314
-2 - test_accuracy: 0.4881534664183218
-finished experiment 7
-processing hyper-parameter 7 out of 9
-doing run 3 out of 5
-fixed rate, multiple epochs values
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>fitting model with 30 epochs
-epoch 0: accuracy: 0.13
-epoch 1: accuracy: 0.16
-epoch 2: accuracy: 0.19
-epoch 3: accuracy: 0.22
-epoch 4: accuracy: 0.25
-epoch 5: accuracy: 0.28
-epoch 6: accuracy: 0.31000000000000005
-epoch 7: accuracy: 0.3400000000000001
-epoch 8: accuracy: 0.3700000000000001
-epoch 9: accuracy: 0.40000000000000013
-epoch 10: accuracy: 0.43000000000000016
-epoch 11: accuracy: 0.4600000000000002
-epoch 12: accuracy: 0.4900000000000002
-epoch 13: accuracy: 0.5200000000000002
-epoch 14: accuracy: 0.5500000000000003
-epoch 15: accuracy: 0.5800000000000003
-epoch 16: accuracy: 0.6100000000000003
-epoch 17: accuracy: 0.6400000000000003
-epoch 18: accuracy: 0.6700000000000004
-epoch 19: accuracy: 0.7000000000000004
-epoch 20: accuracy: 0.6700000000000004
-epoch 21: accuracy: 0.6400000000000003
-epoch 22: accuracy: 0.6100000000000003
-epoch 23: accuracy: 0.5800000000000003
-epoch 24: accuracy: 0.5500000000000003
-epoch 25: accuracy: 0.5200000000000002
-epoch 26: accuracy: 0.4900000000000002
-epoch 27: accuracy: 0.4600000000000002
-epoch 28: accuracy: 0.43000000000000016
-epoch 29: accuracy: 0.40000000000000013
-noise: 0.1
-current path: /mnt/athena/hpsearch/nbs/tools
-fitting model with 30 epochs
-epoch 0: accuracy: 0.32999999999999996
-epoch 1: accuracy: 0.36
-epoch 2: accuracy: 0.39
-epoch 3: accuracy: 0.42000000000000004
-epoch 4: accuracy: 0.45000000000000007
-epoch 5: accuracy: 0.4800000000000001
-epoch 6: accuracy: 0.5100000000000001
-epoch 7: accuracy: 0.5400000000000001
-epoch 8: accuracy: 0.5700000000000002
-epoch 9: accuracy: 0.6000000000000002
-epoch 10: accuracy: 0.6300000000000002
-epoch 11: accuracy: 0.6600000000000003
-epoch 12: accuracy: 0.6900000000000003
-epoch 13: accuracy: 0.7200000000000003
-epoch 14: accuracy: 0.7500000000000003
-epoch 15: accuracy: 0.7800000000000004
-epoch 16: accuracy: 0.8100000000000004
-epoch 17: accuracy: 0.8400000000000004
-epoch 18: accuracy: 0.8700000000000004
-epoch 19: accuracy: 0.9000000000000005
-epoch 20: accuracy: 0.8700000000000004
-epoch 21: accuracy: 0.8400000000000004
-epoch 22: accuracy: 0.8100000000000004
-epoch 23: accuracy: 0.7800000000000004
-epoch 24: accuracy: 0.7500000000000003
-epoch 25: accuracy: 0.7200000000000003
-epoch 26: accuracy: 0.6900000000000003
-epoch 27: accuracy: 0.6600000000000003
-epoch 28: accuracy: 0.6300000000000002
-epoch 29: accuracy: 0.6000000000000002
-noise: 0.1
-current path: /mnt/athena/hpsearch/nbs/tools
-fitting model with 30 epochs
-epoch 0: accuracy: 0.32999999999999996
-epoch 1: accuracy: 0.36
-epoch 2: accuracy: 0.39
-epoch 3: accuracy: 0.42000000000000004
-epoch 4: accuracy: 0.45000000000000007
-epoch 5: accuracy: 0.4800000000000001
-epoch 6: accuracy: 0.5100000000000001
-epoch 7: accuracy: 0.5400000000000001
-epoch 8: accuracy: 0.5700000000000002
-epoch 9: accuracy: 0.6000000000000002
-epoch 10: accuracy: 0.6300000000000002
-epoch 11: accuracy: 0.6600000000000003
-epoch 12: accuracy: 0.6900000000000003
-epoch 13: accuracy: 0.7200000000000003
-epoch 14: accuracy: 0.7500000000000003
-epoch 15: accuracy: 0.7800000000000004
-epoch 16: accuracy: 0.8100000000000004
-epoch 17: accuracy: 0.8400000000000004
-epoch 18: accuracy: 0.8700000000000004
-epoch 19: accuracy: 0.9000000000000005
-epoch 20: accuracy: 0.8700000000000004
-epoch 21: accuracy: 0.8400000000000004
-epoch 22: accuracy: 0.8100000000000004
-epoch 23: accuracy: 0.7800000000000004
-epoch 24: accuracy: 0.7500000000000003
-epoch 25: accuracy: 0.7200000000000003
-epoch 26: accuracy: 0.6900000000000003
-epoch 27: accuracy: 0.6600000000000003
-epoch 28: accuracy: 0.6300000000000002
-epoch 29: accuracy: 0.6000000000000002
-noise: 0.1
-current path: /mnt/athena/hpsearch/nbs/tools
-fitting model with 30 epochs
-epoch 0: accuracy: 0.32999999999999996
-epoch 1: accuracy: 0.36
-epoch 2: accuracy: 0.39
-epoch 3: accuracy: 0.42000000000000004
-epoch 4: accuracy: 0.45000000000000007
-epoch 5: accuracy: 0.4800000000000001
-epoch 6: accuracy: 0.5100000000000001
-epoch 7: accuracy: 0.5400000000000001
-epoch 8: accuracy: 0.5700000000000002
-epoch 9: accuracy: 0.6000000000000002
-epoch 10: accuracy: 0.6300000000000002
-epoch 11: accuracy: 0.6600000000000003
-epoch 12: accuracy: 0.6900000000000003
-epoch 13: accuracy: 0.7200000000000003
-epoch 14: accuracy: 0.7500000000000003
-epoch 15: accuracy: 0.7800000000000004
-epoch 16: accuracy: 0.8100000000000004
-epoch 17: accuracy: 0.8400000000000004
-epoch 18: accuracy: 0.8700000000000004
-epoch 19: accuracy: 0.9000000000000005
-epoch 20: accuracy: 0.8700000000000004
-epoch 21: accuracy: 0.8400000000000004
-epoch 22: accuracy: 0.8100000000000004
-epoch 23: accuracy: 0.7800000000000004
-epoch 24: accuracy: 0.7500000000000003
-epoch 25: accuracy: 0.7200000000000003
-epoch 26: accuracy: 0.6900000000000003
-epoch 27: accuracy: 0.6600000000000003
-epoch 28: accuracy: 0.6300000000000002
-epoch 29: accuracy: 0.6000000000000002
-noise: 0.1
-current path: /mnt/athena/hpsearch/nbs/tools
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>running experiment 7
-run number: 3
-
-parameters:
-	epochs=30,
-	offset=0.3,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 134
-time spent on this experiment: 0.001102447509765625
-3 - validation_accuracy: 0.5069167428328015
-3 - test_accuracy: 0.44654404684002064
-finished experiment 7
-processing hyper-parameter 7 out of 9
-doing run 4 out of 5
-fixed rate, multiple epochs values
-running experiment 7
-run number: 4
-
-parameters:
-	epochs=30,
-	offset=0.3,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 134
-time spent on this experiment: 0.0013344287872314453
-4 - validation_accuracy: 0.6736793079342471
-4 - test_accuracy: 0.4957513878690014
-finished experiment 7
-processing hyper-parameter 8 out of 9
-doing run 0 out of 5
-fixed rate, multiple epochs values
-running experiment 8
-run number: 0
-
-parameters:
-	epochs=30,
-	offset=0.6,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 134
-time spent on this experiment: 0.0008573532104492188
-0 - validation_accuracy: 0.8686659848197331
-0 - test_accuracy: 0.8769776187998023
-finished experiment 8
-processing hyper-parameter 8 out of 9
-doing run 1 out of 5
-fixed rate, multiple epochs values
-running experiment 8
-run number: 1
-
-parameters:
-	epochs=30,
-	offset=0.6,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 134
-time spent on this experiment: 0.0007905960083007812
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>fitting model with 30 epochs
-epoch 0: accuracy: 0.32999999999999996
-epoch 1: accuracy: 0.36
-epoch 2: accuracy: 0.39
-epoch 3: accuracy: 0.42000000000000004
-epoch 4: accuracy: 0.45000000000000007
-epoch 5: accuracy: 0.4800000000000001
-epoch 6: accuracy: 0.5100000000000001
-epoch 7: accuracy: 0.5400000000000001
-epoch 8: accuracy: 0.5700000000000002
-epoch 9: accuracy: 0.6000000000000002
-epoch 10: accuracy: 0.6300000000000002
-epoch 11: accuracy: 0.6600000000000003
-epoch 12: accuracy: 0.6900000000000003
-epoch 13: accuracy: 0.7200000000000003
-epoch 14: accuracy: 0.7500000000000003
-epoch 15: accuracy: 0.7800000000000004
-epoch 16: accuracy: 0.8100000000000004
-epoch 17: accuracy: 0.8400000000000004
-epoch 18: accuracy: 0.8700000000000004
-epoch 19: accuracy: 0.9000000000000005
-epoch 20: accuracy: 0.8700000000000004
-epoch 21: accuracy: 0.8400000000000004
-epoch 22: accuracy: 0.8100000000000004
-epoch 23: accuracy: 0.7800000000000004
-epoch 24: accuracy: 0.7500000000000003
-epoch 25: accuracy: 0.7200000000000003
-epoch 26: accuracy: 0.6900000000000003
-epoch 27: accuracy: 0.6600000000000003
-epoch 28: accuracy: 0.6300000000000002
-epoch 29: accuracy: 0.6000000000000002
-noise: 0.1
-current path: /mnt/athena/hpsearch/nbs/tools
-fitting model with 30 epochs
-epoch 0: accuracy: 0.32999999999999996
-epoch 1: accuracy: 0.36
-epoch 2: accuracy: 0.39
-epoch 3: accuracy: 0.42000000000000004
-epoch 4: accuracy: 0.45000000000000007
-epoch 5: accuracy: 0.4800000000000001
-epoch 6: accuracy: 0.5100000000000001
-epoch 7: accuracy: 0.5400000000000001
-epoch 8: accuracy: 0.5700000000000002
-epoch 9: accuracy: 0.6000000000000002
-epoch 10: accuracy: 0.6300000000000002
-epoch 11: accuracy: 0.6600000000000003
-epoch 12: accuracy: 0.6900000000000003
-epoch 13: accuracy: 0.7200000000000003
-epoch 14: accuracy: 0.7500000000000003
-epoch 15: accuracy: 0.7800000000000004
-epoch 16: accuracy: 0.8100000000000004
-epoch 17: accuracy: 0.8400000000000004
-epoch 18: accuracy: 0.8700000000000004
-epoch 19: accuracy: 0.9000000000000005
-epoch 20: accuracy: 0.8700000000000004
-epoch 21: accuracy: 0.8400000000000004
-epoch 22: accuracy: 0.8100000000000004
-epoch 23: accuracy: 0.7800000000000004
-epoch 24: accuracy: 0.7500000000000003
-epoch 25: accuracy: 0.7200000000000003
-epoch 26: accuracy: 0.6900000000000003
-epoch 27: accuracy: 0.6600000000000003
-epoch 28: accuracy: 0.6300000000000002
-epoch 29: accuracy: 0.6000000000000002
-noise: 0.1
-current path: /mnt/athena/hpsearch/nbs/tools
-fitting model with 30 epochs
-epoch 0: accuracy: 0.63
-epoch 1: accuracy: 0.66
-epoch 2: accuracy: 0.6900000000000001
-epoch 3: accuracy: 0.7200000000000001
-epoch 4: accuracy: 0.7500000000000001
-epoch 5: accuracy: 0.7800000000000001
-epoch 6: accuracy: 0.8100000000000002
-epoch 7: accuracy: 0.8400000000000002
-epoch 8: accuracy: 0.8700000000000002
-epoch 9: accuracy: 0.9000000000000002
-epoch 10: accuracy: 0.9300000000000003
-epoch 11: accuracy: 0.9600000000000003
-epoch 12: accuracy: 0.9900000000000003
-epoch 13: accuracy: 1.0200000000000002
-epoch 14: accuracy: 1.0500000000000003
-epoch 15: accuracy: 1.0800000000000003
-epoch 16: accuracy: 1.1100000000000003
-epoch 17: accuracy: 1.1400000000000003
-epoch 18: accuracy: 1.1700000000000004
-epoch 19: accuracy: 1.2000000000000004
-epoch 20: accuracy: 1.1700000000000004
-epoch 21: accuracy: 1.1400000000000003
-epoch 22: accuracy: 1.1100000000000003
-epoch 23: accuracy: 1.0800000000000003
-epoch 24: accuracy: 1.0500000000000003
-epoch 25: accuracy: 1.0200000000000002
-epoch 26: accuracy: 0.9900000000000002
-epoch 27: accuracy: 0.9600000000000002
-epoch 28: accuracy: 0.9300000000000002
-epoch 29: accuracy: 0.9000000000000001
-noise: 0.1
-current path: /mnt/athena/hpsearch/nbs/tools
-fitting model with 30 epochs
-epoch 0: accuracy: 0.63
-epoch 1: accuracy: 0.66
-epoch 2: accuracy: 0.6900000000000001
-epoch 3: accuracy: 0.7200000000000001
-epoch 4: accuracy: 0.7500000000000001
-epoch 5: accuracy: 0.7800000000000001
-epoch 6: accuracy: 0.8100000000000002
-epoch 7: accuracy: 0.8400000000000002
-epoch 8: accuracy: 0.8700000000000002
-epoch 9: accuracy: 0.9000000000000002
-epoch 10: accuracy: 0.9300000000000003
-epoch 11: accuracy: 0.9600000000000003
-epoch 12: accuracy: 0.9900000000000003
-epoch 13: accuracy: 1.0200000000000002
-epoch 14: accuracy: 1.0500000000000003
-epoch 15: accuracy: 1.0800000000000003
-epoch 16: accuracy: 1.1100000000000003
-epoch 17: accuracy: 1.1400000000000003
-epoch 18: accuracy: 1.1700000000000004
-epoch 19: accuracy: 1.2000000000000004
-epoch 20: accuracy: 1.1700000000000004
-epoch 21: accuracy: 1.1400000000000003
-epoch 22: accuracy: 1.1100000000000003
-epoch 23: accuracy: 1.0800000000000003
-epoch 24: accuracy: 1.0500000000000003
-epoch 25: accuracy: 1.0200000000000002
-epoch 26: accuracy: 0.9900000000000002
-epoch 27: accuracy: 0.9600000000000002
-epoch 28: accuracy: 0.9300000000000002
-epoch 29: accuracy: 0.9000000000000001
-noise: 0.1
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>1 - validation_accuracy: 0.9188562067744498
-1 - test_accuracy: 0.8170633551352208
-finished experiment 8
-processing hyper-parameter 8 out of 9
-doing run 2 out of 5
-fixed rate, multiple epochs values
-running experiment 8
-run number: 2
-
-parameters:
-	epochs=30,
-	offset=0.6,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 134
-time spent on this experiment: 0.0010590553283691406
-2 - validation_accuracy: 0.9223355878469716
-2 - test_accuracy: 0.8961964318241754
-finished experiment 8
-processing hyper-parameter 8 out of 9
-doing run 3 out of 5
-fixed rate, multiple epochs values
-running experiment 8
-run number: 3
-
-parameters:
-	epochs=30,
-	offset=0.6,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 134
-time spent on this experiment: 0.0008649826049804688
-3 - validation_accuracy: 0.7992761012253697
-3 - test_accuracy: 0.5623022440749827
-finished experiment 8
-processing hyper-parameter 8 out of 9
-doing run 4 out of 5
-fixed rate, multiple epochs values
-running experiment 8
-run number: 4
-
-parameters:
-	epochs=30,
-	offset=0.6,
-	rate=0.03
-
-script: /mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py, line number: 134
-time spent on this experiment: 0.0013670921325683594
-4 - validation_accuracy: 0.767049870621226
-4 - test_accuracy: 0.8054340835085607
-finished experiment 8
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>current path: /mnt/athena/hpsearch/nbs/tools
-fitting model with 30 epochs
-epoch 0: accuracy: 0.63
-epoch 1: accuracy: 0.66
-epoch 2: accuracy: 0.6900000000000001
-epoch 3: accuracy: 0.7200000000000001
-epoch 4: accuracy: 0.7500000000000001
-epoch 5: accuracy: 0.7800000000000001
-epoch 6: accuracy: 0.8100000000000002
-epoch 7: accuracy: 0.8400000000000002
-epoch 8: accuracy: 0.8700000000000002
-epoch 9: accuracy: 0.9000000000000002
-epoch 10: accuracy: 0.9300000000000003
-epoch 11: accuracy: 0.9600000000000003
-epoch 12: accuracy: 0.9900000000000003
-epoch 13: accuracy: 1.0200000000000002
-epoch 14: accuracy: 1.0500000000000003
-epoch 15: accuracy: 1.0800000000000003
-epoch 16: accuracy: 1.1100000000000003
-epoch 17: accuracy: 1.1400000000000003
-epoch 18: accuracy: 1.1700000000000004
-epoch 19: accuracy: 1.2000000000000004
-epoch 20: accuracy: 1.1700000000000004
-epoch 21: accuracy: 1.1400000000000003
-epoch 22: accuracy: 1.1100000000000003
-epoch 23: accuracy: 1.0800000000000003
-epoch 24: accuracy: 1.0500000000000003
-epoch 25: accuracy: 1.0200000000000002
-epoch 26: accuracy: 0.9900000000000002
-epoch 27: accuracy: 0.9600000000000002
-epoch 28: accuracy: 0.9300000000000002
-epoch 29: accuracy: 0.9000000000000001
-noise: 0.1
-current path: /mnt/athena/hpsearch/nbs/tools
-fitting model with 30 epochs
-epoch 0: accuracy: 0.63
-epoch 1: accuracy: 0.66
-epoch 2: accuracy: 0.6900000000000001
-epoch 3: accuracy: 0.7200000000000001
-epoch 4: accuracy: 0.7500000000000001
-epoch 5: accuracy: 0.7800000000000001
-epoch 6: accuracy: 0.8100000000000002
-epoch 7: accuracy: 0.8400000000000002
-epoch 8: accuracy: 0.8700000000000002
-epoch 9: accuracy: 0.9000000000000002
-epoch 10: accuracy: 0.9300000000000003
-epoch 11: accuracy: 0.9600000000000003
-epoch 12: accuracy: 0.9900000000000003
-epoch 13: accuracy: 1.0200000000000002
-epoch 14: accuracy: 1.0500000000000003
-epoch 15: accuracy: 1.0800000000000003
-epoch 16: accuracy: 1.1100000000000003
-epoch 17: accuracy: 1.1400000000000003
-epoch 18: accuracy: 1.1700000000000004
-epoch 19: accuracy: 1.2000000000000004
-epoch 20: accuracy: 1.1700000000000004
-epoch 21: accuracy: 1.1400000000000003
-epoch 22: accuracy: 1.1100000000000003
-epoch 23: accuracy: 1.0800000000000003
-epoch 24: accuracy: 1.0500000000000003
-epoch 25: accuracy: 1.0200000000000002
-epoch 26: accuracy: 0.9900000000000002
-epoch 27: accuracy: 0.9600000000000002
-epoch 28: accuracy: 0.9300000000000002
-epoch 29: accuracy: 0.9000000000000001
-noise: 0.1
-current path: /mnt/athena/hpsearch/nbs/tools
-fitting model with 30 epochs
-epoch 0: accuracy: 0.63
-epoch 1: accuracy: 0.66
-epoch 2: accuracy: 0.6900000000000001
-epoch 3: accuracy: 0.7200000000000001
-epoch 4: accuracy: 0.7500000000000001
-epoch 5: accuracy: 0.7800000000000001
-epoch 6: accuracy: 0.8100000000000002
-epoch 7: accuracy: 0.8400000000000002
-epoch 8: accuracy: 0.8700000000000002
-epoch 9: accuracy: 0.9000000000000002
-epoch 10: accuracy: 0.9300000000000003
-epoch 11: accuracy: 0.9600000000000003
-epoch 12: accuracy: 0.9900000000000003
-epoch 13: accuracy: 1.0200000000000002
-epoch 14: accuracy: 1.0500000000000003
-epoch 15: accuracy: 1.0800000000000003
-epoch 16: accuracy: 1.1100000000000003
-epoch 17: accuracy: 1.1400000000000003
-epoch 18: accuracy: 1.1700000000000004
-epoch 19: accuracy: 1.2000000000000004
-epoch 20: accuracy: 1.1700000000000004
-epoch 21: accuracy: 1.1400000000000003
-epoch 22: accuracy: 1.1100000000000003
-epoch 23: accuracy: 1.0800000000000003
-epoch 24: accuracy: 1.0500000000000003
-epoch 25: accuracy: 1.0200000000000002
-epoch 26: accuracy: 0.9900000000000002
-epoch 27: accuracy: 0.9600000000000002
-epoch 28: accuracy: 0.9300000000000002
-epoch 29: accuracy: 0.9000000000000001
-noise: 0.1
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-    </details>
 </div>
     {% endraw %}
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Print-parameters">Print parameters<a class="anchor-link" href="#Print-parameters"> </a></h3>
+<h2 id="print_parameters">print_parameters<a class="anchor-link" href="#print_parameters"> </a></h2>
 </div>
 </div>
 </div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="print_parameters" class="doc_header"><code>print_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tools/print_parameters.py#L15" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>print_parameters</code>(<strong><code>experiment</code></strong>, <strong><code>root</code></strong>=<em><code>None</code></em>)</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="usage">usage<a class="anchor-link" href="#usage"> </a></h3>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="test_print_parameters" class="doc_header"><code>test_print_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/tools/test_print_parameters.py#L17" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_print_parameters</code>()</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -1956,7 +135,7 @@ noise: 0.1
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">print_parameters</span> <span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_print_parameters</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -1969,19 +148,22 @@ noise: 0.1
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>parameters=dict(epochs=15,
+<pre>running test_print_parameters
+parameters=dict(epochs=15,
+                noise=0.1,
                 offset=0.1,
                 rate=0.03)
 
 
 
 other_parameters=dict(experiment_number=3,
-                      git_hash=&#39;b&#39;0d8009984584ccdf28cefc13baaa999fecd966cb\n&#39;&#39;,
-                      lineno=134,
+                      git_hash=&#39;b&#39;e12dbc9b2b3bc38f59a7cc4a5334a93f39ad74dc\n&#39;&#39;,
+                      lineno=212,
                       log_message=&#39;fixed rate, multiple epochs values&#39;,
-                      noise=0.1,
-                      path_results_big=&#39;/mnt/athena/hpsearch/hpsearch/../results/experiments/00003/4&#39;,
-                      script_path=&#39;/mnt/athena/hpsearch/hpsearch/examples/dummy_experiment_manager.py&#39;)
+                      path_results_big=&#39;test_print_parameters/experiments/00003/4&#39;,
+                      script_path=&#39;/home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py&#39;,
+                      suffix_results=&#39;_validation_accuracy&#39;,
+                      verbose=False)
 
 
 </pre>
@@ -1990,6 +172,85 @@ other_parameters=dict(experiment_number=3,
 
 </div>
 </div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="parse_args" class="doc_header"><code>parse_args</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tools/print_parameters.py#L29" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>parse_args</code>(<strong><code>args</code></strong>)</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="parse_arguments_and_print" class="doc_header"><code>parse_arguments_and_print</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tools/print_parameters.py#L37" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>parse_arguments_and_print</code>(<strong><code>args</code></strong>)</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="main" class="doc_header"><code>main</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tools/print_parameters.py#L43" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>main</code>()</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
 
 </div>
     {% endraw %}

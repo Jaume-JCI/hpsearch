@@ -17,7 +17,7 @@ from ..config.hpconfig import get_path_experiments, get_default_operations
 import hpsearch.utils.experiment_utils as ut
 from .metric_visualization import include_best_and_last_experiment
 
-
+# Cell
 def print_table (experiments=[-1, -2], base=None, root_folder=None, display_all=False, include_best=False, op=None,
                 metric=None, round_digits=2, compare=True, compact=0, run_number=0):
 

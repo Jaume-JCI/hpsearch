@@ -9,6 +9,7 @@ import shutil
 
 from . import experiment_utils
 
+# Cell
 def join_experiments (path_source, path_destination, key_score=None):
     experiment_data_source = pd.read_pickle ('%s/experiments_data.pk' %path_source)
     experiment_data_destination = pd.read_pickle ('%s/experiments_data.pk' %path_destination)
@@ -68,6 +69,7 @@ def join_experiments (path_source, path_destination, key_score=None):
         experiment_data_destination.to_csv ('%s/experiments_data.csv' %path_destination)
         experiment_data_destination.to_pickle ('%s/experiments_data.pk' %path_destination)
 
+# Cell
 def remove_defaults_from_experiment_data (experiment_data):
     from ..config.hpconfig import get_default_parameters
 
@@ -100,6 +102,7 @@ def remove_defaults_from_experiment_data (experiment_data):
 
     return experiment_data, changed_df
 
+# Cell
 def remove_experiments (experiments=[], root_path=None, root_folder=None):
     from ..config.hpconfig import get_path_experiment, get_path_experiments
 

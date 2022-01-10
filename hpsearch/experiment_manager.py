@@ -2,8 +2,7 @@
 
 __all__ = ['ExperimentManager', 'get_git_revision_hash', 'record_parameters', 'mypprint', 'mymakedirs',
            'load_or_create_experiment_values', 'store_parameters', 'isnull', 'get_experiment_number',
-           'get_experiment_numbers', 'set_logger', 'insert_experiment_script_path', 'load_parameters',
-           'save_other_parameters']
+           'get_experiment_numbers', 'insert_experiment_script_path', 'load_parameters', 'save_other_parameters']
 
 # Cell
 # coding: utf-8
@@ -24,56 +23,98 @@ from multiprocessing import Process
 import logging
 import traceback
 import shutil
+from fastcore.utils import store_attr
+
+from block_types.utils.utils import set_logger
 
 # hpsearch core API
 from .config.manager_factory import ManagerFactory
-from .utils.resume_from_checkpoint import make_resume_from_checkpoint, exists_current_checkpoint, finished_all_epochs, obtain_last_result
 from .utils import experiment_utils
 from .utils.experiment_utils import remove_defaults
 from .utils.organize_experiments import remove_defaults_from_experiment_data
+import hpsearch.config.hp_defaults as dflt
 
-
+# Cell
 class ExperimentManager (object):
 
-    def __init__ (self, allow_base_class=False):
+    def __init__ (self,
+                  allow_base_class=dflt.allow_base_class,
+                  path_experiments=dflt.path_experiments,
+                  defaults=dflt.defaults,
+                  root=dflt.root,
+                  metric=dflt.metric,
+                  op=dflt.op,
+                  path_alternative=None,
+                  path_data=None,
+                  name_model_history=dflt.name_model_history,
+                  model_file_name=dflt.model_file_name,
+                  name_epoch=dflt.name_epoch,
+                  result_file=dflt.result_file,
+                  logger=None,
+                  verbose: int = dflt.verbose,
+                  name_logger:str = dflt.name_logger
+                 ):
+
+        #store_attr ()
+        if True:
+            self.allow_base_class = allow_base_class
+            self.path_experiments = path_experiments
+            self.defaults = defaults
+            self.key_score = metric
+            self.root = root
+            self.metric = metric
+            self.op = op
+            self.path_alternative = path_alternative
+            self.path_data = path_data
+            self.name_model_history = name_model_history
+            self.model_file_name = model_file_name
+            self.name_epoch = name_epoch
+            self.result_file = result_file
+            self.name_logger = name_logger
+            self.logger = logger
+            self.verbose = verbose
+
+        if self.logger is None:
+            self.logger = set_logger (self.name_logger, path_results=self.path_experiments, verbose=self.verbose)
+
+        self.key_score = metric
         self.parameters_non_pickable = {}
-        self.allow_base_class = allow_base_class
+        self.default_operations = dict(root=root,
+                                       metric=metric,
+                                       op=op)
         self.manager_factory = ManagerFactory(allow_base_class=allow_base_class)
         self.manager_factory.register_manager (self)
 
     def get_default_parameters (self, parameters):
         if not self.allow_base_class:
             raise ImportError ('call get_default_parameters from base class is not allowed')
-        return {}
+        return self.defaults
 
     def get_default_operations (self):
-        default_operations = dict (root='results',
-                                   metric='accuracy',
-                                   op='min')
-        return default_operations
+        return self.default_operations
 
     def get_path_experiments (self, path_experiments = None, folder = None):
         """Gives the root path to the folder where results of experiments are stored."""
 
-        if not self.allow_base_class:
-            raise ImportError ('call get_path_experiments from base class is not allowed')
-
-        path_experiments = 'results/hpsearch'
-        if folder != None:
-            path_experiments = f'{path_experiments}/{folder}'
+        path_experiments = (path_experiments if path_experiments is not None
+                            else self.path_experiments)
+        if folder != None: path_experiments = f'{path_experiments}/{folder}'
 
         return path_experiments
 
     def get_path_alternative (self, path_results):
-        #path_alternative = path_results.replace(root1, root2)
-        path_alternative = path_results
+        if self.path_alternative is None:
+            path_alternative = path_results
 
         return path_alternative
 
     def get_path_data (self, run_number, root_path=None, parameters={}):
-        if root_path is None:
-            root_path = self.get_path_experiments()
-        return f'{root_path}/data'
+        if self.path_data is None:
+            if root_path is None:
+                root_path = self.get_path_experiments()
+            return f'{root_path}/data'
+        else:
+            return self.path_data
 
     def get_path_experiment (self, experiment_id, root_path=None, root_folder=None):
         if root_path is None:
@@ -85,6 +126,41 @@ class ExperimentManager (object):
         path_experiment = self.get_path_experiment (experiment_id, root_path=root_path, root_folder=root_folder)
         path_results = '%s/%d' %(path_experiment,run_number)
         return path_results
+
+    def get_experiment_data (self, path_experiments=None, folder_experiments=None, experiments=None):
+        path_experiments = self.get_path_experiments(path_experiments=path_experiments,
+                                                    folder=folder_experiments)
+        path_csv = '%s/experiments_data.csv' %path_experiments
+        path_pickle = path_csv.replace('csv', 'pk')
+        if os.path.exists (path_pickle):
+            experiment_data = pd.read_pickle (path_pickle)
+        else:
+            experiment_data = pd.read_csv (path_csv, index_col=0)
+        if experiments is not None:
+            experiment_data = experiment_data.loc[experiments,:]
+
+        return experiment_data
+
+    def get_key_score (self, other_parameters):
+        key_score = other_parameters.get('key_score')
+        suffix_results = other_parameters.get('suffix_results', '')
+        if key_score is None and (len(suffix_results) > 0):
+            if suffix_results[0] == '_':
+                key_score = suffix_results[1:]
+            else:
+                key_score = suffix_results
+        key_score = self.key_score if key_score is None else key_score
+
+        return key_score
+
+    def get_name_epoch (self, other_parameters):
+        return other_parameters.get ('name_epoch', self.name_epoch)
+
+    def remove_previous_experiments (self, path_experiments = None, folder = None):
+        path_experiments = self.get_path_experiments (path_experiments=path_experiments,
+                                                      folder=folder)
+        if os.path.exists (path_experiments):
+            shutil.rmtree (path_experiments)
 
     def experiment_visualization (self, **kwargs):
         raise ValueError ('this type of experiment visualization is not recognized')
@@ -101,23 +177,12 @@ class ExperimentManager (object):
         parameters.update (self.parameters_non_pickable)
         self.parameters_non_pickable = {}
 
-        logger = logging.getLogger("experiment_manager")
-
         # #####################################
         # Evaluation
         # #####################################
-        if not parameters.get('just_visualize', False):
-            time_before = time.time()
-            score_dict = self._run_experiment (parameters=parameters, path_results=path_results, run_number=run_number)
-            logger.info ('time spent on this experiment: {}'.format(time.time()-time_before))
-        else:
-            score_dict = None
-
-        # #####################################
-        # Visualization
-        # #####################################
-        if parameters.get('visualization', False):
-            raise ValueError ('not implemented')
+        time_before = time.time()
+        score_dict = self._run_experiment (parameters=parameters, path_results=path_results, run_number=run_number)
+        self.logger.info ('time spent on this experiment: {}'.format(time.time()-time_before))
 
         # #####################################
         # Final scores
@@ -127,7 +192,7 @@ class ExperimentManager (object):
             if score_name[0] == '_':
                 score_name = score_name[1:]
             if score_dict.get(score_name) is not None:
-                logger.info ('score: %f' %(score_dict.get(score_name)))
+                self.logger.info (f'score: {score_dict.get(score_name)}')
 
         spent_time = time.time() - time_before
 
@@ -169,21 +234,24 @@ class ExperimentManager (object):
 
     # *************************************************************************
     # *************************************************************************
-    def create_experiment_and_run (self, parameters = {}, other_parameters = {}, root_path=None, run_number=0, log_message=None):
+    def create_experiment_and_run (self, parameters = {}, other_parameters = {}, root_path=None,
+                                   run_number=0, log_message=None):
+        """
+
+        """
 
         # ****************************************************
         #  preliminary set-up: logger and root_path
         # ****************************************************
-        logger = logging.getLogger("experiment_manager")
         if log_message is not None:
-            logger.info ('**************************************************')
-            logger.info (log_message)
-            logger.info ('**************************************************')
+            self.logger.info ('**************************************************')
+            self.logger.info (log_message)
+            self.logger.info ('**************************************************')
             other_parameters['log_message'] = log_message
 
         # insert path to experiment script file that called the experiment manager
         other_parameters = other_parameters.copy()
-        insert_experiment_script_path (other_parameters, logger)
+        insert_experiment_script_path (other_parameters, self.logger)
 
         # get root_path and create directories
         if root_path is None:
@@ -202,25 +270,26 @@ class ExperimentManager (object):
 
         path_csv = '%s/experiments_data.csv' %root_path
         path_pickle = path_csv.replace('csv', 'pk')
-        experiment_number, experiment_data = load_or_create_experiment_values (path_csv, parameters)
+        experiment_number, experiment_data = load_or_create_experiment_values (
+            path_csv, parameters, precision=other_parameters.get('precision', 1e-15)
+        )
 
         #save_other_parameters (experiment_number, other_parameters, root_path)
 
         # if old experiment, we can require that given parameters match with experiment number
-        if other_parameters.get('experiment_number') is not None and experiment_number != other_parameters.get('experiment_number'):
-            raise ValueError ('expected number: {}, found: {}'.format (other_parameters.get('experiment_number'), experiment_number))
+        if (other_parameters.get('experiment_number') is not None
+            and experiment_number != other_parameters.get('experiment_number')):
+            raise ValueError (f'expected number: {other_parameters.get("experiment_number")}, '
+                              f'found: {experiment_number}')
         other_parameters['experiment_number'] = experiment_number
 
         # ****************************************************
         # get key_score and suffix_results
         # ****************************************************
-        if other_parameters.get('key_score') is not None:
-            other_parameters['suffix_results'] = '_' + other_parameters['key_score']
-        suffix_results = other_parameters.get('suffix_results', '')
-        if len(suffix_results) > 0 and suffix_results[0] == '_':
-            key_score = suffix_results[1:]
-        else:
-            key_score = suffix_results
+        key_score = self.get_key_score (other_parameters)
+        if key_score is not None:
+            suffix_results = f'_{key_score}'
+            other_parameters['suffix_results'] = suffix_results
 
         # ****************************************************
         #   get run_id, if not given
@@ -229,19 +298,19 @@ class ExperimentManager (object):
             run_number = 0
             name_score = '%d%s' %(run_number, suffix_results)
             while not isnull(experiment_data, experiment_number, name_score):
-                logger.info ('found previous run for experiment number {}, run {}, with score {} = {}'.format(experiment_number, run_number, key_score, experiment_data.loc[experiment_number, name_score]))
+                self.logger.info ('found previous run for experiment number {}, run {}, with score {} = {}'.format(experiment_number, run_number, key_score, experiment_data.loc[experiment_number, name_score]))
                 run_number += 1
                 name_score = '%d%s' %(run_number, suffix_results)
-            logger.info ('starting experiment {} with run number {}'.format(experiment_number, run_number))
+            self.logger.info ('starting experiment {} with run number {}'.format(experiment_number, run_number))
 
         else:
             name_score = '%d%s' %(run_number, suffix_results)
             if not isnull(experiment_data, experiment_number, name_score):
                 previous_result = experiment_data.loc[experiment_number, name_score]
-                logger.info ('found completed: experiment number: %d, run number: %d - score: %f' %(experiment_number, run_number, previous_result))
-                logger.info (parameters)
+                self.logger.info ('found completed: experiment number: %d, run number: %d - score: %f' %(experiment_number, run_number, previous_result))
+                self.logger.info (parameters)
                 if other_parameters.get('repeat_experiment', False):
-                    logger.info ('redoing experiment')
+                    self.logger.info ('redoing experiment')
 
         # ****************************************************
         #   remove unfinished experiments
@@ -250,36 +319,44 @@ class ExperimentManager (object):
             name_finished = '%d_finished' %run_number
             if not isnull(experiment_data, experiment_number, name_finished):
                 finished = experiment_data.loc[experiment_number, name_finished]
-                logger.info ('experiment {}, run number {}, finished {}'.format(experiment_number, run_number, finished))
+                self.logger.info (f'experiment {experiment_number}, run number {run_number}, finished {finished}')
                 if not finished:
                     experiment_data.loc[experiment_number, name_score] = None
                     experiment_data.to_csv (path_csv)
                     experiment_data.to_pickle (path_pickle)
-                    logger.info ('removed experiment {}, run number {}, finished {}'.format(experiment_number, run_number, finished))
+                    self.logger.info (f'removed experiment {experiment_number}, '
+                                 f'run number {run_number}, finished {finished}')
             if other_parameters.get('only_remove_not_finished', False):
                 return None, {}
 
         unfinished_flag = False
+        name_epoch = self.get_name_epoch(other_parameters)
+        current_path_results = self.get_path_results (experiment_number, run_number=run_number,
+                                                      root_path=root_path)
 
         # ****************************************************
         #   check conditions for skipping experiment
         # ****************************************************
-        if not isnull(experiment_data, experiment_number, name_score) and not other_parameters.get('repeat_experiment', False) and not other_parameters.get('just_visualize', False):
-            if other_parameters.get('check_finished', False) and not finished_all_epochs(parameters, self.get_path_results (experiment_number, run_number=run_number, root_path=root_path), other_parameters.get('name_epoch','max_epoch')):
+        if (not isnull(experiment_data, experiment_number, name_score)
+            and not other_parameters.get('repeat_experiment', False)):
+            if (other_parameters.get('check_finished', False)
+                and not self.finished_all_epochs (parameters, current_path_results, name_epoch)):
                 unfinished_flag = True
             else:
-                logger.info ('skipping...')
+                self.logger.info ('skipping...')
                 return previous_result, {key_score: previous_result}
-        elif isnull(experiment_data, experiment_number, name_score) and other_parameters.get('recompute_metrics', False) and not other_parameters.get('force_recompute_metrics', False):
-            logger.info ('experiment not found, skipping %d due to only recompute_metrics' %run_number)
+        elif (isnull(experiment_data, experiment_number, name_score)
+              and other_parameters.get('recompute_metrics', False)
+              and not other_parameters.get('force_recompute_metrics', False)):
+            self.logger.info (f'experiment not found, skipping {run_number} due to only recompute_metrics')
             return None, {}
 
         # ****************************************************
         # log info
         # ****************************************************
-        logger.info ('running experiment %d' %experiment_number)
-        logger.info ('run number: %d' %run_number)
-        logger.info ('\nparameters:\n%s' %mypprint(parameters))
+        self.logger.info ('running experiment %d' %experiment_number)
+        self.logger.info ('run number: %d' %run_number)
+        self.logger.info ('\nparameters:\n%s' %mypprint(parameters))
 
         # ****************************************************
         #  get paths
@@ -312,19 +389,21 @@ class ExperimentManager (object):
         # ****************************************************************
         # loggers
         # ****************************************************************
-        logger_experiment = set_logger ("experiment", path_experiment)
-        logger_experiment.info ('script: {}, line number: {}'.format(other_parameters['script_path'], other_parameters['lineno']))
+        logger_experiment = set_logger ("experiment", path_experiment, verbose=self.verbose)
+        logger_experiment.info (f'script: {other_parameters["script_path"]}, line number: {other_parameters["lineno"]}')
         if os.path.exists(other_parameters['script_path']):
             shutil.copy (other_parameters['script_path'], path_experiment)
             shutil.copy (other_parameters['script_path'], path_root_experiment)
 
         # summary logger
-        logger_summary = set_logger ("summary", root_path, mode='w', stdout=False, just_message=True, filename='summary.txt')
+        logger_summary = set_logger ("summary", root_path, mode='w', stdout=False, just_message=True,
+                                     filename='summary.txt', verbose_out=self.verbose)
         logger_summary.info ('\n\n{}\nexperiment: {}, run: {}\nscript: {}, line number: {}\nparameters:\n{}{}'.format('*'*100, experiment_number, run_number, other_parameters['script_path'], other_parameters['lineno'], mypprint(parameters), '*'*100))
         if other_parameters.get('rerun_script') is not None:
             logger_summary.info ('\nre-run:\n{}'.format(other_parameters['rerun_script']))
         # same file in path_experiments
-        logger_summary2 = set_logger ("summary", path_experiment, mode='w', stdout=False, just_message=True, filename='summary.txt')
+        logger_summary2 = set_logger ("summary", path_experiment, mode='w', stdout=False,
+                                      just_message=True, filename='summary.txt', verbose_out=self.verbose)
         logger_summary2.info ('\n\n{}\nexperiment: {}, run: {}\nscript: {}, line number: {}\nparameters:\n{}{}'.format('*'*100, experiment_number, run_number, other_parameters['script_path'], other_parameters['lineno'], mypprint(parameters), '*'*100))
 
         # ****************************************************************
@@ -335,53 +414,73 @@ class ExperimentManager (object):
         parameters.update(other_parameters)
 
         # add default parameters - their values are overwritten by input values, if given
-        parameters_with_defaults = self.get_default_parameters(parameters)
+        defaults = self.get_default_parameters(parameters)
+        parameters_with_defaults = defaults.copy()
         parameters_with_defaults.update(parameters)
         parameters = parameters_with_defaults
 
         # ***********************************************************
         # resume from previous experiment
         # ***********************************************************
+        if (isnull(experiment_data, experiment_number, name_score)
+            and other_parameters.get('check_finished_if_interrupted', False)
+            and not self.finished_all_epochs (parameters, current_path_results, name_epoch)):
+            unfinished_flag = True
+
         resuming_from_prev_epoch_flag = False
         if parameters.get('prev_epoch', False):
-            logger.info('trying prev_epoch')
-            name_epoch = parameters.get('name_epoch','max_epoch')
+            self.logger.info('trying prev_epoch')
             experiment_data2 = experiment_data.copy()
-            if (((not unfinished_flag) and (other_parameters.get('repeat_experiment', False) or other_parameters.get('just_visualize', False)))
-                or other_parameters.get('avoid_resuming', False)
-                or isnull(experiment_data, experiment_number, name_score)):
+            if (not unfinished_flag
+                and (other_parameters.get('repeat_experiment', False)
+                     or isnull(experiment_data, experiment_number, name_score))):
                     experiment_data2 = experiment_data2.drop(experiment_number,axis=0)
-            prev_experiment_number = self.find_closest_epoch (experiment_data2, original_parameters, name_epoch=name_epoch)
+            prev_experiment_number = self.find_closest_epoch (experiment_data2, original_parameters,
+                                                              name_epoch=name_epoch)
             if prev_experiment_number is not None:
-                logger.info('using prev_epoch: %d' %prev_experiment_number)
-                prev_path_results = self.get_path_results (prev_experiment_number, run_number=run_number, root_path=root_path)
-                found = make_resume_from_checkpoint (parameters, prev_path_results)
+                self.logger.info(f'using prev_epoch: {prev_experiment_number}')
+                prev_path_results = self.get_path_results (prev_experiment_number,
+                                                           run_number=run_number,
+                                                           root_path=root_path)
+                found = self.make_resume_from_checkpoint (parameters, prev_path_results)
                 if found:
-                    logger.info ('found previous exp: %d' %prev_experiment_number)
+                    self.logger.info (f'found previous exp: {prev_experiment_number}')
                     if prev_experiment_number == experiment_number:
-                        other_parameters['use_previous_best'] = parameters.get('use_previous_best', True)
-                        logger.info ('using previous best')
+                        if 'use_previous_best' not in other_parameters:
+                            other_parameters['use_previous_best'] = parameters.get('use_previous_best',
+                                                                                   dflt.use_previous_best)
+                        if not other_parameters['use_previous_best'] and unfinished_flag:
+                            prev_epoch = self.get_last_epoch (parameters,
+                                                              current_path_results,
+                                                              name_epoch)
+                            prev_epoch = max (int(prev_epoch), 0)
+                            parameters[name_epoch] = parameters[name_epoch] - prev_epoch
+                        self.logger.info ('using previous best')
                     else:
-                        name_epoch = parameters.get('name_epoch', 'max_epoch')
-                        parameters[name_epoch] = parameters[name_epoch] - int(experiment_data.loc[prev_experiment_number, name_epoch])
+                        prev_epoch = experiment_data.loc[prev_experiment_number,name_epoch]
+                        prev_epoch = (int(prev_epoch) if prev_epoch is not None
+                                      else defaults.get(name_epoch))
+                        parameters[name_epoch] = parameters[name_epoch] - prev_epoch
 
                 resuming_from_prev_epoch_flag = found
 
 
         if not resuming_from_prev_epoch_flag and parameters.get('from_exp', None) is not None:
             prev_experiment_number = parameters.get('from_exp', None)
-            logger.info('using previous experiment %d' %prev_experiment_number)
-            prev_path_results = self.get_path_results (prev_experiment_number, run_number=run_number, root_path=root_path)
-            make_resume_from_checkpoint (parameters, prev_path_results, use_best=True)
+            self.logger.info('using previous experiment %d' %prev_experiment_number)
+            prev_path_results = self.get_path_results (prev_experiment_number, run_number=run_number,
+                                                       root_path=root_path)
+            self.make_resume_from_checkpoint (parameters, prev_path_results, use_best=True)
 
         # ****************************************************************
         #   Analyze if experiment was interrupted
         # ****************************************************************
         if parameters.get('skip_interrupted', False):
-            was_interrumpted = exists_current_checkpoint (parameters, path_experiment)
-            was_interrumpted = was_interrumpted or obtain_last_result (parameters, path_experiment) is not None
+            was_interrumpted = self.exists_current_checkpoint (parameters, path_experiment)
+            was_interrumpted = (was_interrumpted or
+                                self.obtain_last_result (parameters, path_experiment) is not None)
             if was_interrumpted:
-                logger.info ('found intermediate results, skipping...')
+                self.logger.info ('found intermediate results, skipping...')
                 return None, {}
 
         # ****************************************************************
@@ -389,7 +488,7 @@ class ExperimentManager (object):
         # ****************************************************************
         run_pipeline = True
         if parameters.get('use_last_result', False):
-            experiment_result = obtain_last_result (parameters, path_experiment)
+            experiment_result = self.obtain_last_result (parameters, path_experiment)
             if experiment_result is None and parameters.get('run_if_not_interrumpted', False):
                 run_pipeline = True
             elif experiment_result is None:
@@ -408,8 +507,6 @@ class ExperimentManager (object):
         else:
             finished = False
 
-        if other_parameters.get('just_visualize', False):
-            return None, {}
         # ****************************************************************
         #  Retrieve and store results
         # ****************************************************************
@@ -420,10 +517,10 @@ class ExperimentManager (object):
                     experiment_data.loc[experiment_number, '%d_%s' %(run_number, key)]=dict_results[key]
                 else:
                     experiment_data.loc[experiment_number, '%d' %run_number]=dict_results[key]
-                logger.info('{} - {}: {}'.format(run_number, key, dict_results[key]))
+                self.logger.info('{} - {}: {}'.format(run_number, key, dict_results[key]))
         else:
             experiment_data.loc[experiment_number, name_score]=experiment_result
-            logger.info('{} - {}: {}'.format(run_number, name_score, experiment_result))
+            self.logger.info('{} - {}: {}'.format(run_number, name_score, experiment_result))
             dict_results = {name_score:experiment_result}
 
         if isnull(experiment_data, experiment_number, 'time_'+str(run_number)) and finished:
@@ -437,10 +534,10 @@ class ExperimentManager (object):
         save_other_parameters (experiment_number, other_parameters, root_path)
 
         logger_summary2.info ('\nresults:\n{}'.format(dict_results))
-        logger.info ('finished experiment %d' %experiment_number)
+        self.logger.info ('finished experiment %d' %experiment_number)
 
         # return final score
-        result = dict_results.get(name_score)
+        result = dict_results.get(key_score)
         return result, dict_results
 
     def grid_search (self, parameters_multiple_values={}, parameters_single_value={}, other_parameters = {},
@@ -454,7 +551,7 @@ class ExperimentManager (object):
             run_numbers = range (nruns)
 
         if root_path is None:
-            root_path = self.get_path_experiments(folder  = other_parameters.get('root_folder'))
+            root_path = self.get_path_experiments(folder = other_parameters.get('root_folder'))
         path_results_base = root_path
 
         mymakedirs(path_results_base,exist_ok=True)
@@ -469,10 +566,9 @@ class ExperimentManager (object):
         parameters_multiple_values_all = parameters_multiple_values
         parameters_multiple_values_all = list(ParameterGrid(parameters_multiple_values_all))
 
-        logger = set_logger ("experiment_manager", path_results_base)
         if log_message != '':
             other_parameters['log_message'] = log_message
-        insert_experiment_script_path (other_parameters, logger)
+        insert_experiment_script_path (other_parameters, self.logger)
 
         if random_search:
             path_random_hp = '%s/random_hp.pk' %path_results_base
@@ -486,9 +582,9 @@ class ExperimentManager (object):
             parameters.update(parameters_single_value)
 
             for (i_run, run_number) in enumerate(run_numbers):
-                logger.info('processing hyper-parameter %d out of %d' %(i_hp, len(parameters_multiple_values_all)))
-                logger.info('doing run %d out of %d' %(i_run, len(run_numbers)))
-                logger.info('%s' %log_message)
+                self.logger.info('processing hyper-parameter %d out of %d' %(i_hp, len(parameters_multiple_values_all)))
+                self.logger.info('doing run %d out of %d' %(i_run, len(run_numbers)))
+                self.logger.info('%s' %log_message)
 
                 self.create_experiment_and_run (parameters=parameters, other_parameters = other_parameters,
                                            run_number=run_number, root_path=path_results_base)
@@ -505,31 +601,38 @@ class ExperimentManager (object):
         if nruns is not None:
             run_numbers = range (nruns)
 
-        logger = set_logger ("experiment_manager", root_path)
+        if root_path is None:
+            root_path = self.get_path_experiments(folder=other_parameters.get('root_folder'))
+        os.makedirs (root_path, exist_ok = True)
+
         results = np.zeros((len(run_numbers),))
         for (i_run, run_number) in enumerate(run_numbers):
-                logger.info('doing run %d out of %d' %(i_run, len(run_numbers)))
-                logger.info('%s' %log_message)
+                self.logger.info('doing run %d out of %d' %(i_run, len(run_numbers)))
+                self.logger.info('%s' %log_message)
 
-                results[i_run], dict_results  = self.create_experiment_and_run (parameters=parameters, other_parameters = other_parameters,
-                                           run_number=run_number, root_path=root_path)
+                results[i_run], dict_results  = self.create_experiment_and_run (
+                    parameters=parameters, other_parameters = other_parameters,
+                    run_number=run_number, root_path=root_path)
                 if dict_results.get('is_pruned', False):
                     break
 
         mu, std = results.mean(), results.std()
-        logger.info ('mean {}: {}, std: {}'.format(other_parameters.get('key_score',''), mu, std))
+        self.logger.info ('mean {}: {}, std: {}'.format(other_parameters.get('key_score',''), mu, std))
 
         dict_results[other_parameters.get('key_score','cost')] = mu
 
         return mu, std, dict_results
 
 
-    def hp_optimization (self, parameter_sampler = None, root_path=None, log_message=None, parameters={}, other_parameters={}, nruns=None):
+    def hp_optimization (self, parameter_sampler=None, root_path=None, log_message=None,
+                         parameters={}, other_parameters={}, nruns=None):
 
         import optuna
         from optuna.pruners import SuccessiveHalvingPruner, MedianPruner
         from optuna.samplers import RandomSampler, TPESampler
         from optuna.integration.skopt import SkoptSampler
+
+        optuna.logging.disable_propagation()
 
         if root_path is None:
             root_path = self.get_path_experiments(folder  = other_parameters.get('root_folder'))
@@ -537,10 +640,9 @@ class ExperimentManager (object):
         other_parameters = other_parameters.copy()
 
         os.makedirs(root_path, exist_ok=True)
-        logger = set_logger ("experiment_manager", root_path)
         if log_message != '':
             other_parameters['log_message'] = log_message
-        insert_experiment_script_path (other_parameters, logger)
+        insert_experiment_script_path (other_parameters, self.logger)
 
         # n_warmup_steps: Disable pruner until the trial reaches the given number of step.
         sampler_method = other_parameters.get('sampler_method', 'random')
@@ -550,7 +652,8 @@ class ExperimentManager (object):
         if sampler_method == 'random':
             sampler = RandomSampler(seed=seed)
         elif sampler_method == 'tpe':
-            sampler = TPESampler(n_startup_trials=other_parameters.get('n_startup_trials', 5), seed=seed)
+            sampler = TPESampler(n_startup_trials=other_parameters.get('n_startup_trials', 5),
+                                 seed=seed)
         elif sampler_method == 'skopt':
             # cf https://scikit-optimize.github.io/#skopt.Optimizer
             # GP: gaussian process
@@ -560,20 +663,28 @@ class ExperimentManager (object):
             raise ValueError('Unknown sampler: {}'.format(sampler_method))
 
         if pruner_method == 'halving':
-            pruner = SuccessiveHalvingPruner(min_resource=1, reduction_factor=4, min_early_stopping_rate=0)
+            pruner = SuccessiveHalvingPruner(min_resource=1, reduction_factor=4,
+                                             min_early_stopping_rate=0)
         elif pruner_method == 'median':
             pruner = MedianPruner(n_startup_trials=5, n_warmup_steps=n_evaluations // 3)
         elif pruner_method == 'none':
             # Do not prune
-            pruner = MedianPruner(n_startup_trials=other_parameters.get('n_trials', 10), n_warmup_steps=n_evaluations)
+            pruner = MedianPruner(n_startup_trials=other_parameters.get('n_trials', 10),
+                                  n_warmup_steps=n_evaluations)
         else:
-            raise ValueError('Unknown pruner: {}'.format(pruner_method))
+            raise ValueError(f'Unknown pruner: {pruner_method}')
 
-        logger.info ("Sampler: {} - Pruner: {}".format(sampler_method, pruner_method))
+        self.logger.info (f'Sampler: {sampler_method} - Pruner: {pruner_method}')
 
         #study = optuna.create_study(sampler=sampler, pruner=pruner)
         study_name = other_parameters.get('study_name', 'hp_study')  # Unique identifier of the study.
-        study = optuna.create_study(study_name=study_name, storage='sqlite:///%s/%s.db' %(root_path, study_name), sampler=sampler, pruner=pruner, load_if_exists=True)
+        direction = 'maximize' if self.op=='max' else 'minimize'
+        study = optuna.create_study(direction=direction,
+                                    study_name=study_name,
+                                    storage=f'sqlite:///{root_path}/{study_name}.db',
+                                    sampler=sampler, pruner=pruner, load_if_exists=True)
+
+        key_score = self.get_key_score (other_parameters)
 
         def objective(trial):
 
@@ -584,28 +695,36 @@ class ExperimentManager (object):
                 hp_parameters.update(parameter_sampler(trial))
 
             if nruns is None:
-                _, dict_results = self.create_experiment_and_run (parameters=hp_parameters, other_parameters = other_parameters, root_path=root_path, run_number=other_parameters.get('run_number'))
+                _, dict_results = self.create_experiment_and_run (
+                    parameters=hp_parameters, other_parameters=other_parameters,
+                    root_path=root_path, run_number=other_parameters.get('run_number')
+                )
             else:
-                mu_best, std_best, dict_results = self.run_multiple_repetitions (parameters=hp_parameters, other_parameters = other_parameters, root_path=root_path, nruns=nruns)
+                mu_best, std_best, dict_results = self.run_multiple_repetitions (
+                    parameters=hp_parameters, other_parameters=other_parameters,
+                    root_path=root_path, nruns=nruns
+                )
 
             if dict_results.get('is_pruned', False):
                 raise optuna.structs.TrialPruned()
 
-            return dict_results[other_parameters.get('key_score', 'cost')]
+            assert key_score in dict_results, f'metric {key_score} not found in results'
 
-        optuna.logging.disable_propagation()
-        study.optimize(objective, n_trials=other_parameters.get('n_trials', 10), n_jobs=other_parameters.get('n_jobs', 1))
+            return dict_results[key_score]
 
-        logger.info ('Number of finished trials: {}'.format(len(study.trials)))
-        logger.info ('Best trial:')
+        study.optimize(objective, n_trials=other_parameters.get('n_trials', 10),
+                       n_jobs=other_parameters.get('n_jobs', 1))
+
+        self.logger.info ('Number of finished trials: {}'.format(len(study.trials)))
+        self.logger.info ('Best trial:')
         trial = study.best_trial
-        logger.info ('Value: {}'.format(trial.value))
-        logger.info ('best params: {}'.format (study.best_params))
+        self.logger.info ('Value: {}'.format(trial.value))
+        self.logger.info ('best params: {}'.format (study.best_params))
         best_value = trial.value
 
         nruns_best = other_parameters.get('nruns_best', 0)
         if nruns_best > 0:
-            logger.info ('running best configuration %d times' %nruns_best)
+            self.logger.info ('running best configuration %d times' %nruns_best)
             parameters.update (study.best_params)
             mu_best, std_best, _ = self.run_multiple_repetitions (parameters=parameters, other_parameters = other_parameters,
                                             root_path=root_path, nruns=nruns_best)
@@ -613,8 +732,9 @@ class ExperimentManager (object):
 
         return best_value
 
-    def rerun_experiment (self, experiments=[], run_numbers=[0], nruns = None, root_path=None, root_folder = None,
-                          other_parameters={}, parameters = {}, parameter_sampler = None, parameters_multiple_values = None,
+    def rerun_experiment (self, experiments=[], run_numbers=[0], nruns=None, root_path=None,
+                          root_folder = None, other_parameters={}, parameters={},
+                          parameter_sampler=None, parameters_multiple_values=None,
                           log_message='', only_if_exists=False):
 
         other_parameters = other_parameters.copy()
@@ -625,59 +745,72 @@ class ExperimentManager (object):
         if root_path is None:
             root_path = self.get_path_experiments(folder  = other_parameters.get('root_folder'))
 
-        logger = set_logger ("experiment_manager", root_path)
-
         if nruns is not None:
             run_numbers = range (nruns)
 
         parameters_original = parameters
         other_parameters_original = other_parameters
         for experiment_id in experiments:
-            check_experiment_matches = (parameters_multiple_values is None) and (parameter_sampler is None)
-            parameters, other_parameters = load_parameters (experiment=experiment_id, root_path=root_path, root_folder = root_folder,
-                                                            other_parameters=other_parameters_original, parameters = parameters_original,
-                                                            check_experiment_matches=check_experiment_matches)
+            check_experiment_matches = (parameters_multiple_values is None
+                                        and parameter_sampler is None)
+            parameters, other_parameters = load_parameters (
+                experiment=experiment_id, root_path=root_path, root_folder=root_folder,
+                other_parameters=other_parameters_original, parameters=parameters_original,
+                check_experiment_matches=check_experiment_matches
+            )
 
             # we need to set the following flag to False, since otherwise when we request to store the intermediate results
             # and the experiment did not start, we do not run the experiment
-            if other_parameters.get('use_last_result', False) and not other_parameters_original.get('use_last_result', False):
-                logger.debug ('changing other_parameters["use_last_result"] to False')
+            if (other_parameters.get('use_last_result', False)
+                and not other_parameters_original.get('use_last_result', False)):
+                self.logger.debug ('changing other_parameters["use_last_result"] to False')
                 other_parameters['use_last_result'] = False
-            logger.info (f'running experiment {experiment_id} with parameters:\n{parameters}\nother_parameters:\n{other_parameters}')
+            self.logger.info (f'running experiment {experiment_id} with parameters:\n{parameters}\n'
+                         f'other_parameters:\n{other_parameters}')
 
             if parameter_sampler is not None:
-                logger.info ('running hp_optimization')
-                insert_experiment_script_path (other_parameters, logger)
-                self.hp_optimization (parameter_sampler = parameter_sampler, root_path=root_path, log_message=log_message,
-                                        parameters=parameters, other_parameters=other_parameters)
+                self.logger.info ('running hp_optimization')
+                insert_experiment_script_path (other_parameters, self.logger)
+                self.hp_optimization (parameter_sampler=parameter_sampler, root_path=root_path,
+                                      log_message=log_message, parameters=parameters,
+                                      other_parameters=other_parameters)
             elif parameters_multiple_values is not None:
-                self.grid_search (parameters_multiple_values=parameters_multiple_values, parameters_single_value=parameters,
-                                    other_parameters = other_parameters, root_path=root_path, run_numbers=run_numbers, log_message=log_message)
+                self.grid_search (
+                    parameters_multiple_values=parameters_multiple_values,
+                    parameters_single_value=parameters, other_parameters=other_parameters,
+                    root_path=root_path, run_numbers=run_numbers, log_message=log_message
+                )
             else:
                 if only_if_exists:
                     run_numbers = [run_number for run_number in run_numbers if os.path.exists('%s/%d' %(path_root_experiment, run_number))]
 
                 script_parameters = {}
-                insert_experiment_script_path (script_parameters, logger)
+                insert_experiment_script_path (script_parameters, self.logger)
                 other_parameters['rerun_script'] = script_parameters
-                self.run_multiple_repetitions (parameters=parameters, other_parameters = other_parameters, root_path=root_path,
-                                                log_message=log_message, run_numbers=run_numbers)
+                self.run_multiple_repetitions (
+                    parameters=parameters, other_parameters=other_parameters, root_path=root_path,
+                    log_message=log_message, run_numbers=run_numbers
+                )
 
-    def rerun_experiment_pipeline (self, experiments, run_numbers=None, root_path=None, root_folder=None, new_parameters={}, save_results=False):
+    def rerun_experiment_pipeline (self, experiments, run_numbers=None, root_path=None,
+                                   root_folder=None, new_parameters={}, save_results=False):
 
         if root_path is None:
             root_path = self.get_path_experiments(folder=root_folder)
         for experiment_id in experiments:
             path_root_experiment = self.get_path_experiment (experiment_id, root_path=root_path)
 
-            parameters, other_parameters=pickle.load(open('%s/parameters.pk' %path_root_experiment,'rb'))
+            parameters, other_parameters=pickle.load (
+                open(f'{path_root_experiment}/parameters.pk', 'rb')
+            )
             parameters = parameters.copy()
             parameters.update(other_parameters)
             parameters.update(new_parameters)
             for run_number in run_numbers:
                 path_experiment = '%s/%d/' %(path_root_experiment, run_number)
                 path_data = self.get_path_data (run_number, root_path, parameters)
-                score, _ = self.run_experiment_pipeline (run_number, path_experiment, parameters = parameters)
+                score, _ = self.run_experiment_pipeline (run_number, path_experiment,
+                                                         parameters=parameters)
 
                 if save_results:
                     experiment_number = experiment_id
@@ -698,7 +831,8 @@ class ExperimentManager (object):
                     experiment_data.to_csv(path_csv)
                     experiment_data.to_pickle(path_pickle)
 
-    def rerun_experiment_par (self, experiments, run_numbers=None, root_path=None, root_folder=None, parameters={}):
+    def rerun_experiment_par (self, experiments, run_numbers=None, root_path=None,
+                              root_folder=None, parameters={}):
 
         if root_path is None:
             root_path = self.get_path_experiments(folder=root_folder)
@@ -720,7 +854,7 @@ class ExperimentManager (object):
             root_path=root_path, root_folder=root_folder,
             new_parameters=new_parameters)
 
-    def find_closest_epoch (self, experiment_data, parameters, name_epoch='max_epoch'):
+    def find_closest_epoch (self, experiment_data, parameters, name_epoch=dflt.name_epoch):
         '''Finds experiment with same parameters except for number of epochs, and takes the epochs that are closer but lower than the one in parameters.'''
 
         experiment_numbers, _, _ = experiment_utils.find_rows_with_parameters_dict (experiment_data, parameters, ignore_keys=[name_epoch,'prev_epoch'])
@@ -730,17 +864,171 @@ class ExperimentManager (object):
         if current_epoch is None:
             current_epoch = -1
         if len(experiment_numbers) > 1:
-            epochs = experiment_data.loc[experiment_numbers,name_epoch]
-            epochs[epochs.isnull()]=current_epoch
+            epochs = experiment_data.loc[experiment_numbers,name_epoch].copy()
+            epochs[epochs.isnull()]=defaults.get(name_epoch)
             epochs = epochs.loc[epochs<=current_epoch]
             if epochs.shape[0] == 0:
                 return None
             else:
-                return epochs.idxmax()
+                return epochs.astype(int).idxmax()
         elif len(experiment_numbers) == 1:
             return experiment_numbers[0]
         else:
             return None
+
+    def get_last_epoch (self, parameters, path_results,
+                             name_epoch=dflt.name_epoch, name_last_epoch=dflt.name_last_epoch):
+
+        name_model_history = parameters.get('name_model_history', self.name_model_history)
+        path_model_history = f'{path_results}/{name_model_history}'
+
+        prev_epoch = -1
+        if os.path.exists(path_model_history):
+            summary = pickle.load(open(path_model_history, 'rb'))
+            prev_epoch = summary.get(name_last_epoch)
+            if prev_epoch is None:
+                key_score = self.get_key_score (parameters)
+                if key_score in summary and (isinstance(summary[key_score], list)
+                                             or isinstance(summary[key_score], np.array)):
+                    prev_epoch = (~np.isnan(summary[key_score])).sum()
+
+        return prev_epoch
+
+    def finished_all_epochs (self, parameters, path_results,
+                             name_epoch=dflt.name_epoch, name_last_epoch=dflt.name_last_epoch):
+        defaults = self.get_default_parameters (parameters)
+        current_epoch = parameters.get(name_epoch, defaults.get(name_epoch))
+        prev_epoch = self.get_last_epoch (parameters, path_results, name_epoch=name_epoch,
+                                          name_last_epoch=name_last_epoch)
+
+        if prev_epoch >= current_epoch:
+            finished = True
+        else:
+            finished = False
+
+        return finished
+
+    def make_resume_from_checkpoint (self, parameters, prev_path_results, use_best=False):
+
+        if parameters.get('previous_model_file_name') is not None:
+            previous_model_file_name = parameters['previous_model_file_name']
+        else:
+            model_extension = parameters.get('model_extension', 'h5')
+            model_name = parameters.get('model_name', 'checkpoint_')
+            epoch_offset = parameters.get('epoch_offset', 0)
+            name_best_model = parameters.get('name_best_model', 'best_model')
+
+        found = False
+        name_model_history = parameters.get('name_model_history', 'model_history.pk')
+        name_last_epoch = parameters.get('name_last_epoch', dflt.name_last_epoch)
+        path_model_history = f'{prev_path_results}/{name_model_history}'
+        if os.path.exists(path_model_history):
+            parameters['resume_summary'] = path_model_history
+            found = True
+            parameters['prev_path_results'] = prev_path_results
+            if parameters.get('previous_model_file_name') is not None:
+                parameters['resume'] = f'{prev_path_results}/{previous_model_file_name}'
+            elif use_best:
+                parameters['resume'] = f'{prev_path_results}/{name_best_model}.{model_extension}'
+            else:
+                summary = pickle.load(open(path_model_history, 'rb'))
+                prev_epoch = summary.get(name_last_epoch)
+                key_score = self.get_key_score (parameters)
+                if prev_epoch is None:
+                    if key_score in summary and (isinstance(summary[key_score], list)
+                                                 or isinstance(summary[key_score], np.array)):
+                        prev_epoch = (~np.isnan(summary[key_score])).sum()
+                    else:
+                        prev_epoch = 0
+
+                if prev_epoch >= 0:
+                    parameters['resume'] = f'{prev_path_results}/{model_name}{prev_epoch+epoch_offset}.{model_extension}'
+            if not os.path.exists(parameters['resume']):
+                path_resume2 = f'{prev_path_results}/{self.model_file_name}'
+                if os.path.exists (path_resume2):
+                    parameters['resume'] = path_resume2
+                else:
+                    parameters['resume'] = ''
+                    parameters['prev_path_results'] = ''
+                    found = False
+
+        return found
+
+    def exists_current_checkpoint (self, parameters, path_results):
+        model_file_name = self.get_parameter (parameters, 'model_file_name')
+        return os.path.exists (f'{path_results}/{model_file_name}')
+
+    def get_parameter (self, parameters, key):
+        parameter = parameters.get(key)
+        return parameter if parameter is not None else getattr(self, key)
+
+    def obtain_last_result (self, parameters, path_results):
+
+        if parameters.get('use_last_result_from_dict', False):
+            return self.obtain_last_result_from_dict (parameters, path_results)
+        name_result_file = self.get_parameter (parameters, 'name_model_history')
+        path_results_file = f'{path_results}/{name_result_file}'
+        dict_results = None
+        if os.path.exists (path_results_file):
+            history = pickle.load(open(path_results_file, 'rb'))
+            metrics = parameters.get('key_scores')
+            if metrics is None:
+                metrics = history.keys()
+            ops = parameters.get('ops')
+            if ops is None:
+                ops = ['max'] * len(metrics)
+            if type(ops) is str:
+                ops = [ops] * len(metrics)
+            if type(ops) is dict:
+                ops_dict = ops
+                ops = ['max'] * len(metrics)
+                i = 0
+                for k in metrics:
+                    if k in ops_dict.keys():
+                        ops[i] = ops_dict[k]
+                    i += 1
+            dict_results = {}
+            max_last_position = -1
+            for metric, op in zip(metrics, ops):
+                if metric in history.keys():
+                    history_array = history[metric]
+                    score = min(history_array) if op == 'min' else max(history_array)
+                    last_position = np.where(np.array(history_array).ravel()==0)[0]
+                    if len(last_position) > 0:
+                        last_position = last_position[0] - 1
+                    else:
+                        last_position = len(history_array)
+                    dict_results[metric] = score
+                else:
+                    last_position = -1
+                max_last_position = max(last_position, max_last_position)
+
+            dict_results['last'] = max_last_position
+            if max_last_position < parameters.get('min_iterations', dflt.min_iterations):
+                dict_results = None
+                print (f'not storing result from {path_results} with iterations {max_last_position}')
+            else:
+                print (f'storing result from {path_results} with iterations {max_last_position}')
+
+        return dict_results
+
+    #export
+    def obtain_last_result_from_dict (self, parameters, path_results):
+        name_result_file = self.get_parameter(parameters, 'result_file')
+        path_results_file = '%s/%s' %(path_results, name_result_file)
+        dict_results = None
+        if os.path.exists (path_results_file):
+            dict_results = pickle.load(open(path_results_file, 'rb'))
+            if 'last' not in dict_results.keys() and 'epoch' in dict_results.keys():
+                dict_results['last'] = dict_results['epoch']
+            max_last_position = dict_results['last']
+            if max_last_position < parameters.get('min_iterations', dflt.min_iterations):
+                dict_results = None
+                print ('not storing result from {} with iterations {}'.format(path_results, max_last_position))
+            else:
+                print ('storing result from {} with iterations {}'.format(path_results, max_last_position))
+
+        return dict_results
 
     def register_and_store_subclassed_manager (self):
         #self.logger.debug ('registering')
@@ -748,7 +1036,7 @@ class ExperimentManager (object):
         self.manager_factory.write_manager (self)
 
 # Cell
-def get_git_revision_hash(root_path=None):
+def get_git_revision_hash (root_path=None):
     try:
         git_hash = subprocess.check_output(['git', 'rev-parse', 'HEAD'])
         git_hash = str(git_hash)
@@ -764,6 +1052,7 @@ def get_git_revision_hash(root_path=None):
 
     return str(git_hash)
 
+# Cell
 def record_parameters (path_save, parameters, other_parameters=None):
     with open('%s/parameters.txt' %path_save, 'wt') as f:
         f.write('%s\n' %mypprint(parameters, dict_name='parameters'))
@@ -783,6 +1072,7 @@ def record_parameters (path_save, parameters, other_parameters=None):
         except:
             pass
 
+# Cell
 def mypprint(parameters, dict_name=None):
     if dict_name is not None:
         text = '%s=dict(' %dict_name
@@ -804,6 +1094,7 @@ def mypprint(parameters, dict_name=None):
 
     return text
 
+# Cell
 def mymakedirs (path, exist_ok=False):
     '''work around for python 2.7'''
     if exist_ok:
@@ -814,6 +1105,7 @@ def mymakedirs (path, exist_ok=False):
     else:
         os.makedirs(path)
 
+# Cell
 def load_or_create_experiment_values (path_csv, parameters, precision=1e-15):
 
     logger = logging.getLogger("experiment_manager")
@@ -831,7 +1123,9 @@ def load_or_create_experiment_values (path_csv, parameters, precision=1e-15):
         experiment_data, removed_defaults = remove_defaults_from_experiment_data (experiment_data)
 
         # Finds rows that match parameters. If the dataframe doesn't have any parameter with that name, a new column is created and changed_dataframe is set to True
-        experiment_numbers, changed_dataframe, _ = experiment_utils.find_rows_with_parameters_dict (experiment_data, parameters, precision = precision)
+        experiment_numbers, changed_dataframe, _ = experiment_utils.find_rows_with_parameters_dict (
+            experiment_data, parameters, precision = precision
+        )
 
         changed_dataframe = changed_dataframe or removed_defaults
 
@@ -853,6 +1147,7 @@ def load_or_create_experiment_values (path_csv, parameters, precision=1e-15):
 
     return experiment_number, experiment_data
 
+# Cell
 def store_parameters (root_path, experiment_number, parameters):
     """ Keeps track of dictionary to map experiment number and parameters values for the different experiments."""
     path_hp_dictionary = '%s/parameters.pk' %root_path
@@ -871,10 +1166,11 @@ def store_parameters (root_path, experiment_number, parameters):
     # pickle number of current experiment, for visualization
     pickle.dump(experiment_number, open('%s/current_experiment_number.pkl' %root_path,'wb'))
 
+# Cell
 def isnull (experiment_data, experiment_number, name_column):
     return (name_column not in experiment_data.columns) or (experiment_data.loc[experiment_number, name_column] is None) or np.isnan(experiment_data.loc[experiment_number, name_column])
 
-
+# Cell
 def get_experiment_number (root_path, parameters = {}):
 
     path_csv = '%s/experiments_data.csv' %root_path
@@ -883,6 +1179,7 @@ def get_experiment_number (root_path, parameters = {}):
 
     return experiment_number
 
+# Cell
 def get_experiment_numbers (path_results_base, parameters_single_value, parameters_multiple_values_all):
 
     experiment_numbers = []
@@ -899,36 +1196,7 @@ def get_experiment_numbers (path_results_base, parameters_single_value, paramete
 
     return experiment_numbers
 
-def set_logger (name, path_results, stdout=True, mode='a', just_message = False, filename='logs.txt'):
-
-    logger = logging.getLogger(name)
-    logger.setLevel(logging.DEBUG)
-
-    for hdlr in logger.handlers[:]:  # remove all old handlers
-        logger.removeHandler(hdlr)
-
-    #if not logger.hasHandlers():
-
-    # Create handlers
-    if stdout:
-        c_handler = logging.StreamHandler()
-        c_handler.setLevel(logging.DEBUG)
-        c_format = logging.Formatter('%(message)s')
-        c_handler.setFormatter(c_format)
-        logger.addHandler(c_handler)
-
-    f_handler = logging.FileHandler('%s/%s' %(path_results, filename), mode = mode)
-    f_handler.setLevel(logging.DEBUG)
-    if just_message:
-        f_format = logging.Formatter('%(asctime)s - %(message)s')
-    else:
-        f_format = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    f_handler.setFormatter(f_format)
-    logger.addHandler(f_handler)
-    logger.propagate = 0
-
-    return logger
-
+# Cell
 def insert_experiment_script_path (other_parameters, logger):
     if other_parameters.get('script_path') is None:
         stack_level = other_parameters.get('stack_level', -3)
@@ -939,8 +1207,7 @@ def insert_experiment_script_path (other_parameters, logger):
         if 'stack_level' in other_parameters:
             del other_parameters['stack_level']
 
-
-#
+# Cell
 def load_parameters (experiment=None, root_path=None, root_folder = None, other_parameters={}, parameters = {}, check_experiment_matches=True):
 
     from .config.hpconfig import get_path_experiments, get_path_experiment
@@ -974,6 +1241,7 @@ def load_parameters (experiment=None, root_path=None, root_folder = None, other_
 
     return parameters, other_parameters
 
+# Cell
 def save_other_parameters (experiment_number, other_parameters, root_path):
     parameters_to_save = {}
     for k in other_parameters.keys():
