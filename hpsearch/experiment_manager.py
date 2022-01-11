@@ -219,8 +219,16 @@ class ExperimentManager (object):
         p = Process(target=self.run_experiment_saving_results, args=(parameters, path_results))
         p.start()
         p.join()
+        if p.exitcode != 0:
+            self.logger.warning ('process exited with non-zero code: there might be an error '
+                                 'in run_pipeline function')
 
-        dict_results = pickle.load (open ('%s/dict_results.pk' %path_results, 'rb'))
+        path_dict_results = f'{path_results}/dict_results.pk'
+        try:
+            dict_results = pickle.load (open (path_dict_results, 'rb'))
+        except FileNotFoundError:
+            raise RuntimeError (f'{path_dict_results} not found: probably there is an error in run_pipeline'
+                                'function. Please run in debug mode, without multi-processing')
 
         return dict_results
 
@@ -531,7 +539,10 @@ class ExperimentManager (object):
         experiment_data.to_csv(path_csv)
         experiment_data.to_pickle(path_pickle)
 
-        save_other_parameters (experiment_number, other_parameters, root_path)
+        try:
+            save_other_parameters (experiment_number, other_parameters, root_path)
+        except:
+            print (f'error saving other parameters')
 
         logger_summary2.info ('\nresults:\n{}'.format(dict_results))
         self.logger.info ('finished experiment %d' %experiment_number)
