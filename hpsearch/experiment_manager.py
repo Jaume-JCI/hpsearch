@@ -219,8 +219,16 @@ class ExperimentManager (object):
         p = Process(target=self.run_experiment_saving_results, args=(parameters, path_results))
         p.start()
         p.join()
+        if p.exitcode != 0:
+            self.logger.warning ('process exited with non-zero code: there might be an error '
+                                 'in run_pipeline function')
 
-        dict_results = pickle.load (open ('%s/dict_results.pk' %path_results, 'rb'))
+        path_dict_results = f'{path_results}/dict_results.pk'
+        try:
+            dict_results = pickle.load (open (path_dict_results, 'rb'))
+        except FileNotFoundError:
+            raise RuntimeError (f'{path_dict_results} not found: probably there is an error in run_pipeline'
+                                'function. Please run in debug mode, without multi-processing')
 
         return dict_results
 
@@ -531,7 +539,10 @@ class ExperimentManager (object):
         experiment_data.to_csv(path_csv)
         experiment_data.to_pickle(path_pickle)
 
-        save_other_parameters (experiment_number, other_parameters, root_path)
+        try:
+            save_other_parameters (experiment_number, other_parameters, root_path)
+        except:
+            print (f'error saving other parameters')
 
         logger_summary2.info ('\nresults:\n{}'.format(dict_results))
         self.logger.info ('finished experiment %d' %experiment_number)
@@ -735,7 +746,7 @@ class ExperimentManager (object):
     def rerun_experiment (self, experiments=[], run_numbers=[0], nruns=None, root_path=None,
                           root_folder = None, other_parameters={}, parameters={},
                           parameter_sampler=None, parameters_multiple_values=None,
-                          log_message='', only_if_exists=False):
+                          log_message='', only_if_exists=False, check_experiment_matches=True):
 
         other_parameters = other_parameters.copy()
 
@@ -751,9 +762,10 @@ class ExperimentManager (object):
         parameters_original = parameters
         other_parameters_original = other_parameters
         for experiment_id in experiments:
-            check_experiment_matches = (parameters_multiple_values is None
+            check_experiment_matches = (check_experiment_matches and
+                                        parameters_multiple_values is None
                                         and parameter_sampler is None)
-            parameters, other_parameters = load_parameters (
+            parameters, other_parameters = load_parameters (em=self,
                 experiment=experiment_id, root_path=root_path, root_folder=root_folder,
                 other_parameters=other_parameters_original, parameters=parameters_original,
                 check_experiment_matches=check_experiment_matches
@@ -1208,28 +1220,30 @@ def insert_experiment_script_path (other_parameters, logger):
             del other_parameters['stack_level']
 
 # Cell
-def load_parameters (experiment=None, root_path=None, root_folder = None, other_parameters={}, parameters = {}, check_experiment_matches=True):
+def load_parameters (experiment=None, root_path=None, root_folder = None,
+                     other_parameters={}, parameters = {},
+                     check_experiment_matches=True, em=None):
 
-    from .config.hpconfig import get_path_experiments, get_path_experiment
+    if em is None:
+        from .config.hpconfig import get_experiment_manager
+        em = get_experiment_manager ()
     if root_folder is not None:
         other_parameters['root_folder'] = root_folder
 
     if root_path is None:
-        root_path = get_path_experiments(folder  = other_parameters.get('root_folder'))
+        root_path = em.get_path_experiments(folder  = other_parameters.get('root_folder'))
 
-    path_root_experiment = get_path_experiment (experiment, root_path=root_path)
-
-    logger = set_logger ("experiment_manager", root_path)
+    path_root_experiment = em.get_path_experiment (experiment, root_path=root_path)
 
     if os.path.exists('%s/parameters.pk' %path_root_experiment):
-        parameters2, other_parameters2=pickle.load(open('%s/parameters.pk' %path_root_experiment,'rb'))
+        parameters2, other_parameters2=pickle.load(open(f'{path_root_experiment}/parameters.pk','rb'))
 
         other_parameters2.update(other_parameters)
         other_parameters = other_parameters2
 
         # if we don't add or modify parameters, we require that the old experiment number matches the new one
         if (len(parameters) == 0) and check_experiment_matches:
-            logger.info ('requiring experiment number to be {}'.format(experiment))
+            em.logger.info (f'requiring experiment number to be {experiment}')
             other_parameters['experiment_number'] = experiment
         elif 'experiment_number' in other_parameters:
             del other_parameters['experiment_number']
@@ -1237,7 +1251,7 @@ def load_parameters (experiment=None, root_path=None, root_folder = None, other_
         parameters2.update(parameters)
         parameters = parameters2
     else:
-        raise FileNotFoundError ('file {} not found'.format ('%s/parameters.pk' %path_root_experiment))
+        raise FileNotFoundError (f'file {path_root_experiment}/parameters.pk not found')
 
     return parameters, other_parameters
 
