@@ -3,6 +3,7 @@
 __all__ = ['parse_args', 'parse_arguments_and_run', 'main']
 
 # Cell
+import sys
 import argparse
 from ..config.hpconfig import get_experiment_manager
 

@@ -4,6 +4,7 @@ __all__ = ['parse_args', 'parse_arguments_and_run', 'main']
 
 # Cell
 import argparse
+import sys
 from ..config.hpconfig import get_experiment_manager
 
 # Cell
@@ -15,6 +16,7 @@ def parse_args (args):
     parser.add_argument('-u', '--unfinished', action= "store_true")
     parser.add_argument('--runs', type=int, default=None,  help="number of runs")
     parser.add_argument('--root', type=str, default=None, help='name of root folder')
+    parser.add_argument('-v', '--verbose', type=int, default=None, help='verbosity level: 0, 1, 2')
     pars = parser.parse_args(args)
 
     return pars
@@ -31,6 +33,8 @@ def parse_arguments_and_run (args,
                             )
 
     em = get_experiment_manager ()
+    if pars.verbose is not None:
+        em.set_verbose (pars.verbose)
     if em_args is not None:
         for k in em_args:
             setattr (em, k, em_args[k])

@@ -25,7 +25,7 @@ import traceback
 import shutil
 from fastcore.utils import store_attr
 
-from block_types.utils.utils import set_logger
+from block_types.utils.utils import set_logger, set_verbosity
 
 # hpsearch core API
 from .config.manager_factory import ManagerFactory
@@ -84,6 +84,10 @@ class ExperimentManager (object):
                                        op=op)
         self.manager_factory = ManagerFactory(allow_base_class=allow_base_class)
         self.manager_factory.register_manager (self)
+
+    def set_verbose (self, verbose):
+        self.verbose = verbose
+        set_verbosity (logger=self.logger, verbose=verbose)
 
     def get_default_parameters (self, parameters):
         if not self.allow_base_class:

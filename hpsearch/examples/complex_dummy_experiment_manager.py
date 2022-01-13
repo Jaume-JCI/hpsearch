@@ -101,8 +101,13 @@ def remove_previous_experiments ():
     dummy_em.remove_previous_experiments (EM=ComplexDummyExperimentManager)
 
 # Cell
-def generate_data (name_folder, nruns=5, noise=0.1, verbose_model=False, verbose=0, **kwargs):
+def generate_data (name_folder, nruns=5, noise=0.1, verbose_model=False, verbose=0,
+                   parameters_multiple_values=None, parameters_single_value=None,
+                   other_parameters={}, **kwargs):
     em = ComplexDummyExperimentManager (path_experiments=f'test_{name_folder}', verbose=verbose, **kwargs)
     em.remove_previous_experiments ()
-    run_multiple_experiments (em=em, nruns=nruns, noise=noise, verbose=verbose, **kwargs)
+    run_multiple_experiments (em=em, nruns=nruns, noise=noise, verbose=verbose,
+                              values_to_explore=parameters_multiple_values,
+                              parameters_single_value=parameters_single_value,
+                              other_parameters=other_parameters)
     return em

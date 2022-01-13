@@ -197,7 +197,7 @@ class DummyExperimentManager (ExperimentManager):
 
 # Cell
 def run_multiple_experiments (nruns=1, noise=0.0, verbose=True, rate=0.03, values_to_explore=None,
-                              EM=DummyExperimentManager, em=None, **kwargs):
+                              other_parameters={}, EM=DummyExperimentManager, em=None, **kwargs):
     if em is None:
         em = EM (**kwargs)
     parameters_single_value = dict(rate=rate, noise=noise)   # parameters where we use a fixed value
@@ -205,7 +205,9 @@ def run_multiple_experiments (nruns=1, noise=0.0, verbose=True, rate=0.03, value
         parameters_multiple_values=dict(offset=[0.1, 0.3, 0.6], epochs=[5, 15, 30]) # parameters where we try multiple values
     else:
         parameters_multiple_values=values_to_explore
-    other_parameters = dict(verbose=verbose) # parameters that control other aspects that are not part of our experiment definition (a new experiment is not created if we assign different values for these parametsers)
+    other_parameters_original = other_parameters
+    other_parameters = dict (verbose=verbose) # parameters that control other aspects that are not part of our experiment definition (a new experiment is not created if we assign different values for these parametsers)
+    other_parameters.update (other_parameters_original)
     em.grid_search (log_message='fixed rate, multiple epochs values',
             parameters_single_value=parameters_single_value,
             parameters_multiple_values=parameters_multiple_values,
@@ -213,10 +215,14 @@ def run_multiple_experiments (nruns=1, noise=0.0, verbose=True, rate=0.03, value
             nruns=nruns)
 
 # Cell
-def generate_data (name_folder):
-    em = DummyExperimentManager (path_experiments=f'test_{name_folder}', verbose=0)
+def generate_data (name_folder, parameters_multiple_values=None,
+                   parameters_single_value=None, other_parameters={}, verbose=0, **kwargs):
+    em = DummyExperimentManager (path_experiments=f'test_{name_folder}', verbose=verbose, **kwargs)
     em.remove_previous_experiments ()
-    run_multiple_experiments (em=em, nruns=5, noise=0.1, verbose=False)
+    run_multiple_experiments (em=em, nruns=5, noise=0.1, verbose=False,
+                              values_to_explore=parameters_multiple_values,
+                              parameters_single_value=parameters_single_value,
+                              other_parameters=other_parameters)
     return em
 
 # Cell
