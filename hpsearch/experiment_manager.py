@@ -50,6 +50,9 @@ class ExperimentManager (object):
                   model_file_name=dflt.model_file_name,
                   name_epoch=dflt.name_epoch,
                   result_file=dflt.result_file,
+                  target_model_file=None,
+                  destination_model_file=None,
+                  root_folder=None,
                   logger=None,
                   verbose: int = dflt.verbose,
                   name_logger:str = dflt.name_logger
@@ -70,9 +73,15 @@ class ExperimentManager (object):
             self.model_file_name = model_file_name
             self.name_epoch = name_epoch
             self.result_file = result_file
+            self.target_model_file = target_model_file
+            self.destination_model_file = destination_model_file
             self.name_logger = name_logger
             self.logger = logger
             self.verbose = verbose
+            self.root_folder = root_folder
+
+        self.registered_name = (self.__class__.__name__ if self.root_folder is None
+                                else f'{self.__class__.__name__}-{self.root_folder}')
 
         if self.logger is None:
             self.logger = set_logger (self.name_logger, path_results=self.path_experiments, verbose=self.verbose)
@@ -84,6 +93,8 @@ class ExperimentManager (object):
                                        op=op)
         self.manager_factory = ManagerFactory(allow_base_class=allow_base_class)
         self.manager_factory.register_manager (self)
+        self.non_pickable_fields = ['manager_factory', 'parameters_non_pickable',
+                                    'logger']
 
     def set_verbose (self, verbose):
         self.verbose = verbose

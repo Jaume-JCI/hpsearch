@@ -19,7 +19,8 @@ from .query import query
 
 # Cell
 def copy_experiment_contents (experiment=None, root=None, destination_folder='.',
-                              run=0, desired=None):
+                              run=0, desired=None, target_model=None,
+                              destination_model=None):
 
     os.makedirs (destination_folder, exist_ok=True)
 
@@ -34,6 +35,13 @@ def copy_experiment_contents (experiment=None, root=None, destination_folder='.'
     if desired is not None and 'path_results' in desired:
         assert path_results == desired['path_results']
     copy_tree (f'{path_results}', destination_folder)
+    target_model = (target_model if target_model is not None
+                    else em.target_model_file)
+    destination_model = (destination_model if destination_model is not None
+                    else em.destination_model_file)
+    if target_model is not None and destination_model is not None:
+        shutil.copy (f'{path_results}/{target_model}',
+                     f'{destination_folder}/{destination_model}')
 
 # Cell
 def copy_code (source_folder, destination_folder, file=None,
@@ -105,10 +113,15 @@ def copy_experiment_contents_and_code (experiment=None, root=None,
                                        content='.',
                                        code='.',
                                        run=0,
-                                       file=None, desired=None):
+                                       file=None,
+                                       target_model=None,
+                                       destination_model=None,
+                                       desired=None):
     copy_experiment_contents (experiment=experiment, root=root,
                               destination_folder=content,
-                              run=run, desired=desired)
+                              run=run, target_model=target_model,
+                              destination_model=destination_model,
+                              desired=desired)
     copy_code (content, code, file=file,
                path_root_experiment=content)
 
@@ -136,6 +149,10 @@ def parse_args (args):
     parser.add_argument('--code', type=str,
                         default='.', help='path to folder containing experiment results')
     parser.add_argument('--file', type=str, default=None, help='destination code file')
+    parser.add_argument('--target_model', type=str, default=None,
+                        help='target model file')
+    parser.add_argument('--destination_model', type=str, default=None,
+                        help='destination model file')
 
     pars = parser.parse_args(args)
 
