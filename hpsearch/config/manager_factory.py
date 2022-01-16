@@ -24,14 +24,14 @@ def get_pickable_fields (obj):
 # Cell
 class ManagerFactory (object):
     def __init__ (self, allow_base_class=True, verbose=0,
-                  field_pickle_path='em_obj'):
+                  pickle_path='em_obj'):
         self.allow_base_class = allow_base_class
         self.logger = logging.getLogger("experiment_manager")
         if verbose > 1:
             self.logger.setLevel('DEBUG')
         self.obtain_paths()
         self.method = 1
-        self.field_pickle_path = field_pickle_path
+        self.pickle_path = pickle_path
 
     def register_manager (self, experiment_manager_to_register):
         global experiment_manager
@@ -80,6 +80,9 @@ class ManagerFactory (object):
             pickle.dump (self.class_two_module, open(self.class_two_module_file, 'wb'))
             pickle.dump (self.class_two_import, open(self.class_two_import_file, 'wb'))
             pickle.dump (self.class_two_base, open(self.class_two_base_file, 'wb'))
+
+            # store em fields in pickle and cloud-pickle files
+            self.pickle_object ()
         except Exception as e:
             self.logger.warning (f'write_manager failed with exception {e}')
 
@@ -105,14 +108,16 @@ class ManagerFactory (object):
         f.write (f'from {import_module_string} import {name_subclass} as Manager')
         f.close()
 
-        # 3 store pickable fields
+    def pickle_object (self, pickle_path=None):
+        pickle_path = pickle_path if pickle_path is not None else self.pickle_path
+
         self.field_pickle_path.mkdir (parents=True, exist_ok=True)
         em = self.get_experiment_manager ()
         dict_fields = self.em_pickable_fields (em=em)
-        joblib.dump (dict_fields, self.field_pickle_path / f'{em.registered_name}.pk')
+        joblib.dump (dict_fields, pickle_path / f'{em.registered_name}.pk')
 
         # 4 store pickable and non-pickable fields
-        cloudpickle.dump (em, self.field_pickle_path / f'{em.registered_name}.cpk')
+        cloudpickle.dump (em, pickle_path / f'{em.registered_name}.cpk')
 
     def load_class_two_module (self):
         if os.path.exists (self.class_two_module_file):
