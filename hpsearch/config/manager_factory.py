@@ -66,7 +66,6 @@ class ManagerFactory (object):
         return import_module_string
 
     def write_manager (self, em):
-        #pdb.set_trace()
         name_subclass = em.__class__.__name__
         try:
             source_path = inspect.getfile(em.__class__)
@@ -202,7 +201,6 @@ class ManagerFactory (object):
 
 
     def get_experiment_manager (self):
-        #pdb.set_trace()
         if experiment_manager is not None:
             em = experiment_manager
             self.logger.debug ('returning registered experiment manager')
