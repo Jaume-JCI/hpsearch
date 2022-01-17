@@ -80,8 +80,9 @@ class ExperimentManager (object):
             self.verbose = verbose
             self.root_folder = root_folder
 
-        self.registered_name = (self.__class__.__name__ if self.root_folder is None
-                                else f'{self.__class__.__name__}-{self.root_folder}')
+        class_name = self.__class__.__name__
+        self.registered_name = (f'{class_name}-default' if self.root_folder is None
+                                else f'{class_name}-{self.root_folder}')
 
         if self.logger is None:
             self.logger = set_logger (self.name_logger, path_results=self.path_experiments, verbose=self.verbose)

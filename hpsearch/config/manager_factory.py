@@ -31,7 +31,7 @@ class ManagerFactory (object):
             self.logger.setLevel('DEBUG')
         self.obtain_paths()
         self.method = 1
-        self.pickle_path = pickle_path
+        self.pickle_path = Path(pickle_path).resolve()
 
     def register_manager (self, experiment_manager_to_register):
         global experiment_manager
@@ -65,12 +65,13 @@ class ManagerFactory (object):
         self.import_module_string = import_module_string
         return import_module_string
 
-    def write_manager (self, experiment_manager):
-        name_subclass = experiment_manager.__class__.__name__
+    def write_manager (self, em):
+        #pdb.set_trace()
+        name_subclass = em.__class__.__name__
         try:
-            source_path = inspect.getfile(experiment_manager.__class__)
+            source_path = inspect.getfile(em.__class__)
             self.obtain_paths()
-            import_module_string = self.determine_import_string (source_path, self.current_path, experiment_manager)
+            import_module_string = self.determine_import_string (source_path, self.current_path, em)
             self.write_manager_subclass (name_subclass, source_path, self.current_path, import_module_string)
 
             self.load_class_two_module ()
@@ -82,9 +83,10 @@ class ManagerFactory (object):
             pickle.dump (self.class_two_base, open(self.class_two_base_file, 'wb'))
 
             # store em fields in pickle and cloud-pickle files
-            self.pickle_object ()
+            self.pickle_object (em=em)
         except Exception as e:
             self.logger.warning (f'write_manager failed with exception {e}')
+            raise (e)
 
     def em_pickable_fields (self, em=None):
         em = self.get_experiment_manager () if em is None else em
@@ -108,16 +110,20 @@ class ManagerFactory (object):
         f.write (f'from {import_module_string} import {name_subclass} as Manager')
         f.close()
 
-    def pickle_object (self, pickle_path=None):
+    def pickle_object (self, em=None, pickle_path=None):
         pickle_path = pickle_path if pickle_path is not None else self.pickle_path
 
-        self.field_pickle_path.mkdir (parents=True, exist_ok=True)
-        em = self.get_experiment_manager ()
+        self.pickle_path.mkdir (parents=True, exist_ok=True)
+        em = em if em is not None else self.get_experiment_manager ()
+        last_name = f'{em.__class__.__name__}-last'
         dict_fields = self.em_pickable_fields (em=em)
         joblib.dump (dict_fields, pickle_path / f'{em.registered_name}.pk')
+        joblib.dump (dict_fields, pickle_path / f'{last_name}.pk')
 
         # 4 store pickable and non-pickable fields
-        cloudpickle.dump (em, pickle_path / f'{em.registered_name}.cpk')
+        cloudpickle.dump (em, open(pickle_path / f'{em.registered_name}.cpk', 'wb'))
+        #cloudpickle.dump (em, open(pickle_path / f'{last_name}.cpk', 'wb'))
+        cloudpickle.dump (em, open(pickle_path / f'last.cpk', 'wb'))
 
     def load_class_two_module (self):
         if os.path.exists (self.class_two_module_file):
@@ -165,6 +171,16 @@ class ManagerFactory (object):
         print (f'subclasses: {self.class_two_module.keys()}')
         self.print_current_manager()
 
+    def load_pickle_and_set_em_fields (self, em, pickle_path=None):
+        pickle_path = pickle_path if pickle_path is not None else self.pickle_path
+        pickle_file = pickle_path / f'{em.registered_name}.pk'
+        pickle_file = (pickle_path / f'{em.__class__.__name__}-last.pk' if not pickle_file.exists()
+                       else pickle_file)
+        dict_fields = joblib.load (pickle_file)
+        self.logger.debug (f'loading pickled em fields from {pickle_path}')
+        for k in dict_fields:
+            setattr (em, k, dict_fields[k])
+
     def import_written_manager (self):
         global experiment_manager
         try:
@@ -181,11 +197,12 @@ class ManagerFactory (object):
             self.logger.debug ('importing base class ExperimentManager')
             from ..experiment_manager import ExperimentManager
             em = ExperimentManager()
+        self.load_pickle_and_set_em_fields (em)
         experiment_manager = em
 
 
     def get_experiment_manager (self):
-
+        #pdb.set_trace()
         if experiment_manager is not None:
             em = experiment_manager
             self.logger.debug ('returning registered experiment manager')
@@ -227,5 +244,9 @@ class ManagerFactory (object):
         if os.path.exists(self.class_two_base_file):
             self.logger.debug (f'deleting {self.class_two_base_file}')
             os.remove(self.class_two_base_file)
+
+        if self.pickle_path.exists ():
+            self.logger.debug (f'deleting {self.pickle_path}')
+            shutil.rmtree (self.pickle_path)
 
         self.set_base_manager ()
