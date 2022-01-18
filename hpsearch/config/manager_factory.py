@@ -13,6 +13,9 @@ import joblib
 import pickle
 import dill
 from pathlib import Path
+import glob
+
+import hpsearch.config.hp_defaults as dflt
 
 experiment_manager = None
 
@@ -24,7 +27,7 @@ def get_pickable_fields (obj):
 # Cell
 class ManagerFactory (object):
     def __init__ (self, allow_base_class=True, verbose=0,
-                  pickle_path='em_obj'):
+                  pickle_path=dflt.pickle_path, import_manager=False):
         self.allow_base_class = allow_base_class
         self.logger = logging.getLogger("experiment_manager")
         if verbose > 1:
@@ -32,6 +35,7 @@ class ManagerFactory (object):
         self.obtain_paths()
         self.method = 1
         self.pickle_path = Path(pickle_path).resolve()
+        self.import_manager = import_manager
 
     def register_manager (self, experiment_manager_to_register):
         global experiment_manager
@@ -94,7 +98,8 @@ class ManagerFactory (object):
                            if k not in em.non_pickable_fields}
         return pickable_fields
 
-    def write_manager_subclass (self, name_subclass, source_path, base_path=None, import_module_string=None):
+    def write_manager_subclass (self, name_subclass, source_path, base_path=None,
+                                import_module_string=None):
         if base_path is None:
             base_path = self.current_path
         os.makedirs(self.destination_path_folder, exist_ok=True)
@@ -109,20 +114,22 @@ class ManagerFactory (object):
         f.write (f'from {import_module_string} import {name_subclass} as Manager')
         f.close()
 
+    def write_pickle_of_subclass (self, name_manager, pickle_path=None, extension='.cpk'):
+        pickle_path = pickle_path if pickle_path is not None else self.pickle_path
+        shutil.copy (pickle_path / f'{name_manager}{extension}', pickle_path / f'last{extension}')
+
     def pickle_object (self, em=None, pickle_path=None):
         pickle_path = pickle_path if pickle_path is not None else self.pickle_path
 
         self.pickle_path.mkdir (parents=True, exist_ok=True)
         em = em if em is not None else self.get_experiment_manager ()
-        last_name = f'{em.__class__.__name__}-last'
         dict_fields = self.em_pickable_fields (em=em)
         joblib.dump (dict_fields, pickle_path / f'{em.registered_name}.pk')
-        joblib.dump (dict_fields, pickle_path / f'{last_name}.pk')
+        joblib.dump (dict_fields, pickle_path / 'last.pk')
 
         # 4 store pickable and non-pickable fields
         cloudpickle.dump (em, open(pickle_path / f'{em.registered_name}.cpk', 'wb'))
-        #cloudpickle.dump (em, open(pickle_path / f'{last_name}.cpk', 'wb'))
-        cloudpickle.dump (em, open(pickle_path / f'last.cpk', 'wb'))
+        cloudpickle.dump (em, open(pickle_path / 'last.cpk', 'wb'))
 
     def load_class_two_module (self):
         if os.path.exists (self.class_two_module_file):
@@ -142,8 +149,18 @@ class ManagerFactory (object):
         else:
             self.class_two_base = {}
 
-    def change_manager (self, name_subclass):
+    def change_manager (self, name_manager):
         self.previous_manager = self.get_experiment_manager ()
+        if self.import_manager:
+            self.write_manager_to_import (name_manager)
+            self.write_pickle_of_subclass (name_manager, extension='.pk')
+        else:
+            self.write_pickle_of_subclass (name_manager, extension='.cpk')
+        self.reset_manager()
+        self.import_or_load_manager()
+
+    def write_manager_to_import (self, name_manager):
+        name_subclass = name_manager.split ('-')[0]
         self.obtain_paths()
         self.load_class_two_module ()
         if name_subclass not in self.class_two_module:
@@ -154,8 +171,6 @@ class ManagerFactory (object):
             base_path = self.current_path
         self.write_manager_subclass (name_subclass, self.class_two_module[name_subclass], base_path,
                                     self.class_two_import[name_subclass])
-        self.reset_manager()
-        self.import_written_manager()
 
     def switch_back (self):
         self.register_manager (self.previous_manager)
@@ -164,24 +179,46 @@ class ManagerFactory (object):
     def print_current_manager (self):
         em = self.get_experiment_manager ()
         print (f'experiment manager registered: {em.__class__.__name__}')
+        print (f'registered name: {em.registered_name}')
 
     def list_subclasses (self):
+        if self.import_manager:
+            self.list_pickled_managers (extension='.pk')
+        else:
+            self.list_pickled_managers (extension='.cpk')
+        self.print_current_manager()
+
+    def list_subclass_modules (self):
         self.load_class_two_module ()
         print (f'subclasses: {self.class_two_module.keys()}')
-        self.print_current_manager()
+
+    def list_pickled_managers (self, extension='.cpk'):
+        managers = glob.glob (f'{self.pickle_path}/*{extension}')
+        managers = [Path(x).name.split(extension)[0] for x in managers]
+        managers = [x for x in managers if x != 'last']
+        print (f'managers: {managers}')
 
     def load_pickle_and_set_em_fields (self, em, pickle_path=None):
         pickle_path = pickle_path if pickle_path is not None else self.pickle_path
-        pickle_file = pickle_path / f'{em.registered_name}.pk'
-        pickle_file = (pickle_path / f'{em.__class__.__name__}-last.pk' if not pickle_file.exists()
-                       else pickle_file)
-        dict_fields = joblib.load (pickle_file)
+        dict_fields = joblib.load (pickle_path / 'last.pk')
         self.logger.debug (f'loading pickled em fields from {pickle_path}')
         for k in dict_fields:
             setattr (em, k, dict_fields[k])
 
-    def import_written_manager (self):
+    def load_manager (self, pickle_path=None):
+        pickle_path = pickle_path if pickle_path is not None else self.pickle_path
+        em = cloudpickle.load (open(pickle_path / f'last.cpk', 'wb'))
+        return em
+
+    def import_or_load_manager (self):
+        if self.import_manager:
+            em = self.import_written_manager ()
+        else:
+            em = self.load_manager ()
         global experiment_manager
+        experiment_manager = em
+
+    def import_written_manager (self):
         try:
             import hpsearch.app_config.subclassed_manager_import as subclass_module
             from importlib import reload
@@ -197,8 +234,7 @@ class ManagerFactory (object):
             from ..experiment_manager import ExperimentManager
             em = ExperimentManager()
         self.load_pickle_and_set_em_fields (em)
-        experiment_manager = em
-
+        return em
 
     def get_experiment_manager (self):
         if experiment_manager is not None:
@@ -206,7 +242,7 @@ class ManagerFactory (object):
             self.logger.debug ('returning registered experiment manager')
         else:
             self.logger.debug ('experiment manager not registered yet, importing experiment manager')
-            self.import_written_manager()
+            self.import_or_load_manager()
             em = self.get_experiment_manager ()
 
         self.logger.debug (f'returning experiment manager {em}')

@@ -53,6 +53,7 @@ class ExperimentManager (object):
                   target_model_file=None,
                   destination_model_file=None,
                   root_folder=None,
+                  pickle_path=dflt.pickle_path,
                   logger=None,
                   verbose: int = dflt.verbose,
                   name_logger:str = dflt.name_logger
@@ -79,6 +80,7 @@ class ExperimentManager (object):
             self.logger = logger
             self.verbose = verbose
             self.root_folder = root_folder
+            self.pickle_path = pickle_path
 
         class_name = self.__class__.__name__
         self.registered_name = (f'{class_name}-default' if self.root_folder is None
@@ -92,7 +94,8 @@ class ExperimentManager (object):
         self.default_operations = dict(root=root,
                                        metric=metric,
                                        op=op)
-        self.manager_factory = ManagerFactory(allow_base_class=allow_base_class)
+        self.manager_factory = ManagerFactory(allow_base_class=allow_base_class,
+                                              pickle_path=self.pickle_path)
         self.manager_factory.register_manager (self)
         self.non_pickable_fields = ['manager_factory', 'parameters_non_pickable',
                                     'logger']
