@@ -9,11 +9,15 @@ from ..config.hpconfig import get_experiment_manager
 
 # Cell
 def rerun (experiments=None, root=None, epochs=None, runs=None, unfinished=False,
-           verbose=None, debug=False, em_args=None):
+           verbose=None, debug=False, em_args=None, store=False, from_dict=False,
+           range_exp=None):
     other_parameters = dict(
                             use_process=not debug,
                             root_folder=root
                             )
+    if range_exp is not None:
+        assert len(range_exp) == 2
+        experiments += range(range_exp[0], range_exp[1])
 
     em = get_experiment_manager ()
     if verbose is not None:
@@ -31,7 +35,10 @@ def rerun (experiments=None, root=None, epochs=None, runs=None, unfinished=False
         parameters = {}
     if unfinished:
         other_parameters.update (check_finished=True, use_previous_best=False)
-
+    if store:
+        other_parameters.update (use_last_result=True)
+        if from_dict:
+            other_parameters.update (use_last_result_from_dict=True)
 
 
     em.rerun_experiment (experiments=experiments, nruns=runs, root_folder=root,
@@ -42,10 +49,13 @@ def rerun (experiments=None, root=None, epochs=None, runs=None, unfinished=False
 def parse_args (args):
     parser = argparse.ArgumentParser(description='run experiment')
     parser.add_argument('-d', '--debug', action= "store_true")
-    parser.add_argument('-e', '--experiments', type=int, nargs='+', default=None,  help="experiment numbers")
+    parser.add_argument('-e', '--experiments', type=int, nargs='+', default=[],  help="experiment numbers")
+    parser.add_argument('--range-exp', type=int, nargs='+', default=None, help='include this range of experiments')
     parser.add_argument('--epochs', type=int, default=None,  help="number of epochs")
     parser.add_argument('-u', '--unfinished', action= "store_true")
     parser.add_argument('--runs', type=int, default=None,  help="number of runs")
+    parser.add_argument('-s', '--store', action= "store_true",  help="store the result from experiments that were not saved in csv file.")
+    parser.add_argument('-f', '--from-dict', action= "store_true",  help="when storing the result from experiments that were not saved in csv file, we use the dictionary of results typically named dict_results.pk")
     parser.add_argument('--root', type=str, default=None, help='name of root folder')
     parser.add_argument('-v', '--verbose', type=int, default=None, help='verbosity level: 0, 1, 2')
     pars = parser.parse_args(args)

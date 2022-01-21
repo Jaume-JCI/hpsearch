@@ -758,7 +758,7 @@ class ExperimentManager (object):
             other_parameters['root_folder'] = root_folder
 
         if root_path is None:
-            root_path = self.get_path_experiments(folder  = other_parameters.get('root_folder'))
+            root_path = self.get_path_experiments(folder=other_parameters.get('root_folder'))
 
         if nruns is not None:
             run_numbers = range (nruns)
