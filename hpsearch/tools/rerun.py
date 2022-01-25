@@ -10,7 +10,7 @@ from ..config.hpconfig import get_experiment_manager
 # Cell
 def rerun (experiments=None, root=None, epochs=None, runs=None, unfinished=False,
            verbose=None, debug=False, em_args=None, store=False, from_dict=False,
-           range_exp=None):
+           range_exp=None, min_iterations=None):
     other_parameters = dict(
                             use_process=not debug,
                             root_folder=root
@@ -39,6 +39,8 @@ def rerun (experiments=None, root=None, epochs=None, runs=None, unfinished=False
         other_parameters.update (use_last_result=True)
         if from_dict:
             other_parameters.update (use_last_result_from_dict=True)
+        if min_iterations is not None:
+            other_parameters.update (min_iterations=min_iterations)
 
 
     em.rerun_experiment (experiments=experiments, nruns=runs, root_folder=root,
@@ -56,6 +58,7 @@ def parse_args (args):
     parser.add_argument('--runs', type=int, default=None,  help="number of runs")
     parser.add_argument('-s', '--store', action= "store_true",  help="store the result from experiments that were not saved in csv file.")
     parser.add_argument('-f', '--from-dict', action= "store_true",  help="when storing the result from experiments that were not saved in csv file, we use the dictionary of results typically named dict_results.pk")
+    parser.add_argument('--min-iterations', type=int, default=None,  help="number of iterations to be present in model history in order to consider the experiment good enough for storage.")
     parser.add_argument('--root', type=str, default=None, help='name of root folder')
     parser.add_argument('-v', '--verbose', type=int, default=None, help='verbosity level: 0, 1, 2')
     pars = parser.parse_args(args)

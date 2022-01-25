@@ -69,7 +69,7 @@ class ComplexDummyExperimentManager (DummyExperimentManager):
             raise KeyboardInterrupt ('stopped')
 
         # evaluate model with validation and test data
-        validation_accuracy, test_accuracy = model.score()
+        validation_accuracy, test_accuracy = model.retrieve_score()
 
         # store model
         self.model = model
