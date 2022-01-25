@@ -773,7 +773,7 @@ class ExperimentManager (object):
             other_parameters['root_folder'] = root_folder
 
         if root_path is None:
-            root_path = self.get_path_experiments(folder  = other_parameters.get('root_folder'))
+            root_path = self.get_path_experiments(folder=other_parameters.get('root_folder'))
 
         if nruns is not None:
             run_numbers = range (nruns)
@@ -1046,18 +1046,28 @@ class ExperimentManager (object):
     #export
     def obtain_last_result_from_dict (self, parameters, path_results):
         name_result_file = self.get_parameter(parameters, 'result_file')
-        path_results_file = '%s/%s' %(path_results, name_result_file)
+        path_results_file = f'{path_results}/{name_result_file}'
         dict_results = None
         if os.path.exists (path_results_file):
             dict_results = pickle.load(open(path_results_file, 'rb'))
             if 'last' not in dict_results.keys() and 'epoch' in dict_results.keys():
                 dict_results['last'] = dict_results['epoch']
+            if 'last' not in dict_results:
+                parameters['use_last_result_from_dict'] = False
+                dict_results_from_history = self.obtain_last_result (parameters, path_results)
+                parameters['use_last_result_from_dict'] = True
+                if dict_results_from_history is not None:
+                    dict_results['last'] = dict_results_from_history['last']
+            if 'last' not in dict_results:
+                raise RuntimeError ('dict_results has no entry named "last", and '
+                                    'the value of last could not be retrieved from '
+                                    'a model history file')
             max_last_position = dict_results['last']
             if max_last_position < parameters.get('min_iterations', dflt.min_iterations):
                 dict_results = None
-                print ('not storing result from {} with iterations {}'.format(path_results, max_last_position))
+                print (f'not storing result from {path_results} with iterations {max_last_position}')
             else:
-                print ('storing result from {} with iterations {}'.format(path_results, max_last_position))
+                print (f'storing result from {path_results} with iterations {max_last_position}')
 
         return dict_results
 

@@ -253,7 +253,12 @@ def get_experiment_parameters (experiment_data, only_not_null=False):
 
 # Cell
 def get_scores_columns (experiment_data=None, suffix_results='', class_ids = None):
-    ''' Determine the columnns that provide evaluation scores. We assume that they start with the class number, and that the other columns do not start with a digit'''
+    """
+    Determine the columnns that provide evaluation scores.
+
+    We assume that they start with the class number, and that the other columns
+    do not start with a digit.
+    """
     if class_ids is not None:
         scores_columns = ['%d%s' %(col,suffix_results) for col in class_ids]
     else:
@@ -265,7 +270,7 @@ def get_scores_columns (experiment_data=None, suffix_results='', class_ids = Non
             scores_columns = [col for col in scores_columns if (len(col.split(suffix_results))==2) and (len(col.split(suffix_results)[1])==0) and (col.split(suffix_results)[0].isdigit()) ]
         else:
             # We assume that default scores are in columns whose names only have the class number
-            scores_columns = [col for col in scores_columns if (len(col.split('_'))==1)]
+            scores_columns = [col for col in scores_columns if (len(col.split('_'))>=1)]
     return scores_columns
 
 # Cell
