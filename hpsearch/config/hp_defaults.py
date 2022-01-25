@@ -2,7 +2,7 @@
 
 __all__ = ['allow_base_class', 'name_epoch', 'name_last_epoch', 'name_model_history', 'model_file_name',
            'path_experiments', 'defaults', 'root', 'metric', 'op', 'result_file', 'min_iterations', 'use_previous_best',
-           'name_logger', 'pickle_path', 'verbose']
+           'name_logger', 'manager_path', 'verbose']
 
 # Cell
 allow_base_class=False
@@ -19,5 +19,5 @@ result_file='dict_results.pk'
 min_iterations=50
 use_previous_best=True
 name_logger='experiment_manager'
-pickle_path='em_obj'
+manager_path='em_obj'
 verbose=0

@@ -27,14 +27,14 @@ def get_pickable_fields (obj):
 # Cell
 class ManagerFactory (object):
     def __init__ (self, allow_base_class=True, verbose=0,
-                  pickle_path=dflt.pickle_path, import_manager=False):
+                  manager_path=dflt.manager_path, import_manager=False):
         self.allow_base_class = allow_base_class
         self.logger = logging.getLogger("experiment_manager")
         if verbose > 1:
             self.logger.setLevel('DEBUG')
         self.obtain_paths()
         self.method = 1
-        self.pickle_path = Path(pickle_path).resolve()
+        self.manager_path = Path(manager_path).resolve()
         self.import_manager = import_manager
 
     def register_manager (self, experiment_manager_to_register):
@@ -114,22 +114,22 @@ class ManagerFactory (object):
         f.write (f'from {import_module_string} import {name_subclass} as Manager')
         f.close()
 
-    def write_pickle_of_subclass (self, name_manager, pickle_path=None, extension='.cpk'):
-        pickle_path = pickle_path if pickle_path is not None else self.pickle_path
-        shutil.copy (pickle_path / f'{name_manager}{extension}', pickle_path / f'last{extension}')
+    def write_pickle_of_subclass (self, name_manager, manager_path=None, extension='.cpk'):
+        manager_path = manager_path if manager_path is not None else self.manager_path
+        shutil.copy (manager_path / f'{name_manager}{extension}', manager_path / f'last{extension}')
 
-    def pickle_object (self, em=None, pickle_path=None):
-        pickle_path = pickle_path if pickle_path is not None else self.pickle_path
+    def pickle_object (self, em=None, manager_path=None):
+        manager_path = manager_path if manager_path is not None else self.manager_path
 
-        self.pickle_path.mkdir (parents=True, exist_ok=True)
+        self.manager_path.mkdir (parents=True, exist_ok=True)
         em = em if em is not None else self.get_experiment_manager ()
         dict_fields = self.em_pickable_fields (em=em)
-        joblib.dump (dict_fields, pickle_path / f'{em.registered_name}.pk')
-        joblib.dump (dict_fields, pickle_path / 'last.pk')
+        joblib.dump (dict_fields, manager_path / f'{em.registered_name}.pk')
+        joblib.dump (dict_fields, manager_path / 'last.pk')
 
         # 4 store pickable and non-pickable fields
-        cloudpickle.dump (em, open(pickle_path / f'{em.registered_name}.cpk', 'wb'))
-        cloudpickle.dump (em, open(pickle_path / 'last.cpk', 'wb'))
+        cloudpickle.dump (em, open(manager_path / f'{em.registered_name}.cpk', 'wb'))
+        cloudpickle.dump (em, open(manager_path / 'last.cpk', 'wb'))
 
     def load_class_two_module (self):
         if os.path.exists (self.class_two_module_file):
@@ -193,21 +193,21 @@ class ManagerFactory (object):
         print (f'subclasses: {self.class_two_module.keys()}')
 
     def list_pickled_managers (self, extension='.cpk'):
-        managers = glob.glob (f'{self.pickle_path}/*{extension}')
+        managers = glob.glob (f'{self.manager_path}/*{extension}')
         managers = [Path(x).name.split(extension)[0] for x in managers]
         managers = [x for x in managers if x != 'last']
         print (f'managers: {managers}')
 
-    def load_pickle_and_set_em_fields (self, em, pickle_path=None):
-        pickle_path = pickle_path if pickle_path is not None else self.pickle_path
-        dict_fields = joblib.load (pickle_path / 'last.pk')
-        self.logger.debug (f'loading pickled em fields from {pickle_path}')
+    def load_pickle_and_set_em_fields (self, em, manager_path=None):
+        manager_path = manager_path if manager_path is not None else self.manager_path
+        dict_fields = joblib.load (manager_path / 'last.pk')
+        self.logger.debug (f'loading pickled em fields from {manager_path}')
         for k in dict_fields:
             setattr (em, k, dict_fields[k])
 
-    def load_manager (self, pickle_path=None):
-        pickle_path = pickle_path if pickle_path is not None else self.pickle_path
-        em = cloudpickle.load (open(pickle_path / f'last.cpk', 'wb'))
+    def load_manager (self, manager_path=None):
+        manager_path = manager_path if manager_path is not None else self.manager_path
+        em = cloudpickle.load (open(manager_path / f'last.cpk', 'wb'))
         return em
 
     def import_or_load_manager (self):
@@ -279,8 +279,8 @@ class ManagerFactory (object):
             self.logger.debug (f'deleting {self.class_two_base_file}')
             os.remove(self.class_two_base_file)
 
-        if self.pickle_path.exists ():
-            self.logger.debug (f'deleting {self.pickle_path}')
-            shutil.rmtree (self.pickle_path)
+        if self.manager_path.exists ():
+            self.logger.debug (f'deleting {self.manager_path}')
+            shutil.rmtree (self.manager_path)
 
         self.set_base_manager ()
