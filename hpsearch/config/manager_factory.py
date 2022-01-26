@@ -15,6 +15,8 @@ import dill
 from pathlib import Path
 import glob
 
+from block_types.utils.utils import set_logger
+
 import hpsearch.config.hp_defaults as dflt
 
 experiment_manager = None
@@ -26,16 +28,22 @@ def get_pickable_fields (obj):
 
 # Cell
 class ManagerFactory (object):
-    def __init__ (self, allow_base_class=True, verbose=0,
-                  manager_path=dflt.manager_path, import_manager=False):
+    def __init__ (self, allow_base_class=True, manager_path=dflt.manager_path,
+                  import_manager=False, verbose=dflt.verbose, logger=None,
+                  name_logger=dflt.name_logger):
+
         self.allow_base_class = allow_base_class
-        self.logger = logging.getLogger("experiment_manager")
-        if verbose > 1:
-            self.logger.setLevel('DEBUG')
         self.obtain_paths()
         self.method = 1
         self.manager_path = Path(manager_path).resolve()
         self.import_manager = import_manager
+
+        self.verbose = verbose
+        self.logger = logger
+        self.name_logger = name_logger
+        if self.logger is None:
+            self.logger = set_logger (self.name_logger, path_results=self.manager_path,
+                                      verbose=self.verbose)
 
     def register_manager (self, experiment_manager_to_register):
         global experiment_manager
@@ -56,7 +64,7 @@ class ManagerFactory (object):
 
     def determine_import_string (self, source_path, base_path, experiment_manager):
         if self.method==1:
-                import_module_string = experiment_manager.__class__.__module__
+            import_module_string = experiment_manager.__class__.__module__
         elif self.method==2:
             if source_path.startswith(base_path + '/'):
                 split_list = source_path.split(base_path + '/')
@@ -207,7 +215,8 @@ class ManagerFactory (object):
 
     def load_manager (self, manager_path=None):
         manager_path = manager_path if manager_path is not None else self.manager_path
-        em = cloudpickle.load (open(manager_path / f'last.cpk', 'wb'))
+        self.logger.debug (f'loading manager from {manager_path}')
+        em = cloudpickle.load (open(manager_path / f'last.cpk', 'rb'))
         return em
 
     def import_or_load_manager (self):
