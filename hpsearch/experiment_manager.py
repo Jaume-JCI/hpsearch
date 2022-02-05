@@ -97,7 +97,8 @@ class ExperimentManager (object):
         if self.root is not None and self.root_folder is not None and self.root != self.root_folder:
             raise ValueError ('self.root != self.root_folder')
 
-        self.registered_name = (f'{class_name}-default' if self.root_folder is None
+        self.registered_name = (f'{class_name}-default' if (self.root_folder is None
+                                                            or self.root_folder=='')
                                 else f'{class_name}-{self.root_folder}')
 
         self.parameters_non_pickable = {}

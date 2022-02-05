@@ -53,7 +53,11 @@ class ManagerFactory (object):
             self.logger.debug ('returning registered experiment manager')
         else:
             self.logger.debug ('experiment manager not registered yet, importing experiment manager')
-            self.import_or_load_manager()
+            try:
+                self.import_or_load_manager()
+            except FileNotFoundError:
+                self.logger.debug ('No experiment manager to import was found, setting base manager.')
+                self.set_base_manager ()
             em = self.get_experiment_manager ()
 
         self.logger.debug (f'returning experiment manager {em}')
@@ -68,7 +72,7 @@ class ManagerFactory (object):
         experiment_manager = em
 
     def import_written_manager (self):
-        info_path =self. manager_path / 'info'
+        info_path =self.manager_path / 'info'
         self.info = joblib.load (info_path / 'last.pk')
 
         spec = importlib.util.spec_from_file_location(self.info['import_module_string'],
