@@ -83,10 +83,13 @@ class {name_base_class} ():
     except FileNotFoundError:
         parameters, other_parameters = joblib.load (f'{path_root_experiment}/parameters.pk')
     parameters = mypprint(parameters, dict_name='    parameters')
+
+    path_results_str = '{path_results}'
     run_experiment = (
 f'''
 def main (**kwargs):
-    all_parameters = joblib.load (f{path_results}/parameters.pk)
+    path_results = {path_results}
+    all_parameters = joblib.load (f'{path_results_str}/parameters.pk')
 {parameters}
     all_parameters.update (parameters)
     all_parameters.update (**kwargs)
