@@ -134,7 +134,10 @@ nb_path: "nbs/utils/experiment_utils.ipynb"
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">generate_data_exp_utils</span> <span class="p">(</span><span class="n">name_folder</span><span class="p">):</span>
-    <span class="n">em</span> <span class="o">=</span> <span class="n">DummyExperimentManager</span> <span class="p">(</span><span class="n">path_experiments</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;test_</span><span class="si">{</span><span class="n">name_folder</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">path_experiments</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;test_</span><span class="si">{</span><span class="n">name_folder</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="n">manager_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">path_experiments</span><span class="si">}</span><span class="s1">/managers&#39;</span>
+    <span class="n">em</span> <span class="o">=</span> <span class="n">DummyExperimentManager</span> <span class="p">(</span><span class="n">path_experiments</span><span class="o">=</span><span class="n">path_experiments</span><span class="p">,</span> <span class="n">manager_path</span><span class="o">=</span><span class="n">manager_path</span><span class="p">,</span>
+                                 <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">em</span><span class="o">.</span><span class="n">remove_previous_experiments</span> <span class="p">()</span>
     <span class="n">run_multiple_experiments</span><span class="p">(</span><span class="n">em</span><span class="o">=</span><span class="n">em</span><span class="p">,</span> <span class="n">nruns</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                              <span class="n">values_to_explore</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">offset</span><span class="o">=</span><span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">],</span> <span class="n">epochs</span><span class="o">=</span><span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">]))</span>
@@ -437,7 +440,7 @@ do not start with a digit.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_get_scores_columns" class="doc_header"><code>test_get_scores_columns</code><a href="hpsearch/tests/utils/test_experiment_utils.py#L31" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_get_scores_columns</code>()</p>
+<h4 id="test_get_scores_columns" class="doc_header"><code>test_get_scores_columns</code><a href="hpsearch/tests/utils/test_experiment_utils.py#L34" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_get_scores_columns</code>()</p>
 </blockquote>
 
 </div>
@@ -615,7 +618,7 @@ experiment number.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_get_scores_names" class="doc_header"><code>test_get_scores_names</code><a href="hpsearch/tests/utils/test_experiment_utils.py#L55" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_get_scores_names</code>()</p>
+<h4 id="test_get_scores_names" class="doc_header"><code>test_get_scores_names</code><a href="hpsearch/tests/utils/test_experiment_utils.py#L58" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_get_scores_names</code>()</p>
 </blockquote>
 
 </div>
@@ -735,7 +738,7 @@ experiment number.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_get_monitored_training_metrics" class="doc_header"><code>test_get_monitored_training_metrics</code><a href="hpsearch/tests/utils/test_experiment_utils.py#L77" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_get_monitored_training_metrics</code>()</p>
+<h4 id="test_get_monitored_training_metrics" class="doc_header"><code>test_get_monitored_training_metrics</code><a href="hpsearch/tests/utils/test_experiment_utils.py#L80" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_get_monitored_training_metrics</code>()</p>
 </blockquote>
 
 </div>
@@ -997,7 +1000,7 @@ experiment number.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_replace_with_default_values" class="doc_header"><code>test_replace_with_default_values</code><a href="hpsearch/tests/utils/test_experiment_utils.py#L87" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_replace_with_default_values</code>()</p>
+<h4 id="test_replace_with_default_values" class="doc_header"><code>test_replace_with_default_values</code><a href="hpsearch/tests/utils/test_experiment_utils.py#L90" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_replace_with_default_values</code>()</p>
 </blockquote>
 
 </div>

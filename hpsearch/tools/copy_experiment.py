@@ -16,15 +16,16 @@ from distutils.dir_util import copy_tree
 from ..experiment_manager import mypprint
 from ..config.hpconfig import get_experiment_manager
 from .query import query
+import hpsearch.config.hp_defaults as dflt
 
 # Cell
 def copy_experiment_contents (experiment=None, root=None, destination_folder='.',
                               run=0, desired=None, target_model=None,
-                              destination_model=None):
+                              destination_model=None, manager_path=dflt.manager_path):
 
     os.makedirs (destination_folder, exist_ok=True)
 
-    em = get_experiment_manager ()
+    em = get_experiment_manager (manager_path=manager_path)
 
     # 3 write code about calling run_experiment
     root_path = em.get_path_experiments(folder=root)
@@ -45,7 +46,7 @@ def copy_experiment_contents (experiment=None, root=None, destination_folder='.'
 
 # Cell
 def copy_code (source_folder, destination_folder, file=None,
-               path_root_experiment=None):
+               path_root_experiment=None, manager_path=dflt.manager_path):
 
     os.makedirs (destination_folder, exist_ok=True)
     destination_path = (f'{destination_folder}/best_experiment.py' if file is None
@@ -56,7 +57,7 @@ def copy_code (source_folder, destination_folder, file=None,
     fdest = open (destination_path, 'wt')
 
     # 1 write code before definition of subclassed manager
-    em = get_experiment_manager ()
+    em = get_experiment_manager (manager_path=manager_path)
     source_path = inspect.getfile(em.__class__)
     fsrc = open (source_path, 'rt')
     original = fsrc.read ()
@@ -119,25 +120,28 @@ def copy_experiment_contents_and_code (experiment=None, root=None,
                                        file=None,
                                        target_model=None,
                                        destination_model=None,
-                                       desired=None):
+                                       desired=None,
+                                       manager_path=dflt.manager_path):
     copy_experiment_contents (experiment=experiment, root=root,
                               destination_folder=content,
                               run=run, target_model=target_model,
                               destination_model=destination_model,
-                              desired=desired)
+                              desired=desired, manager_path=manager_path)
     copy_code (content, code, file=file,
-               path_root_experiment=content)
+               path_root_experiment=content,
+               manager_path=manager_path)
 
 # Cell
 def copy_code_with_experiment_paths (experiment=None, root=None,
                                      destination_folder='.', file=None,
-                                     run=0, desired=None):
-    em = get_experiment_manager ()
+                                     run=0, desired=None, manager_path=dflt.manager_path):
+    em = get_experiment_manager (manager_path=manager_path)
     root_path = em.get_path_experiments(folder=root)
     path_root_experiment = em.get_path_experiment (experiment, root_path=root_path)
     path_results = em.get_path_results (experiment, run, root_folder=root)
     copy_code (path_results, destination_folder, file=file,
-               path_root_experiment=path_root_experiment)
+               path_root_experiment=path_root_experiment,
+               manager_path=manager_path)
 
 
 # Cell
@@ -156,6 +160,7 @@ def parse_args (args):
                         help='target model file')
     parser.add_argument('--destination_model', type=str, default=None,
                         help='destination model file')
+    parser.add_argument('-p', '--path', default=dflt.manager_path, type=str)
 
     pars = parser.parse_args(args)
 
@@ -164,7 +169,10 @@ def parse_args (args):
 def parse_arguments_and_run (args, desired = None):
 
     pars = parse_args(args)
-    copy_experiment_contents_and_code (**vars(pars), desired=desired)
+    pars = vars(pars)
+    pars['manager_path'] = pars['path']
+    del pars['path']
+    copy_experiment_contents_and_code (**pars, desired=desired)
 
 def main():
     parse_arguments_and_run (sys.argv[1:])

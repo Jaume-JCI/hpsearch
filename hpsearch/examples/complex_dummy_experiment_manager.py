@@ -4,15 +4,16 @@ __all__ = ['ComplexDummyExperimentManager', 'init_em', 'run_multiple_experiments
            'generate_data']
 
 # Cell
-from .dummy_experiment_manager import DummyExperimentManager, FakeModel
-import hpsearch
 import os
 import shutil
 import os
 import pytest
+import numpy as np
 
+from .dummy_experiment_manager import DummyExperimentManager, FakeModel
 import hpsearch.examples.dummy_experiment_manager as dummy_em
 from ..visualization import plot_utils
+import hpsearch
 
 # Cell
 class ComplexDummyExperimentManager (DummyExperimentManager):
@@ -84,7 +85,9 @@ class ComplexDummyExperimentManager (DummyExperimentManager):
 
 # Cell
 def init_em (name_folder):
-    em = ComplexDummyExperimentManager (path_experiments=f'test_{name_folder}')
+    path_experiments = f'test_{name_folder}'
+    manager_path = f'{path_experiments}/managers'
+    em = ComplexDummyExperimentManager (path_experiments=path_experiments, manager_path=manager_path)
 
     em.remove_previous_experiments()
 
@@ -104,7 +107,11 @@ def remove_previous_experiments ():
 def generate_data (name_folder, nruns=5, noise=0.1, verbose_model=False, verbose=0,
                    parameters_multiple_values=None, parameters_single_value=None,
                    other_parameters={}, **kwargs):
-    em = ComplexDummyExperimentManager (path_experiments=f'test_{name_folder}', verbose=verbose, **kwargs)
+    np.random.seed (42)
+    path_experiments = f'test_{name_folder}'
+    manager_path = f'{path_experiments}/managers'
+    em = ComplexDummyExperimentManager (path_experiments=path_experiments, manager_path=manager_path,
+                                        verbose=verbose, **kwargs)
     em.remove_previous_experiments ()
     run_multiple_experiments (em=em, nruns=nruns, noise=noise, verbose=verbose,
                               values_to_explore=parameters_multiple_values,

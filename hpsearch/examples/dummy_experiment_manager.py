@@ -228,7 +228,11 @@ def run_multiple_experiments (nruns=1, noise=0.0, verbose=True, rate=0.03, value
 # Cell
 def generate_data (name_folder, parameters_multiple_values=None,
                    parameters_single_value=None, other_parameters={}, verbose=0, **kwargs):
-    em = DummyExperimentManager (path_experiments=f'test_{name_folder}', verbose=verbose, **kwargs)
+    np.random.seed (42)
+    path_experiments=f'test_{name_folder}'
+    manager_path = f'{path_experiments}/managers'
+    em = DummyExperimentManager (path_experiments=path_experiments, manager_path=manager_path,
+                                 verbose=verbose, **kwargs)
     em.remove_previous_experiments ()
     run_multiple_experiments (em=em, nruns=5, noise=0.1, verbose=False,
                               values_to_explore=parameters_multiple_values,

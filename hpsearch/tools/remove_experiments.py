@@ -12,14 +12,15 @@ sys.path.append('.')
 sys.path.append('src')
 import pandas as pd
 import pickle
+
 from ..utils.organize_experiments import remove_experiments
-from ..config.hpconfig import get_path_experiments
 from ..config.hpconfig import get_default_operations
+import hpsearch.config.hp_defaults as dflt
 
 # Cell
-def remove (experiments=[], root_folder=None):
+def remove (experiments=[], root_folder=None, manager_path=dflt.manager_path):
 
-    default_operations = get_default_operations ()
+    default_operations = get_default_operations (manager_path=manager_path)
     if root_folder is None:
         root_folder = default_operations.get('root', 'results')
 
@@ -33,6 +34,7 @@ def parse_args(args):
     parser.add_argument('-e', nargs='+', default=[-1, -2], type=int,
                         help="experiments")
     parser.add_argument('--root', type=str, default=None)
+    parser.add_argument('-p', '--path', default=dflt.manager_path, type=str)
 
     pars = parser.parse_args(args)
 
@@ -42,7 +44,7 @@ def parse_arguments_and_remove (args):
 
     pars = parse_args(args)
 
-    remove (pars.e, root_folder=pars.root)
+    remove (pars.e, root_folder=pars.root, manager_path=pars.path)
 
 def main():
 

@@ -15,6 +15,7 @@ import pandas as pd
 
 # hpsearch api
 import hpsearch.utils.experiment_utils as ut
+import hpsearch.config.hp_defaults as dflt
 
 # Cell
 def query (pv = {}, pf = {}, pall=[], pexact=False, root= None,
@@ -36,10 +37,11 @@ def query (pv = {}, pf = {}, pall=[], pexact=False, root= None,
 def do_query_and_show (pall=[], best=None, compact=0, exact=False, experiments=None, pf={}, last=None,
                        metric=None, op=None, other_parameters=False, input_range=None, results=0,
                        root=None, round=2, runs=None, show=False, stats=['mean'], pv={},
-                       sort=None, display_all_columns=False, col_width=None):
+                       sort=None, display_all_columns=False, col_width=None,
+                       manager_path=dflt.manager_path):
 
     from ..config.hpconfig import get_default_operations
-    default_operations = get_default_operations ()
+    default_operations = get_default_operations (manager_path=manager_path)
     if root is None:
         root = default_operations.get('root', 'results')
     if metric is None:
@@ -120,6 +122,7 @@ def parse_args(args):
     parser.add_argument('--runs', default=None, type=int, nargs='+', help='query restricted to run number provided')
     parser.add_argument('--sort', default=None, type=str)
     parser.add_argument('--width', default=None, type=int, help='max column width')
+    parser.add_argument('-p', '--path', default=dflt.manager_path, type=str)
     pars = parser.parse_args(args)
 
     pars.v = eval(pars.v)
@@ -137,10 +140,12 @@ def parse_arguments_and_query (args):
 
     pars = parse_args(args)
 
-    do_query_and_show (pall=pars.a, best = pars.best, compact = pars.compact, exact=pars.exact, experiments=pars.experiments,
-                       pf = pars.f, last=pars.last, metric = pars.metric, op = pars.op, other_parameters=pars.other,
-                       input_range=pars.range, results=pars.results, root= pars.root, round=pars.round, runs = pars.runs,
-                       show=pars.show, stats=pars.stats, pv = pars.v, sort=pars.sort, col_width=pars.width)
+    do_query_and_show (pall=pars.a, best = pars.best, compact = pars.compact, exact=pars.exact,
+                       experiments=pars.experiments, pf = pars.f, last=pars.last,
+                       metric = pars.metric, op = pars.op, other_parameters=pars.other,
+                       input_range=pars.range, results=pars.results, root= pars.root,
+                       round=pars.round, runs = pars.runs, show=pars.show, stats=pars.stats,
+                       pv = pars.v, sort=pars.sort, col_width=pars.width, manager_path=pars.path)
 
 def main():
     parse_arguments_and_query (sys.argv[1:])

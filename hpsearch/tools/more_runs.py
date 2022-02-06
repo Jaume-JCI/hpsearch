@@ -5,7 +5,9 @@ __all__ = ['parse_args', 'parse_arguments_and_run', 'main']
 # Cell
 import sys
 import argparse
+
 from ..config.hpconfig import get_experiment_manager
+import hpsearch.config.hp_defaults as dflt
 
 # Cell
 def parse_args (args):
@@ -14,6 +16,7 @@ def parse_args (args):
     parser.add_argument('-e', '--experiments', type=int, nargs='+', default=None,  help="experiment numbers")
     parser.add_argument('--runs', type=int, default=None,  help="number of runs")
     parser.add_argument('--root', type=str, default=None, help='name of root folder')
+    parser.add_argument('-p', '--path', default=dflt.manager_path, type=str)
     pars = parser.parse_args(args)
 
     return pars
@@ -27,7 +30,7 @@ def parse_arguments_and_run (args):
                             root_folder=pars.root
                             )
 
-    em = get_experiment_manager ()
+    em = get_experiment_manager (manager_path=pars.path)
 
     em.rerun_experiment (experiments= pars.experiments, nruns = pars.runs, root_folder=pars.root,
                          other_parameters=other_parameters)
