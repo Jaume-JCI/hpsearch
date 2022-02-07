@@ -25,8 +25,14 @@ entries:
       title: Test change manager
       url: tst.change_manager.html
     - output: web,pdf
+      title: Test copy_experiment
+      url: tst.copy_experiment.html
+    - output: web,pdf
       title: Test metric visualization
       url: tst.print_info.html
+    - output: web,pdf
+      title: Test more runs
+      url: tst.more_runs.html
     - output: web,pdf
       title: Test print parameters
       url: tst.print_parameters.html
@@ -39,6 +45,9 @@ entries:
     - output: web,pdf
       title: Test remove experiments
       url: tst.remove_experiments.html
+    - output: web,pdf
+      title: Test rerun
+      url: tst.rerun.html
     - output: web,pdf
       title: Test nbdev_utils
       url: tst.experiment_manager.html
@@ -79,8 +88,14 @@ entries:
       title: Change manager
       url: change_manager.html
     - output: web,pdf
+      title: Copy experiment indicated by argument
+      url: copy_experiment.html
+    - output: web,pdf
       title: Metric visualization
       url: metric_visualization.html
+    - output: web,pdf
+      title: More runs
+      url: more_runs.html
     - output: web,pdf
       title: Print info
       url: print_info.html
@@ -96,6 +111,9 @@ entries:
     - output: web,pdf
       title: Remove experiments
       url: remove_experiments.html
+    - output: web,pdf
+      title: Re-run previous experiments with new parameters
+      url: rerun.html
     - output: web,pdf
       title: Visualization
       url: visualization.html
