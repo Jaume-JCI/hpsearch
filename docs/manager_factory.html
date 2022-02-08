@@ -71,7 +71,7 @@ nb_path: "nbs/config/manager_factory.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_pickable_fields" class="doc_header"><code>get_pickable_fields</code><a href="hpsearch/config/manager_factory.py#L26" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_pickable_fields</code>(<strong><code>obj</code></strong>)</p>
+<h4 id="get_pickable_fields" class="doc_header"><code>get_pickable_fields</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/config/manager_factory.py#L26" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_pickable_fields</code>(<strong><code>obj</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -108,7 +108,7 @@ nb_path: "nbs/config/manager_factory.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_get_pickable_fields" class="doc_header"><code>test_get_pickable_fields</code><a href="hpsearch/tests/config/test_manager_factory.py#L18" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_get_pickable_fields</code>()</p>
+<h4 id="test_get_pickable_fields" class="doc_header"><code>test_get_pickable_fields</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/config/test_manager_factory.py#L18" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_get_pickable_fields</code>()</p>
 </blockquote>
 
 </div>
@@ -199,7 +199,7 @@ nb_path: "nbs/config/manager_factory.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="ManagerFactory" class="doc_header"><code>class</code> <code>ManagerFactory</code><a href="hpsearch/config/manager_factory.py#L31" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ManagerFactory</code>(<strong><code>allow_base_class</code></strong>=<em><code>True</code></em>, <strong><code>manager_path</code></strong>=<em><code>'em_obj'</code></em>, <strong><code>import_manager</code></strong>=<em><code>False</code></em>, <strong><code>verbose</code></strong>=<em><code>0</code></em>, <strong><code>logger</code></strong>=<em><code>None</code></em>, <strong><code>name_logger</code></strong>=<em><code>'experiment_manager'</code></em>)</p>
+<h2 id="ManagerFactory" class="doc_header"><code>class</code> <code>ManagerFactory</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/config/manager_factory.py#L31" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ManagerFactory</code>(<strong><code>allow_base_class</code></strong>=<em><code>True</code></em>, <strong><code>manager_path</code></strong>=<em><code>'em_obj'</code></em>, <strong><code>import_manager</code></strong>=<em><code>False</code></em>, <strong><code>verbose</code></strong>=<em><code>0</code></em>, <strong><code>logger</code></strong>=<em><code>None</code></em>, <strong><code>name_logger</code></strong>=<em><code>'experiment_manager'</code></em>)</p>
 </blockquote>
 
 </div>
@@ -227,7 +227,7 @@ nb_path: "nbs/config/manager_factory.ipynb"
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The method <code>get_experiment_manager</code> returns the base class ExperimentManager initially, unless a subclass definition has been stored by calling the <code>write_manager</code> method</p>
+<p>The method <a href="/hpsearch/hpconfig.html#get_experiment_manager"><code>get_experiment_manager</code></a> returns the base class ExperimentManager initially, unless a subclass definition has been stored by calling the <code>write_manager</code> method</p>
 
 </div>
 </div>
@@ -243,7 +243,7 @@ nb_path: "nbs/config/manager_factory.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_get_experiment_manager" class="doc_header"><code>test_get_experiment_manager</code><a href="hpsearch/tests/config/test_manager_factory.py#L34" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_get_experiment_manager</code>()</p>
+<h4 id="test_get_experiment_manager" class="doc_header"><code>test_get_experiment_manager</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/config/test_manager_factory.py#L34" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_get_experiment_manager</code>()</p>
 </blockquote>
 
 </div>
@@ -316,14 +316,14 @@ nb_path: "nbs/config/manager_factory.ipynb"
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We can write the definition of a desired subclass of ExperimentManager with the method <code>write_manager</code>. After writing this definition, the object manager_factory will return an instance of the same subclass for any module that imports ManagerFactory. Let us check this with one example. We will use the subclass <code>ExampleExperimentManager</code> as an example, and check that the module file exists after calling the method <code>write_manager</code>.</p>
+<p>We can write the definition of a desired subclass of ExperimentManager with the method <code>write_manager</code>. After writing this definition, the object manager_factory will return an instance of the same subclass for any module that imports ManagerFactory. Let us check this with one example. We will use the subclass <a href="/hpsearch/example_experiment_manager.html#ExampleExperimentManager"><code>ExampleExperimentManager</code></a> as an example, and check that the module file exists after calling the method <code>write_manager</code>.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>After writting the subclass, the method <code>get_experiment_manager</code> returns an instance of this subclass. This allows command-line scripts to use functions of the subclass indicated by other modules.</p>
+<p>After writting the subclass, the method <a href="/hpsearch/hpconfig.html#get_experiment_manager"><code>get_experiment_manager</code></a> returns an instance of this subclass. This allows command-line scripts to use functions of the subclass indicated by other modules.</p>
 
 </div>
 </div>
@@ -339,7 +339,7 @@ nb_path: "nbs/config/manager_factory.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_write_manager" class="doc_header"><code>test_write_manager</code><a href="hpsearch/tests/config/test_manager_factory.py#L67" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_write_manager</code>()</p>
+<h4 id="test_write_manager" class="doc_header"><code>test_write_manager</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/config/test_manager_factory.py#L67" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_write_manager</code>()</p>
 </blockquote>
 
 </div>
@@ -452,7 +452,7 @@ nb_path: "nbs/config/manager_factory.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_pickle_object" class="doc_header"><code>test_pickle_object</code><a href="hpsearch/tests/config/test_manager_factory.py#L72" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_pickle_object</code>()</p>
+<h4 id="test_pickle_object" class="doc_header"><code>test_pickle_object</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/config/test_manager_factory.py#L72" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_pickle_object</code>()</p>
 </blockquote>
 
 </div>
@@ -563,7 +563,7 @@ nb_path: "nbs/config/manager_factory.ipynb"
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The method <code>get_experiment_manager</code> returns a registered experiment_manager</p>
+<p>The method <a href="/hpsearch/hpconfig.html#get_experiment_manager"><code>get_experiment_manager</code></a> returns a registered experiment_manager</p>
 
 </div>
 </div>
@@ -579,7 +579,7 @@ nb_path: "nbs/config/manager_factory.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_register_manager" class="doc_header"><code>test_register_manager</code><a href="hpsearch/tests/config/test_manager_factory.py#L109" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_register_manager</code>()</p>
+<h4 id="test_register_manager" class="doc_header"><code>test_register_manager</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/config/test_manager_factory.py#L109" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_register_manager</code>()</p>
 </blockquote>
 
 </div>

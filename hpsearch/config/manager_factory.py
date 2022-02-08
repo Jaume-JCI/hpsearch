@@ -112,14 +112,13 @@ class ManagerFactory (object):
         import_module_string = em.__class__.__module__
         try:
             source_path = inspect.getfile(em.__class__)
-            self.info = {'source_path': source_path,
-                         'import_module_string': import_module_string,
-                         'class_name': name_subclass}
-            # store em fields in pickle and cloud-pickle files
-            self.pickle_object (em=em)
-        except Exception as e:
-            self.logger.warning (f'write_manager failed with exception {e}')
-            raise (e)
+        except TypeError:
+            source_path = ''
+        self.info = {'source_path': source_path,
+                     'import_module_string': import_module_string,
+                     'class_name': name_subclass}
+        # store em fields in pickle and cloud-pickle files
+        self.pickle_object (em=em)
 
     def pickle_object (self, em=None, manager_path=None, store_info=True):
         manager_path = manager_path if manager_path is not None else self.manager_path

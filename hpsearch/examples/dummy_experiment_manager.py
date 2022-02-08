@@ -51,11 +51,11 @@ class FakeModel (object):
             if self.verbose:
                 print (f'epoch {epoch}: accuracy: {self.accuracy}')
 
-            # we keep track of the evolution of different metrics to later be able to visualize it
-            self.store_intermediate_metrics ()
-
             # increase current epoch by 1
             self.current_epoch += 1
+
+            # we keep track of the evolution of different metrics to later be able to visualize it
+            self.store_intermediate_metrics ()
 
     def store_intermediate_metrics (self):
         validation_accuracy, test_accuracy = self.score()

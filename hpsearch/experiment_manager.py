@@ -440,13 +440,15 @@ class ExperimentManager (object):
 
         # summary logger
         logger_summary = set_logger ("summary", root_path, mode='w', stdout=False, just_message=True,
-                                     filename='summary.txt', verbose_out=self.verbose)
+                                     filename='summary.txt', verbose=self.verbose,
+                                     verbose_out=self.verbose)
         logger_summary.info ('\n\n{}\nexperiment: {}, run: {}\nscript: {}, line number: {}\nparameters:\n{}{}'.format('*'*100, experiment_number, run_number, other_parameters['script_path'], other_parameters['lineno'], mypprint(parameters), '*'*100))
         if other_parameters.get('rerun_script') is not None:
             logger_summary.info ('\nre-run:\n{}'.format(other_parameters['rerun_script']))
         # same file in path_results
         logger_summary2 = set_logger ("summary", path_results, mode='w', stdout=False,
-                                      just_message=True, filename='summary.txt', verbose_out=self.verbose)
+                                      just_message=True, filename='summary.txt', verbose=self.verbose,
+                                      verbose_out=self.verbose)
         logger_summary2.info ('\n\n{}\nexperiment: {}, run: {}\nscript: {}, line number: {}\nparameters:\n{}{}'.format('*'*100, experiment_number, run_number, other_parameters['script_path'], other_parameters['lineno'], mypprint(parameters), '*'*100))
 
         # ****************************************************************

@@ -26,6 +26,3 @@ class ExampleExperimentManager (ExperimentManager):
                         my_second=10,
                         my_third=100)
         return defaults
-
-    def get_path_experiments (self, path_experiments = None, folder = None):
-        return f'{os.path.dirname(hpsearch.__file__)}/../results'
