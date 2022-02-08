@@ -77,7 +77,7 @@ nb_path: "nbs/experiment_manager.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="ExperimentManager" class="doc_header"><code>class</code> <code>ExperimentManager</code><a href="hpsearch/experiment_manager.py#L38" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ExperimentManager</code>(<strong><code>allow_base_class</code></strong>=<em><code>False</code></em>, <strong><code>path_experiments</code></strong>=<em><code>'results/hpsearch'</code></em>, <strong><code>defaults</code></strong>=<em><code>{}</code></em>, <strong><code>root</code></strong>=<em><code>''</code></em>, <strong><code>metric</code></strong>=<em><code>'accuracy'</code></em>, <strong><code>op</code></strong>=<em><code>'max'</code></em>, <strong><code>alternative_root_path</code></strong>=<em><code>None</code></em>, <strong><code>path_data</code></strong>=<em><code>None</code></em>, <strong><code>name_model_history</code></strong>=<em><code>'model_history.pk'</code></em>, <strong><code>model_file_name</code></strong>=<em><code>'model.h5'</code></em>, <strong><code>name_epoch</code></strong>=<em><code>'epochs'</code></em>, <strong><code>result_file</code></strong>=<em><code>'dict_results.pk'</code></em>, <strong><code>logger</code></strong>=<em><code>None</code></em>, <strong><code>verbose</code></strong>:<code>int</code>=<em><code>0</code></em>, <strong><code>name_logger</code></strong>:<code>str</code>=<em><code>'experiment_manager'</code></em>)</p>
+<h2 id="ExperimentManager" class="doc_header"><code>class</code> <code>ExperimentManager</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L38" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ExperimentManager</code>(<strong><code>allow_base_class</code></strong>=<em><code>False</code></em>, <strong><code>path_experiments</code></strong>=<em><code>'results/hpsearch'</code></em>, <strong><code>defaults</code></strong>=<em><code>{}</code></em>, <strong><code>root</code></strong>=<em><code>''</code></em>, <strong><code>metric</code></strong>=<em><code>'accuracy'</code></em>, <strong><code>op</code></strong>=<em><code>'max'</code></em>, <strong><code>alternative_root_path</code></strong>=<em><code>None</code></em>, <strong><code>path_data</code></strong>=<em><code>None</code></em>, <strong><code>name_model_history</code></strong>=<em><code>'model_history.pk'</code></em>, <strong><code>model_file_name</code></strong>=<em><code>'model.h5'</code></em>, <strong><code>name_epoch</code></strong>=<em><code>'epochs'</code></em>, <strong><code>result_file</code></strong>=<em><code>'dict_results.pk'</code></em>, <strong><code>target_model_file</code></strong>=<em><code>None</code></em>, <strong><code>destination_model_file</code></strong>=<em><code>None</code></em>, <strong><code>root_folder</code></strong>=<em><code>None</code></em>, <strong><code>manager_path</code></strong>=<em><code>'em_obj'</code></em>, <strong><code>logger</code></strong>=<em><code>None</code></em>, <strong><code>verbose</code></strong>:<code>int</code>=<em><code>0</code></em>, <strong><code>name_logger</code></strong>:<code>str</code>=<em><code>'experiment_manager'</code></em>)</p>
 </blockquote>
 
 </div>
@@ -128,7 +128,7 @@ nb_path: "nbs/experiment_manager.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_basic_usage" class="doc_header"><code>test_basic_usage</code><a href="hpsearch/tests/test_experiment_manager.py#L31" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_basic_usage</code>()</p>
+<h4 id="test_basic_usage" class="doc_header"><code>test_basic_usage</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L31" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_basic_usage</code>()</p>
 </blockquote>
 
 </div>
@@ -155,7 +155,7 @@ nb_path: "nbs/experiment_manager.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_basic_usage</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_basic_usage</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -164,14 +164,6 @@ nb_path: "nbs/experiment_manager.ipynb"
 
 <div class="output_wrapper">
 <div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>script: /tmp/ipykernel_17968/587345255.py, line number: 5
-</pre>
-</div>
-</div>
 
 <div class="output_area">
 
@@ -202,6 +194,7 @@ epoch 9: accuracy: 0.6
  &#39;experiments_data.csv&#39;,
  &#39;experiments_data.pk&#39;,
  &#39;git_hash.json&#39;,
+ &#39;managers&#39;,
  &#39;other_parameters.csv&#39;,
  &#39;parameters.pk&#39;,
  &#39;parameters.txt&#39;,
@@ -258,8 +251,8 @@ epoch 9: accuracy: 0.6
       <td>0.05</td>
       <td>0.6</td>
       <td>0.5</td>
-      <td>0.001688</td>
-      <td>23:03:16.385757</td>
+      <td>0.001935</td>
+      <td>11:57:18.497762</td>
       <td>True</td>
     </tr>
   </tbody>
@@ -304,7 +297,7 @@ contents of current run at `test_basic/experiments/00000`:
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_same_values" class="doc_header"><code>test_same_values</code><a href="hpsearch/tests/test_experiment_manager.py#L95" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_same_values</code>()</p>
+<h4 id="test_same_values" class="doc_header"><code>test_same_values</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L96" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_same_values</code>()</p>
 </blockquote>
 
 </div>
@@ -340,14 +333,6 @@ contents of current run at `test_basic/experiments/00000`:
 
 <div class="output_wrapper">
 <div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>script: /tmp/ipykernel_17968/314616621.py, line number: 7
-</pre>
-</div>
-</div>
 
 <div class="output_area">
 
@@ -416,8 +401,8 @@ epoch 9: accuracy: 0.6
       <td>0.05</td>
       <td>0.6</td>
       <td>0.5</td>
-      <td>0.001651</td>
-      <td>23:03:16.487347</td>
+      <td>0.002417</td>
+      <td>11:57:18.618991</td>
       <td>True</td>
     </tr>
   </tbody>
@@ -459,7 +444,7 @@ epoch 9: accuracy: 0.6
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_almost_same_values" class="doc_header"><code>test_almost_same_values</code><a href="hpsearch/tests/test_experiment_manager.py#L125" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_almost_same_values</code>()</p>
+<h4 id="test_almost_same_values" class="doc_header"><code>test_almost_same_values</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L126" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_almost_same_values</code>()</p>
 </blockquote>
 
 </div>
@@ -498,14 +483,6 @@ epoch 9: accuracy: 0.6
 
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>script: /tmp/ipykernel_17968/2249530880.py, line number: 7
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>running test_almost_same_values
 fitting model with 10 epochs
@@ -519,22 +496,7 @@ epoch 6: accuracy: 0.44999999999999996
 epoch 7: accuracy: 0.49999999999999994
 epoch 8: accuracy: 0.5499999999999999
 epoch 9: accuracy: 0.6
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>script: /tmp/ipykernel_17968/2249530880.py, line number: 24
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>fitting model with 10 epochs
+fitting model with 10 epochs
 epoch 0: accuracy: 0.1500000000000001
 epoch 1: accuracy: 0.2000000000000002
 epoch 2: accuracy: 0.25000000000000033
@@ -587,8 +549,8 @@ epoch 9: accuracy: 0.600000000000001
       <td>0.05</td>
       <td>0.6</td>
       <td>0.5</td>
-      <td>0.001508</td>
-      <td>23:03:16.595396</td>
+      <td>0.002275</td>
+      <td>11:57:18.743525</td>
       <td>True</td>
     </tr>
     <tr>
@@ -597,8 +559,8 @@ epoch 9: accuracy: 0.600000000000001
       <td>0.05</td>
       <td>0.6</td>
       <td>0.5</td>
-      <td>0.001606</td>
-      <td>23:03:16.633961</td>
+      <td>0.002581</td>
+      <td>11:57:18.792093</td>
       <td>True</td>
     </tr>
   </tbody>
@@ -631,7 +593,7 @@ epoch 9: accuracy: 0.600000000000001
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_new_runs" class="doc_header"><code>test_new_runs</code><a href="hpsearch/tests/test_experiment_manager.py#L160" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_new_runs</code>()</p>
+<h4 id="test_new_runs" class="doc_header"><code>test_new_runs</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L161" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_new_runs</code>()</p>
 </blockquote>
 
 </div>
@@ -667,15 +629,6 @@ epoch 9: accuracy: 0.600000000000001
 
 <div class="output_wrapper">
 <div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>script: /tmp/ipykernel_17968/3459580111.py, line number: 7
-script: /tmp/ipykernel_17968/3459580111.py, line number: 12
-</pre>
-</div>
-</div>
 
 <div class="output_area">
 
@@ -759,12 +712,12 @@ epoch 9: accuracy: 0.6
       <td>0.05</td>
       <td>0.6</td>
       <td>0.5</td>
-      <td>0.001906</td>
-      <td>23:03:16.766153</td>
+      <td>0.002246</td>
+      <td>11:57:18.959550</td>
       <td>True</td>
       <td>0.6</td>
       <td>0.5</td>
-      <td>0.001509</td>
+      <td>0.002191</td>
       <td>True</td>
     </tr>
   </tbody>
@@ -772,14 +725,6 @@ epoch 9: accuracy: 0.6
 </div>
 </div>
 
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>script: /tmp/ipykernel_17968/3459580111.py, line number: 26
-</pre>
-</div>
 </div>
 
 <div class="output_area">
@@ -856,16 +801,16 @@ epoch 9: accuracy: 0.6
       <td>0.05</td>
       <td>0.6</td>
       <td>0.5</td>
-      <td>0.001906</td>
-      <td>23:03:16.812915</td>
+      <td>0.002246</td>
+      <td>11:57:19.013013</td>
       <td>True</td>
       <td>0.6</td>
       <td>0.5</td>
-      <td>0.001509</td>
+      <td>0.002191</td>
       <td>True</td>
       <td>0.6</td>
       <td>0.5</td>
-      <td>0.001535</td>
+      <td>0.002372</td>
       <td>True</td>
     </tr>
   </tbody>
@@ -880,6 +825,7 @@ epoch 9: accuracy: 0.6
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>folders created in `test_new_runs/experiments`:
 [&#39;00000&#39;]
+[&#39;0&#39;, &#39;1&#39;, &#39;2&#39;, &#39;other_parameters.json&#39;, &#39;parameters.json&#39;, &#39;parameters.pk&#39;, &#39;parameters.txt&#39;]
 </pre>
 </div>
 </div>
@@ -907,7 +853,7 @@ epoch 9: accuracy: 0.6
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_second_experiment" class="doc_header"><code>test_second_experiment</code><a href="hpsearch/tests/test_experiment_manager.py#L221" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_second_experiment</code>()</p>
+<h4 id="test_second_experiment" class="doc_header"><code>test_second_experiment</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L222" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_second_experiment</code>()</p>
 </blockquote>
 
 </div>
@@ -948,22 +894,7 @@ epoch 9: accuracy: 0.6
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>running test_second_experiment
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>script: /tmp/ipykernel_17968/3126725428.py, line number: 7
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>fitting model with 10 epochs
+fitting model with 10 epochs
 epoch 0: accuracy: 0.15000000000000002
 epoch 1: accuracy: 0.2
 epoch 2: accuracy: 0.25
@@ -986,14 +917,6 @@ epoch 9: accuracy: 0.6
 
 </div>
 
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>script: /tmp/ipykernel_17968/3126725428.py, line number: 13
-</pre>
-</div>
 </div>
 
 <div class="output_area">
@@ -1062,8 +985,8 @@ epoch 9: accuracy: 2.7
       <td>0.05</td>
       <td>0.6</td>
       <td>0.5</td>
-      <td>0.002351</td>
-      <td>23:03:16.936540</td>
+      <td>0.002207</td>
+      <td>11:57:19.127011</td>
       <td>True</td>
     </tr>
     <tr>
@@ -1072,8 +995,8 @@ epoch 9: accuracy: 2.7
       <td>0.20</td>
       <td>1.0</td>
       <td>1.0</td>
-      <td>0.001715</td>
-      <td>23:03:16.969515</td>
+      <td>0.001945</td>
+      <td>11:57:19.167099</td>
       <td>True</td>
     </tr>
   </tbody>
@@ -1231,7 +1154,7 @@ epoch 9: accuracy: 2.7
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_new_parameter" class="doc_header"><code>test_new_parameter</code><a href="hpsearch/tests/test_experiment_manager.py#L250" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_new_parameter</code>()</p>
+<h4 id="test_new_parameter" class="doc_header"><code>test_new_parameter</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L251" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_new_parameter</code>()</p>
 </blockquote>
 
 </div>
@@ -1270,14 +1193,6 @@ epoch 9: accuracy: 2.7
 
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>script: /tmp/ipykernel_17968/2342689092.py, line number: 7
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>running test_new_parameter
 fitting model with 10 epochs
@@ -1291,22 +1206,7 @@ epoch 6: accuracy: 0.44999999999999996
 epoch 7: accuracy: 0.49999999999999994
 epoch 8: accuracy: 0.5499999999999999
 epoch 9: accuracy: 0.6
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>script: /tmp/ipykernel_17968/2342689092.py, line number: 11
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>fitting model with 5 epochs
+fitting model with 5 epochs
 epoch 0: accuracy: 0.15000000000000002
 epoch 1: accuracy: 0.2
 epoch 2: accuracy: 0.25
@@ -1365,8 +1265,8 @@ epoch 4: accuracy: 0.35
       <td>0.05</td>
       <td>0.60</td>
       <td>0.50</td>
-      <td>0.001476</td>
-      <td>23:03:17.170410</td>
+      <td>0.002098</td>
+      <td>11:57:19.391645</td>
       <td>True</td>
       <td>NaN</td>
     </tr>
@@ -1376,8 +1276,8 @@ epoch 4: accuracy: 0.35
       <td>0.05</td>
       <td>0.35</td>
       <td>0.45</td>
-      <td>0.001106</td>
-      <td>23:03:17.202045</td>
+      <td>0.001919</td>
+      <td>11:57:19.430621</td>
       <td>True</td>
       <td>5.0</td>
     </tr>
@@ -1411,7 +1311,7 @@ epoch 4: accuracy: 0.35
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_new_parameter_default" class="doc_header"><code>test_new_parameter_default</code><a href="hpsearch/tests/test_experiment_manager.py#L283" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_new_parameter_default</code>()</p>
+<h4 id="test_new_parameter_default" class="doc_header"><code>test_new_parameter_default</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L284" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_new_parameter_default</code>()</p>
 </blockquote>
 
 </div>
@@ -1447,14 +1347,6 @@ epoch 4: accuracy: 0.35
 
 <div class="output_wrapper">
 <div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>script: /tmp/ipykernel_17968/2374034115.py, line number: 7
-</pre>
-</div>
-</div>
 
 <div class="output_area">
 
@@ -1523,8 +1415,8 @@ epoch 9: accuracy: 0.6
       <td>0.05</td>
       <td>0.6</td>
       <td>0.5</td>
-      <td>0.001513</td>
-      <td>23:03:17.296610</td>
+      <td>0.002404</td>
+      <td>11:57:19.549020</td>
       <td>True</td>
     </tr>
   </tbody>
@@ -1557,7 +1449,7 @@ epoch 9: accuracy: 0.6
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_other_parameters" class="doc_header"><code>test_other_parameters</code><a href="hpsearch/tests/test_experiment_manager.py#L308" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_other_parameters</code>()</p>
+<h4 id="test_other_parameters" class="doc_header"><code>test_other_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L309" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_other_parameters</code>()</p>
 </blockquote>
 
 </div>
@@ -1593,14 +1485,6 @@ epoch 9: accuracy: 0.6
 
 <div class="output_wrapper">
 <div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>script: /tmp/ipykernel_17968/1875725149.py, line number: 11
-</pre>
-</div>
-</div>
 
 <div class="output_area">
 
@@ -1658,8 +1542,8 @@ epoch 9: accuracy: 0.6
       <td>0.05</td>
       <td>0.6</td>
       <td>0.5</td>
-      <td>0.000668</td>
-      <td>23:03:17.435932</td>
+      <td>0.000322</td>
+      <td>11:57:19.669444</td>
       <td>True</td>
     </tr>
   </tbody>
@@ -1704,7 +1588,7 @@ epoch 9: accuracy: 0.6
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_remove_not_finished" class="doc_header"><code>test_remove_not_finished</code><a href="hpsearch/tests/test_experiment_manager.py#L341" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_remove_not_finished</code>()</p>
+<h4 id="test_remove_not_finished" class="doc_header"><code>test_remove_not_finished</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L342" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_remove_not_finished</code>()</p>
 </blockquote>
 
 </div>
@@ -1740,14 +1624,6 @@ epoch 9: accuracy: 0.6
 
 <div class="output_wrapper">
 <div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>script: /tmp/ipykernel_17968/2801524373.py, line number: 8
-</pre>
-</div>
-</div>
 
 <div class="output_area">
 
@@ -1805,14 +1681,6 @@ epoch 9: accuracy: 0.6
 </div>
 </div>
 
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>script: /tmp/ipykernel_17968/2801524373.py, line number: 15
-</pre>
-</div>
 </div>
 
 <div class="output_area">
@@ -1881,8 +1749,8 @@ epoch 9: accuracy: 3.0000000000000004
       <td>0.20</td>
       <td>1.0</td>
       <td>1.0</td>
-      <td>0.001539</td>
-      <td>23:03:17.573406</td>
+      <td>0.002329</td>
+      <td>11:57:19.832825</td>
       <td>True</td>
     </tr>
   </tbody>
@@ -1890,14 +1758,6 @@ epoch 9: accuracy: 3.0000000000000004
 </div>
 </div>
 
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>script: /tmp/ipykernel_17968/2801524373.py, line number: 20
-</pre>
-</div>
 </div>
 
 <div class="output_area">
@@ -1966,8 +1826,8 @@ epoch 9: accuracy: 3.999999999999999
       <td>0.20</td>
       <td>1.0</td>
       <td>1.0</td>
-      <td>0.001539</td>
-      <td>23:03:17.573406</td>
+      <td>0.002329</td>
+      <td>11:57:19.832825</td>
       <td>True</td>
     </tr>
     <tr>
@@ -1976,8 +1836,8 @@ epoch 9: accuracy: 3.999999999999999
       <td>0.30</td>
       <td>1.0</td>
       <td>1.0</td>
-      <td>0.001799</td>
-      <td>23:03:17.613941</td>
+      <td>0.002064</td>
+      <td>11:57:19.881751</td>
       <td>True</td>
     </tr>
   </tbody>
@@ -2010,7 +1870,7 @@ epoch 9: accuracy: 3.999999999999999
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_repeat_experiment" class="doc_header"><code>test_repeat_experiment</code><a href="hpsearch/tests/test_experiment_manager.py#L371" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_repeat_experiment</code>()</p>
+<h4 id="test_repeat_experiment" class="doc_header"><code>test_repeat_experiment</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L372" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_repeat_experiment</code>()</p>
 </blockquote>
 
 </div>
@@ -2046,14 +1906,6 @@ epoch 9: accuracy: 3.999999999999999
 
 <div class="output_wrapper">
 <div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>script: /tmp/ipykernel_17968/1962307353.py, line number: 7
-</pre>
-</div>
-</div>
 
 <div class="output_area">
 
@@ -2112,8 +1964,8 @@ epoch 9: accuracy: 0.6
       <td>0.05</td>
       <td>0.6</td>
       <td>0.5</td>
-      <td>0.001501</td>
-      <td>23:03:17.712281</td>
+      <td>0.001734</td>
+      <td>11:57:19.982264</td>
       <td>True</td>
     </tr>
   </tbody>
@@ -2121,14 +1973,6 @@ epoch 9: accuracy: 0.6
 </div>
 </div>
 
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>script: /tmp/ipykernel_17968/1962307353.py, line number: 14
-</pre>
-</div>
 </div>
 
 <div class="output_area">
@@ -2187,8 +2031,8 @@ epoch 9: accuracy: 0.6
       <td>0.05</td>
       <td>0.6</td>
       <td>0.5</td>
-      <td>0.001501</td>
-      <td>23:03:17.747980</td>
+      <td>0.001734</td>
+      <td>11:57:20.028632</td>
       <td>True</td>
     </tr>
   </tbody>
@@ -2233,7 +2077,7 @@ epoch 9: accuracy: 0.6
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_check_finished" class="doc_header"><code>test_check_finished</code><a href="hpsearch/tests/test_experiment_manager.py#L401" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_check_finished</code>()</p>
+<h4 id="test_check_finished" class="doc_header"><code>test_check_finished</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L402" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_check_finished</code>()</p>
 </blockquote>
 
 </div>
@@ -2269,15 +2113,6 @@ epoch 9: accuracy: 0.6
 
 <div class="output_wrapper">
 <div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>script: /tmp/ipykernel_17968/2482338563.py, line number: 7
-script: /tmp/ipykernel_17968/2482338563.py, line number: 22
-</pre>
-</div>
-</div>
 
 <div class="output_area">
 
@@ -2327,7 +2162,7 @@ epoch 9: accuracy: 0.6
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_recompute_metrics" class="doc_header"><code>test_recompute_metrics</code><a href="hpsearch/tests/test_experiment_manager.py#L433" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_recompute_metrics</code>()</p>
+<h4 id="test_recompute_metrics" class="doc_header"><code>test_recompute_metrics</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L434" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_recompute_metrics</code>()</p>
 </blockquote>
 
 </div>
@@ -2366,14 +2201,6 @@ epoch 9: accuracy: 0.6
 
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>script: /tmp/ipykernel_17968/2340212191.py, line number: 7
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>running test_recompute_metrics
 fitting model with 10 epochs
@@ -2387,22 +2214,7 @@ epoch 6: accuracy: 0.44999999999999996
 epoch 7: accuracy: 0.49999999999999994
 epoch 8: accuracy: 0.5499999999999999
 epoch 9: accuracy: 0.6
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>script: /tmp/ipykernel_17968/2340212191.py, line number: 22
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>fitting model with 10 epochs
+fitting model with 10 epochs
 epoch 0: accuracy: 0.12000000000000001
 epoch 1: accuracy: 0.14
 epoch 2: accuracy: 0.16
@@ -2457,7 +2269,7 @@ or indicating it in the <code>other_parameters</code> dictionary:<div class="hig
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_prev_epoch" class="doc_header"><code>test_prev_epoch</code><a href="hpsearch/tests/test_experiment_manager.py#L464" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_prev_epoch</code>()</p>
+<h4 id="test_prev_epoch" class="doc_header"><code>test_prev_epoch</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L465" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_prev_epoch</code>()</p>
 </blockquote>
 
 </div>
@@ -2493,14 +2305,6 @@ or indicating it in the <code>other_parameters</code> dictionary:<div class="hig
 
 <div class="output_wrapper">
 <div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>script: /tmp/ipykernel_17968/1621658181.py, line number: 6
-</pre>
-</div>
-</div>
 
 <div class="output_area">
 
@@ -2568,8 +2372,8 @@ epoch 16: accuracy: 0.9500000000000003
       <td>17.0</td>
       <td>0.95</td>
       <td>0.85</td>
-      <td>0.00219</td>
-      <td>23:03:18.132084</td>
+      <td>0.002679</td>
+      <td>11:57:20.448849</td>
       <td>True</td>
     </tr>
   </tbody>
@@ -2577,14 +2381,6 @@ epoch 16: accuracy: 0.9500000000000003
 </div>
 </div>
 
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>script: /tmp/ipykernel_17968/1621658181.py, line number: 14
-</pre>
-</div>
 </div>
 
 <div class="output_area">
@@ -2601,23 +2397,7 @@ epoch 6: accuracy: 0.44999999999999996
 epoch 7: accuracy: 0.49999999999999994
 epoch 8: accuracy: 0.5499999999999999
 epoch 9: accuracy: 0.6
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>script: /tmp/ipykernel_17968/1621658181.py, line number: 15
-script: /tmp/ipykernel_17968/1621658181.py, line number: 16
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>fitting model with 20 epochs
+fitting model with 20 epochs
 epoch 0: accuracy: 0.15000000000000002
 epoch 1: accuracy: 0.2
 epoch 2: accuracy: 0.25
@@ -2638,22 +2418,7 @@ epoch 16: accuracy: 0.9500000000000003
 epoch 17: accuracy: 1.0000000000000002
 epoch 18: accuracy: 1.0500000000000003
 epoch 19: accuracy: 1.1000000000000003
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>script: /tmp/ipykernel_17968/1621658181.py, line number: 24
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>fitting model with 15 epochs
+fitting model with 15 epochs
 epoch 0: accuracy: 0.15000000000000002
 epoch 1: accuracy: 0.2
 epoch 2: accuracy: 0.25
@@ -2669,26 +2434,11 @@ epoch 11: accuracy: 0.7000000000000001
 epoch 12: accuracy: 0.7500000000000001
 epoch 13: accuracy: 0.8000000000000002
 epoch 14: accuracy: 0.8500000000000002
-reading model from test_prev_epoch/experiments/00002/0/model_weights.pk
+reading model from test_prev_epoch//experiments/00002/0/model_weights.pk
 fitting model with 2 epochs
 epoch 0: accuracy: 0.9000000000000002
 epoch 1: accuracy: 0.9500000000000003
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>script: /tmp/ipykernel_17968/1621658181.py, line number: 34
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>fitting model with 17 epochs
+fitting model with 17 epochs
 epoch 0: accuracy: 0.15000000000000002
 epoch 1: accuracy: 0.2
 epoch 2: accuracy: 0.25
@@ -2727,7 +2477,7 @@ epoch 16: accuracy: 0.9500000000000003
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_prev_epoch2" class="doc_header"><code>test_prev_epoch2</code><a href="hpsearch/tests/test_experiment_manager.py#L506" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_prev_epoch2</code>()</p>
+<h4 id="test_prev_epoch2" class="doc_header"><code>test_prev_epoch2</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L507" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_prev_epoch2</code>()</p>
 </blockquote>
 
 </div>
@@ -2768,48 +2518,16 @@ epoch 16: accuracy: 0.9500000000000003
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>running test_prev_epoch2
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>script: /tmp/ipykernel_17968/813877249.py, line number: 6
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>fitting model with 2 epochs
+fitting model with 2 epochs
 epoch 0: accuracy: 0.13
 epoch 1: accuracy: 0.16
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>script: /tmp/ipykernel_17968/813877249.py, line number: 13
-script: /tmp/ipykernel_17968/813877249.py, line number: 18
-script: /tmp/ipykernel_17968/813877249.py, line number: 33
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>fitting model with 5 epochs
+fitting model with 5 epochs
 epoch 0: accuracy: 0.14
 epoch 1: accuracy: 0.18000000000000002
 epoch 2: accuracy: 0.22000000000000003
 epoch 3: accuracy: 0.26
 epoch 4: accuracy: 0.3
-reading model from test_prev_epoch2/experiments/00000/0/model_weights.pk
+reading model from test_prev_epoch2//experiments/00000/0/model_weights.pk
 fitting model with 3 epochs
 epoch 0: accuracy: 0.19
 epoch 1: accuracy: 0.22
@@ -2817,29 +2535,13 @@ epoch 2: accuracy: 0.25
 fitting model with 2 epochs
 epoch 0: accuracy: 0.13
 epoch 1: accuracy: 0.16
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>script: /tmp/ipykernel_17968/813877249.py, line number: 36
-script: /tmp/ipykernel_17968/813877249.py, line number: 40
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>fitting model with 5 epochs
+fitting model with 5 epochs
 epoch 0: accuracy: 0.14
 epoch 1: accuracy: 0.18000000000000002
 epoch 2: accuracy: 0.22000000000000003
 epoch 3: accuracy: 0.26
 epoch 4: accuracy: 0.3
-reading model from test_prev_epoch2/experiments/00000/0/model_weights.pk
+reading model from test_prev_epoch2//experiments/00000/0/model_weights.pk
 fitting model with 3 epochs
 epoch 0: accuracy: 0.19
 epoch 1: accuracy: 0.22
@@ -2878,7 +2580,7 @@ epoch 2: accuracy: 0.25
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_from_exp" class="doc_header"><code>test_from_exp</code><a href="hpsearch/tests/test_experiment_manager.py#L556" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_from_exp</code>()</p>
+<h4 id="test_from_exp" class="doc_header"><code>test_from_exp</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L557" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_from_exp</code>()</p>
 </blockquote>
 
 </div>
@@ -2917,16 +2619,6 @@ epoch 2: accuracy: 0.25
 
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>script: /tmp/ipykernel_17968/3213666507.py, line number: 7
-script: /tmp/ipykernel_17968/3213666507.py, line number: 13
-script: /tmp/ipykernel_17968/3213666507.py, line number: 14
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>running test_from_exp
 fitting model with 5 epochs
@@ -2941,22 +2633,7 @@ epoch 1: accuracy: 0.16
 fitting model with 2 epochs
 epoch 0: accuracy: 0.14
 epoch 1: accuracy: 0.18000000000000002
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>script: /tmp/ipykernel_17968/3213666507.py, line number: 18
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>reading model from test_from_exp/experiments/00000/0/model_weights.pk
+reading model from test_from_exp//experiments/00000/0/model_weights.pk
 fitting model with 5 epochs
 epoch 0: accuracy: 0.21000000000000002
 epoch 1: accuracy: 0.26
@@ -3010,7 +2687,7 @@ This can be done either passing this when constructing the object:</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_skip_interrupted" class="doc_header"><code>test_skip_interrupted</code><a href="hpsearch/tests/test_experiment_manager.py#L585" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_skip_interrupted</code>()</p>
+<h4 id="test_skip_interrupted" class="doc_header"><code>test_skip_interrupted</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L586" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_skip_interrupted</code>()</p>
 </blockquote>
 
 </div>
@@ -3049,18 +2726,6 @@ This can be done either passing this when constructing the object:</p>
 
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>script: /tmp/ipykernel_17968/2789182944.py, line number: 8
-script: /tmp/ipykernel_17968/2789182944.py, line number: 11
-script: /tmp/ipykernel_17968/2789182944.py, line number: 14
-script: /tmp/ipykernel_17968/2789182944.py, line number: 20
-script: /tmp/ipykernel_17968/2789182944.py, line number: 29
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>running test_skip_interrupted
 fitting model with 5 epochs
@@ -3075,8 +2740,8 @@ epoch 1: accuracy: 0.18000000000000002
 epoch 2: accuracy: 0.22000000000000003
 epoch 3: accuracy: 0.26
 epoch 4: accuracy: 0.3
-storing result from test_skip_interrupted/experiments/00000/0 with iterations 5
-not storing result from test_skip_interrupted/experiments/00000/0 with iterations 5
+storing result from test_skip_interrupted//experiments/00000/0 with iterations 5
+not storing result from test_skip_interrupted//experiments/00000/0 with iterations 5
 </pre>
 </div>
 </div>
@@ -3132,8 +2797,8 @@ not storing result from test_skip_interrupted/experiments/00000/0 with iteration
       <td>5.0</td>
       <td>0.3</td>
       <td>0.4</td>
-      <td>0.000943</td>
-      <td>23:03:18.913938</td>
+      <td>0.001494</td>
+      <td>11:57:21.345252</td>
       <td>True</td>
     </tr>
   </tbody>
@@ -3179,7 +2844,7 @@ not storing result from test_skip_interrupted/experiments/00000/0 with iteration
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_use_last_result" class="doc_header"><code>test_use_last_result</code><a href="hpsearch/tests/test_experiment_manager.py#L624" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_use_last_result</code>()</p>
+<h4 id="test_use_last_result" class="doc_header"><code>test_use_last_result</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L625" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_use_last_result</code>()</p>
 </blockquote>
 
 </div>
@@ -3218,16 +2883,6 @@ not storing result from test_skip_interrupted/experiments/00000/0 with iteration
 
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>script: /tmp/ipykernel_17968/2930722641.py, line number: 8
-script: /tmp/ipykernel_17968/2930722641.py, line number: 11
-script: /tmp/ipykernel_17968/2930722641.py, line number: 18
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>running test_use_last_result
 fitting model with 5 epochs
@@ -3242,7 +2897,7 @@ epoch 1: accuracy: 0.18000000000000002
 epoch 2: accuracy: 0.22000000000000003
 epoch 3: accuracy: 0.26
 epoch 4: accuracy: 0.3
-not storing result from test_use_last_result/experiments/00000/0 with iterations 5
+not storing result from test_use_last_result//experiments/00000/0 with iterations 5
 </pre>
 </div>
 </div>
@@ -3298,8 +2953,8 @@ not storing result from test_use_last_result/experiments/00000/0 with iterations
       <td>5.0</td>
       <td>0.3</td>
       <td>0.4</td>
-      <td>0.000973</td>
-      <td>23:03:19.123819</td>
+      <td>0.001465</td>
+      <td>11:57:21.579286</td>
       <td>True</td>
     </tr>
   </tbody>
@@ -3311,16 +2966,8 @@ not storing result from test_use_last_result/experiments/00000/0 with iterations
 
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>script: /tmp/ipykernel_17968/2930722641.py, line number: 28
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>storing result from test_use_last_result/experiments/00000/0 with iterations 5
+<pre>storing result from test_use_last_result//experiments/00000/0 with iterations 5
 0.25 {&#39;validation_accuracy&#39;: 0.25, &#39;test_accuracy&#39;: 0.35, &#39;accuracy&#39;: 0.25, &#39;last&#39;: 5}
 </pre>
 </div>
@@ -3369,7 +3016,7 @@ not storing result from test_use_last_result/experiments/00000/0 with iterations
       <td>0.25</td>
       <td>0.35</td>
       <td>NaN</td>
-      <td>23:03:19.187088</td>
+      <td>11:57:21.658340</td>
       <td>False</td>
       <td>0.25</td>
       <td>5.0</td>
@@ -3381,8 +3028,8 @@ not storing result from test_use_last_result/experiments/00000/0 with iterations
       <td>5.0</td>
       <td>0.30</td>
       <td>0.40</td>
-      <td>0.000973</td>
-      <td>23:03:19.123819</td>
+      <td>0.001465</td>
+      <td>11:57:21.579286</td>
       <td>True</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -3445,7 +3092,7 @@ not storing result from test_use_last_result/experiments/00000/0 with iterations
       <td>0.25</td>
       <td>0.35</td>
       <td>NaN</td>
-      <td>23:03:19.187088</td>
+      <td>11:57:21.658340</td>
       <td>False</td>
       <td>0.25</td>
       <td>5.0</td>
@@ -3457,8 +3104,8 @@ not storing result from test_use_last_result/experiments/00000/0 with iterations
       <td>5.0</td>
       <td>0.30</td>
       <td>0.40</td>
-      <td>0.000973</td>
-      <td>23:03:19.123819</td>
+      <td>0.001465</td>
+      <td>11:57:21.579286</td>
       <td>True</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -3493,7 +3140,7 @@ not storing result from test_use_last_result/experiments/00000/0 with iterations
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_use_last_result_run_interrupted" class="doc_header"><code>test_use_last_result_run_interrupted</code><a href="hpsearch/tests/test_experiment_manager.py#L677" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_use_last_result_run_interrupted</code>()</p>
+<h4 id="test_use_last_result_run_interrupted" class="doc_header"><code>test_use_last_result_run_interrupted</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L678" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_use_last_result_run_interrupted</code>()</p>
 </blockquote>
 
 </div>
@@ -3532,16 +3179,6 @@ not storing result from test_use_last_result/experiments/00000/0 with iterations
 
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>script: /tmp/ipykernel_17968/3294322140.py, line number: 8
-script: /tmp/ipykernel_17968/3294322140.py, line number: 11
-script: /tmp/ipykernel_17968/3294322140.py, line number: 19
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>running test_use_last_result_run_interrupted
 fitting model with 2 epochs
@@ -3553,7 +3190,7 @@ epoch 1: accuracy: 0.18000000000000002
 epoch 2: accuracy: 0.22000000000000003
 epoch 3: accuracy: 0.26
 epoch 4: accuracy: 0.3
-not storing result from test_use_last_result_run_interrupted/experiments/00000/0 with iterations 2
+not storing result from test_use_last_result_run_interrupted//experiments/00000/0 with iterations 2
 fitting model with 5 epochs
 epoch 0: accuracy: 0.13
 epoch 1: accuracy: 0.16
@@ -3588,7 +3225,7 @@ epoch 4: accuracy: 0.25
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_grid_search" class="doc_header"><code>test_grid_search</code><a href="hpsearch/tests/test_experiment_manager.py#L709" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_grid_search</code>()</p>
+<h4 id="test_grid_search" class="doc_header"><code>test_grid_search</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L710" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_grid_search</code>()</p>
 </blockquote>
 
 </div>
@@ -3627,213 +3264,9 @@ epoch 4: accuracy: 0.25
 
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>experiment script: /tmp/ipykernel_17968/546716936.py, line: 8
-processing hyper-parameter 0 out of 4
-doing run 0 out of 1
-
-running experiment 0
-run number: 0
-
-parameters:
-	epochs=5,
-	offset=0.1,
-	rate=0.03
-
-script: /tmp/ipykernel_17968/546716936.py, line number: 8
-time spent on this experiment: 0.0002505779266357422
-score: 0.25
-0 - validation_accuracy: 0.25
-0 - test_accuracy: 0.35
-finished experiment 0
-processing hyper-parameter 1 out of 4
-doing run 0 out of 1
-
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>running test_grid_search
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>running experiment 1
-run number: 0
-
-parameters:
-	epochs=5,
-	offset=0.1
-
-script: /tmp/ipykernel_17968/546716936.py, line number: 8
-time spent on this experiment: 0.00022721290588378906
-score: 0.15000000000000002
-0 - validation_accuracy: 0.15000000000000002
-0 - test_accuracy: 0.25
-finished experiment 1
-processing hyper-parameter 2 out of 4
-doing run 0 out of 1
-
-running experiment 2
-run number: 0
-
-parameters:
-	epochs=7,
-	offset=0.1,
-	rate=0.03
-
-script: /tmp/ipykernel_17968/546716936.py, line number: 8
-time spent on this experiment: 0.0002541542053222656
-score: 0.31000000000000005
-0 - validation_accuracy: 0.31000000000000005
-0 - test_accuracy: 0.41000000000000003
-finished experiment 2
-processing hyper-parameter 3 out of 4
-doing run 0 out of 1
-
-running experiment 3
-run number: 0
-
-parameters:
-	epochs=7,
-	offset=0.1
-
-script: /tmp/ipykernel_17968/546716936.py, line number: 8
-time spent on this experiment: 0.00023746490478515625
-score: 0.17000000000000004
-0 - validation_accuracy: 0.17000000000000004
-0 - test_accuracy: 0.27
-finished experiment 3
-experiment script: /tmp/ipykernel_17968/546716936.py, line: 23
-processing hyper-parameter 0 out of 4
-doing run 0 out of 1
-
-found completed: experiment number: 3, run number: 0 - score: 0.170000
-{&#39;epochs&#39;: 7, &#39;offset&#39;: 0.1}
-skipping...
-processing hyper-parameter 1 out of 4
-doing run 0 out of 1
-
-found completed: experiment number: 2, run number: 0 - score: 0.310000
-{&#39;epochs&#39;: 7, &#39;rate&#39;: 0.03, &#39;offset&#39;: 0.1}
-skipping...
-processing hyper-parameter 2 out of 4
-doing run 0 out of 1
-
-found completed: experiment number: 1, run number: 0 - score: 0.150000
-{&#39;epochs&#39;: 5, &#39;offset&#39;: 0.1}
-skipping...
-processing hyper-parameter 3 out of 4
-doing run 0 out of 1
-
-found completed: experiment number: 0, run number: 0 - score: 0.250000
-{&#39;epochs&#39;: 5, &#39;rate&#39;: 0.03, &#39;offset&#39;: 0.1}
-skipping...
-experiment script: /tmp/ipykernel_17968/546716936.py, line: 36
-processing hyper-parameter 0 out of 4
-doing run 0 out of 2
-
-running experiment 0
-run number: 0
-
-parameters:
-	epochs=7,
-	noise=0.0001,
-	offset=0.1
-
-script: /tmp/ipykernel_17968/546716936.py, line number: 36
-time spent on this experiment: 0.0012292861938476562
-score: 0.1700361395605509
-0 - validation_accuracy: 0.1700361395605509
-0 - test_accuracy: 0.2701538036566466
-finished experiment 0
-processing hyper-parameter 0 out of 4
-doing run 1 out of 2
-
-running experiment 0
-run number: 1
-
-parameters:
-	epochs=7,
-	noise=0.0001,
-	offset=0.1
-
-script: /tmp/ipykernel_17968/546716936.py, line number: 36
-time spent on this experiment: 0.001239776611328125
-score: 0.17009154021177025
-1 - validation_accuracy: 0.17009154021177025
-1 - test_accuracy: 0.27003287511096596
-finished experiment 0
-processing hyper-parameter 1 out of 4
-doing run 0 out of 2
-
-running experiment 1
-run number: 0
-
-parameters:
-	epochs=7,
-	noise=0.0001,
-	offset=0.1,
-	rate=0.03
-
-script: /tmp/ipykernel_17968/546716936.py, line number: 36
-time spent on this experiment: 0.001501321792602539
-score: 0.30996572854834736
-0 - validation_accuracy: 0.30996572854834736
-0 - test_accuracy: 0.40991977227307785
-finished experiment 1
-processing hyper-parameter 1 out of 4
-doing run 1 out of 2
-
-running experiment 1
-run number: 1
-
-parameters:
-	epochs=7,
-	noise=0.0001,
-	offset=0.1,
-	rate=0.03
-
-script: /tmp/ipykernel_17968/546716936.py, line number: 36
-time spent on this experiment: 0.001220703125
-score: 0.31011428228145155
-1 - validation_accuracy: 0.31011428228145155
-1 - test_accuracy: 0.4100751933032687
-finished experiment 1
-processing hyper-parameter 2 out of 4
-doing run 0 out of 2
-
-running experiment 2
-run number: 0
-
-parameters:
-	epochs=5,
-	noise=0.0001,
-	offset=0.1
-
-script: /tmp/ipykernel_17968/546716936.py, line number: 36
-time spent on this experiment: 0.001016378402709961
-score: 0.14984493365689341
-0 - validation_accuracy: 0.14984493365689341
-0 - test_accuracy: 0.2500068562974806
-finished experiment 2
-processing hyper-parameter 2 out of 4
-doing run 1 out of 2
-
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>fitting model with 7 epochs
+fitting model with 7 epochs
 epoch 0: accuracy: 0.11
 epoch 1: accuracy: 0.12
 epoch 2: accuracy: 0.13
@@ -3871,71 +3304,7 @@ epoch 1: accuracy: 0.12
 epoch 2: accuracy: 0.13
 epoch 3: accuracy: 0.14
 epoch 4: accuracy: 0.15000000000000002
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>running experiment 2
-run number: 1
-
-parameters:
-	epochs=5,
-	noise=0.0001,
-	offset=0.1
-
-script: /tmp/ipykernel_17968/546716936.py, line number: 36
-time spent on this experiment: 0.0010807514190673828
-score: 0.1498392516765439
-1 - validation_accuracy: 0.1498392516765439
-1 - test_accuracy: 0.2500184633858532
-finished experiment 2
-processing hyper-parameter 3 out of 4
-doing run 0 out of 2
-
-running experiment 3
-run number: 0
-
-parameters:
-	epochs=5,
-	noise=0.0001,
-	offset=0.1,
-	rate=0.03
-
-script: /tmp/ipykernel_17968/546716936.py, line number: 36
-time spent on this experiment: 0.0010292530059814453
-score: 0.25002930724732986
-0 - validation_accuracy: 0.25002930724732986
-0 - test_accuracy: 0.34992856485819734
-finished experiment 3
-processing hyper-parameter 3 out of 4
-doing run 1 out of 2
-
-running experiment 3
-run number: 1
-
-parameters:
-	epochs=5,
-	noise=0.0001,
-	offset=0.1,
-	rate=0.03
-
-script: /tmp/ipykernel_17968/546716936.py, line number: 36
-time spent on this experiment: 0.0009410381317138672
-score: 0.25008220601599945
-1 - validation_accuracy: 0.25008220601599945
-1 - test_accuracy: 0.3501896792982654
-finished experiment 3
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>fitting model with 5 epochs
+fitting model with 5 epochs
 epoch 0: accuracy: 0.11
 epoch 1: accuracy: 0.12
 epoch 2: accuracy: 0.13
@@ -3957,80 +3326,23 @@ epoch 4: accuracy: 0.25
 </div>
 </div>
 
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>experiment script: /tmp/ipykernel_17968/546716936.py, line: 50
-processing hyper-parameter 0 out of 4
-doing run 0 out of 1
-
-running experiment 0
-run number: 0
-
-parameters:
-	epochs=7,
-	offset=0.1,
-	rate=0.03
-
-script: /tmp/ipykernel_17968/546716936.py, line number: 50
-time spent on this experiment: 0.00023627281188964844
-score: 0.31000000000000005
-0 - validation_accuracy: 0.31000000000000005
-0 - test_accuracy: 0.41000000000000003
-finished experiment 0
-processing hyper-parameter 1 out of 4
-doing run 0 out of 1
-
-running experiment 1
-run number: 0
-
-parameters:
-	epochs=7,
-	offset=0.1
-
-script: /tmp/ipykernel_17968/546716936.py, line number: 50
-time spent on this experiment: 0.00023031234741210938
-score: 0.17000000000000004
-0 - validation_accuracy: 0.17000000000000004
-0 - test_accuracy: 0.27
-finished experiment 1
-processing hyper-parameter 2 out of 4
-doing run 0 out of 1
-
-running experiment 2
-run number: 0
-
-parameters:
-	epochs=5,
-	offset=0.1
-
-script: /tmp/ipykernel_17968/546716936.py, line number: 50
-time spent on this experiment: 0.0002288818359375
-score: 0.15000000000000002
-0 - validation_accuracy: 0.15000000000000002
-0 - test_accuracy: 0.25
-finished experiment 2
-processing hyper-parameter 3 out of 4
-doing run 0 out of 1
-
-running experiment 3
-run number: 0
-
-parameters:
-	epochs=5,
-	offset=0.1,
-	rate=0.03
-
-script: /tmp/ipykernel_17968/546716936.py, line number: 50
-time spent on this experiment: 0.00024771690368652344
-score: 0.25
-0 - validation_accuracy: 0.25
-0 - test_accuracy: 0.35
-finished experiment 3
-</pre>
 </div>
 </div>
 
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+    </div>
 </div>
 </div>
 
@@ -4054,7 +3366,7 @@ finished experiment 3
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_run_multiple_repetitions" class="doc_header"><code>test_run_multiple_repetitions</code><a href="hpsearch/tests/test_experiment_manager.py#L771" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_run_multiple_repetitions</code>()</p>
+<h4 id="test_run_multiple_repetitions" class="doc_header"><code>test_run_multiple_repetitions</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L772" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_run_multiple_repetitions</code>()</p>
 </blockquote>
 
 </div>
@@ -4093,126 +3405,8 @@ finished experiment 3
 
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>doing run 0 out of 5
-
-experiment script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line: 605
-running experiment 0
-run number: 0
-
-parameters:
-	epochs=5,
-	offset=0.1,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line number: 605
-time spent on this experiment: 0.000225067138671875
-score: 0.24953658230718753
-0 - validation_accuracy: 0.24953658230718753
-0 - test_accuracy: 0.34953427024642975
-finished experiment 0
-doing run 1 out of 5
-
-experiment script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line: 605
-running experiment 0
-run number: 1
-
-parameters:
-	epochs=5,
-	offset=0.1,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line number: 605
-time spent on this experiment: 0.00023818016052246094
-score: 0.2500675282046879
-1 - validation_accuracy: 0.2500675282046879
-1 - test_accuracy: 0.3485752518137865
-finished experiment 0
-doing run 2 out of 5
-
-experiment script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line: 605
-running experiment 0
-run number: 2
-
-parameters:
-	epochs=5,
-	offset=0.1,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line number: 605
-time spent on this experiment: 0.00023865699768066406
-score: 0.2508225449121032
-2 - validation_accuracy: 0.2508225449121032
-2 - test_accuracy: 0.34877915635002893
-finished experiment 0
-doing run 3 out of 5
-
-experiment script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line: 605
-running experiment 0
-run number: 3
-
-parameters:
-	epochs=5,
-	offset=0.1,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line number: 605
-time spent on this experiment: 0.0002448558807373047
-score: 0.24953936122904022
-3 - validation_accuracy: 0.24953936122904022
-3 - test_accuracy: 0.3510571222262189
-finished experiment 0
-doing run 4 out of 5
-
-experiment script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line: 605
-running experiment 0
-run number: 4
-
-parameters:
-	epochs=5,
-	offset=0.1,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line number: 605
-time spent on this experiment: 0.000247955322265625
-score: 0.25033126343140355
-4 - validation_accuracy: 0.25033126343140355
-4 - test_accuracy: 0.3509755451271223
-finished experiment 0
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>running test_run_multiple_repetitions
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>mean : 0.2500594560168845, std: 0.000489927463497328
-doing run 0 out of 1
-
-experiment script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line: 605
-running experiment 0
-run number: 0
-
-parameters:
-	epochs=5,
-	offset=0.1,
-	rate=0.03
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line number: 605
-time spent on this experiment: 0.0002410411834716797
-score: 0.25
-0 - validation_accuracy: 0.25
-0 - test_accuracy: 0.35
-finished experiment 0
-mean : 0.25, std: 0.0
 </pre>
 </div>
 </div>
@@ -4240,7 +3434,7 @@ mean : 0.25, std: 0.0
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="parameter_sampler" class="doc_header"><code>parameter_sampler</code><a href="hpsearch/tests/test_experiment_manager.py#L829" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>parameter_sampler</code>(<strong><code>trial</code></strong>)</p>
+<h4 id="parameter_sampler" class="doc_header"><code>parameter_sampler</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L830" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>parameter_sampler</code>(<strong><code>trial</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -4264,7 +3458,7 @@ mean : 0.25, std: 0.0
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_hp_optimization" class="doc_header"><code>test_hp_optimization</code><a href="hpsearch/tests/test_experiment_manager.py#L807" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_hp_optimization</code>()</p>
+<h4 id="test_hp_optimization" class="doc_header"><code>test_hp_optimization</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L808" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_hp_optimization</code>()</p>
 </blockquote>
 
 </div>
@@ -4303,15 +3497,6 @@ mean : 0.25, std: 0.0
 
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>experiment script: /tmp/ipykernel_17968/4246270235.py, line: 20
-Sampler: random - Pruner: halving
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>running test_hp_optimization
 </pre>
@@ -4321,23 +3506,8 @@ Sampler: random - Pruner: halving
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre><span class="ansi-green-fg">[I 2022-01-07 23:03:21,947]</span> A new study created in RDB with name: test_hp_optimization_study
-starting experiment 0 with run number 0
-running experiment 0
-run number: 0
-
-parameters:
-	epochs=12,
-	offset=0.01,
-	rate=0.005939321535345923
-
-script: /tmp/ipykernel_17968/4246270235.py, line number: 20
-time spent on this experiment: 0.0017962455749511719
-score: 0.08127185842415106
-0 - validation_accuracy: 0.08127185842415106
-0 - test_accuracy: 0.0
-finished experiment 0
-<span class="ansi-green-fg">[I 2022-01-07 23:03:22,292]</span> Trial 0 finished with value: 0.08127185842415106 and parameters: {&#39;rate&#39;: 0.005939321535345923, &#39;offset&#39;: 0.01}. Best is trial 0 with value: 0.08127185842415106.
+<pre><span class="ansi-green-fg">[I 2022-02-08 11:57:24,474]</span> A new study created in RDB with name: test_hp_optimization_study
+<span class="ansi-green-fg">[I 2022-02-08 11:57:24,829]</span> Trial 0 finished with value: 0.08127185842415106 and parameters: {&#39;rate&#39;: 0.005939321535345923, &#39;offset&#39;: 0.01}. Best is trial 0 with value: 0.08127185842415106.
 </pre>
 </div>
 </div>
@@ -4365,22 +3535,7 @@ epoch 11: accuracy: 0.08127185842415106
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>starting experiment 1 with run number 0
-running experiment 1
-run number: 0
-
-parameters:
-	epochs=12,
-	offset=0.1,
-	rate=0.004812893194050143
-
-script: /tmp/ipykernel_17968/4246270235.py, line number: 20
-time spent on this experiment: 0.001783609390258789
-score: 0.1577547183286018
-0 - validation_accuracy: 0.1577547183286018
-0 - test_accuracy: 0.057754718328601795
-finished experiment 1
-<span class="ansi-green-fg">[I 2022-01-07 23:03:22,565]</span> Trial 1 finished with value: 0.1577547183286018 and parameters: {&#39;rate&#39;: 0.004812893194050143, &#39;offset&#39;: 0.1}. Best is trial 1 with value: 0.1577547183286018.
+<pre><span class="ansi-green-fg">[I 2022-02-08 11:57:25,124]</span> Trial 1 finished with value: 0.1577547183286018 and parameters: {&#39;rate&#39;: 0.004812893194050143, &#39;offset&#39;: 0.1}. Best is trial 1 with value: 0.1577547183286018.
 </pre>
 </div>
 </div>
@@ -4408,22 +3563,7 @@ epoch 11: accuracy: 0.1577547183286018
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>starting experiment 2 with run number 0
-running experiment 2
-run number: 0
-
-parameters:
-	epochs=12,
-	offset=0.05,
-	rate=0.009672964844509264
-
-script: /tmp/ipykernel_17968/4246270235.py, line number: 20
-time spent on this experiment: 0.001718759536743164
-score: 0.1660755781341112
-0 - validation_accuracy: 0.1660755781341112
-0 - test_accuracy: 0.06607557813411119
-finished experiment 2
-<span class="ansi-green-fg">[I 2022-01-07 23:03:22,813]</span> Trial 2 finished with value: 0.1660755781341112 and parameters: {&#39;rate&#39;: 0.009672964844509264, &#39;offset&#39;: 0.05}. Best is trial 2 with value: 0.1660755781341112.
+<pre><span class="ansi-green-fg">[I 2022-02-08 11:57:25,425]</span> Trial 2 finished with value: 0.1660755781341112 and parameters: {&#39;rate&#39;: 0.009672964844509264, &#39;offset&#39;: 0.05}. Best is trial 2 with value: 0.1660755781341112.
 </pre>
 </div>
 </div>
@@ -4451,22 +3591,7 @@ epoch 11: accuracy: 0.1660755781341112
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>starting experiment 3 with run number 0
-running experiment 3
-run number: 0
-
-parameters:
-	epochs=12,
-	offset=0.01,
-	rate=0.006112401049845392
-
-script: /tmp/ipykernel_17968/4246270235.py, line number: 20
-time spent on this experiment: 0.0020475387573242188
-score: 0.08334881259814472
-0 - validation_accuracy: 0.08334881259814472
-0 - test_accuracy: 0.0
-finished experiment 3
-<span class="ansi-green-fg">[I 2022-01-07 23:03:23,061]</span> Trial 3 finished with value: 0.08334881259814472 and parameters: {&#39;rate&#39;: 0.006112401049845392, &#39;offset&#39;: 0.01}. Best is trial 2 with value: 0.1660755781341112.
+<pre><span class="ansi-green-fg">[I 2022-02-08 11:57:25,728]</span> Trial 3 finished with value: 0.08334881259814472 and parameters: {&#39;rate&#39;: 0.006112401049845392, &#39;offset&#39;: 0.01}. Best is trial 2 with value: 0.1660755781341112.
 </pre>
 </div>
 </div>
@@ -4494,26 +3619,7 @@ epoch 11: accuracy: 0.08334881259814472
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>starting experiment 4 with run number 0
-running experiment 4
-run number: 0
-
-parameters:
-	epochs=12,
-	offset=0.1,
-	rate=0.0011819655769629315
-
-script: /tmp/ipykernel_17968/4246270235.py, line number: 20
-time spent on this experiment: 0.0018162727355957031
-score: 0.11418358692355515
-0 - validation_accuracy: 0.11418358692355515
-0 - test_accuracy: 0.014183586923555147
-finished experiment 4
-<span class="ansi-green-fg">[I 2022-01-07 23:03:23,340]</span> Trial 4 finished with value: 0.11418358692355515 and parameters: {&#39;rate&#39;: 0.0011819655769629315, &#39;offset&#39;: 0.1}. Best is trial 2 with value: 0.1660755781341112.
-Number of finished trials: 5
-Best trial:
-Value: 0.1660755781341112
-best params: {&#39;offset&#39;: 0.05, &#39;rate&#39;: 0.009672964844509264}
+<pre><span class="ansi-green-fg">[I 2022-02-08 11:57:26,022]</span> Trial 4 finished with value: 0.11418358692355515 and parameters: {&#39;rate&#39;: 0.0011819655769629315, &#39;offset&#39;: 0.1}. Best is trial 2 with value: 0.1660755781341112.
 </pre>
 </div>
 </div>
@@ -4578,8 +3684,8 @@ epoch 11: accuracy: 0.11418358692355515
       <td>0.01</td>
       <td>0.081272</td>
       <td>0.000000</td>
-      <td>0.002821</td>
-      <td>23:03:22.210886</td>
+      <td>0.002397</td>
+      <td>11:57:24.740900</td>
       <td>True</td>
     </tr>
     <tr>
@@ -4589,8 +3695,8 @@ epoch 11: accuracy: 0.11418358692355515
       <td>0.10</td>
       <td>0.157755</td>
       <td>0.057755</td>
-      <td>0.002794</td>
-      <td>23:03:22.479159</td>
+      <td>0.002581</td>
+      <td>11:57:25.042324</td>
       <td>True</td>
     </tr>
     <tr>
@@ -4600,8 +3706,8 @@ epoch 11: accuracy: 0.11418358692355515
       <td>0.05</td>
       <td>0.166076</td>
       <td>0.066076</td>
-      <td>0.002721</td>
-      <td>23:03:22.743439</td>
+      <td>0.002168</td>
+      <td>11:57:25.337076</td>
       <td>True</td>
     </tr>
     <tr>
@@ -4611,8 +3717,8 @@ epoch 11: accuracy: 0.11418358692355515
       <td>0.01</td>
       <td>0.083349</td>
       <td>0.000000</td>
-      <td>0.003307</td>
-      <td>23:03:22.992142</td>
+      <td>0.002340</td>
+      <td>11:57:25.650919</td>
       <td>True</td>
     </tr>
     <tr>
@@ -4622,8 +3728,8 @@ epoch 11: accuracy: 0.11418358692355515
       <td>0.10</td>
       <td>0.114184</td>
       <td>0.014184</td>
-      <td>0.002832</td>
-      <td>23:03:23.256664</td>
+      <td>0.002208</td>
+      <td>11:57:25.936115</td>
       <td>True</td>
     </tr>
   </tbody>
@@ -4656,7 +3762,7 @@ epoch 11: accuracy: 0.11418358692355515
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="parameter_sampler" class="doc_header"><code>parameter_sampler</code><a href="hpsearch/tests/test_experiment_manager.py#L829" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>parameter_sampler</code>(<strong><code>trial</code></strong>)</p>
+<h4 id="parameter_sampler" class="doc_header"><code>parameter_sampler</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L830" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>parameter_sampler</code>(<strong><code>trial</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -4680,7 +3786,7 @@ epoch 11: accuracy: 0.11418358692355515
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_rerun_experiment" class="doc_header"><code>test_rerun_experiment</code><a href="hpsearch/tests/test_experiment_manager.py#L838" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_rerun_experiment</code>()</p>
+<h4 id="test_rerun_experiment" class="doc_header"><code>test_rerun_experiment</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L839" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_rerun_experiment</code>()</p>
 </blockquote>
 
 </div>
@@ -4719,116 +3825,9 @@ epoch 11: accuracy: 0.11418358692355515
 
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>experiment script: /tmp/ipykernel_17968/1270020730.py, line: 16
-running experiment 0
-run number: 0
-
-parameters:
-	epochs=5,
-	offset=0.1,
-	rate=0.05
-
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>running test_rerun_experiment
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>script: /tmp/ipykernel_17968/1270020730.py, line number: 16
-experiment script: /tmp/ipykernel_17968/1270020730.py, line: 18
-running experiment 1
-run number: 0
-
-parameters:
-	epochs=2,
-	offset=0.1,
-	rate=0.03
-
-script: /tmp/ipykernel_17968/1270020730.py, line number: 18
-time spent on this experiment: 0.0007839202880859375
-score: 0.16
-0 - validation_accuracy: 0.16
-0 - test_accuracy: 0.26
-finished experiment 1
-experiment script: /tmp/ipykernel_17968/1270020730.py, line: 19
-running experiment 2
-run number: 0
-
-parameters:
-	rate=0.04
-
-script: /tmp/ipykernel_17968/1270020730.py, line number: 19
-time spent on this experiment: 0.0021576881408691406
-score: 0.9000000000000004
-0 - validation_accuracy: 0.9000000000000004
-0 - test_accuracy: 0.8000000000000004
-finished experiment 2
-requiring experiment number to be 1
-running experiment 1 with parameters:
-{&#39;offset&#39;: 0.1, &#39;rate&#39;: 0.03, &#39;epochs&#39;: 2}
-other_parameters:
-{&#39;script_path&#39;: &#39;/tmp/ipykernel_17968/1270020730.py&#39;, &#39;lineno&#39;: 18, &#39;experiment_number&#39;: 1, &#39;suffix_results&#39;: &#39;_validation_accuracy&#39;, &#39;path_results_big&#39;: &#39;test_rerun_experiment/experiments/00001/0&#39;, &#39;git_hash&#39;: &#34;b&#39;1314053a6166d51cb2713a9356811095a91da6c8\\n&#39;&#34;}
-experiment script: /tmp/ipykernel_17968/1270020730.py, line: 27
-doing run 0 out of 1
-
-found completed: experiment number: 1, run number: 0 - score: 0.160000
-{&#39;offset&#39;: 0.1, &#39;rate&#39;: 0.03, &#39;epochs&#39;: 2}
-skipping...
-mean : 0.16, std: 0.0
-requiring experiment number to be 0
-running experiment 0 with parameters:
-{&#39;offset&#39;: 0.1, &#39;rate&#39;: 0.05, &#39;epochs&#39;: 5}
-other_parameters:
-{&#39;halt&#39;: False, &#39;script_path&#39;: &#39;/tmp/ipykernel_17968/1270020730.py&#39;, &#39;lineno&#39;: 16, &#39;experiment_number&#39;: 0, &#39;suffix_results&#39;: &#39;_validation_accuracy&#39;, &#39;path_results_big&#39;: &#39;test_rerun_experiment/experiments/00000/0&#39;, &#39;git_hash&#39;: &#34;b&#39;1314053a6166d51cb2713a9356811095a91da6c8\\n&#39;&#34;, &#39;verbose&#39;: False}
-experiment script: /tmp/ipykernel_17968/1270020730.py, line: 33
-doing run 0 out of 1
-
-running experiment 0
-run number: 0
-
-parameters:
-	epochs=5,
-	offset=0.1,
-	rate=0.05
-
-script: /tmp/ipykernel_17968/1270020730.py, line number: 16
-time spent on this experiment: 0.0003070831298828125
-score: 0.35
-0 - validation_accuracy: 0.35
-0 - test_accuracy: 0.44999999999999996
-finished experiment 0
-mean : 0.35, std: 0.0
-requiring experiment number to be 1
-running experiment 1 with parameters:
-{&#39;offset&#39;: 0.1, &#39;rate&#39;: 0.03, &#39;epochs&#39;: 2}
-other_parameters:
-{&#39;script_path&#39;: &#39;/tmp/ipykernel_17968/1270020730.py&#39;, &#39;lineno&#39;: 18, &#39;experiment_number&#39;: 1, &#39;suffix_results&#39;: &#39;_validation_accuracy&#39;, &#39;path_results_big&#39;: &#39;test_rerun_experiment/experiments/00001/0&#39;, &#39;git_hash&#39;: &#34;b&#39;1314053a6166d51cb2713a9356811095a91da6c8\\n&#39;&#34;, &#39;noise&#39;: 0.001, &#39;verbose&#39;: False}
-experiment script: /tmp/ipykernel_17968/1270020730.py, line: 40
-doing run 0 out of 5
-
-found completed: experiment number: 1, run number: 0 - score: 0.160000
-{&#39;offset&#39;: 0.1, &#39;rate&#39;: 0.03, &#39;epochs&#39;: 2}
-skipping...
-doing run 1 out of 5
-
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>fitting model with 5 epochs
+fitting model with 5 epochs
 epoch 0: accuracy: 0.15000000000000002
 epoch 1: accuracy: 0.2
 epoch 2: accuracy: 0.25
@@ -4855,285 +3854,11 @@ epoch 9: accuracy: 0.9000000000000004
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>running experiment 1
-run number: 1
-
-parameters:
-	epochs=2,
-	offset=0.1,
-	rate=0.03
-
-script: /tmp/ipykernel_17968/1270020730.py, line number: 18
-time spent on this experiment: 0.00024080276489257812
-score: 0.15977653721467416
-1 - validation_accuracy: 0.15977653721467416
-1 - test_accuracy: 0.2607140004940921
-finished experiment 1
-doing run 2 out of 5
-
-running experiment 1
-run number: 2
-
-parameters:
-	epochs=2,
-	offset=0.1,
-	rate=0.03
-
-script: /tmp/ipykernel_17968/1270020730.py, line number: 18
-time spent on this experiment: 0.00023031234741210938
-score: 0.15955348504793299
-2 - validation_accuracy: 0.15955348504793299
-2 - test_accuracy: 0.2608563987943235
-finished experiment 1
-doing run 3 out of 5
-
-running experiment 1
-run number: 3
-
-parameters:
-	epochs=2,
-	offset=0.1,
-	rate=0.03
-
-script: /tmp/ipykernel_17968/1270020730.py, line number: 18
-time spent on this experiment: 0.0002415180206298828
-score: 0.15911614256379886
-3 - validation_accuracy: 0.15911614256379886
-3 - test_accuracy: 0.26015372510594553
-finished experiment 1
-doing run 4 out of 5
-
-running experiment 1
-run number: 4
-
-parameters:
-	epochs=2,
-	offset=0.1,
-	rate=0.03
-
-script: /tmp/ipykernel_17968/1270020730.py, line number: 18
-time spent on this experiment: 0.0002465248107910156
-score: 0.1610830512431753
-4 - validation_accuracy: 0.1610830512431753
-4 - test_accuracy: 0.26105380205203493
-finished experiment 1
-mean : 0.15990584321391627, std: 0.0006571434668150468
-running experiment 2 with parameters:
-{&#39;rate&#39;: 0.04}
-other_parameters:
-{&#39;script_path&#39;: &#39;/tmp/ipykernel_17968/1270020730.py&#39;, &#39;lineno&#39;: 19, &#39;suffix_results&#39;: &#39;_validation_accuracy&#39;, &#39;path_results_big&#39;: &#39;test_rerun_experiment/experiments/00002/0&#39;, &#39;git_hash&#39;: &#34;b&#39;1314053a6166d51cb2713a9356811095a91da6c8\\n&#39;&#34;, &#39;verbose&#39;: False}
-processing hyper-parameter 0 out of 4
-doing run 0 out of 2
-
-running experiment 3
-run number: 0
-
-parameters:
-	epochs=3,
-	offset=0.01,
-	rate=0.04
-
-script: /tmp/ipykernel_17968/1270020730.py, line number: 19
-time spent on this experiment: 0.0002465248107910156
-score: 0.13
-0 - validation_accuracy: 0.13
-0 - test_accuracy: 0.23
-finished experiment 3
-processing hyper-parameter 0 out of 4
-doing run 1 out of 2
-
-running experiment 3
-run number: 1
-
-parameters:
-	epochs=3,
-	offset=0.01,
-	rate=0.04
-
-script: /tmp/ipykernel_17968/1270020730.py, line number: 19
-time spent on this experiment: 0.0002498626708984375
-score: 0.13
-1 - validation_accuracy: 0.13
-1 - test_accuracy: 0.23
-finished experiment 3
-processing hyper-parameter 1 out of 4
-doing run 0 out of 2
-
-running experiment 4
-run number: 0
-
-parameters:
-	epochs=3,
-	offset=0.05,
-	rate=0.04
-
-script: /tmp/ipykernel_17968/1270020730.py, line number: 19
-time spent on this experiment: 0.0003306865692138672
-score: 0.17
-0 - validation_accuracy: 0.17
-0 - test_accuracy: 0.27
-finished experiment 4
-processing hyper-parameter 1 out of 4
-doing run 1 out of 2
-
-running experiment 4
-run number: 1
-
-parameters:
-	epochs=3,
-	offset=0.05,
-	rate=0.04
-
-script: /tmp/ipykernel_17968/1270020730.py, line number: 19
-time spent on this experiment: 0.0002810955047607422
-score: 0.17
-1 - validation_accuracy: 0.17
-1 - test_accuracy: 0.27
-finished experiment 4
-processing hyper-parameter 2 out of 4
-doing run 0 out of 2
-
-running experiment 5
-run number: 0
-
-parameters:
-	epochs=5,
-	offset=0.01,
-	rate=0.04
-
-script: /tmp/ipykernel_17968/1270020730.py, line number: 19
-time spent on this experiment: 0.00025534629821777344
-score: 0.21000000000000002
-0 - validation_accuracy: 0.21000000000000002
-0 - test_accuracy: 0.31000000000000005
-finished experiment 5
-processing hyper-parameter 2 out of 4
-doing run 1 out of 2
-
-running experiment 5
-run number: 1
-
-parameters:
-	epochs=5,
-	offset=0.01,
-	rate=0.04
-
-script: /tmp/ipykernel_17968/1270020730.py, line number: 19
-time spent on this experiment: 0.0003008842468261719
-score: 0.21000000000000002
-1 - validation_accuracy: 0.21000000000000002
-1 - test_accuracy: 0.31000000000000005
-finished experiment 5
-processing hyper-parameter 3 out of 4
-doing run 0 out of 2
-
-running experiment 6
-run number: 0
-
-parameters:
-	epochs=5,
-	offset=0.05,
-	rate=0.04
-
-script: /tmp/ipykernel_17968/1270020730.py, line number: 19
-time spent on this experiment: 0.0002739429473876953
-score: 0.25
-0 - validation_accuracy: 0.25
-0 - test_accuracy: 0.35
-finished experiment 6
-processing hyper-parameter 3 out of 4
-doing run 1 out of 2
-
-running experiment 6
-run number: 1
-
-parameters:
-	epochs=5,
-	offset=0.05,
-	rate=0.04
-
-script: /tmp/ipykernel_17968/1270020730.py, line number: 19
-time spent on this experiment: 0.00023126602172851562
-score: 0.25
-1 - validation_accuracy: 0.25
-1 - test_accuracy: 0.35
-finished experiment 6
-running experiment 2 with parameters:
-{&#39;rate&#39;: 0.04}
-other_parameters:
-{&#39;script_path&#39;: &#39;/tmp/ipykernel_17968/1270020730.py&#39;, &#39;lineno&#39;: 19, &#39;suffix_results&#39;: &#39;_validation_accuracy&#39;, &#39;path_results_big&#39;: &#39;test_rerun_experiment/experiments/00002/0&#39;, &#39;git_hash&#39;: &#34;b&#39;1314053a6166d51cb2713a9356811095a91da6c8\\n&#39;&#34;, &#39;n_trials&#39;: 4, &#39;verbose&#39;: False, &#39;sampler_method&#39;: &#39;skopt&#39;}
-running hp_optimization
-Sampler: skopt - Pruner: halving
-<span class="ansi-green-fg">[I 2022-01-07 23:03:25,202]</span> A new study created in RDB with name: hp_study
-starting experiment 7 with run number 0
-running experiment 7
-run number: 0
-
-parameters:
-	epochs=2,
-	offset=0.02,
-	rate=0.04
-
-script: /tmp/ipykernel_17968/1270020730.py, line number: 19
-time spent on this experiment: 0.0002543926239013672
-score: 0.1
-0 - validation_accuracy: 0.1
-0 - test_accuracy: 0.2
-finished experiment 7
-<span class="ansi-green-fg">[I 2022-01-07 23:03:25,592]</span> Trial 0 finished with value: 0.1 and parameters: {&#39;epochs&#39;: 2, &#39;offset&#39;: 0.02}. Best is trial 0 with value: 0.1.
-starting experiment 8 with run number 0
-running experiment 8
-run number: 0
-
-parameters:
-	epochs=4,
-	offset=0.02,
-	rate=0.04
-
-script: /tmp/ipykernel_17968/1270020730.py, line number: 19
-time spent on this experiment: 0.0003159046173095703
-score: 0.18000000000000002
-0 - validation_accuracy: 0.18000000000000002
-0 - test_accuracy: 0.28
-finished experiment 8
-<span class="ansi-green-fg">[I 2022-01-07 23:03:25,882]</span> Trial 1 finished with value: 0.18000000000000002 and parameters: {&#39;epochs&#39;: 4, &#39;offset&#39;: 0.02}. Best is trial 1 with value: 0.18000000000000002.
-starting experiment 9 with run number 0
-running experiment 9
-run number: 0
-
-parameters:
-	epochs=4,
-	offset=0.06,
-	rate=0.04
-
-script: /tmp/ipykernel_17968/1270020730.py, line number: 19
-time spent on this experiment: 0.00029277801513671875
-score: 0.22000000000000003
-0 - validation_accuracy: 0.22000000000000003
-0 - test_accuracy: 0.32000000000000006
-finished experiment 9
-<span class="ansi-green-fg">[I 2022-01-07 23:03:26,177]</span> Trial 2 finished with value: 0.22000000000000003 and parameters: {&#39;epochs&#39;: 4, &#39;offset&#39;: 0.06}. Best is trial 2 with value: 0.22000000000000003.
-found previous run for experiment number 7, run 0, with score validation_accuracy = 0.1
-starting experiment 7 with run number 1
-running experiment 7
-run number: 1
-
-parameters:
-	epochs=2,
-	offset=0.02,
-	rate=0.04
-
-script: /tmp/ipykernel_17968/1270020730.py, line number: 19
-time spent on this experiment: 0.00029087066650390625
-score: 0.1
-1 - validation_accuracy: 0.1
-1 - test_accuracy: 0.2
-finished experiment 7
-<span class="ansi-green-fg">[I 2022-01-07 23:03:26,456]</span> Trial 3 finished with value: 0.1 and parameters: {&#39;epochs&#39;: 2, &#39;offset&#39;: 0.02}. Best is trial 2 with value: 0.22000000000000003.
-Number of finished trials: 4
-Best trial:
-Value: 0.22000000000000003
-best params: {&#39;epochs&#39;: 4, &#39;offset&#39;: 0.06}
+<pre><span class="ansi-green-fg">[I 2022-02-08 11:57:27,822]</span> A new study created in RDB with name: hp_study
+<span class="ansi-green-fg">[I 2022-02-08 11:57:28,220]</span> Trial 0 finished with value: 0.22000000000000003 and parameters: {&#39;epochs&#39;: 4, &#39;offset&#39;: 0.06}. Best is trial 0 with value: 0.22000000000000003.
+<span class="ansi-green-fg">[I 2022-02-08 11:57:28,517]</span> Trial 1 finished with value: 0.22000000000000003 and parameters: {&#39;epochs&#39;: 4, &#39;offset&#39;: 0.06}. Best is trial 0 with value: 0.22000000000000003.
+<span class="ansi-green-fg">[I 2022-02-08 11:57:28,827]</span> Trial 2 finished with value: 0.18000000000000002 and parameters: {&#39;epochs&#39;: 4, &#39;offset&#39;: 0.02}. Best is trial 0 with value: 0.22000000000000003.
+<span class="ansi-green-fg">[I 2022-02-08 11:57:29,153]</span> Trial 3 finished with value: 0.1 and parameters: {&#39;epochs&#39;: 2, &#39;offset&#39;: 0.02}. Best is trial 0 with value: 0.22000000000000003.
 </pre>
 </div>
 </div>
@@ -5191,8 +3916,8 @@ best params: {&#39;epochs&#39;: 4, &#39;offset&#39;: 0.06}
       <td>5.0</td>
       <td>0.35</td>
       <td>0.45</td>
-      <td>0.001425</td>
-      <td>23:03:23.605901</td>
+      <td>0.001065</td>
+      <td>11:57:26.271250</td>
       <td>True</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -5215,21 +3940,21 @@ best params: {&#39;epochs&#39;: 4, &#39;offset&#39;: 0.06}
       <td>2.0</td>
       <td>0.16</td>
       <td>0.26</td>
-      <td>0.001879</td>
-      <td>23:03:23.801889</td>
+      <td>0.001169</td>
+      <td>11:57:26.459273</td>
       <td>True</td>
-      <td>0.159777</td>
-      <td>0.260714</td>
+      <td>0.160822</td>
+      <td>0.261897</td>
       <td>...</td>
-      <td>0.001259</td>
+      <td>0.000531</td>
       <td>True</td>
-      <td>0.159116</td>
-      <td>0.260154</td>
-      <td>0.00132</td>
+      <td>0.160277</td>
+      <td>0.260827</td>
+      <td>0.000307</td>
       <td>True</td>
-      <td>0.161083</td>
-      <td>0.261054</td>
-      <td>0.001281</td>
+      <td>0.159735</td>
+      <td>0.26272</td>
+      <td>0.000302</td>
       <td>True</td>
     </tr>
     <tr>
@@ -5239,8 +3964,8 @@ best params: {&#39;epochs&#39;: 4, &#39;offset&#39;: 0.06}
       <td>NaN</td>
       <td>0.90</td>
       <td>0.80</td>
-      <td>0.003241</td>
-      <td>23:03:23.543798</td>
+      <td>0.002159</td>
+      <td>11:57:26.218473</td>
       <td>True</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -5263,8 +3988,8 @@ best params: {&#39;epochs&#39;: 4, &#39;offset&#39;: 0.06}
       <td>3.0</td>
       <td>0.13</td>
       <td>0.23</td>
-      <td>0.001298</td>
-      <td>23:03:23.901293</td>
+      <td>0.000306</td>
+      <td>11:57:26.544574</td>
       <td>True</td>
       <td>0.130000</td>
       <td>0.230000</td>
@@ -5287,8 +4012,8 @@ best params: {&#39;epochs&#39;: 4, &#39;offset&#39;: 0.06}
       <td>3.0</td>
       <td>0.17</td>
       <td>0.27</td>
-      <td>0.001418</td>
-      <td>23:03:24.000448</td>
+      <td>0.000297</td>
+      <td>11:57:26.632867</td>
       <td>True</td>
       <td>0.170000</td>
       <td>0.270000</td>
@@ -5311,8 +4036,8 @@ best params: {&#39;epochs&#39;: 4, &#39;offset&#39;: 0.06}
       <td>5.0</td>
       <td>0.21</td>
       <td>0.31</td>
-      <td>0.001335</td>
-      <td>23:03:24.105126</td>
+      <td>0.000305</td>
+      <td>11:57:26.724640</td>
       <td>True</td>
       <td>0.210000</td>
       <td>0.310000</td>
@@ -5335,8 +4060,8 @@ best params: {&#39;epochs&#39;: 4, &#39;offset&#39;: 0.06}
       <td>5.0</td>
       <td>0.25</td>
       <td>0.35</td>
-      <td>0.001387</td>
-      <td>23:03:24.208955</td>
+      <td>0.000321</td>
+      <td>11:57:26.820704</td>
       <td>True</td>
       <td>0.250000</td>
       <td>0.350000</td>
@@ -5354,16 +4079,16 @@ best params: {&#39;epochs&#39;: 4, &#39;offset&#39;: 0.06}
     </tr>
     <tr>
       <th>7</th>
-      <td>0.02</td>
+      <td>0.06</td>
       <td>0.04</td>
-      <td>2.0</td>
-      <td>0.10</td>
-      <td>0.20</td>
-      <td>0.001314</td>
-      <td>23:03:26.377771</td>
+      <td>4.0</td>
+      <td>0.22</td>
+      <td>0.32</td>
+      <td>0.000315</td>
+      <td>11:57:28.444572</td>
       <td>True</td>
-      <td>0.100000</td>
-      <td>0.200000</td>
+      <td>0.220000</td>
+      <td>0.320000</td>
       <td>...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -5383,8 +4108,8 @@ best params: {&#39;epochs&#39;: 4, &#39;offset&#39;: 0.06}
       <td>4.0</td>
       <td>0.18</td>
       <td>0.28</td>
-      <td>0.001367</td>
-      <td>23:03:25.807008</td>
+      <td>0.000381</td>
+      <td>11:57:28.750665</td>
       <td>True</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -5402,13 +4127,13 @@ best params: {&#39;epochs&#39;: 4, &#39;offset&#39;: 0.06}
     </tr>
     <tr>
       <th>9</th>
-      <td>0.06</td>
+      <td>0.02</td>
       <td>0.04</td>
-      <td>4.0</td>
-      <td>0.22</td>
-      <td>0.32</td>
-      <td>0.001762</td>
-      <td>23:03:26.089913</td>
+      <td>2.0</td>
+      <td>0.10</td>
+      <td>0.20</td>
+      <td>0.000386</td>
+      <td>11:57:29.078607</td>
       <td>True</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -5464,7 +4189,7 @@ best params: {&#39;epochs&#39;: 4, &#39;offset&#39;: 0.06}
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_rerun_experiment_pipeline" class="doc_header"><code>test_rerun_experiment_pipeline</code><a href="hpsearch/tests/test_experiment_manager.py#L905" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_rerun_experiment_pipeline</code>()</p>
+<h4 id="test_rerun_experiment_pipeline" class="doc_header"><code>test_rerun_experiment_pipeline</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L906" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_rerun_experiment_pipeline</code>()</p>
 </blockquote>
 
 </div>
@@ -5503,62 +4228,6 @@ best params: {&#39;epochs&#39;: 4, &#39;offset&#39;: 0.06}
 
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>experiment script: /tmp/ipykernel_17968/258747340.py, line: 7
-running experiment 0
-run number: 0
-
-parameters:
-	epochs=5,
-	offset=0.1,
-	rate=0.05
-
-script: /tmp/ipykernel_17968/258747340.py, line number: 7
-experiment script: /tmp/ipykernel_17968/258747340.py, line: 9
-running experiment 1
-run number: 0
-
-parameters:
-	epochs=2,
-	offset=0.1,
-	rate=0.03
-
-script: /tmp/ipykernel_17968/258747340.py, line number: 9
-time spent on this experiment: 0.0006632804870605469
-score: 0.16
-0 - validation_accuracy: 0.16
-0 - test_accuracy: 0.26
-finished experiment 1
-doing run 0 out of 5
-
-experiment script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line: 605
-running experiment 2
-run number: 0
-
-parameters:
-	rate=0.04
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line number: 605
-time spent on this experiment: 0.0015058517456054688
-score: 0.9000000000000004
-0 - validation_accuracy: 0.9000000000000004
-0 - test_accuracy: 0.8000000000000004
-finished experiment 2
-doing run 1 out of 5
-
-experiment script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line: 605
-running experiment 2
-run number: 1
-
-parameters:
-	rate=0.04
-
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>running test_rerun_experiment_pipeline
 fitting model with 5 epochs
@@ -5581,41 +4250,7 @@ epoch 6: accuracy: 0.7800000000000002
 epoch 7: accuracy: 0.8200000000000003
 epoch 8: accuracy: 0.8600000000000003
 epoch 9: accuracy: 0.9000000000000004
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line number: 605
-time spent on this experiment: 0.0016970634460449219
-score: 0.9000000000000004
-1 - validation_accuracy: 0.9000000000000004
-1 - test_accuracy: 0.8000000000000004
-finished experiment 2
-doing run 2 out of 5
-
-experiment script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line: 605
-running experiment 2
-run number: 2
-
-parameters:
-	rate=0.04
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line number: 605
-time spent on this experiment: 0.0015330314636230469
-score: 0.9000000000000004
-2 - validation_accuracy: 0.9000000000000004
-2 - test_accuracy: 0.8000000000000004
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>fitting model with 10 epochs
+fitting model with 10 epochs
 epoch 0: accuracy: 0.54
 epoch 1: accuracy: 0.5800000000000001
 epoch 2: accuracy: 0.6200000000000001
@@ -5637,53 +4272,7 @@ epoch 6: accuracy: 0.7800000000000002
 epoch 7: accuracy: 0.8200000000000003
 epoch 8: accuracy: 0.8600000000000003
 epoch 9: accuracy: 0.9000000000000004
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>finished experiment 2
-doing run 3 out of 5
-
-experiment script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line: 605
-running experiment 2
-run number: 3
-
-parameters:
-	rate=0.04
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line number: 605
-time spent on this experiment: 0.0015239715576171875
-score: 0.9000000000000004
-3 - validation_accuracy: 0.9000000000000004
-3 - test_accuracy: 0.8000000000000004
-finished experiment 2
-doing run 4 out of 5
-
-experiment script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line: 605
-running experiment 2
-run number: 4
-
-parameters:
-	rate=0.04
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line number: 605
-time spent on this experiment: 0.0015299320220947266
-score: 0.9000000000000004
-4 - validation_accuracy: 0.9000000000000004
-4 - test_accuracy: 0.8000000000000004
-finished experiment 2
-mean : 0.9000000000000004, std: 0.0
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>fitting model with 10 epochs
+fitting model with 10 epochs
 epoch 0: accuracy: 0.54
 epoch 1: accuracy: 0.5800000000000001
 epoch 2: accuracy: 0.6200000000000001
@@ -5786,8 +4375,8 @@ epoch 9: accuracy: 0.9000000000000004
       <td>2.0</td>
       <td>0.16</td>
       <td>0.26</td>
-      <td>0.001702</td>
-      <td>23:03:26.631063</td>
+      <td>0.001184</td>
+      <td>11:57:29.324968</td>
       <td>True</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -5810,21 +4399,21 @@ epoch 9: accuracy: 0.9000000000000004
       <td>NaN</td>
       <td>0.90</td>
       <td>0.80</td>
-      <td>0.002523</td>
-      <td>23:03:26.856945</td>
+      <td>0.001873</td>
+      <td>11:57:29.534048</td>
       <td>True</td>
       <td>0.9</td>
       <td>0.8</td>
       <td>...</td>
-      <td>0.002529</td>
+      <td>0.002117</td>
       <td>True</td>
       <td>0.9</td>
       <td>0.8</td>
-      <td>0.002537</td>
+      <td>0.001923</td>
       <td>True</td>
       <td>0.9</td>
       <td>0.8</td>
-      <td>0.002591</td>
+      <td>0.002508</td>
       <td>True</td>
     </tr>
   </tbody>
@@ -5833,23 +4422,6 @@ epoch 9: accuracy: 0.9000000000000004
 </div>
 </div>
 
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>time spent on this experiment: 0.0006670951843261719
-score: 0.18000000000000002
-time spent on this experiment: 0.0007505416870117188
-score: 0.16
-time spent on this experiment: 0.0014848709106445312
-score: 0.9000000000000004
-time spent on this experiment: 0.0017549991607666016
-score: 0.9000000000000004
-time spent on this experiment: 0.0014443397521972656
-score: 0.9000000000000004
-</pre>
-</div>
 </div>
 
 <div class="output_area">
@@ -5911,25 +4483,7 @@ epoch 6: accuracy: 0.7800000000000002
 epoch 7: accuracy: 0.8200000000000003
 epoch 8: accuracy: 0.8600000000000003
 epoch 9: accuracy: 0.9000000000000004
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>time spent on this experiment: 0.0020360946655273438
-score: 0.9000000000000004
-time spent on this experiment: 0.00164794921875
-score: 0.9000000000000004
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>fitting model with 10 epochs
+fitting model with 10 epochs
 epoch 0: accuracy: 0.54
 epoch 1: accuracy: 0.5800000000000001
 epoch 2: accuracy: 0.6200000000000001
@@ -5968,7 +4522,7 @@ epoch 9: accuracy: 0.9000000000000004
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_rerun_experiment_par" class="doc_header"><code>test_rerun_experiment_par</code><a href="hpsearch/tests/test_experiment_manager.py#L960" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_rerun_experiment_par</code>()</p>
+<h4 id="test_rerun_experiment_par" class="doc_header"><code>test_rerun_experiment_par</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L961" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_rerun_experiment_par</code>()</p>
 </blockquote>
 
 </div>
@@ -6004,82 +4558,6 @@ epoch 9: accuracy: 0.9000000000000004
 
 <div class="output_wrapper">
 <div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>experiment script: /tmp/ipykernel_17968/2626610475.py, line: 7
-running experiment 0
-run number: 0
-
-parameters:
-	epochs=5,
-	offset=0.1,
-	rate=0.05
-
-script: /tmp/ipykernel_17968/2626610475.py, line number: 7
-experiment script: /tmp/ipykernel_17968/2626610475.py, line: 9
-running experiment 1
-run number: 0
-
-parameters:
-	epochs=2,
-	offset=0.1,
-	rate=0.03
-
-script: /tmp/ipykernel_17968/2626610475.py, line number: 9
-time spent on this experiment: 0.0006229877471923828
-score: 0.16
-0 - validation_accuracy: 0.16
-0 - test_accuracy: 0.26
-finished experiment 1
-doing run 0 out of 5
-
-experiment script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line: 605
-running experiment 2
-run number: 0
-
-parameters:
-	rate=0.04
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line number: 605
-time spent on this experiment: 0.0024886131286621094
-score: 0.9000000000000004
-0 - validation_accuracy: 0.9000000000000004
-0 - test_accuracy: 0.8000000000000004
-finished experiment 2
-doing run 1 out of 5
-
-experiment script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line: 605
-running experiment 2
-run number: 1
-
-parameters:
-	rate=0.04
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line number: 605
-time spent on this experiment: 0.001641988754272461
-score: 0.9000000000000004
-1 - validation_accuracy: 0.9000000000000004
-1 - test_accuracy: 0.8000000000000004
-finished experiment 2
-doing run 2 out of 5
-
-experiment script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line: 605
-running experiment 2
-run number: 2
-
-parameters:
-	rate=0.04
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line number: 605
-time spent on this experiment: 0.0015268325805664062
-score: 0.9000000000000004
-2 - validation_accuracy: 0.9000000000000004
-2 - test_accuracy: 0.8000000000000004
-</pre>
-</div>
-</div>
 
 <div class="output_area">
 
@@ -6127,53 +4605,7 @@ epoch 6: accuracy: 0.7800000000000002
 epoch 7: accuracy: 0.8200000000000003
 epoch 8: accuracy: 0.8600000000000003
 epoch 9: accuracy: 0.9000000000000004
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>finished experiment 2
-doing run 3 out of 5
-
-experiment script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line: 605
-running experiment 2
-run number: 3
-
-parameters:
-	rate=0.04
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line number: 605
-time spent on this experiment: 0.0015747547149658203
-score: 0.9000000000000004
-3 - validation_accuracy: 0.9000000000000004
-3 - test_accuracy: 0.8000000000000004
-finished experiment 2
-doing run 4 out of 5
-
-experiment script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line: 605
-running experiment 2
-run number: 4
-
-parameters:
-	rate=0.04
-
-script: /home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py, line number: 605
-time spent on this experiment: 0.0017032623291015625
-score: 0.9000000000000004
-4 - validation_accuracy: 0.9000000000000004
-4 - test_accuracy: 0.8000000000000004
-finished experiment 2
-mean : 0.9000000000000004, std: 0.0
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>fitting model with 10 epochs
+fitting model with 10 epochs
 epoch 0: accuracy: 0.54
 epoch 1: accuracy: 0.5800000000000001
 epoch 2: accuracy: 0.6200000000000001
@@ -6276,8 +4708,8 @@ epoch 9: accuracy: 0.9000000000000004
       <td>2.0</td>
       <td>0.16</td>
       <td>0.26</td>
-      <td>0.001598</td>
-      <td>23:12:45.584655</td>
+      <td>0.001079</td>
+      <td>11:57:29.728517</td>
       <td>True</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -6300,21 +4732,21 @@ epoch 9: accuracy: 0.9000000000000004
       <td>NaN</td>
       <td>0.90</td>
       <td>0.80</td>
-      <td>0.003520</td>
-      <td>23:12:45.810447</td>
+      <td>0.002676</td>
+      <td>11:57:29.941738</td>
       <td>True</td>
       <td>0.9</td>
       <td>0.8</td>
       <td>...</td>
-      <td>0.002526</td>
+      <td>0.001907</td>
       <td>True</td>
       <td>0.9</td>
       <td>0.8</td>
-      <td>0.002574</td>
+      <td>0.001986</td>
       <td>True</td>
       <td>0.9</td>
       <td>0.8</td>
-      <td>0.00264</td>
+      <td>0.002055</td>
       <td>True</td>
     </tr>
   </tbody>
@@ -6323,14 +4755,6 @@ epoch 9: accuracy: 0.9000000000000004
 </div>
 </div>
 
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>time spent on this experiment: 0.0016181468963623047
-</pre>
-</div>
 </div>
 
 <div class="output_area">
@@ -6374,7 +4798,7 @@ epoch 9: accuracy: 0.9000000000000004
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_git_revision_hash" class="doc_header"><code>get_git_revision_hash</code><a href="hpsearch/experiment_manager.py#L1072" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_git_revision_hash</code>(<strong><code>root_path</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="get_git_revision_hash" class="doc_header"><code>get_git_revision_hash</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1099" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_git_revision_hash</code>(<strong><code>root_path</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 
 </div>
@@ -6411,7 +4835,7 @@ epoch 9: accuracy: 0.9000000000000004
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="record_parameters" class="doc_header"><code>record_parameters</code><a href="hpsearch/experiment_manager.py#L1089" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>record_parameters</code>(<strong><code>path_save</code></strong>, <strong><code>parameters</code></strong>, <strong><code>other_parameters</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="record_parameters" class="doc_header"><code>record_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1116" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>record_parameters</code>(<strong><code>path_save</code></strong>, <strong><code>parameters</code></strong>, <strong><code>other_parameters</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 
 </div>
@@ -6448,7 +4872,7 @@ epoch 9: accuracy: 0.9000000000000004
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="mypprint" class="doc_header"><code>mypprint</code><a href="hpsearch/experiment_manager.py#L1109" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>mypprint</code>(<strong><code>parameters</code></strong>, <strong><code>dict_name</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="mypprint" class="doc_header"><code>mypprint</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1136" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>mypprint</code>(<strong><code>parameters</code></strong>, <strong><code>dict_name</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 
 </div>
@@ -6485,7 +4909,7 @@ epoch 9: accuracy: 0.9000000000000004
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="load_or_create_experiment_values" class="doc_header"><code>load_or_create_experiment_values</code><a href="hpsearch/experiment_manager.py#L1131" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>load_or_create_experiment_values</code>(<strong><code>path_csv</code></strong>, <strong><code>parameters</code></strong>, <strong><code>precision</code></strong>=<em><code>1e-15</code></em>)</p>
+<h4 id="load_or_create_experiment_values" class="doc_header"><code>load_or_create_experiment_values</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1158" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>load_or_create_experiment_values</code>(<strong><code>path_csv</code></strong>, <strong><code>parameters</code></strong>, <strong><code>precision</code></strong>=<em><code>1e-15</code></em>)</p>
 </blockquote>
 
 </div>
@@ -6522,7 +4946,7 @@ epoch 9: accuracy: 0.9000000000000004
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="store_parameters" class="doc_header"><code>store_parameters</code><a href="hpsearch/experiment_manager.py#L1173" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>store_parameters</code>(<strong><code>root_path</code></strong>, <strong><code>experiment_number</code></strong>, <strong><code>parameters</code></strong>)</p>
+<h4 id="store_parameters" class="doc_header"><code>store_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1200" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>store_parameters</code>(<strong><code>root_path</code></strong>, <strong><code>experiment_number</code></strong>, <strong><code>parameters</code></strong>)</p>
 </blockquote>
 <p>Keeps track of dictionary to map experiment number and parameters values for the different experiments.</p>
 
@@ -6560,7 +4984,7 @@ epoch 9: accuracy: 0.9000000000000004
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="isnull" class="doc_header"><code>isnull</code><a href="hpsearch/experiment_manager.py#L1192" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>isnull</code>(<strong><code>experiment_data</code></strong>, <strong><code>experiment_number</code></strong>, <strong><code>name_column</code></strong>)</p>
+<h4 id="isnull" class="doc_header"><code>isnull</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1219" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>isnull</code>(<strong><code>experiment_data</code></strong>, <strong><code>experiment_number</code></strong>, <strong><code>name_column</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -6597,7 +5021,7 @@ epoch 9: accuracy: 0.9000000000000004
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_experiment_number" class="doc_header"><code>get_experiment_number</code><a href="hpsearch/experiment_manager.py#L1196" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_experiment_number</code>(<strong><code>root_path</code></strong>, <strong><code>parameters</code></strong>=<em><code>{}</code></em>)</p>
+<h4 id="get_experiment_number" class="doc_header"><code>get_experiment_number</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1223" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_experiment_number</code>(<strong><code>root_path</code></strong>, <strong><code>parameters</code></strong>=<em><code>{}</code></em>)</p>
 </blockquote>
 
 </div>
@@ -6634,7 +5058,7 @@ epoch 9: accuracy: 0.9000000000000004
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_experiment_numbers" class="doc_header"><code>get_experiment_numbers</code><a href="hpsearch/experiment_manager.py#L1205" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_experiment_numbers</code>(<strong><code>path_results_base</code></strong>, <strong><code>parameters_single_value</code></strong>, <strong><code>parameters_multiple_values_all</code></strong>)</p>
+<h4 id="get_experiment_numbers" class="doc_header"><code>get_experiment_numbers</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1232" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_experiment_numbers</code>(<strong><code>path_results_base</code></strong>, <strong><code>parameters_single_value</code></strong>, <strong><code>parameters_multiple_values_all</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -6671,7 +5095,7 @@ epoch 9: accuracy: 0.9000000000000004
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="insert_experiment_script_path" class="doc_header"><code>insert_experiment_script_path</code><a href="hpsearch/experiment_manager.py#L1222" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>insert_experiment_script_path</code>(<strong><code>other_parameters</code></strong>, <strong><code>logger</code></strong>)</p>
+<h4 id="insert_experiment_script_path" class="doc_header"><code>insert_experiment_script_path</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1249" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>insert_experiment_script_path</code>(<strong><code>other_parameters</code></strong>, <strong><code>logger</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -6708,7 +5132,7 @@ epoch 9: accuracy: 0.9000000000000004
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="load_parameters" class="doc_header"><code>load_parameters</code><a href="hpsearch/experiment_manager.py#L1233" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>load_parameters</code>(<strong><code>experiment</code></strong>=<em><code>None</code></em>, <strong><code>root_path</code></strong>=<em><code>None</code></em>, <strong><code>root_folder</code></strong>=<em><code>None</code></em>, <strong><code>other_parameters</code></strong>=<em><code>{}</code></em>, <strong><code>parameters</code></strong>=<em><code>{}</code></em>, <strong><code>check_experiment_matches</code></strong>=<em><code>True</code></em>, <strong><code>em</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="load_parameters" class="doc_header"><code>load_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1260" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>load_parameters</code>(<strong><code>experiment</code></strong>=<em><code>None</code></em>, <strong><code>root_path</code></strong>=<em><code>None</code></em>, <strong><code>root_folder</code></strong>=<em><code>None</code></em>, <strong><code>other_parameters</code></strong>=<em><code>{}</code></em>, <strong><code>parameters</code></strong>=<em><code>{}</code></em>, <strong><code>check_experiment_matches</code></strong>=<em><code>True</code></em>, <strong><code>em</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 
 </div>
@@ -6745,7 +5169,7 @@ epoch 9: accuracy: 0.9000000000000004
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="save_other_parameters" class="doc_header"><code>save_other_parameters</code><a href="hpsearch/experiment_manager.py#L1269" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>save_other_parameters</code>(<strong><code>experiment_number</code></strong>, <strong><code>other_parameters</code></strong>, <strong><code>root_path</code></strong>)</p>
+<h4 id="save_other_parameters" class="doc_header"><code>save_other_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1296" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>save_other_parameters</code>(<strong><code>experiment_number</code></strong>, <strong><code>other_parameters</code></strong>, <strong><code>root_path</code></strong>)</p>
 </blockquote>
 
 </div>

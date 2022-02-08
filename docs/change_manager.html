@@ -43,7 +43,13 @@ nb_path: "nbs/tools/change_manager.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pytest</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pytest</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span> <span class="nn">cloudpickle</span>
+
+<span class="kn">from</span> <span class="nn">block_types.utils.utils</span> <span class="kn">import</span> <span class="n">remove_previous_results</span>
+
 <span class="kn">from</span> <span class="nn">hpsearch.config.manager_factory</span> <span class="kn">import</span> <span class="n">ManagerFactory</span>
 <span class="kn">from</span> <span class="nn">hpsearch.examples.example_experiment_manager</span> <span class="kn">import</span> <span class="n">ExampleExperimentManager</span>
 <span class="kn">from</span> <span class="nn">hpsearch.examples.dummy_experiment_manager</span> <span class="kn">import</span> <span class="n">DummyExperimentManager</span>
@@ -56,6 +62,12 @@ nb_path: "nbs/tools/change_manager.ipynb"
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="change_manager">change_manager<a class="anchor-link" href="#change_manager"> </a></h2>
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -67,7 +79,7 @@ nb_path: "nbs/tools/change_manager.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="change_manager" class="doc_header"><code>change_manager</code><a href="hpsearch/tools/change_manager.py#L13" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>change_manager</code>(<strong><code>subclass</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="change_manager" class="doc_header"><code>change_manager</code><a href="hpsearch/tools/change_manager.py#L16" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>change_manager</code>(<strong><code>subclass</code></strong>=<em><code>None</code></em>, <strong><code>manager_path</code></strong>=<em><code>'em_obj'</code></em>)</p>
 </blockquote>
 
 </div>
@@ -104,7 +116,7 @@ nb_path: "nbs/tools/change_manager.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_change_manager_list" class="doc_header"><code>test_change_manager_list</code><a href="hpsearch/tests/tools/test_change_manager.py#L19" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_change_manager_list</code>()</p>
+<h4 id="test_change_manager_list" class="doc_header"><code>test_change_manager_list</code><a href="hpsearch/tests/tools/test_change_manager.py#L22" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_change_manager_list</code>()</p>
 </blockquote>
 
 </div>
@@ -131,7 +143,7 @@ nb_path: "nbs/tools/change_manager.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_change_manager_list</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_change_manager_list</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -144,8 +156,34 @@ nb_path: "nbs/tools/change_manager.ipynb"
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>class2import not found, switching to original method
-class2import not found, switching to original method
+<pre>experiment manager not registered yet, importing experiment manager
+loading manager from /home/jcidatascience/jaume/workspace/remote/temp/hpsearch/test_change_manager_list/manager/whole
+No experiment manager to import was found, setting base manager.
+experiment manager not registered yet, importing experiment manager
+loading manager from /home/jcidatascience/jaume/workspace/remote/temp/hpsearch/test_change_manager_list/manager/whole
+returning registered experiment manager
+returning experiment manager &lt;hpsearch.examples.example_experiment_manager.ExampleExperimentManager object at 0x7fb633d00460&gt;
+returning experiment manager &lt;hpsearch.examples.example_experiment_manager.ExampleExperimentManager object at 0x7fb633d00460&gt;
+returning registered experiment manager
+returning experiment manager &lt;hpsearch.examples.example_experiment_manager.ExampleExperimentManager object at 0x7fb633d00460&gt;
+experiment manager not registered yet, importing experiment manager
+loading manager from /home/jcidatascience/jaume/workspace/remote/temp/hpsearch/test_change_manager_list/manager/whole
+returning registered experiment manager
+returning experiment manager &lt;hpsearch.examples.dummy_experiment_manager.DummyExperimentManager object at 0x7fb61e28fa30&gt;
+returning experiment manager &lt;hpsearch.examples.dummy_experiment_manager.DummyExperimentManager object at 0x7fb61e28fa30&gt;
+experiment manager not registered yet, importing experiment manager
+loading manager from /home/jcidatascience/jaume/workspace/remote/temp/hpsearch/test_change_manager_list/manager/whole
+returning registered experiment manager
+returning experiment manager &lt;hpsearch.examples.dummy_experiment_manager.DummyExperimentManager object at 0x7fb61e28feb0&gt;
+returning experiment manager &lt;hpsearch.examples.dummy_experiment_manager.DummyExperimentManager object at 0x7fb61e28feb0&gt;
+loading manager from /home/jcidatascience/jaume/workspace/remote/temp/hpsearch/test_change_manager_list/manager/whole
+experiment manager not registered yet, importing experiment manager
+loading manager from /home/jcidatascience/jaume/workspace/remote/temp/hpsearch/test_change_manager_list/manager/whole
+returning registered experiment manager
+returning experiment manager &lt;hpsearch.examples.example_experiment_manager.ExampleExperimentManager object at 0x7fb60226e610&gt;
+returning experiment manager &lt;hpsearch.examples.example_experiment_manager.ExampleExperimentManager object at 0x7fb60226e610&gt;
+returning registered experiment manager
+returning experiment manager &lt;hpsearch.examples.example_experiment_manager.ExampleExperimentManager object at 0x7fb60226e610&gt;
 </pre>
 </div>
 </div>
@@ -156,22 +194,56 @@ class2import not found, switching to original method
 <pre>running test_change_manager_list
 
 initial list
-subclasses: dict_keys([])
+managers: []
 experiment manager registered: ExperimentManager
+registered name: ExperimentManager-default
 
 list after storing ExampleExperimentManager
-subclasses: dict_keys([&#39;ExampleExperimentManager&#39;])
+managers: [&#39;ExampleExperimentManager-default&#39;]
 experiment manager registered: ExampleExperimentManager
+registered name: ExampleExperimentManager-default
 
 list after storing DummyExperimentManager
-subclasses: dict_keys([&#39;ExampleExperimentManager&#39;, &#39;DummyExperimentManager&#39;])
+managers: [&#39;DummyExperimentManager-default&#39;, &#39;ExampleExperimentManager-default&#39;]
 experiment manager registered: DummyExperimentManager
+registered name: DummyExperimentManager-default
 
 list after changing manager
-subclasses: dict_keys([&#39;ExampleExperimentManager&#39;, &#39;DummyExperimentManager&#39;])
+managers: [&#39;DummyExperimentManager-default&#39;, &#39;ExampleExperimentManager-default&#39;]
 experiment manager registered: ExampleExperimentManager
+registered name: ExampleExperimentManager-default
 </pre>
 </div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="parse_args">parse_args<a class="anchor-link" href="#parse_args"> </a></h2>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="parse_args" class="doc_header"><code>parse_args</code><a href="hpsearch/tools/change_manager.py#L30" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>parse_args</code>(<strong><code>args</code></strong>)</p>
+</blockquote>
+
+</div>
+
 </div>
 
 </div>
@@ -184,6 +256,19 @@ experiment manager registered: ExampleExperimentManager
     
 <div class="cell border-box-sizing code_cell rendered">
 
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="run_change_manager">run_change_manager<a class="anchor-link" href="#run_change_manager"> </a></h2>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
 <div class="output_wrapper">
 <div class="output">
 
@@ -191,7 +276,186 @@ experiment manager registered: ExampleExperimentManager
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="main" class="doc_header"><code>main</code><a href="hpsearch/tools/change_manager.py#L27" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>main</code>()</p>
+<h4 id="run_change_manager" class="doc_header"><code>run_change_manager</code><a href="hpsearch/tools/change_manager.py#L40" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>run_change_manager</code>(<strong><code>pars</code></strong>)</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="parse_arguments_and_run">parse_arguments_and_run<a class="anchor-link" href="#parse_arguments_and_run"> </a></h2>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="parse_arguments_and_run" class="doc_header"><code>parse_arguments_and_run</code><a href="hpsearch/tools/change_manager.py#L51" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>parse_arguments_and_run</code>(<strong><code>args</code></strong>)</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Example-usage">Example usage<a class="anchor-link" href="#Example-usage"> </a></h3>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="test_change_manager_parse_and_run" class="doc_header"><code>test_change_manager_parse_and_run</code><a href="hpsearch/tests/tools/test_change_manager.py#L87" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_change_manager_parse_and_run</code>()</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_change_manager_parse_and_run</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>experiment manager not registered yet, importing experiment manager
+loading manager from /home/jcidatascience/jaume/workspace/remote/temp/hpsearch/test_change_manager_parse_and_run/manager/whole
+returning registered experiment manager
+returning experiment manager &lt;hpsearch.examples.dummy_experiment_manager.DummyExperimentManager object at 0x7fb6581b8490&gt;
+returning experiment manager &lt;hpsearch.examples.dummy_experiment_manager.DummyExperimentManager object at 0x7fb6581b8490&gt;
+experiment manager not registered yet, importing experiment manager
+loading manager from /home/jcidatascience/jaume/workspace/remote/temp/hpsearch/test_change_manager_parse_and_run/manager/whole
+returning registered experiment manager
+returning experiment manager &lt;hpsearch.examples.dummy_experiment_manager.DummyExperimentManager object at 0x7fb602008df0&gt;
+returning experiment manager &lt;hpsearch.examples.dummy_experiment_manager.DummyExperimentManager object at 0x7fb602008df0&gt;
+loading manager from /home/jcidatascience/jaume/workspace/remote/temp/hpsearch/test_change_manager_parse_and_run/manager/whole
+experiment manager not registered yet, importing experiment manager
+loading manager from /home/jcidatascience/jaume/workspace/remote/temp/hpsearch/test_change_manager_parse_and_run/manager/whole
+returning registered experiment manager
+returning experiment manager &lt;hpsearch.examples.example_experiment_manager.ExampleExperimentManager object at 0x7fb601fd3b20&gt;
+returning experiment manager &lt;hpsearch.examples.example_experiment_manager.ExampleExperimentManager object at 0x7fb601fd3b20&gt;
+experiment manager not registered yet, importing experiment manager
+loading manager from /home/jcidatascience/jaume/workspace/remote/temp/hpsearch/test_change_manager_parse_and_run/manager/whole
+returning registered experiment manager
+returning experiment manager &lt;hpsearch.examples.example_experiment_manager.ExampleExperimentManager object at 0x7fb6592296a0&gt;
+returning experiment manager &lt;hpsearch.examples.example_experiment_manager.ExampleExperimentManager object at 0x7fb6592296a0&gt;
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>running test_change_manager_parse_and_run
+managers: [&#39;DummyExperimentManager-default&#39;, &#39;ExampleExperimentManager-default&#39;]
+experiment manager registered: DummyExperimentManager
+registered name: DummyExperimentManager-default
+managers: [&#39;DummyExperimentManager-default&#39;, &#39;ExampleExperimentManager-default&#39;]
+experiment manager registered: ExampleExperimentManager
+registered name: ExampleExperimentManager-default
+managers: [&#39;DummyExperimentManager-default&#39;, &#39;ExampleExperimentManager-default&#39;]
+experiment manager registered: ExampleExperimentManager
+registered name: ExampleExperimentManager-default
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="main">main<a class="anchor-link" href="#main"> </a></h2>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="main" class="doc_header"><code>main</code><a href="hpsearch/tools/change_manager.py#L56" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>main</code>()</p>
 </blockquote>
 
 </div>

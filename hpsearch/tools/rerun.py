@@ -5,12 +5,14 @@ __all__ = ['rerun', 'parse_args', 'parse_arguments_and_run', 'main']
 # Cell
 import argparse
 import sys
+
 from ..config.hpconfig import get_experiment_manager
+import hpsearch.config.hp_defaults as dflt
 
 # Cell
 def rerun (experiments=None, root=None, epochs=None, runs=None, unfinished=False,
            verbose=None, debug=False, em_args=None, store=False, from_dict=False,
-           range_exp=None, min_iterations=None):
+           range_exp=None, min_iterations=None, manager_path=dflt.manager_path):
     other_parameters = dict(
                             use_process=not debug,
                             root_folder=root
@@ -19,7 +21,7 @@ def rerun (experiments=None, root=None, epochs=None, runs=None, unfinished=False
         assert len(range_exp) == 2
         experiments += range(range_exp[0], range_exp[1])
 
-    em = get_experiment_manager ()
+    em = get_experiment_manager (manager_path=manager_path)
     if verbose is not None:
         em.set_verbose (verbose)
     if em_args is not None:
@@ -61,6 +63,7 @@ def parse_args (args):
     parser.add_argument('--min-iterations', type=int, default=None,  help="number of iterations to be present in model history in order to consider the experiment good enough for storage.")
     parser.add_argument('--root', type=str, default=None, help='name of root folder')
     parser.add_argument('-v', '--verbose', type=int, default=None, help='verbosity level: 0, 1, 2')
+    parser.add_argument('-p', '--path', default=dflt.manager_path, type=str)
     pars = parser.parse_args(args)
 
     return pars
@@ -68,7 +71,10 @@ def parse_args (args):
 def parse_arguments_and_run (args, em_args = None):
 
     pars = parse_args(args)
-    rerun (**vars(pars), em_args=em_args)
+    pars = vars(pars)
+    pars['manager_path'] = pars['path']
+    del pars['path']
+    rerun (**pars, em_args=em_args)
 
 def main():
     parse_arguments_and_run (sys.argv[1:])

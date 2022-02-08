@@ -83,20 +83,30 @@ class ExperimentManager (object):
             self.manager_path = manager_path
 
         class_name = self.__class__.__name__
-        self.registered_name = (f'{class_name}-default' if self.root_folder is None
-                                else f'{class_name}-{self.root_folder}')
 
         if self.logger is None:
             self.logger = set_logger (self.name_logger, path_results=self.path_experiments, verbose=self.verbose)
 
         self.key_score = metric
-        self.root_folder = self.root
+
+        # TODO: use only root or root_folder field, not both
+        if (self.root_folder is None) and (self.root is not None):
+            self.root_folder = self.root
+        if (self.root is None) and (self.root_folder is not None):
+            self.root = self.root_folder
+        if self.root is not None and self.root_folder is not None and self.root != self.root_folder:
+            raise ValueError ('self.root != self.root_folder')
+
+        self.registered_name = (f'{class_name}-default' if (self.root_folder is None
+                                                            or self.root_folder=='')
+                                else f'{class_name}-{self.root_folder}')
+
         self.parameters_non_pickable = {}
         self.default_operations = dict(root=root,
                                        metric=metric,
                                        op=op)
-        self.manager_factory = ManagerFactory(allow_base_class=allow_base_class,
-                                              manager_path=self.manager_path)
+        self.manager_factory = ManagerFactory(allow_base_class=allow_base_class, manager_path=self.manager_path,
+                                              logger=self.logger)
         self.manager_factory.register_manager (self)
         self.non_pickable_fields = ['manager_factory', 'parameters_non_pickable',
                                     'logger']
@@ -430,13 +440,15 @@ class ExperimentManager (object):
 
         # summary logger
         logger_summary = set_logger ("summary", root_path, mode='w', stdout=False, just_message=True,
-                                     filename='summary.txt', verbose_out=self.verbose)
+                                     filename='summary.txt', verbose=self.verbose,
+                                     verbose_out=self.verbose)
         logger_summary.info ('\n\n{}\nexperiment: {}, run: {}\nscript: {}, line number: {}\nparameters:\n{}{}'.format('*'*100, experiment_number, run_number, other_parameters['script_path'], other_parameters['lineno'], mypprint(parameters), '*'*100))
         if other_parameters.get('rerun_script') is not None:
             logger_summary.info ('\nre-run:\n{}'.format(other_parameters['rerun_script']))
         # same file in path_results
         logger_summary2 = set_logger ("summary", path_results, mode='w', stdout=False,
-                                      just_message=True, filename='summary.txt', verbose_out=self.verbose)
+                                      just_message=True, filename='summary.txt', verbose=self.verbose,
+                                      verbose_out=self.verbose)
         logger_summary2.info ('\n\n{}\nexperiment: {}, run: {}\nscript: {}, line number: {}\nparameters:\n{}{}'.format('*'*100, experiment_number, run_number, other_parameters['script_path'], other_parameters['lineno'], mypprint(parameters), '*'*100))
 
         # ****************************************************************

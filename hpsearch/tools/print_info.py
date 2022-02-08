@@ -13,15 +13,18 @@ import argparse
 import sys
 sys.path.append('.')
 sys.path.append('src')
+
 from ..config.hpconfig import get_path_experiments, get_path_results, get_default_operations
 import hpsearch.utils.experiment_utils as ut
 from .metric_visualization import include_best_and_last_experiment
+import hpsearch.config.hp_defaults as dflt
 
 # Cell
-def print_info (experiments=[-1], base=None, root_folder=None, display_all=False, include_best=False, op=None,
-                metric=None, round_digits=2, compare=True, compact=0, run_number=0):
+def print_info (experiments=[-1], base=None, root_folder=None, display_all=False, include_best=False,
+                op=None, metric=None, round_digits=2, compare=True, compact=0, run_number=0,
+                manager_path=dflt.manager_path):
 
-    default_operations = get_default_operations ()
+    default_operations = get_default_operations (manager_path=manager_path)
     if root_folder is None:
         root_folder = default_operations.get('root', 'results')
     if metric is None:
@@ -32,7 +35,7 @@ def print_info (experiments=[-1], base=None, root_folder=None, display_all=False
     if base is not None:
         root_path = base
     else:
-        root_path = get_path_experiments (folder = root_folder)
+        root_path = get_path_experiments (folder = root_folder, manager_path=manager_path)
 
     df = pd.read_csv('%s/experiments_data.csv' %root_path,index_col=0)
 
@@ -54,7 +57,8 @@ def print_info (experiments=[-1], base=None, root_folder=None, display_all=False
         df_scores = ut.get_experiment_scores(df.loc[[experiment]], suffix_results='_%s' %metric, remove_suffix=True)
         display(df_scores.round(round_digits))
 
-        path_results = get_path_results (experiment, run_number, root_path=root_path)
+        path_results = get_path_results (experiment, run_number, root_path=root_path,
+                                         manager_path=manager_path)
         print (f'path to results: {path_results}')
         scores_names = ut.get_scores_names (df, experiment=experiment, run_number=run_number)
         print (f'scores names: {scores_names}')
@@ -77,6 +81,7 @@ def parse_args(args):
     parser.add_argument('--compact', type=int, default=0, help='compact parameters to this number of characters')
     parser.add_argument('--op', default=None, type=str)
     parser.add_argument('--round', default=2, type=int, help='round scores to this number of digits')
+    parser.add_argument('-p', '--path', default=dflt.manager_path, type=str)
     pars = parser.parse_args(args)
 
     return pars
@@ -86,8 +91,9 @@ def parse_arguments_and_run (args):
     pars = parse_args(args)
 
     print_info (experiments=pars.e, base = pars.base, root_folder=pars.root, display_all=pars.a,
-                                         include_best=pars.best, op=pars.op, metric=pars.metric, round_digits=pars.round,
-                                         compare=not pars.no_comp, compact=pars.compact, run_number=pars.run)
+                include_best=pars.best, op=pars.op, metric=pars.metric, round_digits=pars.round,
+                compare=not pars.no_comp, compact=pars.compact, run_number=pars.run,
+                manager_path=pars.path)
 
 def main():
     parse_arguments_and_run (sys.argv[1:])
