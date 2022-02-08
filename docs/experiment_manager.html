@@ -50,7 +50,7 @@ nb_path: "nbs/experiment_manager.ipynb"
 
 <span class="kn">from</span> <span class="nn">block_types.utils.nbdev_utils</span> <span class="kn">import</span> <span class="n">md</span>
 
-<span class="kn">from</span> <span class="nn">hpsearch.examples.complex_dummy_experiment_manager</span> <span class="kn">import</span> <span class="n">ComplexDummyExperimentManager</span>
+<span class="kn">from</span> <span class="nn">hpsearch.examples.complex_dummy_experiment_manager</span> <span class="kn">import</span> <span class="n">init_em</span>
 </pre></div>
 
     </div>
@@ -77,7 +77,7 @@ nb_path: "nbs/experiment_manager.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="ExperimentManager" class="doc_header"><code>class</code> <code>ExperimentManager</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L38" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ExperimentManager</code>(<strong><code>allow_base_class</code></strong>=<em><code>False</code></em>, <strong><code>path_experiments</code></strong>=<em><code>'results/hpsearch'</code></em>, <strong><code>defaults</code></strong>=<em><code>{}</code></em>, <strong><code>root</code></strong>=<em><code>''</code></em>, <strong><code>metric</code></strong>=<em><code>'accuracy'</code></em>, <strong><code>op</code></strong>=<em><code>'max'</code></em>, <strong><code>path_alternative</code></strong>=<em><code>None</code></em>, <strong><code>path_data</code></strong>=<em><code>None</code></em>, <strong><code>name_model_history</code></strong>=<em><code>'model_history.pk'</code></em>, <strong><code>model_file_name</code></strong>=<em><code>'model.h5'</code></em>, <strong><code>name_epoch</code></strong>=<em><code>'epochs'</code></em>, <strong><code>result_file</code></strong>=<em><code>'dict_results.pk'</code></em>, <strong><code>logger</code></strong>=<em><code>None</code></em>, <strong><code>verbose</code></strong>:<code>int</code>=<em><code>0</code></em>, <strong><code>name_logger</code></strong>:<code>str</code>=<em><code>'experiment_manager'</code></em>)</p>
+<h2 id="ExperimentManager" class="doc_header"><code>class</code> <code>ExperimentManager</code><a href="hpsearch/experiment_manager.py#L38" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ExperimentManager</code>(<strong><code>allow_base_class</code></strong>=<em><code>False</code></em>, <strong><code>path_experiments</code></strong>=<em><code>'results/hpsearch'</code></em>, <strong><code>defaults</code></strong>=<em><code>{}</code></em>, <strong><code>root</code></strong>=<em><code>''</code></em>, <strong><code>metric</code></strong>=<em><code>'accuracy'</code></em>, <strong><code>op</code></strong>=<em><code>'max'</code></em>, <strong><code>alternative_root_path</code></strong>=<em><code>None</code></em>, <strong><code>path_data</code></strong>=<em><code>None</code></em>, <strong><code>name_model_history</code></strong>=<em><code>'model_history.pk'</code></em>, <strong><code>model_file_name</code></strong>=<em><code>'model.h5'</code></em>, <strong><code>name_epoch</code></strong>=<em><code>'epochs'</code></em>, <strong><code>result_file</code></strong>=<em><code>'dict_results.pk'</code></em>, <strong><code>logger</code></strong>=<em><code>None</code></em>, <strong><code>verbose</code></strong>:<code>int</code>=<em><code>0</code></em>, <strong><code>name_logger</code></strong>:<code>str</code>=<em><code>'experiment_manager'</code></em>)</p>
 </blockquote>
 
 </div>
@@ -105,50 +105,13 @@ nb_path: "nbs/experiment_manager.ipynb"
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Setting-up-the-experiment-manager">Setting up the experiment manager<a class="anchor-link" href="#Setting-up-the-experiment-manager"> </a></h4>
-</div>
-</div>
-</div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="init_em" class="doc_header"><code>init_em</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L31" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>init_em</code>(<strong><code>name_folder</code></strong>)</p>
-</blockquote>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <h4 id="Basic-usage">Basic usage<a class="anchor-link" href="#Basic-usage"> </a></h4>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><code>create_experiment_and_run</code> is the main function of the <a href="/hpsearch/experiment_manager.html#ExperimentManager"><code>ExperimentManager</code></a>. All other functions make use of it adding additional functionalities.</p>
+<p><code>create_experiment_and_run</code> is the main function of the <code>ExperimentManager</code>. All other functions make use of it adding additional functionalities.</p>
 <p>In order to call <code>create_experiment_and_run</code>, we pass a dictionary of parameters characterizing the experiment we want to run, as follows:</p>
 
 </div>
@@ -165,7 +128,7 @@ nb_path: "nbs/experiment_manager.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_basic_usage" class="doc_header"><code>test_basic_usage</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L42" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_basic_usage</code>()</p>
+<h4 id="test_basic_usage" class="doc_header"><code>test_basic_usage</code><a href="hpsearch/tests/test_experiment_manager.py#L31" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_basic_usage</code>()</p>
 </blockquote>
 
 </div>
@@ -341,7 +304,7 @@ contents of current run at `test_basic/experiments/00000`:
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_same_values" class="doc_header"><code>test_same_values</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L106" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_same_values</code>()</p>
+<h4 id="test_same_values" class="doc_header"><code>test_same_values</code><a href="hpsearch/tests/test_experiment_manager.py#L95" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_same_values</code>()</p>
 </blockquote>
 
 </div>
@@ -496,7 +459,7 @@ epoch 9: accuracy: 0.6
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_almost_same_values" class="doc_header"><code>test_almost_same_values</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L136" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_almost_same_values</code>()</p>
+<h4 id="test_almost_same_values" class="doc_header"><code>test_almost_same_values</code><a href="hpsearch/tests/test_experiment_manager.py#L125" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_almost_same_values</code>()</p>
 </blockquote>
 
 </div>
@@ -668,7 +631,7 @@ epoch 9: accuracy: 0.600000000000001
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_new_runs" class="doc_header"><code>test_new_runs</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L171" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_new_runs</code>()</p>
+<h4 id="test_new_runs" class="doc_header"><code>test_new_runs</code><a href="hpsearch/tests/test_experiment_manager.py#L160" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_new_runs</code>()</p>
 </blockquote>
 
 </div>
@@ -944,7 +907,7 @@ epoch 9: accuracy: 0.6
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_second_experiment" class="doc_header"><code>test_second_experiment</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L232" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_second_experiment</code>()</p>
+<h4 id="test_second_experiment" class="doc_header"><code>test_second_experiment</code><a href="hpsearch/tests/test_experiment_manager.py#L221" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_second_experiment</code>()</p>
 </blockquote>
 
 </div>
@@ -1268,7 +1231,7 @@ epoch 9: accuracy: 2.7
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_new_parameter" class="doc_header"><code>test_new_parameter</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L261" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_new_parameter</code>()</p>
+<h4 id="test_new_parameter" class="doc_header"><code>test_new_parameter</code><a href="hpsearch/tests/test_experiment_manager.py#L250" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_new_parameter</code>()</p>
 </blockquote>
 
 </div>
@@ -1448,7 +1411,7 @@ epoch 4: accuracy: 0.35
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_new_parameter_default" class="doc_header"><code>test_new_parameter_default</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L294" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_new_parameter_default</code>()</p>
+<h4 id="test_new_parameter_default" class="doc_header"><code>test_new_parameter_default</code><a href="hpsearch/tests/test_experiment_manager.py#L283" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_new_parameter_default</code>()</p>
 </blockquote>
 
 </div>
@@ -1594,7 +1557,7 @@ epoch 9: accuracy: 0.6
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_other_parameters" class="doc_header"><code>test_other_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L319" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_other_parameters</code>()</p>
+<h4 id="test_other_parameters" class="doc_header"><code>test_other_parameters</code><a href="hpsearch/tests/test_experiment_manager.py#L308" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_other_parameters</code>()</p>
 </blockquote>
 
 </div>
@@ -1741,7 +1704,7 @@ epoch 9: accuracy: 0.6
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_remove_not_finished" class="doc_header"><code>test_remove_not_finished</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L352" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_remove_not_finished</code>()</p>
+<h4 id="test_remove_not_finished" class="doc_header"><code>test_remove_not_finished</code><a href="hpsearch/tests/test_experiment_manager.py#L341" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_remove_not_finished</code>()</p>
 </blockquote>
 
 </div>
@@ -2047,7 +2010,7 @@ epoch 9: accuracy: 3.999999999999999
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_repeat_experiment" class="doc_header"><code>test_repeat_experiment</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L382" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_repeat_experiment</code>()</p>
+<h4 id="test_repeat_experiment" class="doc_header"><code>test_repeat_experiment</code><a href="hpsearch/tests/test_experiment_manager.py#L371" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_repeat_experiment</code>()</p>
 </blockquote>
 
 </div>
@@ -2270,7 +2233,7 @@ epoch 9: accuracy: 0.6
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_check_finished" class="doc_header"><code>test_check_finished</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L412" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_check_finished</code>()</p>
+<h4 id="test_check_finished" class="doc_header"><code>test_check_finished</code><a href="hpsearch/tests/test_experiment_manager.py#L401" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_check_finished</code>()</p>
 </blockquote>
 
 </div>
@@ -2364,7 +2327,7 @@ epoch 9: accuracy: 0.6
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_recompute_metrics" class="doc_header"><code>test_recompute_metrics</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L444" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_recompute_metrics</code>()</p>
+<h4 id="test_recompute_metrics" class="doc_header"><code>test_recompute_metrics</code><a href="hpsearch/tests/test_experiment_manager.py#L433" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_recompute_metrics</code>()</p>
 </blockquote>
 
 </div>
@@ -2494,7 +2457,7 @@ or indicating it in the <code>other_parameters</code> dictionary:<div class="hig
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_prev_epoch" class="doc_header"><code>test_prev_epoch</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L477" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_prev_epoch</code>()</p>
+<h4 id="test_prev_epoch" class="doc_header"><code>test_prev_epoch</code><a href="hpsearch/tests/test_experiment_manager.py#L464" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_prev_epoch</code>()</p>
 </blockquote>
 
 </div>
@@ -2764,7 +2727,7 @@ epoch 16: accuracy: 0.9500000000000003
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_prev_epoch2" class="doc_header"><code>test_prev_epoch2</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L519" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_prev_epoch2</code>()</p>
+<h4 id="test_prev_epoch2" class="doc_header"><code>test_prev_epoch2</code><a href="hpsearch/tests/test_experiment_manager.py#L506" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_prev_epoch2</code>()</p>
 </blockquote>
 
 </div>
@@ -2915,7 +2878,7 @@ epoch 2: accuracy: 0.25
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_from_exp" class="doc_header"><code>test_from_exp</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L569" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_from_exp</code>()</p>
+<h4 id="test_from_exp" class="doc_header"><code>test_from_exp</code><a href="hpsearch/tests/test_experiment_manager.py#L556" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_from_exp</code>()</p>
 </blockquote>
 
 </div>
@@ -3047,7 +3010,7 @@ This can be done either passing this when constructing the object:</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_skip_interrupted" class="doc_header"><code>test_skip_interrupted</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L598" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_skip_interrupted</code>()</p>
+<h4 id="test_skip_interrupted" class="doc_header"><code>test_skip_interrupted</code><a href="hpsearch/tests/test_experiment_manager.py#L585" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_skip_interrupted</code>()</p>
 </blockquote>
 
 </div>
@@ -3216,7 +3179,7 @@ not storing result from test_skip_interrupted/experiments/00000/0 with iteration
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_use_last_result" class="doc_header"><code>test_use_last_result</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L637" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_use_last_result</code>()</p>
+<h4 id="test_use_last_result" class="doc_header"><code>test_use_last_result</code><a href="hpsearch/tests/test_experiment_manager.py#L624" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_use_last_result</code>()</p>
 </blockquote>
 
 </div>
@@ -3530,7 +3493,7 @@ not storing result from test_use_last_result/experiments/00000/0 with iterations
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_use_last_result_run_interrupted" class="doc_header"><code>test_use_last_result_run_interrupted</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L690" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_use_last_result_run_interrupted</code>()</p>
+<h4 id="test_use_last_result_run_interrupted" class="doc_header"><code>test_use_last_result_run_interrupted</code><a href="hpsearch/tests/test_experiment_manager.py#L677" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_use_last_result_run_interrupted</code>()</p>
 </blockquote>
 
 </div>
@@ -3625,7 +3588,7 @@ epoch 4: accuracy: 0.25
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_grid_search" class="doc_header"><code>test_grid_search</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L722" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_grid_search</code>()</p>
+<h4 id="test_grid_search" class="doc_header"><code>test_grid_search</code><a href="hpsearch/tests/test_experiment_manager.py#L709" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_grid_search</code>()</p>
 </blockquote>
 
 </div>
@@ -4091,7 +4054,7 @@ finished experiment 3
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_run_multiple_repetitions" class="doc_header"><code>test_run_multiple_repetitions</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L784" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_run_multiple_repetitions</code>()</p>
+<h4 id="test_run_multiple_repetitions" class="doc_header"><code>test_run_multiple_repetitions</code><a href="hpsearch/tests/test_experiment_manager.py#L771" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_run_multiple_repetitions</code>()</p>
 </blockquote>
 
 </div>
@@ -4277,7 +4240,7 @@ mean : 0.25, std: 0.0
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="parameter_sampler" class="doc_header"><code>parameter_sampler</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L842" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>parameter_sampler</code>(<strong><code>trial</code></strong>)</p>
+<h4 id="parameter_sampler" class="doc_header"><code>parameter_sampler</code><a href="hpsearch/tests/test_experiment_manager.py#L829" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>parameter_sampler</code>(<strong><code>trial</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -4301,7 +4264,7 @@ mean : 0.25, std: 0.0
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_hp_optimization" class="doc_header"><code>test_hp_optimization</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L820" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_hp_optimization</code>()</p>
+<h4 id="test_hp_optimization" class="doc_header"><code>test_hp_optimization</code><a href="hpsearch/tests/test_experiment_manager.py#L807" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_hp_optimization</code>()</p>
 </blockquote>
 
 </div>
@@ -4693,7 +4656,7 @@ epoch 11: accuracy: 0.11418358692355515
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="parameter_sampler" class="doc_header"><code>parameter_sampler</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L842" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>parameter_sampler</code>(<strong><code>trial</code></strong>)</p>
+<h4 id="parameter_sampler" class="doc_header"><code>parameter_sampler</code><a href="hpsearch/tests/test_experiment_manager.py#L829" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>parameter_sampler</code>(<strong><code>trial</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -4717,7 +4680,7 @@ epoch 11: accuracy: 0.11418358692355515
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_rerun_experiment" class="doc_header"><code>test_rerun_experiment</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L851" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_rerun_experiment</code>()</p>
+<h4 id="test_rerun_experiment" class="doc_header"><code>test_rerun_experiment</code><a href="hpsearch/tests/test_experiment_manager.py#L838" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_rerun_experiment</code>()</p>
 </blockquote>
 
 </div>
@@ -5501,7 +5464,7 @@ best params: {&#39;epochs&#39;: 4, &#39;offset&#39;: 0.06}
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_rerun_experiment_pipeline" class="doc_header"><code>test_rerun_experiment_pipeline</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L918" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_rerun_experiment_pipeline</code>()</p>
+<h4 id="test_rerun_experiment_pipeline" class="doc_header"><code>test_rerun_experiment_pipeline</code><a href="hpsearch/tests/test_experiment_manager.py#L905" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_rerun_experiment_pipeline</code>()</p>
 </blockquote>
 
 </div>
@@ -6005,7 +5968,7 @@ epoch 9: accuracy: 0.9000000000000004
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_rerun_experiment_par" class="doc_header"><code>test_rerun_experiment_par</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L973" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_rerun_experiment_par</code>()</p>
+<h4 id="test_rerun_experiment_par" class="doc_header"><code>test_rerun_experiment_par</code><a href="hpsearch/tests/test_experiment_manager.py#L960" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_rerun_experiment_par</code>()</p>
 </blockquote>
 
 </div>
@@ -6411,7 +6374,7 @@ epoch 9: accuracy: 0.9000000000000004
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_git_revision_hash" class="doc_header"><code>get_git_revision_hash</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1039" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_git_revision_hash</code>(<strong><code>root_path</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="get_git_revision_hash" class="doc_header"><code>get_git_revision_hash</code><a href="hpsearch/experiment_manager.py#L1072" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_git_revision_hash</code>(<strong><code>root_path</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 
 </div>
@@ -6448,7 +6411,7 @@ epoch 9: accuracy: 0.9000000000000004
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="record_parameters" class="doc_header"><code>record_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1056" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>record_parameters</code>(<strong><code>path_save</code></strong>, <strong><code>parameters</code></strong>, <strong><code>other_parameters</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="record_parameters" class="doc_header"><code>record_parameters</code><a href="hpsearch/experiment_manager.py#L1089" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>record_parameters</code>(<strong><code>path_save</code></strong>, <strong><code>parameters</code></strong>, <strong><code>other_parameters</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 
 </div>
@@ -6485,46 +6448,8 @@ epoch 9: accuracy: 0.9000000000000004
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="mypprint" class="doc_header"><code>mypprint</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1076" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>mypprint</code>(<strong><code>parameters</code></strong>, <strong><code>dict_name</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="mypprint" class="doc_header"><code>mypprint</code><a href="hpsearch/experiment_manager.py#L1109" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>mypprint</code>(<strong><code>parameters</code></strong>, <strong><code>dict_name</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="mymakedirs">mymakedirs<a class="anchor-link" href="#mymakedirs"> </a></h2>
-</div>
-</div>
-</div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="mymakedirs" class="doc_header"><code>mymakedirs</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1098" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>mymakedirs</code>(<strong><code>path</code></strong>, <strong><code>exist_ok</code></strong>=<em><code>False</code></em>)</p>
-</blockquote>
-<p>work around for python 2.7</p>
 
 </div>
 
@@ -6560,7 +6485,7 @@ epoch 9: accuracy: 0.9000000000000004
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="load_or_create_experiment_values" class="doc_header"><code>load_or_create_experiment_values</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1109" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>load_or_create_experiment_values</code>(<strong><code>path_csv</code></strong>, <strong><code>parameters</code></strong>, <strong><code>precision</code></strong>=<em><code>1e-15</code></em>)</p>
+<h4 id="load_or_create_experiment_values" class="doc_header"><code>load_or_create_experiment_values</code><a href="hpsearch/experiment_manager.py#L1131" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>load_or_create_experiment_values</code>(<strong><code>path_csv</code></strong>, <strong><code>parameters</code></strong>, <strong><code>precision</code></strong>=<em><code>1e-15</code></em>)</p>
 </blockquote>
 
 </div>
@@ -6597,7 +6522,7 @@ epoch 9: accuracy: 0.9000000000000004
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="store_parameters" class="doc_header"><code>store_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1151" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>store_parameters</code>(<strong><code>root_path</code></strong>, <strong><code>experiment_number</code></strong>, <strong><code>parameters</code></strong>)</p>
+<h4 id="store_parameters" class="doc_header"><code>store_parameters</code><a href="hpsearch/experiment_manager.py#L1173" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>store_parameters</code>(<strong><code>root_path</code></strong>, <strong><code>experiment_number</code></strong>, <strong><code>parameters</code></strong>)</p>
 </blockquote>
 <p>Keeps track of dictionary to map experiment number and parameters values for the different experiments.</p>
 
@@ -6635,7 +6560,7 @@ epoch 9: accuracy: 0.9000000000000004
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="isnull" class="doc_header"><code>isnull</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1170" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>isnull</code>(<strong><code>experiment_data</code></strong>, <strong><code>experiment_number</code></strong>, <strong><code>name_column</code></strong>)</p>
+<h4 id="isnull" class="doc_header"><code>isnull</code><a href="hpsearch/experiment_manager.py#L1192" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>isnull</code>(<strong><code>experiment_data</code></strong>, <strong><code>experiment_number</code></strong>, <strong><code>name_column</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -6672,7 +6597,7 @@ epoch 9: accuracy: 0.9000000000000004
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_experiment_number" class="doc_header"><code>get_experiment_number</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1174" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_experiment_number</code>(<strong><code>root_path</code></strong>, <strong><code>parameters</code></strong>=<em><code>{}</code></em>)</p>
+<h4 id="get_experiment_number" class="doc_header"><code>get_experiment_number</code><a href="hpsearch/experiment_manager.py#L1196" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_experiment_number</code>(<strong><code>root_path</code></strong>, <strong><code>parameters</code></strong>=<em><code>{}</code></em>)</p>
 </blockquote>
 
 </div>
@@ -6709,7 +6634,7 @@ epoch 9: accuracy: 0.9000000000000004
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_experiment_numbers" class="doc_header"><code>get_experiment_numbers</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1183" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_experiment_numbers</code>(<strong><code>path_results_base</code></strong>, <strong><code>parameters_single_value</code></strong>, <strong><code>parameters_multiple_values_all</code></strong>)</p>
+<h4 id="get_experiment_numbers" class="doc_header"><code>get_experiment_numbers</code><a href="hpsearch/experiment_manager.py#L1205" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_experiment_numbers</code>(<strong><code>path_results_base</code></strong>, <strong><code>parameters_single_value</code></strong>, <strong><code>parameters_multiple_values_all</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -6746,7 +6671,7 @@ epoch 9: accuracy: 0.9000000000000004
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="insert_experiment_script_path" class="doc_header"><code>insert_experiment_script_path</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1200" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>insert_experiment_script_path</code>(<strong><code>other_parameters</code></strong>, <strong><code>logger</code></strong>)</p>
+<h4 id="insert_experiment_script_path" class="doc_header"><code>insert_experiment_script_path</code><a href="hpsearch/experiment_manager.py#L1222" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>insert_experiment_script_path</code>(<strong><code>other_parameters</code></strong>, <strong><code>logger</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -6783,7 +6708,7 @@ epoch 9: accuracy: 0.9000000000000004
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="load_parameters" class="doc_header"><code>load_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1211" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>load_parameters</code>(<strong><code>experiment</code></strong>=<em><code>None</code></em>, <strong><code>root_path</code></strong>=<em><code>None</code></em>, <strong><code>root_folder</code></strong>=<em><code>None</code></em>, <strong><code>other_parameters</code></strong>=<em><code>{}</code></em>, <strong><code>parameters</code></strong>=<em><code>{}</code></em>, <strong><code>check_experiment_matches</code></strong>=<em><code>True</code></em>)</p>
+<h4 id="load_parameters" class="doc_header"><code>load_parameters</code><a href="hpsearch/experiment_manager.py#L1233" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>load_parameters</code>(<strong><code>experiment</code></strong>=<em><code>None</code></em>, <strong><code>root_path</code></strong>=<em><code>None</code></em>, <strong><code>root_folder</code></strong>=<em><code>None</code></em>, <strong><code>other_parameters</code></strong>=<em><code>{}</code></em>, <strong><code>parameters</code></strong>=<em><code>{}</code></em>, <strong><code>check_experiment_matches</code></strong>=<em><code>True</code></em>, <strong><code>em</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 
 </div>
@@ -6820,7 +6745,7 @@ epoch 9: accuracy: 0.9000000000000004
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="save_other_parameters" class="doc_header"><code>save_other_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1245" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>save_other_parameters</code>(<strong><code>experiment_number</code></strong>, <strong><code>other_parameters</code></strong>, <strong><code>root_path</code></strong>)</p>
+<h4 id="save_other_parameters" class="doc_header"><code>save_other_parameters</code><a href="hpsearch/experiment_manager.py#L1269" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>save_other_parameters</code>(<strong><code>experiment_number</code></strong>, <strong><code>other_parameters</code></strong>, <strong><code>root_path</code></strong>)</p>
 </blockquote>
 
 </div>

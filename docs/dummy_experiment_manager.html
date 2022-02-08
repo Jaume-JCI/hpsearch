@@ -73,7 +73,7 @@ nb_path: "nbs/examples/dummy_experiment_manager.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="FakeModel" class="doc_header"><code>class</code> <code>FakeModel</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/examples/dummy_experiment_manager.py#L11" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>FakeModel</code>(<strong><code>offset</code></strong>=<em><code>0.5</code></em>, <strong><code>rate</code></strong>=<em><code>0.01</code></em>, <strong><code>epochs</code></strong>=<em><code>10</code></em>, <strong><code>noise</code></strong>=<em><code>0.0</code></em>, <strong><code>verbose</code></strong>=<em><code>True</code></em>)</p>
+<h2 id="FakeModel" class="doc_header"><code>class</code> <code>FakeModel</code><a href="hpsearch/examples/dummy_experiment_manager.py#L11" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>FakeModel</code>(<strong><code>offset</code></strong>=<em><code>0.5</code></em>, <strong><code>rate</code></strong>=<em><code>0.01</code></em>, <strong><code>epochs</code></strong>=<em><code>10</code></em>, <strong><code>noise</code></strong>=<em><code>0.0</code></em>, <strong><code>verbose</code></strong>=<em><code>True</code></em>)</p>
 </blockquote>
 
 </div>
@@ -110,7 +110,7 @@ nb_path: "nbs/examples/dummy_experiment_manager.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="DummyExperimentManager" class="doc_header"><code>class</code> <code>DummyExperimentManager</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/examples/dummy_experiment_manager.py#L118" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>DummyExperimentManager</code>(<strong><code>path_experiments</code></strong>=<em><code>None</code></em>, <strong><code>root</code></strong>=<em><code>''</code></em>, <strong><code>metric</code></strong>=<em><code>'validation_accuracy'</code></em>, <strong><code>op</code></strong>=<em><code>'max'</code></em>, <strong>**<code>kwargs</code></strong>) :: <a href="/hpsearch/experiment_manager.html#ExperimentManager"><code>ExperimentManager</code></a></p>
+<h2 id="DummyExperimentManager" class="doc_header"><code>class</code> <code>DummyExperimentManager</code><a href="hpsearch/examples/dummy_experiment_manager.py#L129" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>DummyExperimentManager</code>(<strong><code>path_experiments</code></strong>=<em><code>None</code></em>, <strong><code>root</code></strong>=<em><code>''</code></em>, <strong><code>metric</code></strong>=<em><code>'validation_accuracy'</code></em>, <strong><code>op</code></strong>=<em><code>'max'</code></em>, <strong>**<code>kwargs</code></strong>) :: <code>ExperimentManager</code></p>
 </blockquote>
 
 </div>
@@ -147,7 +147,7 @@ nb_path: "nbs/examples/dummy_experiment_manager.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="run_multiple_experiments" class="doc_header"><code>run_multiple_experiments</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/examples/dummy_experiment_manager.py#L199" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>run_multiple_experiments</code>(<strong><code>nruns</code></strong>=<em><code>1</code></em>, <strong><code>noise</code></strong>=<em><code>0.0</code></em>, <strong><code>verbose</code></strong>=<em><code>True</code></em>, <strong><code>rate</code></strong>=<em><code>0.03</code></em>, <strong><code>values_to_explore</code></strong>=<em><code>None</code></em>, <strong><code>EM</code></strong>=<em><code>DummyExperimentManager</code></em>, <strong><code>em</code></strong>=<em><code>None</code></em>, <strong>**<code>kwargs</code></strong>)</p>
+<h4 id="run_multiple_experiments" class="doc_header"><code>run_multiple_experiments</code><a href="hpsearch/examples/dummy_experiment_manager.py#L210" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>run_multiple_experiments</code>(<strong><code>nruns</code></strong>=<em><code>1</code></em>, <strong><code>noise</code></strong>=<em><code>0.0</code></em>, <strong><code>verbose</code></strong>=<em><code>True</code></em>, <strong><code>rate</code></strong>=<em><code>0.03</code></em>, <strong><code>values_to_explore</code></strong>=<em><code>None</code></em>, <strong><code>other_parameters</code></strong>=<em><code>{}</code></em>, <strong><code>EM</code></strong>=<em><code>DummyExperimentManager</code></em>, <strong><code>em</code></strong>=<em><code>None</code></em>, <strong>**<code>kwargs</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -178,7 +178,7 @@ nb_path: "nbs/examples/dummy_experiment_manager.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="generate_data" class="doc_header"><code>generate_data</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/examples/dummy_experiment_manager.py#L216" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>generate_data</code>(<strong><code>name_folder</code></strong>)</p>
+<h4 id="generate_data" class="doc_header"><code>generate_data</code><a href="hpsearch/examples/dummy_experiment_manager.py#L229" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>generate_data</code>(<strong><code>name_folder</code></strong>, <strong><code>parameters_multiple_values</code></strong>=<em><code>None</code></em>, <strong><code>parameters_single_value</code></strong>=<em><code>None</code></em>, <strong><code>other_parameters</code></strong>=<em><code>{}</code></em>, <strong><code>verbose</code></strong>=<em><code>0</code></em>, <strong>**<code>kwargs</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -209,7 +209,7 @@ nb_path: "nbs/examples/dummy_experiment_manager.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="remove_previous_experiments" class="doc_header"><code>remove_previous_experiments</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/examples/dummy_experiment_manager.py#L226" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>remove_previous_experiments</code>(<strong><code>EM</code></strong>=<em><code>DummyExperimentManager</code></em>)</p>
+<h4 id="remove_previous_experiments" class="doc_header"><code>remove_previous_experiments</code><a href="hpsearch/examples/dummy_experiment_manager.py#L243" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>remove_previous_experiments</code>(<strong><code>EM</code></strong>=<em><code>DummyExperimentManager</code></em>)</p>
 </blockquote>
 
 </div>
@@ -246,7 +246,7 @@ nb_path: "nbs/examples/dummy_experiment_manager.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_dummy_experiment_manager" class="doc_header"><code>test_dummy_experiment_manager</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/examples/test_dummy_experiment_manager.py#L18" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_dummy_experiment_manager</code>()</p>
+<h4 id="test_dummy_experiment_manager" class="doc_header"><code>test_dummy_experiment_manager</code><a href="hpsearch/tests/examples/test_dummy_experiment_manager.py#L18" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_dummy_experiment_manager</code>()</p>
 </blockquote>
 
 </div>

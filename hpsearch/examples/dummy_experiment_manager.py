@@ -32,6 +32,7 @@ class FakeModel (object):
 
         self.history = {}
         self.current_epoch = 0
+        self.dict_results = None
 
     def fit (self):
         number_epochs = int(self.epochs)
@@ -70,9 +71,14 @@ class FakeModel (object):
             self.history['accuracy'] = []
         self.history['accuracy'].append(self.accuracy)
 
+        self.dict_results = dict (accuracy=self.accuracy,
+                                  validation_accuracy=validation_accuracy,
+                                  test_accuracy=test_accuracy)
+
     def save_model_and_history (self, path_results):
         pickle.dump (self.weight, open(f'{path_results}/model_weights.pk','wb'))
         pickle.dump (self.history, open(f'{path_results}/model_history.pk','wb'))
+        pickle.dump (self.dict_results, open(f'{path_results}/dict_results.pk','wb'))
 
     def load_model_and_history (self, path_results):
         if os.path.exists(f'{path_results}/model_weights.pk'):
@@ -86,6 +92,11 @@ class FakeModel (object):
                 self.accuracy = self.offset
         else:
             print (f'model not found in {path_results}')
+
+    def retrieve_score (self):
+        if self.dict_results is None:
+            self.dict_results = pickle.load (open(f'{path_results}/dict_results.pk','rb'))
+        return self.dict_results['validation_accuracy'], self.dict_results['test_accuracy']
 
     def score (self):
         # validation accuracy
@@ -156,7 +167,7 @@ class DummyExperimentManager (ExperimentManager):
         model.save_model_and_history(path_results)
 
         # evaluate model with validation and test data
-        validation_accuracy, test_accuracy = model.score()
+        validation_accuracy, test_accuracy = model.retrieve_score()
 
         # store model
         self.model = model
