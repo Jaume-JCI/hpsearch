@@ -211,8 +211,4 @@ class ManagerFactory (object):
             self.logger.debug (f'deleting {self.manager_path}')
             shutil.rmtree (str(self.manager_path))
 
-        if self.manager_path.exists ():
-            self.logger.debug (f'deleting {self.manager_path}')
-            shutil.rmtree (self.manager_path)
-
         self.set_base_manager ()
