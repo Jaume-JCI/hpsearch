@@ -21,6 +21,7 @@ from block_types.utils.nbdev_utils import md
 
 from hpsearch.experiment_manager import *
 from hpsearch.examples.complex_dummy_experiment_manager import ComplexDummyExperimentManager
+from hpsearch.examples.complex_dummy_experiment_manager import init_em
 
 # Cell
 @pytest.fixture (name='init_em')

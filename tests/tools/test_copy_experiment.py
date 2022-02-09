@@ -9,6 +9,7 @@ import os
 import joblib
 from IPython.display import display
 from block_types.utils.nbdev_utils import md
+import shutil
 
 from hpsearch.tools.copy_experiment import *
 from hpsearch.examples.complex_dummy_experiment_manager import generate_data, init_em

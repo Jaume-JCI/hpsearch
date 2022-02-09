@@ -10,6 +10,8 @@ import os
 import joblib
 from IPython.display import display
 from block_types.utils.nbdev_utils import md
+import pickle
+import shutil
 
 from hpsearch.config.manager_factory import *
 from hpsearch.examples.example_experiment_manager import ExampleExperimentManager
