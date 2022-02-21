@@ -127,7 +127,7 @@ class ExperimentManager (object):
         """Gives the root path to the folder where results of experiments are stored."""
         path_experiments = (path_experiments if path_experiments is not None
                             else self.path_experiments)
-        if folder != None: path_experiments = f'{path_experiments}/{folder}'
+        if folder is not None and folder != '': path_experiments = f'{path_experiments}/{folder}'
         return path_experiments
 
     def get_path_experiment (self, experiment_id, root_path=None, root_folder=None):
@@ -1100,10 +1100,11 @@ def get_git_revision_hash (root_path=None):
     try:
         git_hash = subprocess.check_output(['git', 'rev-parse', 'HEAD'])
         git_hash = str(git_hash)
-        json.dump(git_hash, open('%s/git_hash.json' %root_path, 'wt'))
+        if root_path is not None:
+            json.dump(git_hash, open('%s/git_hash.json' %root_path, 'wt'))
     except:
         logger = logging.getLogger("experiment_manager")
-        if root_path is not None:
+        if root_path is not None and os.path.exists(root_path):
             logger.info ('could not get git hash, retrieving it from disk...')
             git_hash = json.load(open('%s/git_hash.json' %root_path, 'rt'))
         else:
@@ -1163,9 +1164,19 @@ def load_or_create_experiment_values (path_csv, parameters, precision=1e-15):
     changed_dataframe = False
 
     if os.path.exists (path_pickle) or os.path.exists (path_csv):
+        read_csv_flag = False
         if os.path.exists (path_pickle):
-            experiment_data = pd.read_pickle (path_pickle)
+            # work-around for solving the issue with pandas versions
+            # Pandas >= 1.1.0 presents problems when reading pickle files
+            # from earlier versions
+            try:
+                experiment_data = pd.read_pickle (path_pickle)
+                experiment_data = experiment_data.copy()
+            except AttributeError:
+                read_csv_flag = True
         else:
+            read_csv_flag = True
+        if read_csv_flag:
             experiment_data = pd.read_csv (path_csv, index_col=0)
             experiment_data.to_pickle(path_pickle)
 
