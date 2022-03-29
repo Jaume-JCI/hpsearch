@@ -31,7 +31,7 @@ def get_pickable_fields (obj):
 class ManagerFactory (object):
     def __init__ (self, allow_base_class=True, manager_path=dflt.manager_path,
                   import_manager=False, verbose=dflt.verbose, logger=None,
-                  name_logger=dflt.name_logger):
+                  name_logger_factory=dflt.name_logger_factory):
 
         self.allow_base_class = allow_base_class
         self.manager_path = Path(manager_path).resolve()
@@ -39,9 +39,9 @@ class ManagerFactory (object):
 
         self.verbose = verbose
         self.logger = logger
-        self.name_logger = name_logger
+        self.name_logger_factory = name_logger_factory
         if self.logger is None:
-            self.logger = set_logger (self.name_logger, path_results=self.manager_path,
+            self.logger = set_logger (self.name_logger_factory, path_results=self.manager_path,
                                       verbose=self.verbose)
 
     # **************************************************

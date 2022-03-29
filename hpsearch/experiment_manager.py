@@ -277,7 +277,7 @@ class ExperimentManager (object):
     # *************************************************************************
     # *************************************************************************
     def create_experiment_and_run (self, parameters = {}, other_parameters = {}, root_path=None,
-                                   run_number=0, log_message=None):
+                                   run_number=0, log_message=None, stack_level=-3):
         """
 
         """
@@ -293,7 +293,7 @@ class ExperimentManager (object):
 
         # insert path to experiment script file that called the experiment manager
         other_parameters = other_parameters.copy()
-        insert_experiment_script_path (other_parameters, self.logger)
+        insert_experiment_script_path (other_parameters, self.logger, stack_level=stack_level)
 
         # get root_path and create directories
         if root_path is None:
@@ -590,7 +590,7 @@ class ExperimentManager (object):
 
     def grid_search (self, parameters_multiple_values={}, parameters_single_value={}, other_parameters = {},
                      root_path=None, run_numbers=[0], random_search=False,
-                     load_previous=False, log_message='', nruns = None, keep='multiple'):
+                     load_previous=False, log_message='', nruns = None, keep='multiple', **kwargs):
 
         other_parameters = other_parameters.copy()
 
@@ -636,14 +636,14 @@ class ExperimentManager (object):
                 self.logger.info('%s' %log_message)
 
                 self.create_experiment_and_run (parameters=parameters, other_parameters = other_parameters,
-                                           run_number=run_number, root_path=path_results_base)
+                                           run_number=run_number, root_path=path_results_base, **kwargs)
 
         # This solves an intermitent issue found in TensorFlow (reported as bug by community)
         import gc
         gc.collect()
 
     def run_multiple_repetitions (self, parameters={}, other_parameters = {},
-                     root_path=None, log_message='', nruns = None, run_numbers=[0]):
+                     root_path=None, log_message='', nruns = None, run_numbers=[0], **kwargs):
 
         other_parameters = other_parameters.copy()
 
@@ -661,7 +661,7 @@ class ExperimentManager (object):
 
                 results[i_run], dict_results  = self.create_experiment_and_run (
                     parameters=parameters, other_parameters = other_parameters,
-                    run_number=run_number, root_path=root_path)
+                    run_number=run_number, root_path=root_path, **kwargs)
                 if dict_results.get('is_pruned', False):
                     break
 
@@ -674,7 +674,7 @@ class ExperimentManager (object):
 
 
     def hp_optimization (self, parameter_sampler=None, root_path=None, log_message=None,
-                         parameters={}, other_parameters={}, nruns=None):
+                         parameters={}, other_parameters={}, nruns=None, stack_level=-3):
 
         import optuna
         from optuna.pruners import SuccessiveHalvingPruner, MedianPruner
@@ -691,7 +691,7 @@ class ExperimentManager (object):
         os.makedirs(root_path, exist_ok=True)
         if log_message != '':
             other_parameters['log_message'] = log_message
-        insert_experiment_script_path (other_parameters, self.logger)
+        insert_experiment_script_path (other_parameters, self.logger, stack_level=stack_level)
 
         # n_warmup_steps: Disable pruner until the trial reaches the given number of step.
         sampler_method = other_parameters.get('sampler_method', 'random')
@@ -750,8 +750,7 @@ class ExperimentManager (object):
                 )
             else:
                 mu_best, std_best, dict_results = self.run_multiple_repetitions (
-                    parameters=hp_parameters, other_parameters=other_parameters,
-                    root_path=root_path, nruns=nruns
+                    parameters=hp_parameters, other_parameters=other_parameters
                 )
 
             if dict_results.get('is_pruned', False):
@@ -784,7 +783,8 @@ class ExperimentManager (object):
     def rerun_experiment (self, experiments=[], run_numbers=[0], nruns=None, root_path=None,
                           root_folder = None, other_parameters={}, parameters={},
                           parameter_sampler=None, parameters_multiple_values=None,
-                          log_message='', only_if_exists=False, check_experiment_matches=True):
+                          log_message='', only_if_exists=False, check_experiment_matches=True,
+                          **kwargs):
 
         other_parameters = other_parameters.copy()
 
@@ -823,12 +823,12 @@ class ExperimentManager (object):
                 insert_experiment_script_path (other_parameters, self.logger)
                 self.hp_optimization (parameter_sampler=parameter_sampler, root_path=root_path,
                                       log_message=log_message, parameters=parameters,
-                                      other_parameters=other_parameters)
+                                      other_parameters=other_parameters, **kwargs)
             elif parameters_multiple_values is not None:
                 self.grid_search (
                     parameters_multiple_values=parameters_multiple_values,
                     parameters_single_value=parameters, other_parameters=other_parameters,
-                    root_path=root_path, run_numbers=run_numbers, log_message=log_message
+                    root_path=root_path, run_numbers=run_numbers, log_message=log_message, **kwargs
                 )
             else:
                 if only_if_exists:
@@ -839,7 +839,7 @@ class ExperimentManager (object):
                 other_parameters['rerun_script'] = script_parameters
                 self.run_multiple_repetitions (
                     parameters=parameters, other_parameters=other_parameters, root_path=root_path,
-                    log_message=log_message, run_numbers=run_numbers
+                    log_message=log_message, run_numbers=run_numbers, **kwargs
                 )
 
     def rerun_experiment_pipeline (self, experiments, run_numbers=None, root_path=None,
@@ -1257,9 +1257,9 @@ def get_experiment_numbers (path_results_base, parameters_single_value, paramete
     return experiment_numbers
 
 # Cell
-def insert_experiment_script_path (other_parameters, logger):
+def insert_experiment_script_path (other_parameters, logger, stack_level=-3):
     if other_parameters.get('script_path') is None:
-        stack_level = other_parameters.get('stack_level', -3)
+        stack_level = other_parameters.get('stack_level', stack_level)
         stack = traceback.extract_stack()[stack_level]
         other_parameters['script_path'] = stack.filename
         other_parameters['lineno'] = stack.lineno
