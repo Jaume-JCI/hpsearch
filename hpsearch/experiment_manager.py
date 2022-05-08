@@ -25,7 +25,7 @@ import traceback
 import shutil
 from fastcore.utils import store_attr
 
-from block_types.utils.utils import set_logger, set_verbosity
+from dsblocks.utils.utils import set_logger, set_verbosity
 
 # hpsearch core API
 from .config.manager_factory import ManagerFactory
