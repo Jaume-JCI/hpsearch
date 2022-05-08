@@ -8,7 +8,7 @@ import pandas as pd
 import os
 import joblib
 from IPython.display import display
-from block_types.utils.nbdev_utils import md
+from dsblocks.utils.nbdev_utils import md
 
 from hpsearch.utils.organize_experiments import *
 from hpsearch.examples.dummy_experiment_manager import generate_data

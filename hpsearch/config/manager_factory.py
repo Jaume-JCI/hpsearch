@@ -16,7 +16,7 @@ from pathlib import Path
 import glob
 import importlib.util
 
-from block_types.utils.utils import set_logger
+from dsblocks.utils.utils import set_logger
 
 import hpsearch.config.hp_defaults as dflt
 

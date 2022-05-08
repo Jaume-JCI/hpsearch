@@ -12,7 +12,7 @@ jobs:
     - name: Install the library
       run: |
         pip install nbdev jupyter pytest
-        pip install git+https://github.com/Jaume-JCI/block-types.git@main
+        pip install git+https://github.com/Jaume-JCI/ds-blocks.git@main
         pip install .
     - name: Read all notebooks
       run: |

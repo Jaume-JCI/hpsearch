@@ -166,9 +166,9 @@ class ExperimentManager (object):
                                                     folder=folder_experiments)
         path_csv = '%s/experiments_data.csv' %path_experiments
         path_pickle = path_csv.replace('csv', 'pk')
-        if os.path.exists (path_pickle):
+        try:
             experiment_data = pd.read_pickle (path_pickle)
-        else:
+        except:
             experiment_data = pd.read_csv (path_csv, index_col=0)
         if experiments is not None:
             experiment_data = experiment_data.loc[experiments,:]

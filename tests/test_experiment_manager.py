@@ -18,7 +18,7 @@ import joblib
 from IPython.display import display
 import optuna
 
-from block_types.utils.nbdev_utils import md
+from dsblocks.utils.nbdev_utils import md
 
 from hpsearch.experiment_manager import *
 from hpsearch.examples.complex_dummy_experiment_manager import ComplexDummyExperimentManager

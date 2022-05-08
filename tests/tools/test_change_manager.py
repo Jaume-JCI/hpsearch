@@ -9,8 +9,8 @@ import os
 import joblib
 from pathlib import Path
 from IPython.display import display
-from block_types.utils.nbdev_utils import md
-from block_types.utils.utils import remove_previous_results
+from dsblocks.utils.nbdev_utils import md
+from dsblocks.utils.utils import remove_previous_results
 import cloudpickle
 
 from hpsearch.tools.change_manager import *

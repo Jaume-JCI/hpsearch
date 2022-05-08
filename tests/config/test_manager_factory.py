@@ -9,7 +9,7 @@ import pandas as pd
 import os
 import joblib
 from IPython.display import display
-from block_types.utils.nbdev_utils import md
+from dsblocks.utils.nbdev_utils import md
 import pickle
 import shutil
 
