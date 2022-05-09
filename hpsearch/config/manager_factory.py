@@ -144,8 +144,11 @@ class ManagerFactory (object):
         joblib.dump (dict_fields, fields_path / 'last.pk')
 
         # store pickable and non-pickable fields
+        fields = {k: getattr (em, k) for k in em.avoid_saving_fields}
+        for k in em.avoid_saving_fields: setattr (em, k, None)
         cloudpickle.dump (em, open(whole_object_path / f'{em.registered_name}.pk', 'wb'))
         cloudpickle.dump (em, open(whole_object_path / 'last.pk', 'wb'))
+        for k in em.avoid_saving_fields: setattr (em, k, fields[k])
 
         # info file
         if store_info:
