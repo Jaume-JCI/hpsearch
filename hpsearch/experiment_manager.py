@@ -109,8 +109,8 @@ class ExperimentManager (object):
         self.manager_factory = ManagerFactory(allow_base_class=allow_base_class, manager_path=self.manager_path,
                                               logger=self.logger)
         self.manager_factory.register_manager (self)
-        non_pickable_fields = (non_pickable_fields is isinstance(non_pickable_fields, list) else
-                               [non_pickable_fields])
+        non_pickable_fields = (non_pickable_fields if isinstance(non_pickable_fields, list)
+                               else [non_pickable_fields])
         self.non_pickable_fields = non_pickable_fields + ['manager_factory', 'parameters_non_pickable',
                                                           'logger']
 
