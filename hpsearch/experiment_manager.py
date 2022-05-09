@@ -54,6 +54,7 @@ class ExperimentManager (object):
                   destination_model_file=None,
                   root_folder=None,
                   manager_path=dflt.manager_path,
+                  non_pickable_fields=[],
                   logger=None,
                   verbose: int = dflt.verbose,
                   name_logger:str = dflt.name_logger
@@ -108,8 +109,10 @@ class ExperimentManager (object):
         self.manager_factory = ManagerFactory(allow_base_class=allow_base_class, manager_path=self.manager_path,
                                               logger=self.logger)
         self.manager_factory.register_manager (self)
-        self.non_pickable_fields = ['manager_factory', 'parameters_non_pickable',
-                                    'logger']
+        non_pickable_fields = (non_pickable_fields is isinstance(non_pickable_fields, list) else
+                               [non_pickable_fields])
+        self.non_pickable_fields = non_pickable_fields + ['manager_factory', 'parameters_non_pickable',
+                                                          'logger']
 
     def set_verbose (self, verbose):
         self.verbose = verbose
