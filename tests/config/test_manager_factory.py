@@ -117,22 +117,16 @@ def test_pickle_object ():
 #exports tests.config.test_manager_factory
 def test_does_not_pickle_unpickable ():
     global em
-    from hpsearch.examples.complex_dummy_experiment_manager import ComplexDummyExperimentManager
+    from hpsearch.examples.complex_dummy_experiment_manager import DummyManagerAvoidSaving
 
-    class MyNewManager (ComplexDummyExperimentManager):
-        def __init__ (self, **kwargs):
-            self.my_new_field = [2, 1, 3]
-            self.greeting_message = 'good morning!'
-            super ().__init__ (avoid_saving_fields=['my_new_field', 'greeting_message'], **kwargs)
-
-    em = MyNewManager (path_experiments='my_new_path', root='other_root')
+    em = DummyManagerAvoidSaving (path_experiments='my_new_path', root='other_root')
 
     factory = ManagerFactory (verbose=2)
     factory.delete_and_reset_all()
     factory.register_manager (em)
     factory.write_manager (em)
     assert sorted(os.listdir (factory.manager_path / 'fields'))==[
-        'MyNewManager-other_root.pk', 'last.pk']
+        'DummyManagerAvoidSaving-other_root.pk', 'last.pk']
     assert em.my_new_field == [2, 1, 3]
     assert em.greeting_message == 'good morning!'
 
