@@ -5,19 +5,21 @@ __all__ = ['experiment_manager', 'get_pickable_fields', 'ManagerFactory']
 # Cell
 import inspect
 import shutil
-import hpsearch
 import os
 import logging
-import cloudpickle
 import joblib
 import pickle
 import dill
 from pathlib import Path
 import glob
+import cloudpickle
 import importlib.util
+import pandas as pd
+import numpy as np
 
 from dsblocks.utils.utils import set_logger
 
+import hpsearch
 import hpsearch.config.hp_defaults as dflt
 
 experiment_manager = None
@@ -25,6 +27,9 @@ experiment_manager = None
 # Cell
 def get_pickable_fields (obj):
     dict_fields = vars(obj)
+    # dill seems to have issues with DataFrame and possibly np.array
+    dict_fields = {k:dict_fields[k] for k in dict_fields
+                   if not isinstance(dict_fields[k], pd.DataFrame) and not isinstance(dict_fields[k], np.ndarray)}
     return {k:dict_fields[k] for k in dict_fields if dill.pickles (dict_fields[k])}
 
 # Cell
