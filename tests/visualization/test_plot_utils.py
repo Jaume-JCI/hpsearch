@@ -14,5 +14,5 @@ from hpsearch.visualization.plot_utils import *
 
 # Comes from plot_utils.ipynb, cell
 def test_plot_default ():
-    traces = add_trace([1,2,3,30,60], 'b', label='first line', traces=[])
+    traces = add_trace([1,2,3,30,60], 'b', label='first line')
     plot([10,20,30,40,100], 'y', label='second line', title='My title', xlabel = 'epochs', ylabel='percentage', traces=traces);

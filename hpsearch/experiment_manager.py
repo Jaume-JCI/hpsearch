@@ -169,6 +169,7 @@ class ExperimentManager (object):
             return self.path_data
 
     def get_experiment_data (self, path_experiments=None, folder_experiments=None, experiments=None):
+        folder_experiments = (folder_experiments if folder_experiments is not None else self.root_folder)
         path_experiments = self.get_path_experiments(path_experiments=path_experiments,
                                                     folder=folder_experiments)
         path_csv = '%s/experiments_data.csv' %path_experiments

@@ -29,7 +29,8 @@ def imshow (z, x=None, y=None, title=None, xlabel=None, ylabel=None):
     offline.iplot(dict(data=traces, layout=go.Layout(**dict_layout)))
 
 # Cell
-def add_trace (x, y=None, style='b', label='', backend='plotly', marker = None, traces=[]):
+def add_trace (x, y=None, style='b', label='', backend='plotly', marker = None, traces=None):
+    if traces is None: traces = []
     if y is None or type(y) is str:
         if type(y) is str:
             style = y
@@ -103,7 +104,8 @@ def symbol2marker (symbol):
 
 # Cell
 def plot (x=None, y=None, style='b', label='', title=None, xlabel=None, ylabel=None, backend='plotly', figsize=(20,10),
-          fontsize=24, lw=3, markersize=20, window=None, traces=[]):
+          fontsize=24, lw=3, markersize=20, window=None, traces=None):
+    if traces is None: traces = []
     if backend=='plotly':
         assert imported_plotly, 'plotly must be installed for using this backend'
         offline.init_notebook_mode (connected=True)
