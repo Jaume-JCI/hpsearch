@@ -23,7 +23,8 @@ class MultiHistoryPlotter ():
                   metrics='all', metrics_second=None, parameters = None, compare = True,
                   ylegend=0.5, name_file='model_history.pk', op='max',
                   include_parameters_in_legend=False, backend='visdom',
-                  use_run_number_in_label=True, use_run_number_in_title=False, **kwargs):
+                  use_run_number_in_label=True, use_run_number_in_title=False,
+                  write_scores_in_title=True, **kwargs):
         self.experiments = experiments
         self.run_number = run_number
         self.root_path = root_path
@@ -41,6 +42,7 @@ class MultiHistoryPlotter ():
             self.root_path = get_path_experiments(folder=self.root_folder)
         self.use_run_number_in_label = use_run_number_in_label
         self.use_run_number_in_title = use_run_number_in_title
+        self.write_scores_in_title = write_scores_in_title
 
     def plot_multiple_histories (self, experiments=None, run_number=None, metrics=None,
                                  metrics_second=None):
@@ -171,7 +173,7 @@ class MultiHistoryPlotter ():
             number = run_number
         else:
             number = None
-        if number is not None:
+        if (number is not None) and self.write_scores_in_title:
             if (imetric==0) and (len(self.metrics_second)>0):
                 title += f' [{number} ({metric}): {vmin:.3}]'
             else:

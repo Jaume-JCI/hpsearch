@@ -37,7 +37,7 @@ def test_several_visualizations ():
     metric_visualization(experiments=[3, 7], metric='test_accuracy', backend='matplotlib',
                          visualization_options={'visualization': ['history', 'metric_correlation',
                                                                   'custom'],
-                                               'metric_1': 'validation_accuracy',
+                                                'metric_1': 'validation_accuracy',
                                                 'metric_2': 'test_accuracy'},
                          manager_path=em.manager_path)
     em.remove_previous_experiments ()
