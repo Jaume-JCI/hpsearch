@@ -3,7 +3,7 @@
 __all__ = ['get_experiment_data', 'get_parameters_columns', 'get_experiment_parameters', 'get_scores_columns',
            'get_experiment_scores', 'get_scores_names', 'get_monitored_training_metrics', 'get_classes_with_results',
            'get_parameters_unique', 'compact_parameters', 'replace_with_default_values', 'remove_defaults',
-           'find_rows_with_parameters_dict', 'query', 'summarize_results', 'summary']
+           'find_rows_with_parameters_dict', 'summarize_results', 'query', 'summary']
 
 # Cell
 import pandas as pd
@@ -111,12 +111,8 @@ def get_monitored_training_metrics (experiment, run_number=0, history_file_name=
 def get_classes_with_results (experiment_data = None, suffix_results = '', class_ids = None):
     """
     Gets the list of class_ids for whom there are results in experiment_data.
-
-    Example usage with summarize_results:
-        import hpsearch.utils.vc_experiment_utils as ut
-        d=ut.summarize_results(class_ids='qualified',suffix_results='_auc_roc', min_results=10);
-        ch=ut.get_classes_with_results(d['original'].loc[d['mean'].index],suffix_results='_auc_roc');
     """
+    assert experiment_data is not None, 'experiment_data must be introduced'
     result_columns = get_scores_columns (experiment_data, suffix_results=suffix_results, class_ids=class_ids)
     completed_results = ~experiment_data.loc[:,result_columns].isnull()
     completed_results = completed_results.all(axis=0)
@@ -215,84 +211,6 @@ def find_rows_with_parameters_dict (experiment_data, parameters_dict, create_if_
     matching_rows = matching_all_condition.index[matching_all_condition].tolist()
 
     return matching_rows, changed_dataframe, matching_all_condition
-
-# Cell
-def query (path_experiments = None,
-              folder_experiments = None,
-              intersection = False,
-              experiments = None,
-              suffix_results='',
-              min_results=0,
-              classes = None,
-              parameters_fixed = {},
-              parameters_variable = {},
-              parameters_all = [],
-              exact_match = True,
-              output='all',
-              ascending=False,
-              suffix_test_set = None,
-              stats = ['mean','median','rank','min','max','std'],
-              query_other_parameters=False):
-
-    if path_experiments is None:
-        from ..config.hpconfig import get_path_experiments
-        path_experiments = get_path_experiments(path_experiments=path_experiments, folder = folder_experiments)
-
-    path_pickle = None
-    if query_other_parameters:
-        path_csv = '%s/other_parameters.csv' %path_experiments
-    else:
-        path_pickle = '%s/experiments_data.pk' %path_experiments
-        if not os.path.exists(path_pickle):
-            path_pickle = None
-            path_csv = '%s/experiments_data.csv' %path_experiments
-    if path_pickle is not None:
-        experiment_data = pd.read_pickle(path_pickle)
-    else:
-        experiment_data = pd.read_csv(path_csv, index_col=0)
-
-    non_valid_pars = set(parameters_fixed.keys()).difference(set(experiment_data.columns))
-    if len(non_valid_pars) > 0:
-        print (f'\n**The following query parameters are not valid: {list(non_valid_pars)}**')
-        print (f'\nValid parameters:\n{sorted(get_parameters_columns(experiment_data))}\n')
-
-    parameters_multiple_values_all = list(ParameterGrid(parameters_variable))
-    experiment_numbers = []
-    for (i, parameters_multiple_values) in enumerate(parameters_multiple_values_all):
-        parameters = parameters_multiple_values.copy()
-        parameters.update(parameters_fixed)
-        parameters_none = {k:v for k,v in parameters.items() if v is None}
-        parameters_not_none = {k:v for k,v in parameters.items() if v is not None}
-
-        parameters = remove_defaults (parameters_not_none)
-        parameters.update(parameters_none)
-
-        experiment_numbers_i, _, _ = find_rows_with_parameters_dict (experiment_data, parameters, ignore_keys=parameters_all, exact_match = exact_match)
-        experiment_numbers += experiment_numbers_i
-
-    experiment_data = experiment_data.iloc[experiment_numbers]
-
-    if experiments is not None:
-        experiment_data = experiment_data.loc[experiments]
-
-    if query_other_parameters:
-        return experiment_data
-
-    d=summarize_results(path_experiments=path_experiments,
-                      folder_experiments=folder_experiments,
-                      intersection=intersection,
-                      experiments=experiments,
-                      suffix_results=suffix_results,
-                      min_results=min_results,
-                      class_ids=classes,
-                      parameters=None,
-                      output='all',
-                      data=experiment_data,
-                      ascending=ascending,
-                      suffix_test_set=suffix_test_set,
-                      stats=stats)
-
-    return d['mean'], d
 
 # Cell
 def summarize_results(path_experiments = None,
@@ -408,13 +326,91 @@ def summarize_results(path_experiments = None,
     return summary
 
 # Cell
+def query (path_experiments = None,
+              folder_experiments = None,
+              intersection = False,
+              experiments = None,
+              suffix_results='',
+              min_results=0,
+              classes = None,
+              parameters_fixed = {},
+              parameters_variable = {},
+              parameters_all = [],
+              exact_match = True,
+              output='all',
+              ascending=False,
+              suffix_test_set = None,
+              stats = ['mean','median','rank','min','max','std'],
+              query_other_parameters=False):
+
+    if path_experiments is None:
+        from ..config.hpconfig import get_path_experiments
+        path_experiments = get_path_experiments(path_experiments=path_experiments, folder = folder_experiments)
+
+    path_pickle = None
+    if query_other_parameters:
+        path_csv = '%s/other_parameters.csv' %path_experiments
+    else:
+        path_pickle = '%s/experiments_data.pk' %path_experiments
+        if not os.path.exists(path_pickle):
+            path_pickle = None
+            path_csv = '%s/experiments_data.csv' %path_experiments
+    if path_pickle is not None:
+        experiment_data = pd.read_pickle(path_pickle)
+    else:
+        experiment_data = pd.read_csv(path_csv, index_col=0)
+
+    non_valid_pars = set(parameters_fixed.keys()).difference(set(experiment_data.columns))
+    if len(non_valid_pars) > 0:
+        print (f'\n**The following query parameters are not valid: {list(non_valid_pars)}**')
+        print (f'\nValid parameters:\n{sorted(get_parameters_columns(experiment_data))}\n')
+
+    parameters_multiple_values_all = list(ParameterGrid(parameters_variable))
+    experiment_numbers = []
+    for (i, parameters_multiple_values) in enumerate(parameters_multiple_values_all):
+        parameters = parameters_multiple_values.copy()
+        parameters.update(parameters_fixed)
+        parameters_none = {k:v for k,v in parameters.items() if v is None}
+        parameters_not_none = {k:v for k,v in parameters.items() if v is not None}
+
+        parameters = remove_defaults (parameters_not_none)
+        parameters.update(parameters_none)
+
+        experiment_numbers_i, _, _ = find_rows_with_parameters_dict (experiment_data, parameters, ignore_keys=parameters_all, exact_match = exact_match)
+        experiment_numbers += experiment_numbers_i
+
+    experiment_data = experiment_data.iloc[experiment_numbers]
+
+    if experiments is not None:
+        experiment_data = experiment_data.loc[experiments]
+
+    if query_other_parameters:
+        return experiment_data
+
+    d=summarize_results(path_experiments=path_experiments,
+                      folder_experiments=folder_experiments,
+                      intersection=intersection,
+                      experiments=experiments,
+                      suffix_results=suffix_results,
+                      min_results=min_results,
+                      class_ids=classes,
+                      parameters=None,
+                      output='all',
+                      data=experiment_data,
+                      ascending=ascending,
+                      suffix_test_set=suffix_test_set,
+                      stats=stats)
+
+    return d['mean'], d
+
+# Cell
 def summary (df, experiments = None, score=None, compact=True):
     if experiments is not None:
         df = df.loc[experiments]
     if compact:
         _, df = get_parameters_unique(df)
     parameters_columns = get_parameters_columns(df, True)
-    scores_columns = ut.get_scores_columns (df, suffix_results=score)
-    df = df.loc[experiments,parameters_columns + scores_columns]
-    df = df.rename (columns={'0_%s' %score: score})
+    scores_columns = get_scores_columns (df, suffix_results=score)
+    df = df[parameters_columns + scores_columns]
+    df.columns=[c.split('_')[0] for c in df.columns]
     return df
