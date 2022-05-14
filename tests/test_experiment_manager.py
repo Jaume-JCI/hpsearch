@@ -257,7 +257,7 @@ def test_second_experiment ():
 
     md (f'folders created in `{path_experiments}/experiments`:'); print(list_exp)
 
-    assert list_exp == ['00000','00001']
+    assert sorted(list_exp) == sorted(['00000','00001'])
 
     em.remove_previous_experiments()
 
