@@ -167,7 +167,7 @@ def test_almost_same_values ():
                                            'time_0', 'date', '0_finished']).all()
     display (df)
     list_exp = os.listdir (f'{path_experiments}/experiments')
-    assert list_exp == ['00000', '00001']
+    assert sorted(list_exp) == sorted(['00000', '00001'])
 
     em.remove_previous_experiments()
 
