@@ -7,6 +7,7 @@ __all__ = ['ExperimentManager', 'get_git_revision_hash', 'record_parameters', 'm
 # Cell
 # coding: utf-8
 import pickle
+import joblib
 import sys
 import os
 import numpy as np
@@ -23,9 +24,8 @@ from multiprocessing import Process
 import logging
 import traceback
 import shutil
-from fastcore.utils import store_attr
 
-from dsblocks.utils.utils import set_logger, set_verbosity
+from dsblocks.utils.utils import set_logger, set_verbosity, store_attr
 
 # hpsearch core API
 from .config.manager_factory import ManagerFactory
@@ -289,6 +289,8 @@ class ExperimentManager (object):
         """
 
         """
+        em_args = Bunch ()
+        store_attr (store_args=False, self=em_args, but='parameters, other_parameters')
 
         # ****************************************************
         #  preliminary set-up: logger and root_path
@@ -432,7 +434,7 @@ class ExperimentManager (object):
         other_parameters['git_hash'] = get_git_revision_hash(root_path)
 
         # write parameters in root experiment folder
-        record_parameters (path_root_experiment, parameters, other_parameters)
+        record_parameters (path_root_experiment, parameters, other_parameters, em_args)
 
         # store hyper_parameters in dictionary that maps experiment_number with hyper_parameter values
         store_parameters (root_path, experiment_number, parameters)
@@ -789,7 +791,7 @@ class ExperimentManager (object):
         return best_value
 
     def rerun_experiment (self, experiments=[], run_numbers=[0], nruns=None, root_path=None,
-                          root_folder = None, other_parameters={}, parameters={},
+                          root_folder = None, other_parameters={}, em_args={}, parameters={},
                           parameter_sampler=None, parameters_multiple_values=None,
                           log_message='', only_if_exists=False, check_experiment_matches=True,
                           **kwargs):
@@ -807,14 +809,15 @@ class ExperimentManager (object):
 
         parameters_original = parameters
         other_parameters_original = other_parameters
+        em_args_original = em_args
         for experiment_id in experiments:
             check_experiment_matches = (check_experiment_matches and
                                         parameters_multiple_values is None
                                         and parameter_sampler is None)
-            parameters, other_parameters = load_parameters (em=self,
+            parameters, other_parameters, em_args = load_parameters (em=self,
                 experiment=experiment_id, root_path=root_path, root_folder=root_folder,
-                other_parameters=other_parameters_original, parameters=parameters_original,
-                check_experiment_matches=check_experiment_matches
+                other_parameters=other_parameters_original, em_args=em_args_original,
+                parameters=parameters_original, check_experiment_matches=check_experiment_matches
             )
 
             # we need to set the following flag to False, since otherwise when we request to store the intermediate results
@@ -858,8 +861,8 @@ class ExperimentManager (object):
         for experiment_id in experiments:
             path_root_experiment = self.get_path_experiment (experiment_id, root_path=root_path)
 
-            parameters, other_parameters=pickle.load (
-                open(f'{path_root_experiment}/parameters.pk', 'rb')
+            parameters, other_parameters, em_args =joblib.load (
+                f'{path_root_experiment}/parameters.pk'
             )
             parameters = parameters.copy()
             parameters.update(other_parameters)
@@ -1122,22 +1125,34 @@ def get_git_revision_hash (root_path=None):
     return str(git_hash)
 
 # Cell
-def record_parameters (path_save, parameters, other_parameters=None):
+def record_parameters (path_save, parameters, other_parameters=None, em_args=None):
     with open('%s/parameters.txt' %path_save, 'wt') as f:
         f.write('%s\n' %mypprint(parameters, dict_name='parameters'))
         if other_parameters is not None:
             f.write('\n\n%s\n' %mypprint(other_parameters, dict_name='other_parameters'))
+        if em_args is not None:
+            f.write('\n\n%s\n' %mypprint(other_parameters, dict_name='em_args'))
+
+    to_pickle = [parameters]
     if other_parameters is not None:
-        pickle.dump ([parameters,other_parameters],open('%s/parameters.pk' %path_save, 'wb'))
-    else:
-        pickle.dump (parameters,open('%s/parameters.pk' %path_save, 'wb'))
+        to_pickle.append (other_parameters)
+    if em_args is not None:
+        to_pickle.append(em_args)
+    if len(to_pickle) == 1: to_pickle = to_pickle[0]
+    joblib.dump (to_pickle,f'{path_save}/parameters.pk')
+
     try:
-        json.dump(parameters,open('%s/parameters.json' %path_save, 'wt'))
+        json.dump(parameters, open(f'{path_save}/parameters.json', 'wt'))
     except:
         pass
     if other_parameters is not None:
         try:
-            json.dump(parameters,open('%s/other_parameters.json' %path_save, 'wt'))
+            json.dump(other_parameters, open (f'{path_save}/other_parameters.json', 'wt'))
+        except:
+            pass
+    if em_args is not None:
+        try:
+            json.dump(em_args, open (f'{path_save}/em_args.json', 'wt'))
         except:
             pass
 
@@ -1277,7 +1292,7 @@ def insert_experiment_script_path (other_parameters, logger, stack_level=-3):
 
 # Cell
 def load_parameters (experiment=None, root_path=None, root_folder = None,
-                     other_parameters={}, parameters = {},
+                     other_parameters={}, em_args={}, parameters = {},
                      check_experiment_matches=True, em=None):
 
     if em is None:
@@ -1292,10 +1307,12 @@ def load_parameters (experiment=None, root_path=None, root_folder = None,
     path_root_experiment = em.get_path_experiment (experiment, root_path=root_path)
 
     if os.path.exists('%s/parameters.pk' %path_root_experiment):
-        parameters2, other_parameters2=pickle.load(open(f'{path_root_experiment}/parameters.pk','rb'))
+        parameters2, other_parameters2, em_args2 = joblib.load (f'{path_root_experiment}/parameters.pk')
 
         other_parameters2.update(other_parameters)
         other_parameters = other_parameters2
+        em_args2.update(em_args)
+        em_args = em_args2
 
         # if we don't add or modify parameters, we require that the old experiment number matches the new one
         if (len(parameters) == 0) and check_experiment_matches:
@@ -1309,7 +1326,7 @@ def load_parameters (experiment=None, root_path=None, root_folder = None,
     else:
         raise FileNotFoundError (f'file {path_root_experiment}/parameters.pk not found')
 
-    return parameters, other_parameters
+    return parameters, other_parameters, em_args
 
 # Cell
 def save_other_parameters (experiment_number, other_parameters, root_path):

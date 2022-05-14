@@ -4,10 +4,10 @@ __all__ = ['init_em_fixture', 'test_get_path_alternative', 'test_basic_usage', '
            'test_almost_same_values', 'test_new_runs', 'test_second_experiment', 'test_new_parameter',
            'test_new_parameter_default', 'test_other_parameters', 'test_remove_not_finished', 'test_repeat_experiment',
            'test_check_finished', 'test_recompute_metrics', 'test_prev_epoch', 'test_prev_epoch2', 'test_from_exp',
-           'test_skip_interrupted', 'test_use_last_result', 'test_use_last_result_run_interrupted', 'test_grid_search',
-           'test_run_multiple_repetitions', 'parameter_sampler', 'test_hp_optimization', 'parameter_sampler',
-           'test_rerun_experiment', 'test_rerun_experiment_pipeline', 'test_rerun_experiment_par',
-           'test_get_git_revision_hash']
+           'test_skip_interrupted', 'test_use_last_result', 'test_use_last_result_run_interrupted',
+           'test_storing_em_args_and_parameters', 'test_grid_search', 'test_run_multiple_repetitions',
+           'parameter_sampler', 'test_hp_optimization', 'parameter_sampler', 'test_rerun_experiment',
+           'test_rerun_experiment_pipeline', 'test_rerun_experiment_par', 'test_get_git_revision_hash']
 
 # Cell
 import pytest
@@ -718,6 +718,23 @@ def test_use_last_result_run_interrupted ():
     assert (df.isna()['0_validation_accuracy'] == [False, False]).all()
     assert (df['0_validation_accuracy'] == [0.25, 0.30]).all()
 
+    em.remove_previous_experiments()
+
+# Comes from experiment_manager.ipynb, cell
+def test_storing_em_args_and_parameters ():
+    em = init_em ('storing_em_args_and_parameters')
+
+    result, dict_results = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.05})
+    print (sorted (os.listdir('test_storing_em_args_and_parameters/experiments/00000')))
+    assert sorted (os.listdir('test_storing_em_args_and_parameters/experiments/00000')) == sorted(
+        ['other_parameters.json',
+         'parameters.pk',
+         'parameters.txt',
+         'em_args.json',
+         '0',
+         'parameters.json'])
+    par, other, em_args = joblib.load ('test_storing_em_args_and_parameters/experiments/00000/parameters.pk')
+    assert em_args ==  {'root_path': None, 'run_number': 0, 'log_message': None, 'stack_level': -3}
     em.remove_previous_experiments()
 
 # Comes from experiment_manager.ipynb, cell
