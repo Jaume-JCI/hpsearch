@@ -616,11 +616,15 @@ class ExperimentManager (object):
         os.makedirs (path_results_base,exist_ok=True)
 
         if keep=='multiple':
-            parameters_single_value = {k:parameters_single_value[k] for k in parameters_single_value.keys() if k not in parameters_multiple_values}
+            parameters_single_value = {k:parameters_single_value[k]
+                                       for k in parameters_single_value.keys()
+                                       if k not in parameters_multiple_values}
         elif keep=='single':
-            parameters_multiple_values = {k:parameters_multiple_values[k] for k in parameters_multiple_values.keys() if k not in parameters_single_value}
+            parameters_multiple_values = {k:parameters_multiple_values[k]
+                                          for k in parameters_multiple_values.keys()
+                                          if k not in parameters_single_value}
         else:
-            raise ValueError ('parameter keep {} not recognized: it must be either multiple or single'.format(keep))
+            raise ValueError (f'parameter keep {keep} not recognized: it must be either multiple or single')
 
         parameters_multiple_values_all = parameters_multiple_values
         parameters_multiple_values_all = list(ParameterGrid(parameters_multiple_values_all))
@@ -641,9 +645,10 @@ class ExperimentManager (object):
             parameters.update(parameters_single_value)
 
             for (i_run, run_number) in enumerate(run_numbers):
-                self.logger.info('processing hyper-parameter %d out of %d' %(i_hp, len(parameters_multiple_values_all)))
-                self.logger.info('doing run %d out of %d' %(i_run, len(run_numbers)))
-                self.logger.info('%s' %log_message)
+                self.logger.info(f'processing hyper-parameter {i_hp} '
+                                 f'out of {len(parameters_multiple_values_all)}'
+                self.logger.info(f'doing run {i_run} out of {len(run_numbers)}'
+                self.logger.info(log_message)
 
                 self.create_experiment_and_run (parameters=parameters, other_parameters = other_parameters,
                                            run_number=run_number, root_path=path_results_base, **kwargs)
@@ -684,7 +689,7 @@ class ExperimentManager (object):
 
 
     def hp_optimization (self, parameter_sampler=None, root_path=None, log_message=None,
-                         parameters={}, other_parameters={}, nruns=None, stack_level=-3):
+                         parameters={}, other_parameters={}, nruns=None, stack_level=-3, **kwargs):
 
         import optuna
         from optuna.pruners import SuccessiveHalvingPruner, MedianPruner
@@ -784,8 +789,9 @@ class ExperimentManager (object):
         if nruns_best > 0:
             self.logger.info ('running best configuration %d times' %nruns_best)
             parameters.update (study.best_params)
-            mu_best, std_best, _ = self.run_multiple_repetitions (parameters=parameters, other_parameters = other_parameters,
-                                            root_path=root_path, nruns=nruns_best)
+            mu_best, std_best, _ = self.run_multiple_repetitions (
+                parameters=parameters, other_parameters = other_parameters, root_path=root_path,
+                nruns=nruns_best, **kwargs)
             best_value = mu_best
 
         return best_value
@@ -809,14 +815,14 @@ class ExperimentManager (object):
 
         parameters_original = parameters
         other_parameters_original = other_parameters
-        em_args_original = em_args
+        kwargs_original = kwargs
         for experiment_id in experiments:
             check_experiment_matches = (check_experiment_matches and
                                         parameters_multiple_values is None
                                         and parameter_sampler is None)
-            parameters, other_parameters, em_args = load_parameters (em=self,
+            parameters, other_parameters, kwargs = load_parameters (em=self,
                 experiment=experiment_id, root_path=root_path, root_folder=root_folder,
-                other_parameters=other_parameters_original, em_args=em_args_original,
+                other_parameters=other_parameters_original, em_args=kwargs_original,
                 parameters=parameters_original, check_experiment_matches=check_experiment_matches
             )
 
@@ -904,21 +910,13 @@ class ExperimentManager (object):
                 path_experiment = '%s/%d/' %(path_root_experiment, run_number)
                 self.run_experiment_pipeline (run_number, path_experiment, parameters = parameters)
 
-    def record_intermediate_results (self, experiments=range(100), run_numbers=range(100), root_path=None, root_folder=None, new_parameters={}, remove=False):
-
-        if remove:
-            new_parameters.update (remove_not_finished=True, only_remove_not_finished=True)
-        else:
-            new_parameters.update (use_last_result=True)
-
-        self.rerun_experiment_and_save(experiments=experiments, run_numbers=run_numbers,
-            root_path=root_path, root_folder=root_folder,
-            new_parameters=new_parameters)
-
     def find_closest_epoch (self, experiment_data, parameters, name_epoch=dflt.name_epoch):
-        '''Finds experiment with same parameters except for number of epochs, and takes the epochs that are closer but lower than the one in parameters.'''
+        """Finds experiment with same parameters except for number of epochs.
 
-        experiment_numbers, _, _ = experiment_utils.find_rows_with_parameters_dict (experiment_data, parameters, ignore_keys=[name_epoch,'prev_epoch'])
+        Takes the epochs that are closer but lower than the one in parameters."""
+
+        experiment_numbers, _, _ = experiment_utils.find_rows_with_parameters_dict (
+            experiment_data, parameters, ignore_keys=[name_epoch,'prev_epoch'])
 
         defaults = self.get_default_parameters(parameters)
         current_epoch = parameters.get(name_epoch, defaults.get(name_epoch))
@@ -1003,7 +1001,8 @@ class ExperimentManager (object):
                         prev_epoch = 0
 
                 if prev_epoch >= 0:
-                    parameters['resume'] = f'{prev_path_results}/{model_name}{prev_epoch+epoch_offset}.{model_extension}'
+                    parameters['resume'] = f'{prev_path_results}/'
+                                           f'{model_name}{prev_epoch+epoch_offset}.{model_extension}'
             if not os.path.exists(parameters['resume']):
                 path_resume2 = f'{prev_path_results}/{self.model_file_name}'
                 if os.path.exists (path_resume2):
