@@ -19,7 +19,7 @@ from .query import query
 import hpsearch.config.hp_defaults as dflt
 
 # Cell
-def copy_experiment_contents (experiment=None, root=None, destination_folder='.',
+def copy_experiment_contents (experiment=None, folder=None, destination_folder='.',
                               run=0, desired=None, target_model=None,
                               destination_model=None, manager_path=dflt.manager_path):
 
@@ -28,11 +28,11 @@ def copy_experiment_contents (experiment=None, root=None, destination_folder='.'
     em = get_experiment_manager (manager_path=manager_path)
 
     # 3 write code about calling run_experiment
-    root_path = em.get_path_experiments(folder=root)
-    path_root_experiment = em.get_path_experiment (experiment, root_path=root_path)
-    shutil.copy (f'{path_root_experiment}/parameters.pk',
+    path_experiments = em.path_experiments
+    path_experiment = em.get_path_experiment (experiment)
+    shutil.copy (f'{path_experiment}/parameters.pk',
                  f'{destination_folder}/separate_parameters.pk')
-    path_results = em.get_path_results (experiment, run, root_folder=root)
+    path_results = em.get_path_results (experiment, run)
     if desired is not None and 'path_results' in desired:
         assert path_results == desired['path_results']
     copy_tree (f'{path_results}', destination_folder)
@@ -46,13 +46,13 @@ def copy_experiment_contents (experiment=None, root=None, destination_folder='.'
 
 # Cell
 def copy_code (source_folder, destination_folder, file=None,
-               path_root_experiment=None, manager_path=dflt.manager_path):
+               path_experiment=None, manager_path=dflt.manager_path):
 
     os.makedirs (destination_folder, exist_ok=True)
     destination_path = (f'{destination_folder}/best_experiment.py' if file is None
                         else f'{destination_folder}/{file}')
-    path_root_experiment = (source_folder if path_root_experiment is None
-                            else path_root_experiment)
+    path_experiment = (source_folder if path_experiment is None
+                            else path_experiment)
     path_results = source_folder
     fdest = open (destination_path, 'wt')
 
@@ -86,9 +86,9 @@ def copy_code (source_folder, destination_folder, file=None,
 
     # 3 write code about calling run_experiment
     try:
-        parameters, other_parameters, *_ = joblib.load (f'{path_root_experiment}/separate_parameters.pk')
+        parameters, other_parameters, *_ = joblib.load (f'{path_experiment}/separate_parameters.pk')
     except FileNotFoundError:
-        parameters, other_parameters, *_ = joblib.load (f'{path_root_experiment}/parameters.pk')
+        parameters, other_parameters, *_ = joblib.load (f'{path_experiment}/parameters.pk')
     parameters = mypprint(parameters, dict_name='    parameters')
 
     path_results_str = '{path_results}'
@@ -111,7 +111,7 @@ if __name__ == '__main__':
     fdest.close ()
 
 # Cell
-def copy_experiment_contents_and_code (experiment=None, root=None,
+def copy_experiment_contents_and_code (experiment=None, folder=None,
                                        content='.',
                                        code='.',
                                        run=0,
@@ -120,25 +120,25 @@ def copy_experiment_contents_and_code (experiment=None, root=None,
                                        destination_model=None,
                                        desired=None,
                                        manager_path=dflt.manager_path):
-    copy_experiment_contents (experiment=experiment, root=root,
+    copy_experiment_contents (experiment=experiment, folder=folder,
                               destination_folder=content,
                               run=run, target_model=target_model,
                               destination_model=destination_model,
                               desired=desired, manager_path=manager_path)
     copy_code (content, code, file=file,
-               path_root_experiment=content,
+               path_experiment=content,
                manager_path=manager_path)
 
 # Cell
-def copy_code_with_experiment_paths (experiment=None, root=None,
+def copy_code_with_experiment_paths (experiment=None, folder=None,
                                      destination_folder='.', file=None,
                                      run=0, desired=None, manager_path=dflt.manager_path):
     em = get_experiment_manager (manager_path=manager_path)
-    root_path = em.get_path_experiments(folder=root)
-    path_root_experiment = em.get_path_experiment (experiment, root_path=root_path)
-    path_results = em.get_path_results (experiment, run, root_folder=root)
+    path_experiments = em.path_experiments
+    path_experiment = em.get_path_experiment (experiment)
+    path_results = em.get_path_results (experiment, run)
     copy_code (path_results, destination_folder, file=file,
-               path_root_experiment=path_root_experiment,
+               path_experiment=path_experiment,
                manager_path=manager_path)
 
 
@@ -148,7 +148,7 @@ def parse_args (args):
     parser.add_argument('-e', '--experiment', type=int, default=None,
                         help="experiment number")
     parser.add_argument('--run', type=int, default=None,  help="run number")
-    parser.add_argument('--root', type=str, default=None, help='name of root folder')
+    parser.add_argument('--folder', type=str, default=None, help='name of experiments folder')
     parser.add_argument('--content', type=str,
                         default='.', help='path to folder containing experiment results')
     parser.add_argument('--code', type=str,

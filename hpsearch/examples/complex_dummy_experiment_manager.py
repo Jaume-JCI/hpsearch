@@ -90,14 +90,14 @@ class DummyManagerAvoidSaving (ComplexDummyExperimentManager):
 
 # Cell
 def init_em (name_folder):
-    path_experiments = f'test_{name_folder}'
+    path_experiments = f'test_{name_folder}/default'
     manager_path = f'{path_experiments}/managers'
     em = ComplexDummyExperimentManager (path_experiments=path_experiments, manager_path=manager_path)
 
     em.remove_previous_experiments()
 
     with pytest.raises (FileNotFoundError):
-        os.listdir(em.get_path_experiments())
+        os.listdir(em.path_experiments)
 
     return em
 
@@ -113,7 +113,7 @@ def generate_data (name_folder, nruns=5, noise=0.1, verbose_model=False, verbose
                    parameters_multiple_values=None, parameters_single_value=None,
                    other_parameters={}, em_args={}, **kwargs):
     np.random.seed (42)
-    path_experiments = f'test_{name_folder}'
+    path_experiments = f'test_{name_folder}/default'
     manager_path = f'{path_experiments}/managers'
     em = ComplexDummyExperimentManager (path_experiments=path_experiments, manager_path=manager_path,
                                         verbose=verbose, **kwargs)

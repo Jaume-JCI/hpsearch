@@ -10,18 +10,17 @@ from ..config.hpconfig import get_experiment_manager
 import hpsearch.config.hp_defaults as dflt
 
 # Cell
-def rerun (experiments=None, root=None, epochs=None, runs=None, unfinished=False,
+def rerun (experiments=None, folder=None, epochs=None, runs=None, unfinished=False,
            verbose=None, debug=False, em_attrs=None, store=False, from_dict=False,
            range_exp=None, min_iterations=None, manager_path=dflt.manager_path):
-    em_args = dict(
-                            use_process=not debug,
-                            root_folder=root
-                            )
+    em_args = dict(use_process=not debug)
     if range_exp is not None:
         assert len(range_exp) == 2
         experiments += range(range_exp[0], range_exp[1])
 
     em = get_experiment_manager (manager_path=manager_path)
+    if folder is not None:
+        em.set_path_experiments (folder=folder)
     if verbose is not None:
         em.set_verbose (verbose)
     if em_attrs is not None:
@@ -61,7 +60,7 @@ def parse_args (args):
     parser.add_argument('-s', '--store', action= "store_true",  help="store the result from experiments that were not saved in csv file.")
     parser.add_argument('-f', '--from-dict', action= "store_true",  help="when storing the result from experiments that were not saved in csv file, we use the dictionary of results typically named dict_results.pk")
     parser.add_argument('--min-iterations', type=int, default=None,  help="number of iterations to be present in model history in order to consider the experiment good enough for storage.")
-    parser.add_argument('--root', type=str, default=None, help='name of root folder')
+    parser.add_argument('--folder', type=str, default=None, help='name of experiments folder')
     parser.add_argument('-v', '--verbose', type=int, default=None, help='verbosity level: 0, 1, 2')
     parser.add_argument('-p', '--path', default=dflt.manager_path, type=str)
     pars = parser.parse_args(args)

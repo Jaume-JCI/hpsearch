@@ -103,29 +103,29 @@ def remove_defaults_from_experiment_data (experiment_data):
     return experiment_data, changed_df
 
 # Cell
-def remove_experiments (experiments=[], root_path=None, root_folder=None):
-    from ..config.hpconfig import get_path_experiment, get_path_experiments
-
+def remove_experiments (experiments=[], folder=None, manager_path=dflt.manager_path):
+    from ..config.hpconfig import get_experiment_manager
+    em = get_experiment_manager (manager_path=dflt.manager_path)
+    if folder is not None: em.set_path_experiments (folder=folder)
     if type(experiments) is not list:
         experiments = [experiments]
-    if root_path is None:
-        root_path = get_path_experiments(folder = root_folder)
+    path_experiments = em.path_experiments
 
     # 1. remove experiments from csv file
-    path_csv = f'{root_path}/experiments_data.csv'
-    path_pickle = path_csv.replace('csv', 'pk')
+    path_csv = path_experiments/'experiments_data.csv'
+    path_pickle = str(path_csv).replace('csv', 'pk')
     experiment_data = pd.read_pickle (path_pickle)
     experiment_data = experiment_data.drop (index=experiments)
 
     # 2. remove experiments folders
     for experiment in experiments:
-        path_experiment = get_path_experiment (experiment, root_path=root_path, root_folder=root_folder)
+        path_experiment = em.get_path_experiment (experiment)
         shutil.rmtree(path_experiment)
 
     # 3. move experiment folders
     for new_number, original_number in enumerate(experiment_data.index):
-        path_new_experiment = get_path_experiment (new_number, root_path=root_path, root_folder=root_folder)
-        path_original_experiment = get_path_experiment (original_number, root_path=root_path, root_folder=root_folder)
+        path_new_experiment = em.get_path_experiment (new_number)
+        path_original_experiment = em.get_path_experiment (original_number)
         if path_new_experiment != path_original_experiment:
             shutil.move (path_original_experiment, path_new_experiment)
 

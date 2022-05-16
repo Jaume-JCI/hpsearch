@@ -131,7 +131,7 @@ class DummyExperimentManager (ExperimentManager):
 
     def __init__ (self,
                   path_experiments=None,
-                  root=None,
+                  folder=None,
                   metric='validation_accuracy',
                   op='max',
                   **kwargs):
@@ -139,7 +139,7 @@ class DummyExperimentManager (ExperimentManager):
         if path_experiments is None: path_experiments = f'{os.path.dirname(hpsearch.__file__)}/../results'
 
         super().__init__ (path_experiments=path_experiments,
-                          root=root,
+                          folder=folder,
                           metric=metric,
                           op=op,
                           **kwargs)
@@ -192,14 +192,13 @@ class DummyExperimentManager (ExperimentManager):
 
         return defaults
 
-    def experiment_visualization (self, experiments=None, run_number=0, root_path=None, root_folder=None,
+    def experiment_visualization (self, experiments=None, run_number=0,
                                   name_file='model_history.pk', metric='test_accuracy', backend='matplotlib',
                                   **kwargs):
-        if root_path is None:
-            root_path = self.get_path_experiments(folder=root_folder)
+        path_experiments = self.path_experiments
         traces = []
         for experiment_id in experiments:
-            path_results = self.get_path_results (experiment_id, run_number=run_number, root_path=root_path)
+            path_results = self.get_path_results (experiment_id, run_number=run_number)
             if os.path.exists('%s/%s' %(path_results, name_file)):
                 history = pickle.load(open('%s/%s' %(path_results, name_file),'rb'))
                 label = '{}'.format(experiment_id)
@@ -232,7 +231,7 @@ def run_multiple_experiments (nruns=1, noise=0.0, verbose=True, rate=0.03, value
 def generate_data (name_folder, parameters_multiple_values=None,
                    parameters_single_value=None, other_parameters={}, verbose=0, em_args={}, **kwargs):
     np.random.seed (42)
-    path_experiments=f'test_{name_folder}'
+    path_experiments=f'test_{name_folder}/default'
     manager_path = f'{path_experiments}/managers'
     em = DummyExperimentManager (path_experiments=path_experiments, manager_path=manager_path,
                                  verbose=verbose, **kwargs)

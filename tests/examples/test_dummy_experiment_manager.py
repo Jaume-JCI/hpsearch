@@ -18,8 +18,8 @@ from hpsearch.examples.dummy_experiment_manager import generate_data
 def test_dummy_experiment_manager ():
     em = generate_data ('dummy_experiment_manager')
 
-    path_results = em.get_path_experiments()
-    df = pd.read_csv (f'{path_results}/experiments_data.csv', index_col=0)
+    path_experiments = em.path_experiments
+    df = pd.read_csv (path_experiments/'experiments_data.csv', index_col=0)
     display (df)
 
     # check that stored parameters are correct

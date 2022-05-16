@@ -15,7 +15,7 @@ def parse_args (args):
     parser.add_argument('-d', '--debug', action= "store_true")
     parser.add_argument('-e', '--experiments', type=int, nargs='+', default=None,  help="experiment numbers")
     parser.add_argument('--runs', type=int, default=None,  help="number of runs")
-    parser.add_argument('--root', type=str, default=None, help='name of root folder')
+    parser.add_argument('--folder', type=str, default=None, help='name of experiments folder')
     parser.add_argument('-p', '--path', default=dflt.manager_path, type=str)
     pars = parser.parse_args(args)
 
@@ -25,7 +25,7 @@ def parse_arguments_and_run (args):
 
     pars = parse_args(args)
 
-    em_args = dict(use_process=not pars.debug, root_folder=pars.root)
+    em_args = dict(use_process=not pars.debug)
 
     em = get_experiment_manager (manager_path=pars.path)
 

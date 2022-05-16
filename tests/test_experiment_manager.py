@@ -33,7 +33,7 @@ def init_em_fixture():
 def test_get_path_alternative ():
     em = init_em ('basic')
 
-    em.alternative_root_path = 'other_path'
+    em.alternative_path = 'other_path'
     path_results = em.get_path_results (experiment_id=1, run_number=2)
     assert path_results=='test_basic/experiments/00001/2'
     path_alternative = em.get_path_alternative (path_results)
@@ -60,9 +60,9 @@ def test_basic_usage ():
     files_stored = ['current_experiment_number.pkl', 'experiments', 'experiments_data.csv',
                     'experiments_data.pk', 'git_hash.json', 'managers', 'parameters.pk',
                     'parameters.txt', 'summary.txt']
-    display(files_stored)
+    display (files_stored)
 
-    path_experiments = em.get_path_experiments()
+    path_experiments = em.path_experiments
 
     assert (sorted(os.listdir (path_experiments))==
             files_stored)
@@ -101,7 +101,7 @@ def test_basic_usage ():
 # Comes from experiment_manager.ipynb, cell
 def test_same_values ():
     em = init_em ('same_values')
-    path_experiments = em.get_path_experiments()
+    path_experiments = em.path_experiments
 
     # first experiment
     result, dict_results = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.05})
@@ -131,7 +131,7 @@ def test_same_values ():
 # Comes from experiment_manager.ipynb, cell
 def test_almost_same_values ():
     em = init_em ('almost_same_values')
-    path_experiments = em.get_path_experiments()
+    path_experiments = em.path_experiments
 
     # first experiment
     result, dict_results = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.05})
@@ -166,7 +166,7 @@ def test_almost_same_values ():
 # Comes from experiment_manager.ipynb, cell
 def test_new_runs ():
     em = init_em ('new_runs')
-    path_experiments = em.get_path_experiments()
+    path_experiments = em.path_experiments
 
     # first experiment
     result, dict_results = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.05})
@@ -227,7 +227,7 @@ def test_new_runs ():
 # Comes from experiment_manager.ipynb, cell
 def test_second_experiment ():
     em = init_em ('second')
-    path_experiments = em.get_path_experiments()
+    path_experiments = em.path_experiments
 
     # first experiment
     result, dict_results = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.05})
@@ -256,7 +256,7 @@ def test_second_experiment ():
 # Comes from experiment_manager.ipynb, cell
 def test_new_parameter ():
     em = init_em ('another_parameter')
-    path_experiments = em.get_path_experiments()
+    path_experiments = em.path_experiments
 
     # first experiment
     result, dict_results = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.05})
@@ -289,7 +289,7 @@ def test_new_parameter ():
 # Comes from experiment_manager.ipynb, cell
 def test_new_parameter_default ():
     em = init_em ('another_parameter_default')
-    path_experiments = em.get_path_experiments()
+    path_experiments = em.path_experiments
 
     # first experiment
     result, dict_results = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.05})
@@ -314,7 +314,7 @@ def test_new_parameter_default ():
 # Comes from experiment_manager.ipynb, cell
 def test_other_parameters ():
     em = init_em ('other_parameters')
-    path_experiments = em.get_path_experiments()
+    path_experiments = em.path_experiments
 
     # first experiment:
     # we use the other_parameters argument to indicate a parameter that does not affect the outcome
@@ -347,7 +347,7 @@ def test_other_parameters ():
 # Comes from experiment_manager.ipynb, cell
 def test_remove_not_finished ():
     em = init_em ('remove_not_finished')
-    path_experiments = em.get_path_experiments()
+    path_experiments = em.path_experiments
 
     # first experiment: we simulate that a halt before finishing
     with pytest.raises (KeyboardInterrupt):
@@ -377,7 +377,7 @@ def test_remove_not_finished ():
 # Comes from experiment_manager.ipynb, cell
 def test_repeat_experiment ():
     em = init_em ('repeat_experiment')
-    path_experiments = em.get_path_experiments()
+    path_experiments = em.path_experiments
 
     # first experiment
     result, dict_results = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.05})
@@ -407,7 +407,7 @@ def test_repeat_experiment ():
 # Comes from experiment_manager.ipynb, cell
 def test_check_finished ():
     em = init_em ('check_finished')
-    path_experiments = em.get_path_experiments()
+    path_experiments = em.path_experiments
 
     # first experiment: we simulate that we only run for half the number of epochs
     result, dict_results = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.05, 'epochs': 10},
@@ -439,7 +439,7 @@ def test_check_finished ():
 # Comes from experiment_manager.ipynb, cell
 def test_recompute_metrics ():
     em = init_em ('recompute_metrics')
-    path_experiments = em.get_path_experiments()
+    path_experiments = em.path_experiments
 
     # first experiment
     result, dict_results = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.05})
@@ -562,7 +562,7 @@ def test_prev_epoch2 ():
 # Comes from experiment_manager.ipynb, cell
 def test_from_exp ():
     em = init_em ('from_exp')
-    path_experiments = em.get_path_experiments()
+    path_experiments = em.path_experiments
 
     # get reference result
     _ = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.05, 'epochs': 5})
@@ -591,7 +591,7 @@ def test_from_exp ():
 # Comes from experiment_manager.ipynb, cell
 def test_skip_interrupted ():
     em = init_em ('skip_interrupted')
-    path_experiments = em.get_path_experiments()
+    path_experiments = em.path_experiments
 
     # first 3 experiments
     with pytest.raises (KeyboardInterrupt):
@@ -624,7 +624,7 @@ def test_skip_interrupted ():
 # Comes from experiment_manager.ipynb, cell
 def test_use_last_result ():
     em = init_em ('use_last_result')
-    path_experiments = em.get_path_experiments()
+    path_experiments = em.path_experiments
 
     # first 3 experiments
     with pytest.raises (KeyboardInterrupt):
@@ -674,7 +674,7 @@ def test_use_last_result ():
 # Comes from experiment_manager.ipynb, cell
 def test_use_last_result_run_interrupted ():
     em = init_em ('use_last_result_run_interrupted')
-    path_experiments = em.get_path_experiments()
+    path_experiments = em.path_experiments
 
     # first 3 experiments
     with pytest.raises (KeyboardInterrupt):
@@ -706,13 +706,17 @@ def test_use_last_result_run_interrupted ():
 def test_storing_em_args_and_parameters ():
     em = init_em ('storing_em_args_and_parameters')
 
+    path_experiment = em.get_path_experiment (0)
     result, dict_results = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.05})
-    print (sorted (os.listdir('test_storing_em_args_and_parameters/experiments/00000')))
-    assert sorted (os.listdir('test_storing_em_args_and_parameters/experiments/00000')) == [
+    # assert path_experiment == ('test_storing_em_args_and_parameters'
+    #                                                     '/default/experiments/00000')
+    assert sorted (os.listdir(path_experiment)) == [
         '0', 'em_args.json', 'em_attrs.json', 'info.json', 'other_parameters.json', 'parameters.json',
         'parameters.pk', 'parameters.txt']
-    par, other, em_args = joblib.load ('test_storing_em_args_and_parameters/experiments/00000/parameters.pk')
-    assert em_args ==  {'root_path': None, 'run_number': 0, 'log_message': None, 'stack_level': -3}
+    par, other, em_args, info, em_attrs = joblib.load (path_experiment/'parameters.pk')
+    print (em_args)
+    #assert em_args ==  {'run_number': 0, 'log_message': None, 'stack_level': -3}
+
     em.remove_previous_experiments()
 
 # Comes from experiment_manager.ipynb, cell

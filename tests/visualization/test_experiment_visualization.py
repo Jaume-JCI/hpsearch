@@ -61,10 +61,10 @@ def test_multiple_runs ():
     plot_utils.plot(title=title, xlabel='epoch', ylabel='test_accuracy', traces=traces,
                     backend='matplotlib');
 
-    md ('#### plotting multiple runs, and indicating a different root_path')
+    md ('#### plotting multiple runs, and indicating a different path_experiments')
     import shutil
     shutil.move ('test_multiple_runs', 'test_another_location')
-    multi_history_plotter = MultiHistoryPlotter (root_path='test_another_location',
+    multi_history_plotter = MultiHistoryPlotter (path_experiments='test_another_location',
                                                  backend='matplotlib')
     multi_history_plotter.plot_multiple_histories (experiments=[8], run_number=list(range(5))+['mean'],
                                                    metrics='test_accuracy')

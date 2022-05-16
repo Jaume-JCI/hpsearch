@@ -345,7 +345,7 @@ def query (path_experiments = None,
 
     if path_experiments is None:
         from ..config.hpconfig import get_path_experiments
-        path_experiments = get_path_experiments(path_experiments=path_experiments, folder = folder_experiments)
+        path_experiments = get_path_experiments()
 
     path_pickle = None
     if query_other_parameters:

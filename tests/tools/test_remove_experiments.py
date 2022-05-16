@@ -18,7 +18,7 @@ def test_parse_arguments_and_remove ():
     em = generate_data ('test_parse_arguments_and_remove')
 
     # before
-    path_experiments = em.get_path_experiments ()
+    path_experiments = em.path_experiments
     df_old = em.get_experiment_data ()
     display (df_old)
 

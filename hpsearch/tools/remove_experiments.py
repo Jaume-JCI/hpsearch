@@ -14,18 +14,12 @@ import pandas as pd
 import pickle
 
 from ..utils.organize_experiments import remove_experiments
-from ..config.hpconfig import get_default_operations
+from ..config.hpconfig import get_experiment_manager
 import hpsearch.config.hp_defaults as dflt
 
 # Cell
-def remove (experiments=[], root_folder=None, manager_path=dflt.manager_path):
-
-    default_operations = get_default_operations (manager_path=manager_path)
-    if root_folder is None:
-        root_folder = default_operations.get('root', 'results')
-
-    print (experiments, root_folder)
-    remove_experiments (experiments=experiments, root_folder=root_folder)
+def remove (experiments=[], folder=None, manager_path=dflt.manager_path):
+    remove_experiments (experiments=experiments, folder=folder, manager_path=manager_path)
 
 # Cell
 def parse_args(args):
@@ -33,7 +27,7 @@ def parse_args(args):
     # Datasets
     parser.add_argument('-e', nargs='+', default=[-1, -2], type=int,
                         help="experiments")
-    parser.add_argument('--root', type=str, default=None)
+    parser.add_argument('--folder', type=str, default=None)
     parser.add_argument('-p', '--path', default=dflt.manager_path, type=str)
 
     pars = parser.parse_args(args)
@@ -44,7 +38,7 @@ def parse_arguments_and_remove (args):
 
     pars = parse_args(args)
 
-    remove (pars.e, root_folder=pars.root, manager_path=pars.path)
+    remove (pars.e, folder=pars.folder, manager_path=pars.path)
 
 def main():
 

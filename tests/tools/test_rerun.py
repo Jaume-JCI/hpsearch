@@ -18,22 +18,22 @@ import hpsearch.utils.experiment_utils as ut
 # Comes from rerun.ipynb, cell
 def test_parse_arguments_and_run_more_runs ():
     em = generate_data ('parse_arguments_and_run_more_runs',
-                        root_folder='newroot')
+                        folder='new_folder')
 
-    df = em.get_experiment_data (folder_experiments='newroot')
+    df = em.get_experiment_data ()
     assert df.shape==(9,25)
 
-    args = ['-e', '4', '3', '--root', 'newroot', '--verbose', '1', '-p', em.manager_path]
+    args = ['-e', '4', '3', '--verbose', '1', '-p', em.manager_path]
     parse_arguments_and_run (args)
     em.raise_error_if_run=True
-    df = em.get_experiment_data (folder_experiments='newroot')
+    df = em.get_experiment_data ()
     x=[f'{i}_validation_accuracy' for i in range(5)]; assert df.columns.isin(x).sum()==5
     assert df.shape==(9,25)
 
-    args = ['-e', '4', '3', '--runs', '10', '--root', 'newroot', '-p', em.manager_path]
+    args = ['-e', '4', '3', '--runs', '10', '-p', em.manager_path]
     em.raise_error_if_run=False
     parse_arguments_and_run (args)
-    df = em.get_experiment_data (folder_experiments='newroot')
+    df = em.get_experiment_data ()
     assert df.shape==(9,45)
     x=[f'{i}_validation_accuracy' for i in range(10)]; assert df.columns.isin(x).sum()==10
 
@@ -106,9 +106,9 @@ def test_parse_arguments_and_run_more_epochs ():
 def test_parse_arguments_and_run_store ():
     path_experiments = 'test_parse_arguments_and_run_store'
     em = generate_data (path_experiments,
-                        root_folder='newroot')
+                        folder='new_folder')
 
-    df = em.get_experiment_data (folder_experiments='newroot')
+    df = em.get_experiment_data ()
     assert df.shape==(9,25)
     columns = ut.get_scores_columns (df, class_ids=range(5), suffix_results='_validation_accuracy')
     columns += ut.get_scores_columns (df, class_ids=range(5), suffix_results='_test_accuracy')
@@ -121,16 +121,16 @@ def test_parse_arguments_and_run_store ():
     df_orig = df.copy()
     columns = ut.get_scores_columns (df_orig)
     df[columns] = None
-    path = em.get_path_experiments (folder='newroot')
-    df.to_csv (f'{path}/experiments_data.csv')
-    df.to_pickle (f'{path}/experiments_data.pk')
-    df_overwritten = em.get_experiment_data (folder_experiments='newroot')
+    path = em.path_experiments
+    df.to_csv (path/'experiments_data.csv')
+    df.to_pickle (path/'experiments_data.pk')
+    df_overwritten = em.get_experiment_data ()
     assert (df_orig[columns]!=df_overwritten[columns]).all().all()
 
-    parse_arguments_and_run ('--root newroot --range-exp 0 9 --store --from-dict --runs 5 '
+    parse_arguments_and_run ('--range-exp 0 9 --store --from-dict --runs 5 '
                              f'--min-iterations 1 -p {em.manager_path}'.split())
 
-    df_new = em.get_experiment_data (folder_experiments='newroot')
+    df_new = em.get_experiment_data ()
     # TODO: see why finished is False after storing
     #assert (df_orig[columns]==df_new[columns]).all().all()
     x, y = df_orig[columns].astype('float'), df_new[columns].astype('float')
@@ -142,15 +142,15 @@ def test_parse_arguments_and_run_store ():
     df.loc[3:,columns] = None
     df.to_csv (f'{path}/experiments_data.csv')
     df.to_pickle (f'{path}/experiments_data.pk')
-    df_overwritten = em.get_experiment_data (folder_experiments='newroot')
+    df_overwritten = em.get_experiment_data ()
     #assert (df_orig[columns]==df_overwritten[columns]).sum().sum() == 20
     # TODO: see why is the following true, instead of the previous:
     #assert (df_orig[columns]==df_overwritten[columns]).sum().sum() == 30
 
-    parse_arguments_and_run ('--root newroot --range-exp 0 9 --store --from-dict --runs 5 '
+    parse_arguments_and_run ('--range-exp 0 9 --store --from-dict --runs 5 '
                              f'--min-iterations 1 -p {em.manager_path}'.split())
 
-    df_new = em.get_experiment_data (folder_experiments='newroot')
+    df_new = em.get_experiment_data ()
     #assert (df_orig[columns]==df_new[columns]).all().all()
     x, y = df_orig[columns].astype('float'), df_new[columns].astype('float')
     y[[f'{x}_finished' for x in range(5)]]=1.0
@@ -167,15 +167,15 @@ def test_parse_arguments_and_run_store ():
     df = df.drop (index=range(3,9))
     df.to_csv (f'{path}/experiments_data.csv')
     df.to_pickle (f'{path}/experiments_data.pk')
-    df_overwritten = em.get_experiment_data (folder_experiments='newroot')
+    df_overwritten = em.get_experiment_data ()
     assert df_overwritten.shape==(3,25)
 
     assert df_overwritten.isna().sum().sum()==15
 
-    parse_arguments_and_run ('--root newroot --range-exp 0 9 --store --from-dict --runs 5 '
+    parse_arguments_and_run ('--range-exp 0 9 --store --from-dict --runs 5 '
                              f'--min-iterations 1 -p {em.manager_path}'.split())
 
-    df_new = em.get_experiment_data (folder_experiments='newroot')
+    df_new = em.get_experiment_data ()
     #assert (df_orig[columns]==df_new[columns]).all().all()
     x, y = df_orig[columns].astype('float'), df_new[columns].astype('float')
     y[[f'{x}_finished' for x in range(5)]]=1.0
@@ -190,14 +190,14 @@ def test_parse_arguments_and_run_store ():
     df.iloc[1,:] = None
     df.iloc[3:,:] = None
 
-    path = em.get_path_experiments (folder='newroot')
+    path = em.path_experiments
 
-    df.to_csv (f'{path}/experiments_data.csv')
-    df.to_pickle (f'{path}/experiments_data.pk')
+    df.to_csv (path/'experiments_data.csv')
+    df.to_pickle (path/'experiments_data.pk')
 
     with pytest.raises (ValueError):
         parse_arguments_and_run (
-            f'--root newroot --range-exp 0 9 --store --from-dict --runs 5 -p {em.manager_path}'.split()
+            f'--range-exp 0 9 --store --from-dict --runs 5 -p {em.manager_path}'.split()
         )
 
     em.remove_previous_experiments ()

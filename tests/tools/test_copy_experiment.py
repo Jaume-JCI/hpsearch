@@ -80,15 +80,15 @@ def test_copy_code_with_experiment_paths ():
 
 # Comes from copy_experiment.ipynb, cell
 def test_parse_arguments_copy_experiment ():
-    em = generate_data ('parse_arguments_copy_experiment', root_folder='newroot')
+    em = generate_data ('parse_arguments_copy_experiment', folder='new_folder')
 
-    df = em.get_experiment_data (folder_experiments='newroot')
+    df = em.get_experiment_data ()
     assert df.shape==(9,25)
 
-    args = ('--root newroot -e 2 --content test_dest_folder_copy_exp_content '
+    args = ('-e 2 --content test_dest_folder_copy_exp_content '
            f'--run 1 --file test_file.py --code test_my_code -p {em.manager_path}')
     desired = {'path_results':
-               'test_parse_arguments_copy_experiment/newroot/experiments/00002/1'}
+               'test_parse_arguments_copy_experiment/new_folder/experiments/00002/1'}
     parse_arguments_and_run (args.split (), desired=desired)
 
     assert sorted(os.listdir ('test_dest_folder_copy_exp_content'))==[
