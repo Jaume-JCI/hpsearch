@@ -120,6 +120,7 @@ class FakeModel (object):
         pass
 
 
+
 # Cell
 from ..experiment_manager import ExperimentManager
 import hpsearch
@@ -130,7 +131,7 @@ class DummyExperimentManager (ExperimentManager):
 
     def __init__ (self,
                   path_experiments=None,
-                  root='',
+                  root=None,
                   metric='validation_accuracy',
                   op='max',
                   **kwargs):
@@ -208,7 +209,8 @@ class DummyExperimentManager (ExperimentManager):
 
 # Cell
 def run_multiple_experiments (nruns=1, noise=0.0, verbose=True, rate=0.03, values_to_explore=None,
-                              other_parameters={}, EM=DummyExperimentManager, em=None, **kwargs):
+                              other_parameters={}, EM=DummyExperimentManager, em=None, em_args={},
+                              **kwargs):
     if em is None:
         em = EM (**kwargs)
     parameters_single_value = dict(rate=rate, noise=noise)   # parameters where we use a fixed value
@@ -223,11 +225,12 @@ def run_multiple_experiments (nruns=1, noise=0.0, verbose=True, rate=0.03, value
             parameters_single_value=parameters_single_value,
             parameters_multiple_values=parameters_multiple_values,
             other_parameters=other_parameters,
-            nruns=nruns)
+            nruns=nruns,
+            **em_args)
 
 # Cell
 def generate_data (name_folder, parameters_multiple_values=None,
-                   parameters_single_value=None, other_parameters={}, verbose=0, **kwargs):
+                   parameters_single_value=None, other_parameters={}, verbose=0, em_args={}, **kwargs):
     np.random.seed (42)
     path_experiments=f'test_{name_folder}'
     manager_path = f'{path_experiments}/managers'
@@ -237,7 +240,7 @@ def generate_data (name_folder, parameters_multiple_values=None,
     run_multiple_experiments (em=em, nruns=5, noise=0.1, verbose=False,
                               values_to_explore=parameters_multiple_values,
                               parameters_single_value=parameters_single_value,
-                              other_parameters=other_parameters)
+                              other_parameters=other_parameters,  em_args=em_args)
     return em
 
 # Cell

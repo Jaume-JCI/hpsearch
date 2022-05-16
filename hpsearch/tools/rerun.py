@@ -11,9 +11,9 @@ import hpsearch.config.hp_defaults as dflt
 
 # Cell
 def rerun (experiments=None, root=None, epochs=None, runs=None, unfinished=False,
-           verbose=None, debug=False, em_args=None, store=False, from_dict=False,
+           verbose=None, debug=False, em_attrs=None, store=False, from_dict=False,
            range_exp=None, min_iterations=None, manager_path=dflt.manager_path):
-    other_parameters = dict(
+    em_args = dict(
                             use_process=not debug,
                             root_folder=root
                             )
@@ -24,30 +24,30 @@ def rerun (experiments=None, root=None, epochs=None, runs=None, unfinished=False
     em = get_experiment_manager (manager_path=manager_path)
     if verbose is not None:
         em.set_verbose (verbose)
-    if em_args is not None:
-        for k in em_args:
-            setattr (em, k, em_args[k])
+    if em_attrs is not None:
+        for k in em_attrs:
+            setattr (em, k, em_attrs[k])
 
     if epochs is not None:
         parameters = {em.name_epoch: int(epochs)}
-        other_parameters.update (prev_epoch=True)
+        em_args.update (prev_epoch=True)
         check_experiment_matches=False
     else:
         check_experiment_matches=True
         parameters = {}
     if unfinished:
-        other_parameters.update (check_finished=True, use_previous_best=False)
+        em_args.update (check_finished=True, use_previous_best=False)
     if store:
-        other_parameters.update (use_last_result=True)
+        em_args.update (use_last_result=True)
         if from_dict:
-            other_parameters.update (use_last_result_from_dict=True)
+            em_args.update (use_last_result_from_dict=True)
         if min_iterations is not None:
-            other_parameters.update (min_iterations=min_iterations)
+            em_args.update (min_iterations=min_iterations)
 
 
-    em.rerun_experiment (experiments=experiments, nruns=runs, root_folder=root,
-                         parameters=parameters, other_parameters=other_parameters,
-                         check_experiment_matches=check_experiment_matches)
+    em.rerun_experiment (experiments=experiments, nruns=runs,
+                         parameters=parameters, check_experiment_matches=check_experiment_matches,
+                         **em_args)
 
 # Cell
 def parse_args (args):
@@ -68,13 +68,13 @@ def parse_args (args):
 
     return pars
 
-def parse_arguments_and_run (args, em_args = None):
+def parse_arguments_and_run (args, em_attrs = None):
 
     pars = parse_args(args)
     pars = vars(pars)
     pars['manager_path'] = pars['path']
     del pars['path']
-    rerun (**pars, em_args=em_args)
+    rerun (**pars, em_attrs=em_attrs)
 
 def main():
     parse_arguments_and_run (sys.argv[1:])

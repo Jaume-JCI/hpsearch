@@ -86,9 +86,9 @@ def copy_code (source_folder, destination_folder, file=None,
 
     # 3 write code about calling run_experiment
     try:
-        parameters, other_parameters = joblib.load (f'{path_root_experiment}/separate_parameters.pk')
+        parameters, other_parameters, *_ = joblib.load (f'{path_root_experiment}/separate_parameters.pk')
     except FileNotFoundError:
-        parameters, other_parameters = joblib.load (f'{path_root_experiment}/parameters.pk')
+        parameters, other_parameters, *_ = joblib.load (f'{path_root_experiment}/parameters.pk')
     parameters = mypprint(parameters, dict_name='    parameters')
 
     path_results_str = '{path_results}'

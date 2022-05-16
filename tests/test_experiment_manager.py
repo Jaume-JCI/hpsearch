@@ -57,17 +57,9 @@ def test_basic_usage ():
 
     # Eight files  are stored in *path_experiments*, and the `experiments` folder is created:
 
-    files_stored = ['current_experiment_number.pkl',
-             'experiments',
-             'experiments_data.csv',
-             'experiments_data.pk',
-             'git_hash.json',
-             'managers',
-             'other_parameters.csv',
-             'parameters.pk',
-             'parameters.txt',
-             'summary.txt']
-
+    files_stored = ['current_experiment_number.pkl', 'experiments', 'experiments_data.csv',
+                    'experiments_data.pk', 'git_hash.json', 'managers', 'parameters.pk',
+                    'parameters.txt', 'summary.txt']
     display(files_stored)
 
     path_experiments = em.get_path_experiments()
@@ -160,7 +152,7 @@ def test_almost_same_values ():
     # second experiment: the difference between the values of rate parameter is 1.e-16:
     # too small to be considered different
     result, dict_results = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.05+1e-16},
-                                                        other_parameters={'precision': 1e-17})
+                                                         precision=1e-17)
 
     df = em.get_experiment_data ()
     assert df.shape[0]==2 and (df.columns==['offset','rate','0_validation_accuracy','0_test_accuracy',
@@ -372,7 +364,7 @@ def test_remove_not_finished ():
     display(df)
 
     result, dict_results = em.create_experiment_and_run (parameters={'offset':1.0, 'rate': 0.3},
-                                                         other_parameters={'remove_not_finished':True})
+                                                         remove_not_finished=True)
 
     df = em.get_experiment_data ()
     display(df)
@@ -396,7 +388,7 @@ def test_repeat_experiment ():
 
     # second experiment
     result, dict_results = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.05},
-                                                         other_parameters={'repeat_experiment': True})
+                                                         repeat_experiment = True)
 
     df = em.get_experiment_data ()
     display(df)
@@ -434,7 +426,7 @@ def test_check_finished ():
 
     # third experiment: same values in parameters dictionary, with other_parameters indicating check_finished
     result, dict_results = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.05, 'epochs': 10},
-                                                         other_parameters={'check_finished':True})
+                                                         check_finished=True)
 
     df = em.get_experiment_data ()
     assert df.shape[0]==1 and (df.columns==['offset','rate','0_validation_accuracy','0_test_accuracy',
@@ -454,7 +446,7 @@ def test_recompute_metrics ():
     # second experiment: new values
     em.raise_error_if_run = True
     result, dict_results = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.02},
-                                                         other_parameters={'recompute_metrics': True})
+                                                         recompute_metrics=True)
 
     df = em.get_experiment_data ()
     assert df.shape[0]==2 and (df.columns==['offset','rate','0_validation_accuracy','0_test_accuracy',
@@ -463,9 +455,10 @@ def test_recompute_metrics ():
 
     # third experiment: new values
     em.raise_error_if_run = False
-    result, dict_results = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.02, 'epochs': 10},
-                                                         other_parameters={'recompute_metrics':True,
-                                                                           'force_recompute_metrics': True})
+    result, dict_results = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.02,
+                                                                     'epochs': 10},
+                                                         recompute_metrics=True,
+                                                         force_recompute_metrics=True)
 
     df = em.get_experiment_data ()
     assert df.shape[0]==2 and (df.columns==['offset','rate','0_validation_accuracy','0_test_accuracy',
@@ -499,7 +492,7 @@ def test_prev_epoch ():
     # whose path is indicated in parameters['resume'], or whose path is
     # indicated in f'{parameters["prev_path_results"]}/{self.model_file_name}'
     _ = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.05, 'epochs': 17},
-                                      other_parameters={'prev_epoch': True})
+                                      prev_epoch=True)
 
 
 
@@ -509,7 +502,7 @@ def test_prev_epoch ():
     assert reference_accuracy==em.model.accuracy and reference_weight==em.model.weight
 
     _ = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.05, 'epochs': 17},
-                                      other_parameters={'repeat_experiment': True})
+                                      repeat_experiment = True)
 
     assert em.model.epochs==17 and em.model.current_epoch==17
 
@@ -536,7 +529,7 @@ def test_prev_epoch2 ():
     # But we request to run the experiment until the end
     score, results = em.create_experiment_and_run (
         parameters={'offset':0.1, 'rate': 0.03, 'epochs': 5},
-        other_parameters={'prev_epoch': True, 'check_finished': True, 'use_previous_best': False}
+        prev_epoch=True, check_finished=True, use_previous_best=False
     )
 
     assert score==0.25 and results['validation_accuracy']==0.25
@@ -558,9 +551,8 @@ def test_prev_epoch2 ():
     # But we request to run the experiment until the end
     score, results = em.create_experiment_and_run (
         parameters={'offset':0.1, 'rate': 0.03, 'epochs': 5},
-        other_parameters={'prev_epoch': True, 'check_finished_if_interrupted': True,
-                          'use_previous_best': False}
-    )
+        prev_epoch=True, check_finished_if_interrupted=True,
+        use_previous_best=False)
     assert score==0.25 and results['validation_accuracy']==0.25
     assert em.model.current_epoch==5 and em.model.epochs==3
     df = em.get_experiment_data ()
@@ -585,7 +577,7 @@ def test_from_exp ():
     # the following resumes from experiment 0, and trains the model for 5 more epochs
     # using now different `offset` and `rate` hyper-parameters
     _ = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.05, 'epochs': 5},
-                                      other_parameters={'from_exp': 0})
+                                      from_exp=0)
 
     assert em.model.epochs==5 and em.model.current_epoch==7
     correct_accuracy = (0.1 + 0.03*2 # accuracy of model from experiment 0
@@ -611,24 +603,18 @@ def test_skip_interrupted ():
     em.raise_error_if_run = True
     score, results = em.create_experiment_and_run (
         parameters={'offset':0.1, 'rate': 0.03, 'epochs': 5},
-        other_parameters={'skip_interrupted': True}
-    )
+        skip_interrupted=True)
     assert score is None and len(results)==0
 
     score, results = em.create_experiment_and_run (
         parameters={'offset':0.1, 'rate': 0.03, 'epochs': 5},
-        other_parameters={'skip_interrupted': True,
-                          'model_file_name': 'wrong_file.pk',
-                          'min_iterations':1}
-    )
+        skip_interrupted=True, model_file_name='wrong_file.pk', min_iterations=1)
     assert score is None and len(results)==0
 
     with pytest.raises (RuntimeError):
         score, results = em.create_experiment_and_run (
             parameters={'offset':0.1, 'rate': 0.03, 'epochs': 5},
-            other_parameters={'skip_interrupted': True,
-                              'model_file_name': 'wrong_file.pk'}
-        )
+            skip_interrupted=True, model_file_name='wrong_file.pk')
 
     df = em.get_experiment_data ()
     display (df)
@@ -654,8 +640,7 @@ def test_use_last_result ():
     # Since this is not true, the last result is not used.
     score, results = em.create_experiment_and_run (
         parameters={'offset':0.1, 'rate': 0.03, 'epochs': 5},
-        other_parameters={'use_last_result': True}
-    )
+        use_last_result=True)
     assert score is None and results=={}
     df = em.get_experiment_data ()
     display(df)
@@ -664,8 +649,7 @@ def test_use_last_result ():
     # We use last result and lower the required number of epochs to 2
     score, results = em.create_experiment_and_run (
         parameters={'offset':0.1, 'rate': 0.03, 'epochs': 5},
-        other_parameters={'use_last_result': True, 'min_iterations': 2}
-    )
+        use_last_result=True, min_iterations=2)
     print (score, results)
     assert score==0.25 and results=={'validation_accuracy': 0.25, 'test_accuracy': 0.35, 'accuracy': 0.25, 'last': 5}
     df = em.get_experiment_data ()
@@ -677,8 +661,7 @@ def test_use_last_result ():
     # But we request to run the experiment until the end
     score, results = em.create_experiment_and_run (
         parameters={'offset':0.1, 'rate': 0.03, 'epochs': 5},
-        other_parameters={'use_last_result': True, 'run_if_not_interrumpted': True}
-    )
+        use_last_result=True, run_if_not_interrumpted=True)
     print (score, results)
     #assert score==None and results=={'validation_accuracy': 0.25, 'test_accuracy': 0.35, 'accuracy': 0.25, 'last': 5}
     df = em.get_experiment_data ()
@@ -708,8 +691,7 @@ def test_use_last_result_run_interrupted ():
     # But we request to run the experiment until the end
     score, results = em.create_experiment_and_run (
         parameters={'offset':0.1, 'rate': 0.03, 'epochs': 5},
-        other_parameters={'use_last_result': True, 'run_if_not_interrumpted': True}
-    )
+        use_last_result=True, run_if_not_interrumpted=True)
     print (score, results)
     #assert score==None and results=={'validation_accuracy': 0.25, 'test_accuracy': 0.35, 'accuracy': 0.25, 'last': 5}
     df = em.get_experiment_data ()
@@ -726,13 +708,9 @@ def test_storing_em_args_and_parameters ():
 
     result, dict_results = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.05})
     print (sorted (os.listdir('test_storing_em_args_and_parameters/experiments/00000')))
-    assert sorted (os.listdir('test_storing_em_args_and_parameters/experiments/00000')) == sorted(
-        ['other_parameters.json',
-         'parameters.pk',
-         'parameters.txt',
-         'em_args.json',
-         '0',
-         'parameters.json'])
+    assert sorted (os.listdir('test_storing_em_args_and_parameters/experiments/00000')) == [
+        '0', 'em_args.json', 'em_attrs.json', 'info.json', 'other_parameters.json', 'parameters.json',
+        'parameters.pk', 'parameters.txt']
     par, other, em_args = joblib.load ('test_storing_em_args_and_parameters/experiments/00000/parameters.pk')
     assert em_args ==  {'root_path': None, 'run_number': 0, 'log_message': None, 'stack_level': -3}
     em.remove_previous_experiments()
@@ -841,12 +819,10 @@ def test_hp_optimization ():
     np.random.seed (42)
 
     parameters = {'epochs': 12}
-    other_parameters = dict (trial_report='test_hp_optimization_trial',
-                             study_name='test_hp_optimization_study',
-                             n_trials=5)
 
     em.hp_optimization (parameter_sampler=parameter_sampler, parameters=parameters,
-                        other_parameters=other_parameters)
+                        trial_report='test_hp_optimization_trial', study_name='test_hp_optimization_study',
+                        n_trials=5)
 
     df = em.get_experiment_data ()
     display (df)
@@ -862,8 +838,7 @@ def parameter_sampler (trial):
     epochs = trial.suggest_categorical('epochs', [2, 4])
     offset = trial.suggest_categorical('offset', [0.02, 0.06])
 
-    parameters = dict(epochs=epochs,
-                      offset=offset)
+    parameters = dict(epochs=epochs, offset=offset)
 
     return parameters
 
@@ -922,7 +897,8 @@ def test_rerun_experiment ():
     # ****************************************
     em.rerun_experiment (experiments=[2],
                          parameter_sampler=parameter_sampler,
-                         other_parameters={'n_trials':4, 'verbose':False, 'sampler_method':'skopt'})
+                         other_parameters={'verbose':False},
+                         n_trials=4, sampler_method='skopt')
     df2 = em.get_experiment_data ()
     display (df2)
     print (df2.shape)

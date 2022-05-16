@@ -80,7 +80,7 @@ def test_copy_code_with_experiment_paths ():
 
 # Comes from copy_experiment.ipynb, cell
 def test_parse_arguments_copy_experiment ():
-    em = generate_data ('parse_arguments_copy_experiment', other_parameters={'root_folder': 'newroot'})
+    em = generate_data ('parse_arguments_copy_experiment', root_folder='newroot')
 
     df = em.get_experiment_data (folder_experiments='newroot')
     assert df.shape==(9,25)

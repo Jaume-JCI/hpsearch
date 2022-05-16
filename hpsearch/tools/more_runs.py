@@ -25,15 +25,12 @@ def parse_arguments_and_run (args):
 
     pars = parse_args(args)
 
-    other_parameters = dict(
-                            use_process=not pars.debug,
-                            root_folder=pars.root
-                            )
+    em_args = dict(use_process=not pars.debug, root_folder=pars.root)
 
     em = get_experiment_manager (manager_path=pars.path)
 
-    em.rerun_experiment (experiments= pars.experiments, nruns = pars.runs, root_folder=pars.root,
-                         other_parameters=other_parameters)
+    em.rerun_experiment (experiments= pars.experiments, nruns = pars.runs,
+                         **em_args)
 
 def main():
     parse_arguments_and_run (sys.argv[1:])

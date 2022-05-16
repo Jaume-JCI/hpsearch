@@ -18,7 +18,7 @@ import hpsearch.utils.experiment_utils as ut
 # Comes from rerun.ipynb, cell
 def test_parse_arguments_and_run_more_runs ():
     em = generate_data ('parse_arguments_and_run_more_runs',
-                        other_parameters={'root_folder': 'newroot'})
+                        root_folder='newroot')
 
     df = em.get_experiment_data (folder_experiments='newroot')
     assert df.shape==(9,25)
@@ -64,7 +64,7 @@ def test_parse_arguments_and_run_more_epochs ():
     args = ['-e', '3', '--epochs', '7', '-d', '-p', em.manager_path]
     parse_arguments_and_run (
         args,
-        em_args={'desired_path_results_previous_experiment':'test_parse_arguments_and_run_more_epochs/experiments/00001/0',
+        em_attrs={'desired_path_results_previous_experiment':'test_parse_arguments_and_run_more_epochs/experiments/00001/0',
                  'desired_epochs': 1, 'desired_current_epoch': 7}
     )
 
@@ -106,7 +106,7 @@ def test_parse_arguments_and_run_more_epochs ():
 def test_parse_arguments_and_run_store ():
     path_experiments = 'test_parse_arguments_and_run_store'
     em = generate_data (path_experiments,
-                        other_parameters={'root_folder': 'newroot'})
+                        root_folder='newroot')
 
     df = em.get_experiment_data (folder_experiments='newroot')
     assert df.shape==(9,25)
