@@ -30,7 +30,11 @@ def get_pickable_fields (obj):
     # dill seems to have issues with DataFrame and possibly np.array
     dict_fields = {k:dict_fields[k] for k in dict_fields
                    if not isinstance(dict_fields[k], pd.DataFrame) and not isinstance(dict_fields[k], np.ndarray)}
-    return {k:dict_fields[k] for k in dict_fields if dill.pickles (dict_fields[k])}
+    try:
+        result = {k:dict_fields[k] for k in dict_fields if dill.pickles (dict_fields[k])}
+    except:
+        result = dict_fields
+    return result
 
 # Cell
 class ManagerFactory (object):
