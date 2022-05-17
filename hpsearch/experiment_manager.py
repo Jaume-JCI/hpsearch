@@ -90,14 +90,14 @@ class ExperimentManager (object):
         self._path_experiments = Path (self._path_experiments).resolve ()
         if folder is not None or parent_path is not None:
             self.set_path_experiments (folder=folder, parent_path=parent_path)
-        self.alternative_path = Path(self.alternative_path) if self.alternative_path is not None
-        self.path_data = Path(self.path_data) if self.path_data is not None
+        self.alternative_path = Path(self.alternative_path) if self.alternative_path is not None else None
+        self.path_data = Path(self.path_data) if self.path_data is not None else None
 
         if self.logger is None:
             self.logger = set_logger (self.name_logger, path_results=self.path_experiments, verbose=self.verbose)
 
         self.key_score = metric
-        self.registered_name = f'{class_name}-{self.folder}')
+        self.registered_name = f'{class_name}-{self.folder}'
 
         self.parameters_non_pickable = {}
         self.manager_factory = ManagerFactory(allow_base_class=allow_base_class, manager_path=self.manager_path,
