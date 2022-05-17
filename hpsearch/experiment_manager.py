@@ -276,7 +276,6 @@ class ExperimentManager (object):
                                    run_if_not_interrumpted=False, use_last_result_from_dict=False,
                                    previous_model_file_name=None, model_extension='h5', model_name='checkpoint_',
                                    epoch_offset=0, name_best_model='best_model',
-                                   name_model_history='model_history.pk',
                                    name_last_epoch=dflt.name_last_epoch, min_iterations=dflt.min_iterations):
         """
 
@@ -508,7 +507,6 @@ class ExperimentManager (object):
                                               previous_model_file_name=previous_model_file_name,
                                               model_extension=model_extension, model_name=model_name,
                                               epoch_offset=epoch_offset, name_best_model=name_best_model,
-                                              name_model_history=name_model_history,
                                               name_last_epoch=name_last_epoch)
 
         # ****************************************************************
@@ -944,7 +942,7 @@ class ExperimentManager (object):
     def finished_all_epochs (self, parameters, path_results,
                              name_last_epoch=dflt.name_last_epoch):
         defaults = self.get_default_parameters (parameters)
-        current_epoch = parameters.get(name_epoch, defaults.get(name_epoch))
+        current_epoch = parameters.get(self.name_epoch, defaults.get(self.name_epoch))
         prev_epoch = self.get_last_epoch (parameters, path_results,
                                           name_last_epoch=name_last_epoch)
 
@@ -957,10 +955,10 @@ class ExperimentManager (object):
 
     def make_resume_from_checkpoint (self, parameters, prev_path_results, use_best=False, previous_model_file_name=None,
                                     model_extension='h5', model_name='checkpoint_', epoch_offset=0, name_best_model='best_model',
-                                    name_model_history='model_history.pk', name_last_epoch=dflt.name_last_epoch):
+                                    name_last_epoch=dflt.name_last_epoch):
 
         found = False
-        path_model_history = f'{prev_path_results}/{name_model_history}'
+        path_model_history = f'{prev_path_results}/{self.name_model_history}'
         if os.path.exists(path_model_history):
             parameters['resume_summary'] = path_model_history
             found = True
@@ -972,7 +970,7 @@ class ExperimentManager (object):
             else:
                 summary = pickle.load(open(path_model_history, 'rb'))
                 prev_epoch = summary.get(name_last_epoch)
-                key_score = self.get_key_score (parameters)
+                key_score = self.key_score
                 if prev_epoch is None:
                     if key_score in summary and (isinstance(summary[key_score], list)
                                                  or isinstance(summary[key_score], np.array)):
@@ -995,12 +993,8 @@ class ExperimentManager (object):
         return found
 
     def exists_current_checkpoint (self, parameters, path_results):
-        model_file_name = self.get_parameter (parameters, 'model_file_name')
+        model_file_name = self.model_file_name
         return os.path.exists (f'{path_results}/{model_file_name}')
-
-    def get_parameter (self, parameters, key, default=None):
-        parameter = parameters.get(key)
-        return parameter if parameter is not None else getattr(self, key, default)
 
     def obtain_last_result (self, parameters, path_results, use_last_result_from_dict=False,
                             min_iterations=dflt.min_iterations):
@@ -1009,7 +1003,7 @@ class ExperimentManager (object):
             return self.obtain_last_result_from_dict (parameters, path_results,
                                                       use_last_result_from_dict=use_last_result_from_dict,
                                                       min_iterations=min_iterations)
-        name_result_file = self.get_parameter (parameters, 'name_model_history')
+        name_result_file = self.name_model_history
         path_results_file = f'{path_results}/{name_result_file}'
         dict_results = None
         if os.path.exists (path_results_file):

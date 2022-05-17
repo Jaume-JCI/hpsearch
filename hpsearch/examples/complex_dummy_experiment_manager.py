@@ -89,10 +89,10 @@ class DummyManagerAvoidSaving (ComplexDummyExperimentManager):
         super ().__init__ (avoid_saving_fields=['my_new_field', 'greeting_message'], **kwargs)
 
 # Cell
-def init_em (name_folder):
+def init_em (name_folder, **kwargs):
     path_experiments = f'test_{name_folder}/default'
     manager_path = f'{path_experiments}/managers'
-    em = ComplexDummyExperimentManager (path_experiments=path_experiments, manager_path=manager_path)
+    em = ComplexDummyExperimentManager (path_experiments=path_experiments, manager_path=manager_path, **kwargs)
 
     em.remove_previous_experiments()
 

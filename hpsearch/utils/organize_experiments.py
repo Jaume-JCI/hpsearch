@@ -8,6 +8,7 @@ import numpy as np
 import shutil
 
 from . import experiment_utils
+import hpsearch.config.hp_defaults as dflt
 
 # Cell
 def join_experiments (path_source, path_destination, key_score=None):
