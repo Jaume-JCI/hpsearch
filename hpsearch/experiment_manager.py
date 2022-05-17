@@ -277,6 +277,7 @@ class ExperimentManager (object):
                                    previous_model_file_name=None, model_extension='h5', model_name='checkpoint_',
                                    epoch_offset=0, name_best_model='best_model',
                                    name_last_epoch=dflt.name_last_epoch, min_iterations=dflt.min_iterations):
+
         """
 
         """
@@ -672,11 +673,11 @@ class ExperimentManager (object):
 
 
     def hp_optimization (self, parameter_sampler=None, log_message=None,
-                         parameters={}, other_parameters={}, nruns=None, stack_level=-3,
-                         sampler_method='random', pruner_method='halving',
-                         n_evaluations=20, seed=0, n_startup_trials=5, n_trials=10,
-                         study_name='hp_study', run_number=None, n_jobs=1,
-                         nruns_best=0,
+                         parameters={}, other_parameters={}, info=Bunch(),
+                         nruns=None, stack_level=-3, sampler_method='random',
+                         pruner_method='halving', n_evaluations=20, seed=0,
+                         n_startup_trials=5, n_trials=10, study_name='hp_study',
+                         run_number=None, n_jobs=1, nruns_best=0,
                          **kwargs):
 
         import optuna
@@ -809,6 +810,13 @@ class ExperimentManager (object):
                 parameters=parameters_original, check_experiment_matches=check_experiment_matches
             )
 
+            if 'log_message' in em_args:
+                info['old_log_message'] = em_args['log_message']
+                del em_args['log_message']
+            if 'run_number' in em_args:
+                info['old_run_number'] = em_args['run_number']
+                del em_args['run_number']
+
             # we need to set the following flag to False, since otherwise when we request to store the intermediate results
             # and the experiment did not start, we do not run the experiment
             if (em_args.get('use_last_result', False)
@@ -820,6 +828,9 @@ class ExperimentManager (object):
 
             if parameter_sampler is not None:
                 self.logger.info ('running hp_optimization')
+                if 'parameter_sampler' in em_args:
+                    info['old_parameter_sampler'] = em_args['parameter_sampler']
+                    del em_args['parameter_sampler']
                 insert_experiment_script_path (info, self.logger)
                 em_args['info'] = info
                 self.hp_optimization (parameter_sampler=parameter_sampler,

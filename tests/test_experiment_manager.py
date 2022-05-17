@@ -19,6 +19,7 @@ from IPython.display import display
 import optuna
 
 from dsblocks.utils.nbdev_utils import md
+from dsblocks.utils.utils import check_last_part
 
 from hpsearch.experiment_manager import *
 from hpsearch.examples.complex_dummy_experiment_manager import ComplexDummyExperimentManager
@@ -35,9 +36,9 @@ def test_get_path_alternative ():
 
     em.alternative_path = 'other_path'
     path_results = em.get_path_results (experiment_id=1, run_number=2)
-    assert path_results=='test_basic/experiments/00001/2'
+    check_last_part (path_results,'test_basic/default/experiments/00001/2')
     path_alternative = em.get_path_alternative (path_results)
-    assert (path_alternative=='other_path/experiments/00001/2')
+    check_last_part (path_alternative, 'other_path/experiments/00001/2')
 
     em.remove_previous_experiments()
 
@@ -608,13 +609,14 @@ def test_skip_interrupted ():
 
     score, results = em.create_experiment_and_run (
         parameters={'offset':0.1, 'rate': 0.03, 'epochs': 5},
-        skip_interrupted=True, model_file_name='wrong_file.pk', min_iterations=1)
+        skip_interrupted=True, min_iterations=1)
     assert score is None and len(results)==0
 
+    em.model_file_name='wrong_file.pk'
     with pytest.raises (RuntimeError):
         score, results = em.create_experiment_and_run (
             parameters={'offset':0.1, 'rate': 0.03, 'epochs': 5},
-            skip_interrupted=True, model_file_name='wrong_file.pk')
+            skip_interrupted=True)
 
     df = em.get_experiment_data ()
     display (df)
@@ -708,11 +710,13 @@ def test_storing_em_args_and_parameters ():
 
     path_experiment = em.get_path_experiment (0)
     result, dict_results = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.05})
-    # assert path_experiment == ('test_storing_em_args_and_parameters'
-    #                                                     '/default/experiments/00000')
-    assert sorted (os.listdir(path_experiment)) == [
-        '0', 'em_args.json', 'em_attrs.json', 'info.json', 'other_parameters.json', 'parameters.json',
-        'parameters.pk', 'parameters.txt']
+    check_last_part (path_experiment, 'test_storing_em_args_and_parameters/default/experiments/00000')
+    ref_list = ['0', 'em_args.json', 'em_attrs.json', 'experiment_manager.py', 'info.json', 'other_parameters.json',
+     'parameters.json', 'parameters.pk', 'parameters.txt']
+    ref_list2 = ref_list.copy()
+    del ref_list2[3]
+    result_list = sorted (os.listdir(path_experiment))
+    assert result_list==ref_list or result_list==ref_list2
     par, other, em_args, info, em_attrs = joblib.load (path_experiment/'parameters.pk')
     print (em_args)
     #assert em_args ==  {'run_number': 0, 'log_message': None, 'stack_level': -3}
@@ -825,7 +829,7 @@ def test_hp_optimization ():
     parameters = {'epochs': 12}
 
     em.hp_optimization (parameter_sampler=parameter_sampler, parameters=parameters,
-                        trial_report='test_hp_optimization_trial', study_name='test_hp_optimization_study',
+                        study_name='test_hp_optimization_study',
                         n_trials=5)
 
     df = em.get_experiment_data ()
