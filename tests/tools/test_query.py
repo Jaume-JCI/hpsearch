@@ -27,7 +27,7 @@ def test_do_query_and_show ():
     assert (df.offset == [.6,.6,.6,.3,.3,.1,.3,.1,.1]).all()
     assert (df['mean'] == [0.97, 0.89, 0.81, 0.8 , 0.65, 0.55, 0.46, 0.44, 0.19]).all()
 
-    em.remove_previous_experiments ()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from query.ipynb, cell
 def test_do_query_and_show_change_metric ():
@@ -35,7 +35,7 @@ def test_do_query_and_show_change_metric ():
 
     do_query_and_show (metric='test_accuracy', manager_path=em.manager_path)
 
-    em.remove_previous_experiments ()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from query.ipynb, cell
 def test_do_query_and_show_with_conditions ():
@@ -44,7 +44,7 @@ def test_do_query_and_show_with_conditions ():
     do_query_and_show (metric='validation_accuracy', op='max', pf={'epochs':15},
                        manager_path=em.manager_path)
 
-    em.remove_previous_experiments ()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from query.ipynb, cell
 def test_do_query_and_show_sort_maximum ():
@@ -53,7 +53,7 @@ def test_do_query_and_show_sort_maximum ():
     do_query_and_show (metric='validation_accuracy', op='max', sort='max',
                        stats=['mean', 'min', 'max'], manager_path=em.manager_path);
 
-    em.remove_previous_experiments ()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from query.ipynb, cell
 def test_parse_arguments_and_query_change_metric ():
@@ -62,7 +62,7 @@ def test_parse_arguments_and_query_change_metric ():
     command = f'--metric test_accuracy -p {em.manager_path}'
     parse_arguments_and_query (command.split())
 
-    em.remove_previous_experiments ()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from query.ipynb, cell
 def test_parse_arguments_and_query_with_conditions ():
@@ -71,4 +71,4 @@ def test_parse_arguments_and_query_with_conditions ():
     command = f'--metric validation_accuracy --op max -f dict(epochs=15) -p {em.manager_path}'
     parse_arguments_and_query (command.split())
 
-    em.remove_previous_experiments ()
+    em.remove_previous_experiments (parent=True)

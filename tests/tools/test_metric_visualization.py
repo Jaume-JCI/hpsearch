@@ -28,7 +28,7 @@ def test_metric_visualization ():
     metric_visualization(experiments=[3, 7], metric='test_accuracy', backend='matplotlib',
                          manager_path=em.manager_path)
 
-    em.remove_previous_experiments ()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from metric_visualization.ipynb, cell
 def test_several_visualizations ():
@@ -40,7 +40,7 @@ def test_several_visualizations ():
                                                 'metric_1': 'validation_accuracy',
                                                 'metric_2': 'test_accuracy'},
                          manager_path=em.manager_path)
-    em.remove_previous_experiments ()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from metric_visualization.ipynb, cell
 def test_several_metrics ():
@@ -49,7 +49,7 @@ def test_several_metrics ():
     metric_visualization (experiments=[-1,-2], metric=['test_accuracy', 'validation_accuracy'],
                           backend='matplotlib', manager_path=em.manager_path)
 
-    em.remove_previous_experiments ()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from metric_visualization.ipynb, cell
 def test_several_metrics_same_plot ():
@@ -59,7 +59,7 @@ def test_several_metrics_same_plot ():
                           metrics_second=['test_accuracy'],
                           backend='matplotlib', manager_path=em.manager_path)
 
-    em.remove_previous_experiments ()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from metric_visualization.ipynb, cell
 def test_parse_arguments_and_visualize ():
@@ -74,4 +74,4 @@ def test_parse_arguments_and_visualize ():
 
     parse_arguments_and_visualize (command)
 
-    em.remove_previous_experiments ()
+    em.remove_previous_experiments (parent=True)

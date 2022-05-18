@@ -94,7 +94,7 @@ def init_em (name_folder, **kwargs):
     manager_path = f'{path_experiments}/managers'
     em = ComplexDummyExperimentManager (path_experiments=path_experiments, manager_path=manager_path, **kwargs)
 
-    em.remove_previous_experiments()
+    em.remove_previous_experiments(parent=True)
 
     with pytest.raises (FileNotFoundError):
         os.listdir(em.path_experiments)
@@ -117,7 +117,7 @@ def generate_data (name_folder, nruns=5, noise=0.1, verbose_model=False, verbose
     manager_path = f'{path_experiments}/managers'
     em = ComplexDummyExperimentManager (path_experiments=path_experiments, manager_path=manager_path,
                                         verbose=verbose, **kwargs)
-    em.remove_previous_experiments ()
+    em.remove_previous_experiments (parent=True)
     run_multiple_experiments (em=em, nruns=nruns, noise=noise, verbose=verbose,
                               values_to_explore=parameters_multiple_values,
                               parameters_single_value=parameters_single_value,

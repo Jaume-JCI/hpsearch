@@ -37,7 +37,7 @@ def test_parse_arguments_and_run_more_runs ():
     assert df.shape==(9,45)
     x=[f'{i}_validation_accuracy' for i in range(10)]; assert df.columns.isin(x).sum()==10
 
-    em.remove_previous_experiments ()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from rerun.ipynb, cell
 def test_parse_arguments_and_run_more_epochs ():
@@ -47,7 +47,7 @@ def test_parse_arguments_and_run_more_epochs ():
     _ = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.05, 'epochs': 7})
     df = em.get_experiment_data ()
     display (df)
-    em.remove_previous_experiments()
+    em.remove_previous_experiments (parent=True)
 
     # first 3 experiments
     _ = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.05, 'epochs': 5})
@@ -85,7 +85,7 @@ def test_parse_arguments_and_run_more_epochs ():
 
     # *****************************************
     # *****************************************
-    em.remove_previous_experiments ()
+    em.remove_previous_experiments (parent=True)
     em.desired_path_results_previous_experiment, em.desired_epochs, em.desired_current_epoch = None, None, None
     # first 3 experiments
     _ = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.05, 'epochs': 5})
@@ -100,7 +100,7 @@ def test_parse_arguments_and_run_more_epochs ():
     print (df.shape)
     assert df.shape==(7,8)
 
-    em.remove_previous_experiments ()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from rerun.ipynb, cell
 def test_parse_arguments_and_run_store ():
@@ -200,4 +200,4 @@ def test_parse_arguments_and_run_store ():
             f'--range-exp 0 9 --store --from-dict --runs 5 -p {em.manager_path}'.split()
         )
 
-    em.remove_previous_experiments ()
+    em.remove_previous_experiments (parent=True)

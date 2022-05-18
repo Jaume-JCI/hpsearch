@@ -34,4 +34,4 @@ def test_parse_arguments_and_run_more_runs ():
     assert df.shape==(9,45)
     x=[f'{i}_validation_accuracy' for i in range(10)]; assert df.columns.isin(x).sum()==10
 
-    em.remove_previous_experiments ()
+    em.remove_previous_experiments (parent=True)

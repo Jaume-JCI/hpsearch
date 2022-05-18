@@ -46,4 +46,4 @@ def test_remove_experiments ():
     print ('csv content:')
     print (experiments_data)
 
-    em.remove_previous_experiments ()
+    em.remove_previous_experiments (parent=True)

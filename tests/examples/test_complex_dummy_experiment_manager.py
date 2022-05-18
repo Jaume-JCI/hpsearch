@@ -56,7 +56,7 @@ and remove the experiment
     md ('We run the first experiment  with 20 epochs:')
 
     # a.- remove previous experiment
-    em.remove_previous_experiments()
+    em.remove_previous_experiments (parent=True)
 
     # b.- create first experiment with epochs=20
     em.create_experiment_and_run (parameters = {'epochs': 20});
@@ -88,4 +88,4 @@ and remove the experiment
     md ('We plot the history')
     plot_multiple_histories ([1], run_number=0, op='max', backend='matplotlib', metrics='validation_accuracy')
 
-    em.remove_previous_experiments()
+    em.remove_previous_experiments (parent=True)

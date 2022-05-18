@@ -54,4 +54,4 @@ def test_dummy_experiment_manager ():
 
     em.experiment_visualization ([3,4,5], backend='matplotlib')
 
-    em.remove_previous_experiments()
+    em.remove_previous_experiments (parent=True)

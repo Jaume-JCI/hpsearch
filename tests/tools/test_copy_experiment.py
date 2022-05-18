@@ -54,7 +54,7 @@ def test_copy_content_and_code ():
 
     shutil.rmtree ('test_my_code')
     shutil.rmtree ('test_dest_folder_copy_exp_content')
-    em.remove_previous_experiments ()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from copy_experiment.ipynb, cell
 def test_copy_code_with_experiment_paths ():
@@ -75,7 +75,7 @@ def test_copy_code_with_experiment_paths ():
     assert 'parameters=dict(epochs=5,' in text
     assert 'em = ComplexDummyExperimentManager ()' in text
 
-    em.remove_previous_experiments ()
+    em.remove_previous_experiments (parent=True)
     shutil.rmtree ('test_dest_folder_copy_exp')
 
 # Comes from copy_experiment.ipynb, cell
@@ -114,4 +114,4 @@ def test_parse_arguments_copy_experiment ():
 
     shutil.rmtree ('test_my_code')
     shutil.rmtree ('test_dest_folder_copy_exp_content')
-    em.remove_previous_experiments ()
+    em.remove_previous_experiments (parent=True)

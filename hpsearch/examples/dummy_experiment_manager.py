@@ -235,7 +235,7 @@ def generate_data (name_folder, parameters_multiple_values=None,
     manager_path = f'{path_experiments}/managers'
     em = DummyExperimentManager (path_experiments=path_experiments, manager_path=manager_path,
                                  verbose=verbose, **kwargs)
-    em.remove_previous_experiments ()
+    em.remove_previous_experiments (parent=True)
     run_multiple_experiments (em=em, nruns=5, noise=0.1, verbose=False,
                               values_to_explore=parameters_multiple_values,
                               parameters_single_value=parameters_single_value,
@@ -248,4 +248,4 @@ import os
 
 def remove_previous_experiments (EM=DummyExperimentManager):
     em = EM ()
-    em.remove_previous_experiments ()
+    em.remove_previous_experiments (parent=True)
