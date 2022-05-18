@@ -19,6 +19,7 @@ from IPython.display import display
 import optuna
 
 from dsblocks.utils.nbdev_utils import md
+from dsblocks.utils.utils import remove_previous_results
 
 from hpsearch.experiment_manager import *
 from hpsearch.examples.complex_dummy_experiment_manager import ComplexDummyExperimentManager
@@ -1030,4 +1031,4 @@ def test_get_git_revision_hash ():
     assert git_hash == ''
 
     os.chdir (curdir)
-    shutil.rmtree (path_results)
+    remove_previous_results (path_results)
