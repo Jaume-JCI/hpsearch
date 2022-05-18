@@ -180,7 +180,7 @@ class ExperimentManager (object):
 
     def remove_previous_experiments (self, parent=False, only_test=True):
         path_to_remove = self.path_experiments.parent if parent else self.path_experiments
-        if not str(path_to_remove).startswith ('test_') and only_test:
+        if not str(path_to_remove.name).startswith ('test_') and only_test:
             raise ValueError (f'path to remove does not start with test_: {path_to_remove}')
         if path_to_remove.exists():
             shutil.rmtree (path_to_remove)
