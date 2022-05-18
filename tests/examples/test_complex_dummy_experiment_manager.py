@@ -88,4 +88,4 @@ and remove the experiment
     md ('We plot the history')
     plot_multiple_histories ([1], run_number=0, op='max', backend='matplotlib', metrics='validation_accuracy')
 
-    em.remove_previous_experiments (parent=True)
+    em.remove_previous_experiments ()

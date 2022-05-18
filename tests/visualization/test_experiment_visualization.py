@@ -14,6 +14,7 @@ from dsblocks.utils.nbdev_utils import md
 from hpsearch.visualization.experiment_visualization import *
 from hpsearch.examples.dummy_experiment_manager import generate_data
 from hpsearch.examples.dummy_experiment_manager import run_multiple_experiments
+from hpsearch.visualization import plot_utils
 
 # Comes from experiment_visualization.ipynb, cell
 def generate_data_plot (folder):

@@ -19,7 +19,7 @@ from IPython.display import display
 import optuna
 
 from dsblocks.utils.nbdev_utils import md
-from dsblocks.utils.utils import check_last_part
+from dsblocks.utils.utils import check_last_part, remove_previous_results
 
 from hpsearch.experiment_manager import *
 from hpsearch.examples.complex_dummy_experiment_manager import ComplexDummyExperimentManager
@@ -59,8 +59,8 @@ def test_basic_usage ():
     # Eight files  are stored in *path_experiments*, and the `experiments` folder is created:
 
     files_stored = ['current_experiment_number.pkl', 'experiments', 'experiments_data.csv',
-                    'experiments_data.pk', 'git_hash.json', 'managers', 'parameters.pk',
-                    'parameters.txt', 'summary.txt']
+                    'experiments_data.pk', 'git_hash.json', 'managers', 'other_parameters.csv',
+                    'parameters.pk', 'parameters.txt', 'summary.txt']
     display (files_stored)
 
     path_experiments = em.path_experiments
@@ -711,8 +711,8 @@ def test_storing_em_args_and_parameters ():
     path_experiment = em.get_path_experiment (0)
     result, dict_results = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.05})
     check_last_part (path_experiment, 'test_storing_em_args_and_parameters/default/experiments/00000')
-    ref_list = ['0', 'em_args.json', 'em_attrs.json', 'experiment_manager.py', 'info.json', 'other_parameters.json',
-     'parameters.json', 'parameters.pk', 'parameters.txt']
+    ref_list = ['0', 'em_args.json', 'em_attrs.json',  'info.json', 'other_parameters.json',
+     'parameters.json', 'parameters.pk', 'parameters.txt', 'test_experiment_manager.py',]
     ref_list2 = ref_list.copy()
     del ref_list2[3]
     result_list = sorted (os.listdir(path_experiment))
@@ -1031,4 +1031,4 @@ def test_get_git_revision_hash ():
     assert git_hash == ''
 
     os.chdir (curdir)
-    shutil.rmtree (path_results)
+    remove_previous_results (path_results)

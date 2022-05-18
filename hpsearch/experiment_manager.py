@@ -188,7 +188,8 @@ class ExperimentManager (object):
     def experiment_visualization (self, **kwargs):
         raise ValueError ('this type of experiment visualization is not recognized')
 
-    def run_experiment_pipeline (self, run_number=0, path_results='./results', parameters = {}):
+    def run_experiment_pipeline (self, run_number=0, path_results='./results', parameters = {},
+                                 use_process=False):
         """ Runs complete learning pipeline: loading / generating data, building and learning model, applying it to data,
         and evaluating it."""
         start_time = time.time()
@@ -204,7 +205,8 @@ class ExperimentManager (object):
         # Evaluation
         # #####################################
         time_before = time.time()
-        score_dict = self._run_experiment (parameters=parameters, path_results=path_results, run_number=run_number)
+        score_dict = self._run_experiment (parameters=parameters, path_results=path_results,
+                                           run_number=run_number, use_process=use_process)
         self.logger.info ('time spent on this experiment: {}'.format(time.time()-time_before))
 
         # #####################################
@@ -224,14 +226,14 @@ class ExperimentManager (object):
     # *************************************************************************
     #   run_experiment methods
     # *************************************************************************
-    def _run_experiment (self, parameters={}, path_results='./results', run_number=None):
+    def _run_experiment (self, parameters={}, path_results='./results', run_number=None, use_process=False):
 
         parameters['run_number'] = run_number
 
         # wrap parameters
         parameters = Bunch(**parameters)
 
-        if parameters.get('use_process', False):
+        if use_process:
             return self.run_experiment_in_separate_process (parameters, path_results)
         else:
             return self.run_experiment (parameters=parameters, path_results=path_results)
@@ -277,9 +279,10 @@ class ExperimentManager (object):
                                    use_previous_best=dflt.use_previous_best, from_exp=None,
                                    skip_interrupted=False, use_last_result=False,
                                    run_if_not_interrumpted=False, use_last_result_from_dict=False,
-                                   previous_model_file_name=None, model_extension='h5', model_name='checkpoint_',
-                                   epoch_offset=0, name_best_model='best_model',
-                                   name_last_epoch=dflt.name_last_epoch, min_iterations=dflt.min_iterations):
+                                   previous_model_file_name=None, model_extension='h5',
+                                   model_name='checkpoint_', epoch_offset=0, name_best_model='best_model',
+                                   name_last_epoch=dflt.name_last_epoch, min_iterations=dflt.min_iterations,
+                                   use_process=False):
 
         """
 
@@ -547,7 +550,8 @@ class ExperimentManager (object):
         # ****************************************************************
         if run_pipeline:
             experiment_result, time_spent = self.run_experiment_pipeline (run_number, path_results,
-                                                                          parameters=parameters)
+                                                                          parameters=parameters,
+                                                                          use_process=use_process)
             finished = True
         else:
             finished = False

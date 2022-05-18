@@ -101,7 +101,7 @@ def parse_args(args):
     parser.add_argument('-m','--metric', type=str, default=None, help="metrics scores")
     parser.add_argument('--stats', type=str, nargs='+', default=['mean'],  help="statistics for multiple runs")
     parser.add_argument('--experiments', type=int, nargs='+', default=None,  help="experiment numbers")
-    parser.add_argument('-f','--folder', type=str, default=None)
+    parser.add_argument('--folder', type=str, default=None)
     parser.add_argument('-v', type=str, default='{}', help='variable parameters')
     parser.add_argument('-f', type=str, default='{}', help='fixed parameters')
     parser.add_argument('-a', type=str, default='[]', help='all parameters')

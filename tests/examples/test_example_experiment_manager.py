@@ -25,4 +25,4 @@ def test_example_experiment_manager ():
             other_parameters=other_parameters,
             nruns=1)
 
-    em.remove_previous_experiments (parent=True)
+    em.remove_previous_experiments ()

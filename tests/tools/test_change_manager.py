@@ -47,9 +47,9 @@ def test_change_manager_list ():
     manager_factory.write_manager (em)
 
     assert sorted(os.listdir (manager_path))==['fields', 'info', 'logs.txt', 'whole']
-    assert sorted(os.listdir (f'{manager_path}/whole'))==['ExampleExperimentManager-default.pk', 'last.pk']
-    assert sorted(os.listdir (f'{manager_path}/info'))==['ExampleExperimentManager-default.pk', 'last.pk']
-    assert sorted(os.listdir (f'{manager_path}/fields'))==['ExampleExperimentManager-default.pk', 'last.pk']
+    assert sorted(os.listdir (f'{manager_path}/whole'))==['ExampleExperimentManager-experiments.pk', 'last.pk']
+    assert sorted(os.listdir (f'{manager_path}/info'))==['ExampleExperimentManager-experiments.pk', 'last.pk']
+    assert sorted(os.listdir (f'{manager_path}/fields'))==['ExampleExperimentManager-experiments.pk', 'last.pk']
 
     print ('\nlist after storing ExampleExperimentManager')
     em_before = manager_factory.get_experiment_manager ()
@@ -57,7 +57,7 @@ def test_change_manager_list ():
     em_after = manager_factory.get_experiment_manager ()
     assert em_before.__class__.__name__ == em_after.__class__.__name__
 
-    assert sorted(os.listdir (f'{manager_path}/whole'))==['ExampleExperimentManager-default.pk', 'last.pk']
+    assert sorted(os.listdir (f'{manager_path}/whole'))==['ExampleExperimentManager-experiments.pk', 'last.pk']
 
     # we store a third EM (DummyExperimentManager) and list the two
     # stored managers
@@ -99,7 +99,7 @@ def test_change_manager_parse_and_run ():
     em = DummyExperimentManager(path_experiments=path_experiments, manager_path=manager_path)
     em.register_and_store_subclassed_manager ()
 
-    assert sorted(os.listdir (f'{manager_path}/whole'))==['DummyExperimentManager-default.pk', 'ExampleExperimentManager-default.pk', 'last.pk']
+    assert sorted(os.listdir (f'{manager_path}/whole'))==['DummyExperimentManager-experiments.pk', 'ExampleExperimentManager-experiments.pk', 'last.pk']
 
     # *********************************
     # *********************************

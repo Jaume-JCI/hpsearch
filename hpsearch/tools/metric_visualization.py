@@ -48,8 +48,8 @@ def metric_visualization (experiments=[-1,-2], run_number=0, folder=None, metric
                           parameters=None, name_file='model_history.pk', visualization_options = {},
                           backend='plotly', manager_path=dflt.manager_path, **kwargs):
 
+    em = get_experiment_manager (manager_path=manager_path)
     if folder is not None or metric is not None or op is not None:
-        em = get_experiment_manager (manager_path=manager_path)
         if folder is not None: em.set_path_experiments (folder=folder)
         if metric is not None: em.key_score = metric
         if op is not None: em.op = op

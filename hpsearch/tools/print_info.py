@@ -20,7 +20,7 @@ from .metric_visualization import include_best_and_last_experiment
 import hpsearch.config.hp_defaults as dflt
 
 # Cell
-def print_info (experiments=[-1], base=None, folder=None, display_all=False, include_best=False,
+def print_info (experiments=[-1], path_experiments=None, folder=None, display_all=False, include_best=False,
                 op=None, metric=None, round_digits=2, compare=True, compact=0, run_number=0,
                 manager_path=dflt.manager_path):
 
