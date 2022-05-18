@@ -26,7 +26,7 @@ def generate_data_exp_utils (name_folder):
     manager_path = f'{path_experiments}/managers'
     em = DummyExperimentManager (path_experiments=path_experiments, manager_path=manager_path,
                                  verbose=0)
-    em.remove_previous_experiments ()
+    em.remove_previous_experiments (parent=True)
     run_multiple_experiments(em=em, nruns=5, noise=0.1, verbose=False,
                              values_to_explore=dict(offset=[0.1, 0.3, 0.6], epochs=[5, 10, 100]))
     run_multiple_experiments(em=em, nruns=5, noise=0.1, verbose=False, rate=0.0001,
@@ -42,7 +42,7 @@ def test_get_experiment_data ():
     reference = em.get_experiment_data ()
     pd.testing.assert_frame_equal (df, reference)
 
-    em.remove_previous_experiments ()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from experiment_utils.ipynb, cell
 def test_get_parameters_and_scores ():
@@ -143,7 +143,7 @@ def test_get_parameters_and_scores ():
     result = get_scores_columns (df, class_ids=range(5), suffix_results='_validation_accuracy')
     assert result == ['0_validation_accuracy', '1_validation_accuracy', '2_validation_accuracy',
                      '3_validation_accuracy', '4_validation_accuracy']
-    em.remove_previous_experiments ()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from experiment_utils.ipynb, cell
 def test_get_scores_names ():
@@ -165,7 +165,7 @@ def test_get_scores_names ():
     print (scores_names)
     assert scores_names==['validation_accuracy']
 
-    em.remove_previous_experiments()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from experiment_utils.ipynb, cell
 def test_get_monitored_training_metrics ():
@@ -175,7 +175,7 @@ def test_get_monitored_training_metrics ():
     print (monitored_metrics)
     assert monitored_metrics==['validation_accuracy', 'test_accuracy', 'accuracy']
 
-    em.remove_previous_experiments()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from experiment_utils.ipynb, cell
 def test_get_classes_with_results ():
@@ -191,7 +191,7 @@ def test_get_classes_with_results ():
     result = get_classes_with_results (df, suffix_results='_validation_accuracy', class_ids=[0,2])
     display (result)
     assert result==[0,2]
-    em.remove_previous_experiments()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from experiment_utils.ipynb, cell
 def test_get_parameters_unique ():
@@ -204,7 +204,7 @@ def test_get_parameters_unique ():
     assert result[1].shape==(18,3)
     assert result[0] == ['epochs', 'offset', 'rate']
 
-    em.remove_previous_experiments()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from experiment_utils.ipynb, cell
 def test_compact_parameters ():
@@ -243,7 +243,7 @@ def test_compact_parameters ():
          'time_4': 'Ti4',
          '4_finished': '4Fi'}
 
-    em.remove_previous_experiments()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from experiment_utils.ipynb, cell
 def test_replace_with_default_values ():
@@ -253,7 +253,7 @@ def test_replace_with_default_values ():
     df=replace_with_default_values(df)
     assert (df.epochs.values == ([5.]*3 + [10.]*3 + [100.]*3)*2).all()
 
-    em.remove_previous_experiments()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from experiment_utils.ipynb, cell
 def test_remove_defaults ():
@@ -272,7 +272,7 @@ def test_remove_defaults ():
     parameters = remove_defaults ({'offset':0.5, 'rate': 0.000001, 'epochs': 100})
     assert parameters=={'rate': 0.000001}
 
-    em.remove_previous_experiments ()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from experiment_utils.ipynb, cell
 def test_find_rows_with_parameters_dict ():
@@ -310,7 +310,7 @@ def test_find_rows_with_parameters_dict ():
     assert 'new_par' in df.columns
     assert matching_rows==[]
 
-    em.remove_previous_experiments ()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from experiment_utils.ipynb, cell
 def test_summarize_results ():
@@ -349,7 +349,7 @@ def test_summarize_results ():
     assert d.shape[0]==2
     assert all(d.index==[0,2])
     assert {'mean', 'min', 'max', 'std', 'median'}.issubset(d.columns)
-    em.remove_previous_experiments ()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from experiment_utils.ipynb, cell
 def test_query ():
@@ -382,7 +382,7 @@ def test_query ():
     assert (dmean.epochs == 10).sum() == 2
     display (dmean)
 
-    em.remove_previous_experiments ()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from experiment_utils.ipynb, cell
 def test_summary ():
@@ -395,4 +395,4 @@ def test_summary ():
     display (result)
     assert all(result.columns == ['offset', 'rate', '0', '1', '2', '3', '4'])
     assert result.shape[0] == 3
-    em.remove_previous_experiments ()
+    em.remove_previous_experiments (parent=True)

@@ -24,8 +24,7 @@ def get_experiment_data (path_experiments=None, folder_experiments=None, experim
     If path_experiments is not given, it uses the default one.
     """
     from ..config.hpconfig import get_experiment_data
-    return get_experiment_data (path_experiments=path_experiments, folder_experiments=folder_experiments,
-                                experiments=experiments)
+    return get_experiment_data (experiments=experiments)
 
 # Cell
 def get_parameters_columns (experiment_data, only_not_null=False):
@@ -96,10 +95,10 @@ def get_scores_names (experiment_data=None, run_number=None, experiment=None, on
 
 # Cell
 def get_monitored_training_metrics (experiment, run_number=0, history_file_name='model_history.pk',
-                                    path_results=None, root_path=None, root_folder=None):
+                                    path_results=None):
     if path_results is None:
         from ..config.hpconfig import get_path_results
-        path_results = get_path_results(experiment, run_number, root_path=root_path, root_folder=root_folder)
+        path_results = get_path_results(experiment, run_number)
     path_history = f'{path_results}/{history_file_name}'
     if os.path.exists(path_history):
         history=pickle.load(open(path_history,'rb'))

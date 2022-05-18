@@ -178,9 +178,10 @@ class ExperimentManager (object):
 
         return experiment_data
 
-    def remove_previous_experiments (self):
-        if self.path_experiments.exists():
-            shutil.rmtree (self.path_experiments)
+    def remove_previous_experiments (self, parent=False):
+        path_to_save = self.path_experiments.parent if parent else self.path_experiments
+        if path_to_save.exists():
+            shutil.rmtree (path_to_save)
 
     def experiment_visualization (self, **kwargs):
         raise ValueError ('this type of experiment visualization is not recognized')
@@ -575,8 +576,8 @@ class ExperimentManager (object):
 
         try:
             save_other_parameters (experiment_number, {**other_parameters, **em_args, **info}, path_experiments)
-        except:
-            print (f'error saving other parameters')
+        except Exception as e:
+            print (f'error saving other parameters: {e}')
 
         logger_summary2.info ('\nresults:\n{}'.format(dict_results))
         self.logger.info ('finished experiment %d' %experiment_number)
@@ -1348,7 +1349,7 @@ def get_scalar_fields (other_parameters):
 
 def save_other_parameters (experiment_number, other_parameters, path_experiments):
 
-    other_parameters = get_scalar_fields (other_parameters)
+    parameters_to_save = get_scalar_fields (other_parameters)
 
     path_csv = f'{str(path_experiments)}/other_parameters.csv'
     df = pd.DataFrame (index = [experiment_number], data=parameters_to_save)
