@@ -35,7 +35,7 @@ def generate_data_exp_utils (name_folder):
 
 # Comes from experiment_utils.ipynb, cell
 def test_get_experiment_data ():
-    path_experiments = 'test_get_experiment_data'
+    path_experiments = 'get_experiment_data'
     em = generate_data (path_experiments)
 
     df = get_experiment_data ()
