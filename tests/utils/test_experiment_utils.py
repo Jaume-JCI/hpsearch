@@ -22,7 +22,7 @@ from hpsearch.examples.complex_dummy_experiment_manager import generate_data, in
 
 # Comes from experiment_utils.ipynb, cell
 def generate_data_exp_utils (name_folder):
-    path_experiments = f'test_{name_folder}'
+    path_experiments = f'test_{name_folder}/debug'
     manager_path = f'{path_experiments}/managers'
     em = DummyExperimentManager (path_experiments=path_experiments, manager_path=manager_path,
                                  verbose=0)
