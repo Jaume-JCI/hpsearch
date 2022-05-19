@@ -64,7 +64,7 @@ def test_parse_arguments_and_run_more_epochs ():
     args = ['-e', '3', '--epochs', '7', '-d', '-p', em.manager_path]
     parse_arguments_and_run (
         args,
-        em_attrs={'desired_path_results_previous_experiment':'test_parse_arguments_and_run_more_epochs/experiments/00001/0',
+        em_attrs={'desired_path_results_previous_experiment':'test_parse_arguments_and_run_more_epochs/default/experiments/00001/0',
                  'desired_epochs': 1, 'desired_current_epoch': 7}
     )
 
@@ -75,7 +75,7 @@ def test_parse_arguments_and_run_more_epochs ():
     args = ['-e', '4', '--epochs', '7', '-d', '-p', em.manager_path]
     parse_arguments_and_run (
         args,
-        em_args={'desired_path_results_previous_experiment':'test_parse_arguments_and_run_more_epochs/experiments/00000/0',
+        em_attrs={'desired_path_results_previous_experiment':'test_parse_arguments_and_run_more_epochs/default/experiments/00000/0',
                  'desired_epochs': 2, 'desired_current_epoch': 7}
     )
 

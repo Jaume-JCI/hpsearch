@@ -13,6 +13,8 @@ import os
 import re
 from distutils.dir_util import copy_tree
 
+from dsblocks.utils.utils import check_last_part
+
 from ..experiment_manager import mypprint
 from ..config.hpconfig import get_experiment_manager
 from .query import query
@@ -34,7 +36,7 @@ def copy_experiment_contents (experiment=None, folder=None, destination_folder='
                  f'{destination_folder}/separate_parameters.pk')
     path_results = em.get_path_results (experiment, run)
     if desired is not None and 'path_results' in desired:
-        assert path_results == desired['path_results']
+        check_last_part (path_results, desired['path_results'])
     copy_tree (f'{path_results}', destination_folder)
     target_model = (target_model if target_model is not None
                     else em.target_model_file)
@@ -140,6 +142,7 @@ def copy_code_with_experiment_paths (experiment=None, folder=None,
     copy_code (path_results, destination_folder, file=file,
                path_experiment=path_experiment,
                manager_path=manager_path)
+
 
 
 # Cell

@@ -123,7 +123,7 @@ class ExperimentManager (object):
     def path_experiments (self):
         return self._path_experiments
 
-    def set_path_experiments (path_experiments=None, folder=None, parent_path=None):
+    def set_path_experiments (self, path_experiments=None, folder=None, parent_path=None):
         if path_experiments is not None: self._path_experiments = Path(path_experiments).resolve()
         else:
             parent_path = Path(parent_path).resolve() if parent_path is not None else self.parent_path

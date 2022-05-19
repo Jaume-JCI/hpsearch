@@ -21,8 +21,8 @@ def test_do_query_and_show ():
     em = generate_data (path_results)
 
     df=do_query_and_show (manager_path=em.manager_path)
-    assert sorted(os.listdir (f'test_{path_results}/debug/managers'))==['fields', 'info', 'logs.txt', 'whole']
-    assert sorted(os.listdir (f'test_{path_results}/debug/managers/whole'))==['DummyExperimentManager-default.pk', 'last.pk']
+    assert sorted(os.listdir (f'test_{path_results}/default/managers'))==['fields', 'info', 'logs.txt', 'whole']
+    assert sorted(os.listdir (f'test_{path_results}/default/managers/whole'))==['DummyExperimentManager-default.pk', 'last.pk']
     assert (df.epochs == [15,30,5,15,30,15,5,30,5]).all()
     assert (df.offset == [.6,.6,.6,.3,.3,.1,.3,.1,.1]).all()
     assert (df['mean'] == [0.97, 0.89, 0.81, 0.8 , 0.65, 0.55, 0.46, 0.44, 0.19]).all()

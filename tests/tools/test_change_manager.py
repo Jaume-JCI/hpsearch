@@ -68,7 +68,7 @@ def test_change_manager_list ():
     assert manager_factory.get_experiment_manager().__class__.__name__ == 'DummyExperimentManager'
     change_manager (None, manager_path=manager_path)
 
-    assert sorted(os.listdir (f'{manager_path}/whole'))==['DummyExperimentManager-default.pk', 'ExampleExperimentManager-default.pk', 'last.pk']
+    assert sorted(os.listdir (f'{manager_path}/whole'))==['DummyExperimentManager-experiments.pk', 'ExampleExperimentManager-experiments.pk', 'last.pk']
 
     whole_object_path = Path(f'{manager_path}/whole')
     em=cloudpickle.load (open (whole_object_path / 'last.pk', 'rb'))
@@ -76,7 +76,7 @@ def test_change_manager_list ():
 
     # we change the registered manager back to the first one
     print ('\nlist after changing manager')
-    change_manager('ExampleExperimentManager-default', manager_path=manager_path)
+    change_manager('ExampleExperimentManager-experiments', manager_path=manager_path)
     assert manager_factory.get_experiment_manager().__class__.__name__ == 'ExampleExperimentManager'
     em=cloudpickle.load (open (whole_object_path / 'last.pk', 'rb'))
     assert em.__class__.__name__=='ExampleExperimentManager'
@@ -106,7 +106,7 @@ def test_change_manager_parse_and_run ():
     command = f'-l -p {manager_path}'
     parse_arguments_and_run (command.split())
 
-    command = f'-m ExampleExperimentManager-default -p {manager_path}'
+    command = f'-m ExampleExperimentManager-experiments -p {manager_path}'
     parse_arguments_and_run (command.split())
 
     command = f'-l -p {manager_path}'

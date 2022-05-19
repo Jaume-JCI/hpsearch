@@ -65,11 +65,10 @@ def test_multiple_runs ():
     md ('#### plotting multiple runs, and indicating a different path_experiments')
     import shutil
     shutil.move ('test_multiple_runs', 'test_another_location')
-    multi_history_plotter = MultiHistoryPlotter (path_experiments='test_another_location',
+    multi_history_plotter = MultiHistoryPlotter (path_experiments='test_another_location/default',
                                                  backend='matplotlib')
     multi_history_plotter.plot_multiple_histories (experiments=[8], run_number=list(range(5))+['mean'],
                                                    metrics='test_accuracy')
-    shutil.move ('test_another_location', 'test_multiple_runs')
     em.remove_previous_experiments (parent=True)
 
 # Comes from experiment_visualization.ipynb, cell

@@ -39,7 +39,7 @@ def print_info (experiments=[-1], path_experiments=None, folder=None, display_al
     metric_column = f'{run_number}_{em.key_score}'
 
     experiments = include_best_and_last_experiment ([em.key_score], experiments=experiments,
-                                                    run_number=run_number, op=self.op)
+                                                    run_number=run_number, op=em.op)
 
 
     df_scores = None

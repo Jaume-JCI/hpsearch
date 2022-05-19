@@ -10,6 +10,8 @@ import os
 import pytest
 import numpy as np
 
+from dsblocks.utils.utils import check_last_part
+
 from .dummy_experiment_manager import DummyExperimentManager, FakeModel
 import hpsearch.examples.dummy_experiment_manager as dummy_em
 from ..visualization import plot_utils
@@ -53,7 +55,9 @@ class ComplexDummyExperimentManager (DummyExperimentManager):
         path_results_previous_experiment = parameters.get('prev_path_results')
         if path_results_previous_experiment is not None:
             model.load_model_and_history (path_results_previous_experiment)
-            assert self.desired_path_results_previous_experiment is None or self.desired_path_results_previous_experiment==path_results_previous_experiment
+            if self.desired_path_results_previous_experiment is not None:
+                check_last_part (path_results_previous_experiment,
+                                 self.desired_path_results_previous_experiment)
 
         # fit model with training data
         model.fit ()
