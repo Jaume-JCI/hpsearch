@@ -14,6 +14,8 @@ import sys
 import time
 from sklearn.model_selection import ParameterGrid
 import warnings
+
+from ..config import hp_defaults as dflt
 warnings.filterwarnings('ignore')
 
 # Cell
@@ -28,7 +30,8 @@ def get_experiment_data (path_experiments=None, folder_experiments=None, experim
 
 # Cell
 def get_parameters_columns (experiment_data, only_not_null=False):
-    parameters =  [par for par in experiment_data.columns if not par[0].isdigit() and (par.find('time_')<0) and (par.find('date')<0)]
+    parameters = experiment_data[dflt.parameters_col].columns
+    parameters = [(dflt.parameters_col, *x) for x in parameters]
     if only_not_null:
         parameters = np.array(parameters)[~experiment_data.loc[:,parameters].isnull().all(axis=0)].tolist()
     return parameters
@@ -178,7 +181,7 @@ def find_rows_with_parameters_dict (experiment_data, parameters_dict, create_if_
     matching_all_condition = pd.Series([True]*experiment_data.shape[0])
     existing_keys = [par for par in parameters_dict.keys() if par not in ignore_keys]
     for parameter in existing_keys:
-        mi_parameter = (dflt.name_par, parameter, '')
+        mi_parameter = (dflt.parameters_col, parameter, '')
         if mi_parameter not in experiment_data.columns:
             if create_if_not_exists:
                 experiment_data[mi_parameter] = None
@@ -206,11 +209,11 @@ def find_rows_with_parameters_dict (experiment_data, parameters_dict, create_if_
 
     # We assume that all the columns correspond to parameters, except for those that start with a digit (corresponding to the class evaluated) and those that start with time (giving an estimation of the computational cost)
     if exact_match:
-        rest_parameters = get_parameters_columns (experiment_data)
+        rest_parameters = experiment_data[dflt.parameters_col].columns.get_level_values(0)
         rest_parameters = [par for par in rest_parameters if par not in parameters_dict.keys()]
         rest_parameters = [par for par in rest_parameters if par not in ignore_keys]
         for parameter in rest_parameters:
-            mi_parameter = (dflt.name_par, parameter, '')
+            mi_parameter = (dflt.parameters_col, parameter, '')
             matching_condition = experiment_data[mi_parameter].isnull()
             matching_all_condition = matching_all_condition & matching_condition.values
 
