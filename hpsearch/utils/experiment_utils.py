@@ -168,33 +168,39 @@ def remove_defaults (parameters):
 # Cell
 def find_rows_with_parameters_dict (experiment_data, parameters_dict, create_if_not_exists=True,
                                     exact_match=True, ignore_keys=[], precision = 1e-10):
-    """ Finds rows that match parameters. If the dataframe doesn't have any parameter with that name, a new column is created and changed_dataframe is set to True."""
+    """
+    Finds rows that match parameters.
+
+    If the dataframe doesn't have any parameter with that name, a new column
+    is created and changed_dataframe is set to True.
+    """
     changed_dataframe = False
     matching_all_condition = pd.Series([True]*experiment_data.shape[0])
     existing_keys = [par for par in parameters_dict.keys() if par not in ignore_keys]
     for parameter in existing_keys:
-        if parameter not in experiment_data.columns:
+        mi_parameter = (dflt.name_par, parameter, '')
+        if mi_parameter not in experiment_data.columns:
             if create_if_not_exists:
-                experiment_data[parameter] = None
+                experiment_data[mi_parameter] = None
                 changed_dataframe = True
             else:
                 raise ValueError ('parameter %s not found in experiment_data' %parameter)
         if parameters_dict[parameter] is None:
-            matching_condition = experiment_data[parameter].isnull()
-        elif experiment_data[parameter].isnull().all():
-            matching_condition = ~experiment_data[parameter].isnull()
+            matching_condition = experiment_data[mi_parameter].isnull()
+        elif experiment_data[mi_parameter].isnull().all():
+            matching_condition = ~experiment_data[mi_parameter].isnull()
         elif (type(parameters_dict[parameter]) == float) or (type(parameters_dict[parameter]) == np.float32) or (type(parameters_dict[parameter]) == np.float64):
             if parameters_dict[parameter] == np.floor(parameters_dict[parameter]):
-                matching_condition = experiment_data[parameter]==parameters_dict[parameter]
+                matching_condition = experiment_data[mi_parameter]==parameters_dict[parameter]
             else:
-                matching_condition = experiment_data[parameter]==parameters_dict[parameter]
-                for idx, v in enumerate(experiment_data[parameter]):
+                matching_condition = experiment_data[mi_parameter]==parameters_dict[parameter]
+                for idx, v in enumerate(experiment_data[mi_parameter]):
                     if (type(v) == float or type(v) == np.float32 or type(v) == np.float64) and (np.abs(v-parameters_dict[parameter]) < precision):
                         matching_condition.iloc[idx]=True
                     else:
                         matching_condition.iloc[idx]=False
         else:
-            matching_condition = experiment_data[parameter]==parameters_dict[parameter]
+            matching_condition = experiment_data[mi_parameter]==parameters_dict[parameter]
 
         matching_all_condition = matching_all_condition & matching_condition.values
 
@@ -204,7 +210,8 @@ def find_rows_with_parameters_dict (experiment_data, parameters_dict, create_if_
         rest_parameters = [par for par in rest_parameters if par not in parameters_dict.keys()]
         rest_parameters = [par for par in rest_parameters if par not in ignore_keys]
         for parameter in rest_parameters:
-            matching_condition = experiment_data[parameter].isnull()
+            mi_parameter = (dflt.name_par, parameter, '')
+            matching_condition = experiment_data[mi_parameter].isnull()
             matching_all_condition = matching_all_condition & matching_condition.values
 
     matching_rows = matching_all_condition.index[matching_all_condition].tolist()

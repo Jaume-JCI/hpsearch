@@ -549,7 +549,7 @@ class ExperimentManager (object):
         # run experiment
         # ****************************************************************
         if run_pipeline:
-            experiment_result, time_spent = self.run_experiment_pipeline (run_number, path_results,
+            dict_results, time_spent = self.run_experiment_pipeline (run_number, path_results,
                                                                           parameters=parameters,
                                                                           use_process=use_process)
             finished = True
@@ -559,18 +559,11 @@ class ExperimentManager (object):
         # ****************************************************************
         #  Retrieve and store results
         # ****************************************************************
-        if type(experiment_result)==dict:
-            dict_results = experiment_result
-            for key in dict_results.keys():
-                if key != '':
-                    experiment_data.loc[experiment_number, '%d_%s' %(run_number, key)]=dict_results[key]
-                else:
-                    experiment_data.loc[experiment_number, '%d' %run_number]=dict_results[key]
-                self.logger.info('{} - {}: {}'.format(run_number, key, dict_results[key]))
-        else:
-            experiment_data.loc[experiment_number, name_score]=experiment_result
-            self.logger.info('{} - {}: {}'.format(run_number, name_score, experiment_result))
-            dict_results = {name_score:experiment_result}
+        if not isinstance(dict_results, dict): dict_results = {name_score: dict_results}
+        columns = pd.MultiIndex.from_product ([[dflt.scores_col], list(dict_results.keys()), [run_number]])
+        experiment_data[[x for x in columns if x not in experiment_data]] = None
+        experiment_data.loc[experiment_number, columns]=dict_results.values()
+        experiment_data = experiment_data[experiment_data.columns.sort_values()]
 
         if isnull(experiment_data, experiment_number, 'time_'+str(run_number)) and finished:
             experiment_data.loc[experiment_number,'time_'+str(run_number)]=time_spent
@@ -1196,9 +1189,9 @@ def mypprint(parameters, dict_name=None):
     return text
 
 # Cell
-def load_or_create_experiment_values (path_csv, parameters, precision=1e-15):
+def load_or_create_experiment_values (path_csv, parameters, precision=1e-15, logger=None):
 
-    logger = logging.getLogger("experiment_manager")
+    if logger is None: logger = logging.getLogger("experiment_manager")
     path_pickle = path_csv.replace('csv', 'pk')
     experiment_numbers = []
     changed_dataframe = False
@@ -1222,7 +1215,8 @@ def load_or_create_experiment_values (path_csv, parameters, precision=1e-15):
 
         experiment_data, removed_defaults = remove_defaults_from_experiment_data (experiment_data)
 
-        # Finds rows that match parameters. If the dataframe doesn't have any parameter with that name, a new column is created and changed_dataframe is set to True
+        # Finds rows that match parameters. If the dataframe doesn't have any parameter with that name,
+        # a new column is created and changed_dataframe is set to True
         experiment_numbers, changed_dataframe, _ = experiment_utils.find_rows_with_parameters_dict (
             experiment_data, parameters, precision = precision
         )
@@ -1236,6 +1230,9 @@ def load_or_create_experiment_values (path_csv, parameters, precision=1e-15):
 
     if len(experiment_numbers) == 0:
         experiment_data = experiment_data.append (parameters, ignore_index=True)
+        experiment_data.columns = pd.MultiIndex.from_product (
+            [[dflt.parameters_col], list(parameters.keys()), ['']])
+        experiment_data = experiment_data[experiment_data.columns.sort_values()]
         changed_dataframe = True
         experiment_number = experiment_data.shape[0]-1
     else:

@@ -7,7 +7,8 @@ __all__ = ['init_em_fixture', 'test_get_path_alternative', 'test_basic_usage', '
            'test_skip_interrupted', 'test_use_last_result', 'test_use_last_result_run_interrupted',
            'test_storing_em_args_and_parameters', 'test_grid_search', 'test_run_multiple_repetitions',
            'parameter_sampler', 'test_hp_optimization', 'parameter_sampler', 'test_rerun_experiment',
-           'test_rerun_experiment_pipeline', 'test_rerun_experiment_par', 'test_get_git_revision_hash']
+           'test_rerun_experiment_pipeline', 'test_rerun_experiment_par', 'test_get_git_revision_hash',
+           'test_load_or_create_experiment_values']
 
 # Cell
 import pytest
@@ -715,6 +716,9 @@ def test_storing_em_args_and_parameters ():
      'parameters.json', 'parameters.pk', 'parameters.txt', 'test_experiment_manager.py',]
     ref_list2 = ref_list.copy()
     del ref_list2[3]
+    if __name__ == '__main__':
+        del ref_list[-1]
+        del ref_list2[-1]
     result_list = sorted (os.listdir(path_experiment))
     assert result_list==ref_list or result_list==ref_list2
     par, other, em_args, info, em_attrs = joblib.load (path_experiment/'parameters.pk')
@@ -1032,3 +1036,9 @@ def test_get_git_revision_hash ():
 
     os.chdir (curdir)
     remove_previous_results (path_results)
+
+# Comes from experiment_manager.ipynb, cell
+def test_load_or_create_experiment_values ():
+    path_csv_folder = 'test_load_or_create_experiment_values'
+    os.makedirs (path_csv_folder, exist_ok=True)
+    load_or_create_experiment_values (path_csv, parameters, precision=1e-15, logger=None)
