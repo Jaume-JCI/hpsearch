@@ -18,7 +18,7 @@ from hpsearch.config.hpconfig import get_path_experiments
 def test_remove_experiments ():
     em = generate_data ('remove_experiments')
 
-    path_experiments = get_path_experiments ()
+    path_experiments = em.path_experiments
     print (f'path_experiments: {path_experiments}\n')
     print (f'experiments content: {os.listdir(path_experiments)}\n')
     print (f'experiments inside: {os.listdir(f"{path_experiments}/experiments")}\n')
@@ -46,4 +46,4 @@ def test_remove_experiments ():
     print ('csv content:')
     print (experiments_data)
 
-    em.remove_previous_experiments ()
+    em.remove_previous_experiments (parent=True)

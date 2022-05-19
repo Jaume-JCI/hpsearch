@@ -25,35 +25,31 @@ def get_default_operations (manager_path=dflt.manager_path):
     experiment_manager = get_experiment_manager (manager_path=manager_path)
     return experiment_manager.get_default_operations ()
 
-def get_path_experiments (path_experiments = None, folder = None, manager_path=dflt.manager_path):
+def get_path_experiments (manager_path=dflt.manager_path):
     experiment_manager = get_experiment_manager (manager_path=manager_path)
-    return experiment_manager.get_path_experiments (path_experiments, folder)
+    return experiment_manager.path_experiments
 
 def get_path_alternative (path_results, manager_path=dflt.manager_path):
     experiment_manager = get_experiment_manager (manager_path=manager_path)
     return experiment_manager.get_path_alternative (path_results)
 
-def get_path_data (run_number, root_path=None, parameters={}, manager_path=dflt.manager_path):
+def get_path_data (run_number, parameters={}, manager_path=dflt.manager_path):
     experiment_manager = get_experiment_manager (manager_path=manager_path)
-    return experiment_manager.get_path_data (run_number, root_path, parameters)
+    return experiment_manager.get_path_data (run_number, parameters)
 
-def get_path_experiment (experiment_id, root_path=None, root_folder=None,
-                         manager_path=dflt.manager_path):
+def get_path_experiment (experiment_id, manager_path=dflt.manager_path):
     experiment_manager = get_experiment_manager (manager_path=manager_path)
-    return experiment_manager.get_path_experiment (experiment_id, root_path, root_folder)
+    return experiment_manager.get_path_experiment (experiment_id)
 
-def get_path_results (experiment_id, run_number, root_path=None, root_folder=None,
-                      manager_path=dflt.manager_path):
+def get_path_results (experiment_id, run_number, manager_path=dflt.manager_path):
     experiment_manager = get_experiment_manager (manager_path=manager_path)
-    return experiment_manager.get_path_results (experiment_id, run_number, root_path, root_folder)
+    return experiment_manager.get_path_results (experiment_id, run_number)
 
 def experiment_visualization (manager_path=dflt.manager_path, **kwargs):
     experiment_manager = get_experiment_manager (manager_path=manager_path)
     return experiment_manager.experiment_visualization (**kwargs)
 
-def get_experiment_data (path_experiments=None, folder_experiments=None, experiments=None,
+def get_experiment_data (experiments=None,
                          manager_path=dflt.manager_path):
     experiment_manager = get_experiment_manager (manager_path=manager_path)
-    return experiment_manager.get_experiment_data (path_experiments=path_experiments,
-                                                      folder_experiments=folder_experiments,
-                                                      experiments=experiments)
+    return experiment_manager.get_experiment_data (experiments=experiments)

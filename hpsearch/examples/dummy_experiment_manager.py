@@ -120,6 +120,7 @@ class FakeModel (object):
         pass
 
 
+
 # Cell
 from ..experiment_manager import ExperimentManager
 import hpsearch
@@ -130,7 +131,7 @@ class DummyExperimentManager (ExperimentManager):
 
     def __init__ (self,
                   path_experiments=None,
-                  root='',
+                  folder=None,
                   metric='validation_accuracy',
                   op='max',
                   **kwargs):
@@ -138,7 +139,7 @@ class DummyExperimentManager (ExperimentManager):
         if path_experiments is None: path_experiments = f'{os.path.dirname(hpsearch.__file__)}/../results'
 
         super().__init__ (path_experiments=path_experiments,
-                          root=root,
+                          folder=folder,
                           metric=metric,
                           op=op,
                           **kwargs)
@@ -191,14 +192,13 @@ class DummyExperimentManager (ExperimentManager):
 
         return defaults
 
-    def experiment_visualization (self, experiments=None, run_number=0, root_path=None, root_folder=None,
+    def experiment_visualization (self, experiments=None, run_number=0,
                                   name_file='model_history.pk', metric='test_accuracy', backend='matplotlib',
                                   **kwargs):
-        if root_path is None:
-            root_path = self.get_path_experiments(folder=root_folder)
+        path_experiments = self.path_experiments
         traces = []
         for experiment_id in experiments:
-            path_results = self.get_path_results (experiment_id, run_number=run_number, root_path=root_path)
+            path_results = self.get_path_results (experiment_id, run_number=run_number)
             if os.path.exists('%s/%s' %(path_results, name_file)):
                 history = pickle.load(open('%s/%s' %(path_results, name_file),'rb'))
                 label = '{}'.format(experiment_id)
@@ -208,7 +208,8 @@ class DummyExperimentManager (ExperimentManager):
 
 # Cell
 def run_multiple_experiments (nruns=1, noise=0.0, verbose=True, rate=0.03, values_to_explore=None,
-                              other_parameters={}, EM=DummyExperimentManager, em=None, **kwargs):
+                              other_parameters={}, EM=DummyExperimentManager, em=None, em_args={},
+                              **kwargs):
     if em is None:
         em = EM (**kwargs)
     parameters_single_value = dict(rate=rate, noise=noise)   # parameters where we use a fixed value
@@ -223,21 +224,22 @@ def run_multiple_experiments (nruns=1, noise=0.0, verbose=True, rate=0.03, value
             parameters_single_value=parameters_single_value,
             parameters_multiple_values=parameters_multiple_values,
             other_parameters=other_parameters,
-            nruns=nruns)
+            nruns=nruns,
+            **em_args)
 
 # Cell
 def generate_data (name_folder, parameters_multiple_values=None,
-                   parameters_single_value=None, other_parameters={}, verbose=0, **kwargs):
+                   parameters_single_value=None, other_parameters={}, verbose=0, em_args={}, **kwargs):
     np.random.seed (42)
-    path_experiments=f'test_{name_folder}'
+    path_experiments=f'test_{name_folder}/default'
     manager_path = f'{path_experiments}/managers'
     em = DummyExperimentManager (path_experiments=path_experiments, manager_path=manager_path,
                                  verbose=verbose, **kwargs)
-    em.remove_previous_experiments ()
+    em.remove_previous_experiments (parent=True)
     run_multiple_experiments (em=em, nruns=5, noise=0.1, verbose=False,
                               values_to_explore=parameters_multiple_values,
                               parameters_single_value=parameters_single_value,
-                              other_parameters=other_parameters)
+                              other_parameters=other_parameters,  em_args=em_args)
     return em
 
 # Cell
@@ -246,4 +248,4 @@ import os
 
 def remove_previous_experiments (EM=DummyExperimentManager):
     em = EM ()
-    em.remove_previous_experiments ()
+    em.remove_previous_experiments (parent=True)

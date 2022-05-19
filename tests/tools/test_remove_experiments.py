@@ -18,7 +18,7 @@ def test_parse_arguments_and_remove ():
     em = generate_data ('test_parse_arguments_and_remove')
 
     # before
-    path_experiments = em.get_path_experiments ()
+    path_experiments = em.path_experiments
     df_old = em.get_experiment_data ()
     display (df_old)
 
@@ -36,4 +36,4 @@ def test_parse_arguments_and_remove ():
     assert (df.loc[3] == df_old.loc[4]).all() and (df.loc[6] == df_old.loc[8]).all()
     assert (df.loc[4] == df_old.loc[5]).all()
 
-    em.remove_previous_experiments ()
+    em.remove_previous_experiments (parent=True)

@@ -4,10 +4,10 @@ __all__ = ['init_em_fixture', 'test_get_path_alternative', 'test_basic_usage', '
            'test_almost_same_values', 'test_new_runs', 'test_second_experiment', 'test_new_parameter',
            'test_new_parameter_default', 'test_other_parameters', 'test_remove_not_finished', 'test_repeat_experiment',
            'test_check_finished', 'test_recompute_metrics', 'test_prev_epoch', 'test_prev_epoch2', 'test_from_exp',
-           'test_skip_interrupted', 'test_use_last_result', 'test_use_last_result_run_interrupted', 'test_grid_search',
-           'test_run_multiple_repetitions', 'parameter_sampler', 'test_hp_optimization', 'parameter_sampler',
-           'test_rerun_experiment', 'test_rerun_experiment_pipeline', 'test_rerun_experiment_par',
-           'test_get_git_revision_hash']
+           'test_skip_interrupted', 'test_use_last_result', 'test_use_last_result_run_interrupted',
+           'test_storing_em_args_and_parameters', 'test_grid_search', 'test_run_multiple_repetitions',
+           'parameter_sampler', 'test_hp_optimization', 'parameter_sampler', 'test_rerun_experiment',
+           'test_rerun_experiment_pipeline', 'test_rerun_experiment_par', 'test_get_git_revision_hash']
 
 # Cell
 import pytest
@@ -19,7 +19,7 @@ from IPython.display import display
 import optuna
 
 from dsblocks.utils.nbdev_utils import md
-from dsblocks.utils.utils import remove_previous_results
+from dsblocks.utils.utils import check_last_part, remove_previous_results
 
 from hpsearch.experiment_manager import *
 from hpsearch.examples.complex_dummy_experiment_manager import ComplexDummyExperimentManager
@@ -34,13 +34,13 @@ def init_em_fixture():
 def test_get_path_alternative ():
     em = init_em ('basic')
 
-    em.alternative_root_path = 'other_path'
+    em.alternative_path = 'other_path'
     path_results = em.get_path_results (experiment_id=1, run_number=2)
-    assert path_results=='test_basic/experiments/00001/2'
+    check_last_part (path_results,'test_basic/default/experiments/00001/2')
     path_alternative = em.get_path_alternative (path_results)
-    assert (path_alternative=='other_path/experiments/00001/2')
+    check_last_part (path_alternative, 'other_path/experiments/00001/2')
 
-    em.remove_previous_experiments()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from experiment_manager.ipynb, cell
 def test_basic_usage ():
@@ -58,20 +58,12 @@ def test_basic_usage ():
 
     # Eight files  are stored in *path_experiments*, and the `experiments` folder is created:
 
-    files_stored = ['current_experiment_number.pkl',
-             'experiments',
-             'experiments_data.csv',
-             'experiments_data.pk',
-             'git_hash.json',
-             'managers',
-             'other_parameters.csv',
-             'parameters.pk',
-             'parameters.txt',
-             'summary.txt']
+    files_stored = ['current_experiment_number.pkl', 'experiments', 'experiments_data.csv',
+                    'experiments_data.pk', 'git_hash.json', 'managers', 'other_parameters.csv',
+                    'parameters.pk', 'parameters.txt', 'summary.txt']
+    display (files_stored)
 
-    display(files_stored)
-
-    path_experiments = em.get_path_experiments()
+    path_experiments = em.path_experiments
 
     assert (sorted(os.listdir (path_experiments))==
             files_stored)
@@ -105,12 +97,12 @@ def test_basic_usage ():
 
     pd.testing.assert_frame_equal(df,df_bis)
 
-    em.remove_previous_experiments()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from experiment_manager.ipynb, cell
 def test_same_values ():
     em = init_em ('same_values')
-    path_experiments = em.get_path_experiments()
+    path_experiments = em.path_experiments
 
     # first experiment
     result, dict_results = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.05})
@@ -135,12 +127,12 @@ def test_same_values ():
 
     assert list_exp == ['00000']
 
-    em.remove_previous_experiments()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from experiment_manager.ipynb, cell
 def test_almost_same_values ():
     em = init_em ('almost_same_values')
-    path_experiments = em.get_path_experiments()
+    path_experiments = em.path_experiments
 
     # first experiment
     result, dict_results = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.05})
@@ -161,7 +153,7 @@ def test_almost_same_values ():
     # second experiment: the difference between the values of rate parameter is 1.e-16:
     # too small to be considered different
     result, dict_results = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.05+1e-16},
-                                                        other_parameters={'precision': 1e-17})
+                                                         precision=1e-17)
 
     df = em.get_experiment_data ()
     assert df.shape[0]==2 and (df.columns==['offset','rate','0_validation_accuracy','0_test_accuracy',
@@ -170,12 +162,12 @@ def test_almost_same_values ():
     list_exp = os.listdir (f'{path_experiments}/experiments')
     assert sorted(list_exp) == sorted(['00000', '00001'])
 
-    em.remove_previous_experiments()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from experiment_manager.ipynb, cell
 def test_new_runs ():
     em = init_em ('new_runs')
-    path_experiments = em.get_path_experiments()
+    path_experiments = em.path_experiments
 
     # first experiment
     result, dict_results = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.05})
@@ -231,12 +223,12 @@ def test_new_runs ():
     else:
         print (sorted(list_runs))
 
-    em.remove_previous_experiments()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from experiment_manager.ipynb, cell
 def test_second_experiment ():
     em = init_em ('second')
-    path_experiments = em.get_path_experiments()
+    path_experiments = em.path_experiments
 
     # first experiment
     result, dict_results = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.05})
@@ -260,12 +252,12 @@ def test_second_experiment ():
 
     assert sorted(list_exp) == sorted(['00000','00001'])
 
-    em.remove_previous_experiments()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from experiment_manager.ipynb, cell
 def test_new_parameter ():
     em = init_em ('another_parameter')
-    path_experiments = em.get_path_experiments()
+    path_experiments = em.path_experiments
 
     # first experiment
     result, dict_results = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.05})
@@ -293,12 +285,12 @@ def test_new_parameter ():
 
     md ('experiment dataframe:'); display(df)
 
-    em.remove_previous_experiments()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from experiment_manager.ipynb, cell
 def test_new_parameter_default ():
     em = init_em ('another_parameter_default')
-    path_experiments = em.get_path_experiments()
+    path_experiments = em.path_experiments
 
     # first experiment
     result, dict_results = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.05})
@@ -318,12 +310,12 @@ def test_new_parameter_default ():
 
     md ('experiment dataframe:'); display(df)
 
-    em.remove_previous_experiments()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from experiment_manager.ipynb, cell
 def test_other_parameters ():
     em = init_em ('other_parameters')
-    path_experiments = em.get_path_experiments()
+    path_experiments = em.path_experiments
 
     # first experiment:
     # we use the other_parameters argument to indicate a parameter that does not affect the outcome
@@ -351,12 +343,12 @@ def test_other_parameters ():
 
     md ('experiment dataframe:'); display(df)
 
-    em.remove_previous_experiments()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from experiment_manager.ipynb, cell
 def test_remove_not_finished ():
     em = init_em ('remove_not_finished')
-    path_experiments = em.get_path_experiments()
+    path_experiments = em.path_experiments
 
     # first experiment: we simulate that a halt before finishing
     with pytest.raises (KeyboardInterrupt):
@@ -373,7 +365,7 @@ def test_remove_not_finished ():
     display(df)
 
     result, dict_results = em.create_experiment_and_run (parameters={'offset':1.0, 'rate': 0.3},
-                                                         other_parameters={'remove_not_finished':True})
+                                                         remove_not_finished=True)
 
     df = em.get_experiment_data ()
     display(df)
@@ -381,12 +373,12 @@ def test_remove_not_finished ():
     # in this case, no new experiment is added, since the new parameter has the same value as the default value
     # implicitly used in the first experiment.
 
-    em.remove_previous_experiments()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from experiment_manager.ipynb, cell
 def test_repeat_experiment ():
     em = init_em ('repeat_experiment')
-    path_experiments = em.get_path_experiments()
+    path_experiments = em.path_experiments
 
     # first experiment
     result, dict_results = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.05})
@@ -397,7 +389,7 @@ def test_repeat_experiment ():
 
     # second experiment
     result, dict_results = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.05},
-                                                         other_parameters={'repeat_experiment': True})
+                                                         repeat_experiment = True)
 
     df = em.get_experiment_data ()
     display(df)
@@ -411,12 +403,12 @@ def test_repeat_experiment ():
 
     assert (df.index==[0]).all()
 
-    em.remove_previous_experiments()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from experiment_manager.ipynb, cell
 def test_check_finished ():
     em = init_em ('check_finished')
-    path_experiments = em.get_path_experiments()
+    path_experiments = em.path_experiments
 
     # first experiment: we simulate that we only run for half the number of epochs
     result, dict_results = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.05, 'epochs': 10},
@@ -435,7 +427,7 @@ def test_check_finished ():
 
     # third experiment: same values in parameters dictionary, with other_parameters indicating check_finished
     result, dict_results = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.05, 'epochs': 10},
-                                                         other_parameters={'check_finished':True})
+                                                         check_finished=True)
 
     df = em.get_experiment_data ()
     assert df.shape[0]==1 and (df.columns==['offset','rate','0_validation_accuracy','0_test_accuracy',
@@ -443,19 +435,19 @@ def test_check_finished ():
     assert (df.index==[0]).all()
     assert (date!=df.date.values[0]) and (score!=df['0_validation_accuracy'].values[0])
 
-    em.remove_previous_experiments()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from experiment_manager.ipynb, cell
 def test_recompute_metrics ():
     em = init_em ('recompute_metrics')
-    path_experiments = em.get_path_experiments()
+    path_experiments = em.path_experiments
 
     # first experiment
     result, dict_results = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.05})
     # second experiment: new values
     em.raise_error_if_run = True
     result, dict_results = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.02},
-                                                         other_parameters={'recompute_metrics': True})
+                                                         recompute_metrics=True)
 
     df = em.get_experiment_data ()
     assert df.shape[0]==2 and (df.columns==['offset','rate','0_validation_accuracy','0_test_accuracy',
@@ -464,9 +456,10 @@ def test_recompute_metrics ():
 
     # third experiment: new values
     em.raise_error_if_run = False
-    result, dict_results = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.02, 'epochs': 10},
-                                                         other_parameters={'recompute_metrics':True,
-                                                                           'force_recompute_metrics': True})
+    result, dict_results = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.02,
+                                                                     'epochs': 10},
+                                                         recompute_metrics=True,
+                                                         force_recompute_metrics=True)
 
     df = em.get_experiment_data ()
     assert df.shape[0]==2 and (df.columns==['offset','rate','0_validation_accuracy','0_test_accuracy',
@@ -474,7 +467,7 @@ def test_recompute_metrics ():
     assert (df.index==[0,1]).all()
     assert df['0_validation_accuracy'].values[1]==0.3
 
-    em.remove_previous_experiments()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from experiment_manager.ipynb, cell
 def test_prev_epoch ():
@@ -486,7 +479,7 @@ def test_prev_epoch ():
     reference_weight = em.model.weight
     df = em.get_experiment_data ()
     display (df)
-    em.remove_previous_experiments()
+    em.remove_previous_experiments (parent=True)
 
     # first 3 experiments
     _ = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.05, 'epochs': 10})
@@ -500,7 +493,7 @@ def test_prev_epoch ():
     # whose path is indicated in parameters['resume'], or whose path is
     # indicated in f'{parameters["prev_path_results"]}/{self.model_file_name}'
     _ = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.05, 'epochs': 17},
-                                      other_parameters={'prev_epoch': True})
+                                      prev_epoch=True)
 
 
 
@@ -510,19 +503,19 @@ def test_prev_epoch ():
     assert reference_accuracy==em.model.accuracy and reference_weight==em.model.weight
 
     _ = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.05, 'epochs': 17},
-                                      other_parameters={'repeat_experiment': True})
+                                      repeat_experiment = True)
 
     assert em.model.epochs==17 and em.model.current_epoch==17
 
     assert reference_accuracy==em.model.accuracy and reference_weight==em.model.weight
 
-    em.remove_previous_experiments()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from experiment_manager.ipynb, cell
 def test_prev_epoch2 ():
     em = init_em ('prev_epoch2')
 
-    em.remove_previous_experiments()
+    em.remove_previous_experiments (parent=True)
     score, results = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.03, 'epochs': 5},
                                           other_parameters={'actual_epochs': 2})
 
@@ -537,7 +530,7 @@ def test_prev_epoch2 ():
     # But we request to run the experiment until the end
     score, results = em.create_experiment_and_run (
         parameters={'offset':0.1, 'rate': 0.03, 'epochs': 5},
-        other_parameters={'prev_epoch': True, 'check_finished': True, 'use_previous_best': False}
+        prev_epoch=True, check_finished=True, use_previous_best=False
     )
 
     assert score==0.25 and results['validation_accuracy']==0.25
@@ -546,7 +539,7 @@ def test_prev_epoch2 ():
     assert (df['0_validation_accuracy']==[0.25, 0.30]).all()
 
 
-    em.remove_previous_experiments()
+    em.remove_previous_experiments (parent=True)
 
     # **********************************
     with pytest.raises (KeyboardInterrupt):
@@ -559,25 +552,24 @@ def test_prev_epoch2 ():
     # But we request to run the experiment until the end
     score, results = em.create_experiment_and_run (
         parameters={'offset':0.1, 'rate': 0.03, 'epochs': 5},
-        other_parameters={'prev_epoch': True, 'check_finished_if_interrupted': True,
-                          'use_previous_best': False}
-    )
+        prev_epoch=True, check_finished_if_interrupted=True,
+        use_previous_best=False)
     assert score==0.25 and results['validation_accuracy']==0.25
     assert em.model.current_epoch==5 and em.model.epochs==3
     df = em.get_experiment_data ()
     assert (df['0_validation_accuracy']==[0.25, 0.30]).all()
-    em.remove_previous_experiments()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from experiment_manager.ipynb, cell
 def test_from_exp ():
     em = init_em ('from_exp')
-    path_experiments = em.get_path_experiments()
+    path_experiments = em.path_experiments
 
     # get reference result
     _ = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.05, 'epochs': 5})
     reference_accuracy = em.model.accuracy
     reference_weight = em.model.weight
-    em.remove_previous_experiments()
+    em.remove_previous_experiments (parent=True)
 
     # first 3 experiments
     _ = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.03, 'epochs': 2})
@@ -586,7 +578,7 @@ def test_from_exp ():
     # the following resumes from experiment 0, and trains the model for 5 more epochs
     # using now different `offset` and `rate` hyper-parameters
     _ = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.05, 'epochs': 5},
-                                      other_parameters={'from_exp': 0})
+                                      from_exp=0)
 
     assert em.model.epochs==5 and em.model.current_epoch==7
     correct_accuracy = (0.1 + 0.03*2 # accuracy of model from experiment 0
@@ -595,12 +587,12 @@ def test_from_exp ():
     assert (em.model.accuracy-correct_accuracy) < 1e-10
     assert reference_accuracy!=em.model.accuracy
 
-    em.remove_previous_experiments()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from experiment_manager.ipynb, cell
 def test_skip_interrupted ():
     em = init_em ('skip_interrupted')
-    path_experiments = em.get_path_experiments()
+    path_experiments = em.path_experiments
 
     # first 3 experiments
     with pytest.raises (KeyboardInterrupt):
@@ -612,34 +604,29 @@ def test_skip_interrupted ():
     em.raise_error_if_run = True
     score, results = em.create_experiment_and_run (
         parameters={'offset':0.1, 'rate': 0.03, 'epochs': 5},
-        other_parameters={'skip_interrupted': True}
-    )
+        skip_interrupted=True)
     assert score is None and len(results)==0
 
     score, results = em.create_experiment_and_run (
         parameters={'offset':0.1, 'rate': 0.03, 'epochs': 5},
-        other_parameters={'skip_interrupted': True,
-                          'model_file_name': 'wrong_file.pk',
-                          'min_iterations':1}
-    )
+        skip_interrupted=True, min_iterations=1)
     assert score is None and len(results)==0
 
+    em.model_file_name='wrong_file.pk'
     with pytest.raises (RuntimeError):
         score, results = em.create_experiment_and_run (
             parameters={'offset':0.1, 'rate': 0.03, 'epochs': 5},
-            other_parameters={'skip_interrupted': True,
-                              'model_file_name': 'wrong_file.pk'}
-        )
+            skip_interrupted=True)
 
     df = em.get_experiment_data ()
     display (df)
 
-    em.remove_previous_experiments()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from experiment_manager.ipynb, cell
 def test_use_last_result ():
     em = init_em ('use_last_result')
-    path_experiments = em.get_path_experiments()
+    path_experiments = em.path_experiments
 
     # first 3 experiments
     with pytest.raises (KeyboardInterrupt):
@@ -655,8 +642,7 @@ def test_use_last_result ():
     # Since this is not true, the last result is not used.
     score, results = em.create_experiment_and_run (
         parameters={'offset':0.1, 'rate': 0.03, 'epochs': 5},
-        other_parameters={'use_last_result': True}
-    )
+        use_last_result=True)
     assert score is None and results=={}
     df = em.get_experiment_data ()
     display(df)
@@ -665,8 +651,7 @@ def test_use_last_result ():
     # We use last result and lower the required number of epochs to 2
     score, results = em.create_experiment_and_run (
         parameters={'offset':0.1, 'rate': 0.03, 'epochs': 5},
-        other_parameters={'use_last_result': True, 'min_iterations': 2}
-    )
+        use_last_result=True, min_iterations=2)
     print (score, results)
     assert score==0.25 and results=={'validation_accuracy': 0.25, 'test_accuracy': 0.35, 'accuracy': 0.25, 'last': 5}
     df = em.get_experiment_data ()
@@ -678,8 +663,7 @@ def test_use_last_result ():
     # But we request to run the experiment until the end
     score, results = em.create_experiment_and_run (
         parameters={'offset':0.1, 'rate': 0.03, 'epochs': 5},
-        other_parameters={'use_last_result': True, 'run_if_not_interrumpted': True}
-    )
+        use_last_result=True, run_if_not_interrumpted=True)
     print (score, results)
     #assert score==None and results=={'validation_accuracy': 0.25, 'test_accuracy': 0.35, 'accuracy': 0.25, 'last': 5}
     df = em.get_experiment_data ()
@@ -687,12 +671,12 @@ def test_use_last_result ():
     #assert (df.isna()['0_validation_accuracy'] == [False, False]).all()
     #assert (df['0_validation_accuracy'] == [0.25, 0.30]).all()
 
-    em.remove_previous_experiments()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from experiment_manager.ipynb, cell
 def test_use_last_result_run_interrupted ():
     em = init_em ('use_last_result_run_interrupted')
-    path_experiments = em.get_path_experiments()
+    path_experiments = em.path_experiments
 
     # first 3 experiments
     with pytest.raises (KeyboardInterrupt):
@@ -709,8 +693,7 @@ def test_use_last_result_run_interrupted ():
     # But we request to run the experiment until the end
     score, results = em.create_experiment_and_run (
         parameters={'offset':0.1, 'rate': 0.03, 'epochs': 5},
-        other_parameters={'use_last_result': True, 'run_if_not_interrumpted': True}
-    )
+        use_last_result=True, run_if_not_interrumpted=True)
     print (score, results)
     #assert score==None and results=={'validation_accuracy': 0.25, 'test_accuracy': 0.35, 'accuracy': 0.25, 'last': 5}
     df = em.get_experiment_data ()
@@ -719,7 +702,26 @@ def test_use_last_result_run_interrupted ():
     assert (df.isna()['0_validation_accuracy'] == [False, False]).all()
     assert (df['0_validation_accuracy'] == [0.25, 0.30]).all()
 
-    em.remove_previous_experiments()
+    em.remove_previous_experiments (parent=True)
+
+# Comes from experiment_manager.ipynb, cell
+def test_storing_em_args_and_parameters ():
+    em = init_em ('storing_em_args_and_parameters')
+
+    path_experiment = em.get_path_experiment (0)
+    result, dict_results = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.05})
+    check_last_part (path_experiment, 'test_storing_em_args_and_parameters/default/experiments/00000')
+    ref_list = ['0', 'em_args.json', 'em_attrs.json',  'info.json', 'other_parameters.json',
+     'parameters.json', 'parameters.pk', 'parameters.txt', 'test_experiment_manager.py',]
+    ref_list2 = ref_list.copy()
+    del ref_list2[3]
+    result_list = sorted (os.listdir(path_experiment))
+    assert result_list==ref_list or result_list==ref_list2
+    par, other, em_args, info, em_attrs = joblib.load (path_experiment/'parameters.pk')
+    print (em_args)
+    #assert em_args ==  {'run_number': 0, 'log_message': None, 'stack_level': -3}
+
+    em.remove_previous_experiments (parent=True)
 
 # Comes from experiment_manager.ipynb, cell
 def test_grid_search ():
@@ -753,7 +755,7 @@ def test_grid_search ():
 
     # *********************************
     # *********************************
-    em.remove_previous_experiments()
+    em.remove_previous_experiments (parent=True)
     em.raise_error_if_run = False
     em.grid_search (parameters_multiple_values={'rate': [0.01,0.03], 'epochs': [7, 5]},
                     parameters_single_value={'offset':0.1, 'noise':0.0001}, nruns=2)
@@ -768,7 +770,7 @@ def test_grid_search ():
 
     # *********************************
     # *********************************
-    em.remove_previous_experiments()
+    em.remove_previous_experiments (parent=True)
     np.random.seed (42)
     em.grid_search (parameters_multiple_values={'rate': [0.01,0.03], 'epochs': [7, 5]},
                     parameters_single_value={'offset':0.1}, random_search=True,
@@ -781,7 +783,7 @@ def test_grid_search ():
     assert (df['offset']==0.1).all()
     assert (np.abs(df['0_validation_accuracy']-[0.31, 0.25, 0.17, 0.15])<1e-15).all()
 
-    em.remove_previous_experiments()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from experiment_manager.ipynb, cell
 def test_run_multiple_repetitions ():
@@ -799,7 +801,7 @@ def test_run_multiple_repetitions ():
 
     # *********************************
     # *********************************
-    em.remove_previous_experiments()
+    em.remove_previous_experiments (parent=True)
     mu, std, dict_results = em.run_multiple_repetitions (
         parameters={'rate': 0.03, 'epochs': 5, 'offset': 0.1},
         other_parameters = {'verbose': False}
@@ -808,7 +810,7 @@ def test_run_multiple_repetitions ():
     assert df.shape==(1,8)
     assert mu==0.25 and std==0
 
-    em.remove_previous_experiments()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from experiment_manager.ipynb, cell
 def parameter_sampler (trial):
@@ -825,12 +827,10 @@ def test_hp_optimization ():
     np.random.seed (42)
 
     parameters = {'epochs': 12}
-    other_parameters = dict (trial_report='test_hp_optimization_trial',
-                             study_name='test_hp_optimization_study',
-                             n_trials=5)
 
     em.hp_optimization (parameter_sampler=parameter_sampler, parameters=parameters,
-                        other_parameters=other_parameters)
+                        study_name='test_hp_optimization_study',
+                        n_trials=5)
 
     df = em.get_experiment_data ()
     display (df)
@@ -839,15 +839,14 @@ def test_hp_optimization ():
     #assert (df['offset']==[0.01,0.10,0.05,0.01,0.10]).all()
     #assert np.max(np.abs(df['rate']-[0.005939, 0.004813, 0.009673, 0.006112, 0.001182])) < 1e-5
 
-    em.remove_previous_experiments()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from experiment_manager.ipynb, cell
 def parameter_sampler (trial):
     epochs = trial.suggest_categorical('epochs', [2, 4])
     offset = trial.suggest_categorical('offset', [0.02, 0.06])
 
-    parameters = dict(epochs=epochs,
-                      offset=offset)
+    parameters = dict(epochs=epochs, offset=offset)
 
     return parameters
 
@@ -906,7 +905,8 @@ def test_rerun_experiment ():
     # ****************************************
     em.rerun_experiment (experiments=[2],
                          parameter_sampler=parameter_sampler,
-                         other_parameters={'n_trials':4, 'verbose':False, 'sampler_method':'skopt'})
+                         other_parameters={'verbose':False},
+                         n_trials=4, sampler_method='skopt')
     df2 = em.get_experiment_data ()
     display (df2)
     print (df2.shape)
@@ -915,7 +915,7 @@ def test_rerun_experiment ():
     n0 = (~df2.isna())['0_validation_accuracy'].sum()
     #assert (n0+n1)==16
 
-    em.remove_previous_experiments()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from experiment_manager.ipynb, cell
 def test_rerun_experiment_pipeline ():
@@ -970,7 +970,7 @@ def test_rerun_experiment_pipeline ():
     df2 = em.get_experiment_data ()
     pd.testing.assert_frame_equal(df,df2)
 
-    em.remove_previous_experiments()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from experiment_manager.ipynb, cell
 def test_rerun_experiment_par ():
@@ -1008,7 +1008,7 @@ def test_rerun_experiment_par ():
 
     pd.testing.assert_frame_equal(df,df2)
 
-    em.remove_previous_experiments()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from experiment_manager.ipynb, cell
 def test_get_git_revision_hash ():

@@ -30,7 +30,7 @@ and remove the experiment
     )
 
     em = ComplexDummyExperimentManager (path_experiments='test_complex_dummy_experiment_manager',
-                                        verbose=0)
+                                        verbose=0, name_epoch='epochs')
     em.create_experiment_and_run (parameters = {'epochs': 30});
     reference_accuracy = em.model.accuracy
     reference_weight = em.model.weight
@@ -56,7 +56,7 @@ and remove the experiment
     md ('We run the first experiment  with 20 epochs:')
 
     # a.- remove previous experiment
-    em.remove_previous_experiments()
+    em.remove_previous_experiments ()
 
     # b.- create first experiment with epochs=20
     em.create_experiment_and_run (parameters = {'epochs': 20});
@@ -71,9 +71,7 @@ and remove the experiment
     md ('We run the second experiment resumes from the previous one and increases the epochs to 30')
     # 4.- create second experiment with epochs=10
     em.create_experiment_and_run (parameters = {'epochs': 30},
-                              other_parameters={'prev_epoch': True,
-                                               'name_epoch': 'epochs',
-                                               'previous_model_file_name': 'model_weights.pk'});
+                                  prev_epoch=True, previous_model_file_name='model_weights.pk');
 
     experiments_data = pd.read_pickle (f'{path_experiments}/experiments_data.pk')
     print ('csv data')
@@ -90,4 +88,4 @@ and remove the experiment
     md ('We plot the history')
     plot_multiple_histories ([1], run_number=0, op='max', backend='matplotlib', metrics='validation_accuracy')
 
-    em.remove_previous_experiments()
+    em.remove_previous_experiments ()

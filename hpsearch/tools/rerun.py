@@ -10,44 +10,43 @@ from ..config.hpconfig import get_experiment_manager
 import hpsearch.config.hp_defaults as dflt
 
 # Cell
-def rerun (experiments=None, root=None, epochs=None, runs=None, unfinished=False,
-           verbose=None, debug=False, em_args=None, store=False, from_dict=False,
+def rerun (experiments=None, folder=None, epochs=None, runs=None, unfinished=False,
+           verbose=None, debug=False, em_attrs=None, store=False, from_dict=False,
            range_exp=None, min_iterations=None, manager_path=dflt.manager_path):
-    other_parameters = dict(
-                            use_process=not debug,
-                            root_folder=root
-                            )
+    em_args = dict(use_process=not debug)
     if range_exp is not None:
         assert len(range_exp) == 2
         experiments += range(range_exp[0], range_exp[1])
 
     em = get_experiment_manager (manager_path=manager_path)
+    if folder is not None:
+        em.set_path_experiments (folder=folder)
     if verbose is not None:
         em.set_verbose (verbose)
-    if em_args is not None:
-        for k in em_args:
-            setattr (em, k, em_args[k])
+    if em_attrs is not None:
+        for k in em_attrs:
+            setattr (em, k, em_attrs[k])
 
     if epochs is not None:
         parameters = {em.name_epoch: int(epochs)}
-        other_parameters.update (prev_epoch=True)
+        em_args.update (prev_epoch=True)
         check_experiment_matches=False
     else:
         check_experiment_matches=True
         parameters = {}
     if unfinished:
-        other_parameters.update (check_finished=True, use_previous_best=False)
+        em_args.update (check_finished=True, use_previous_best=False)
     if store:
-        other_parameters.update (use_last_result=True)
+        em_args.update (use_last_result=True)
         if from_dict:
-            other_parameters.update (use_last_result_from_dict=True)
+            em_args.update (use_last_result_from_dict=True)
         if min_iterations is not None:
-            other_parameters.update (min_iterations=min_iterations)
+            em_args.update (min_iterations=min_iterations)
 
 
-    em.rerun_experiment (experiments=experiments, nruns=runs, root_folder=root,
-                         parameters=parameters, other_parameters=other_parameters,
-                         check_experiment_matches=check_experiment_matches)
+    em.rerun_experiment (experiments=experiments, nruns=runs,
+                         parameters=parameters, check_experiment_matches=check_experiment_matches,
+                         **em_args)
 
 # Cell
 def parse_args (args):
@@ -61,20 +60,20 @@ def parse_args (args):
     parser.add_argument('-s', '--store', action= "store_true",  help="store the result from experiments that were not saved in csv file.")
     parser.add_argument('-f', '--from-dict', action= "store_true",  help="when storing the result from experiments that were not saved in csv file, we use the dictionary of results typically named dict_results.pk")
     parser.add_argument('--min-iterations', type=int, default=None,  help="number of iterations to be present in model history in order to consider the experiment good enough for storage.")
-    parser.add_argument('--root', type=str, default=None, help='name of root folder')
+    parser.add_argument('--folder', type=str, default=None, help='name of experiments folder')
     parser.add_argument('-v', '--verbose', type=int, default=None, help='verbosity level: 0, 1, 2')
     parser.add_argument('-p', '--path', default=dflt.manager_path, type=str)
     pars = parser.parse_args(args)
 
     return pars
 
-def parse_arguments_and_run (args, em_args = None):
+def parse_arguments_and_run (args, em_attrs = None):
 
     pars = parse_args(args)
     pars = vars(pars)
     pars['manager_path'] = pars['path']
     del pars['path']
-    rerun (**pars, em_args=em_args)
+    rerun (**pars, em_attrs=em_attrs)
 
 def main():
     parse_arguments_and_run (sys.argv[1:])

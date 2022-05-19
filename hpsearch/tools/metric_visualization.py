@@ -15,25 +15,23 @@ import pandas as pd
 import pickle
 
 import hpsearch.visualization.experiment_visualization as ev
-from ..config.hpconfig import get_path_experiments
-from ..config.hpconfig import get_default_operations
+from ..config.hpconfig import get_experiment_manager, get_path_experiments
 import hpsearch.config.hp_defaults as dflt
 
 # Cell
-def include_best_and_last_experiment (metrics, experiments=[-1, -2], root_folder=None, run_number=0,
+def include_best_and_last_experiment (metrics, experiments=[-1, -2], run_number=0,
                                       op='max', manager_path=dflt.manager_path,):
+    path_experiments = get_path_experiments (manager_path=manager_path)
     for i in range(len(experiments)):
         if experiments[i] == -1:
-            root_path = get_path_experiments (folder = root_folder, manager_path=manager_path)
-            experiment_number = pickle.load(open(f'{root_path}/current_experiment_number.pkl','rb'))
+            experiment_number = pickle.load(open(path_experiments/'current_experiment_number.pkl','rb'))
             experiments[i] = experiment_number
 
         if experiments[i] == -2:
             first_metric = metrics[0]
             if len(metrics)>1:
                 print (f'we use the first metric {first_metric} in given list {metrics} for obtaining the best experiment')
-            root_path = get_path_experiments (folder = root_folder, manager_path=manager_path)
-            df = pd.read_csv(f'{root_path}/experiments_data.csv',index_col=0)
+            df = pd.read_csv(path_experiments/'experiments_data.csv',index_col=0)
             score_column = f'{run_number}_{first_metric}'
             if score_column in df.columns:
                 if op=='max':
@@ -46,17 +44,18 @@ def include_best_and_last_experiment (metrics, experiments=[-1, -2], root_folder
     return experiments
 
 # Cell
-def metric_visualization (experiments=[-1,-2], run_number=0, root_folder=None, metric=None, op = None,
+def metric_visualization (experiments=[-1,-2], run_number=0, folder=None, metric=None, op = None,
                           parameters=None, name_file='model_history.pk', visualization_options = {},
                           backend='plotly', manager_path=dflt.manager_path, **kwargs):
 
-    default_operations = get_default_operations (manager_path=manager_path)
-    if root_folder is None:
-        root_folder = default_operations.get('root', 'results')
-    if metric is None:
-        metric = default_operations.get('metric', 'accuracy')
-    if op is None:
-        op = default_operations.get('op', 'min')
+    em = get_experiment_manager (manager_path=manager_path)
+    if folder is not None or metric is not None or op is not None:
+        if folder is not None: em.set_path_experiments (folder=folder)
+        if metric is not None: em.key_score = metric
+        if op is not None: em.op = op
+    folder = em.folder
+    metric = em.key_score
+    op = em.op
 
     # metrics
     if type(metric) is str:
@@ -65,7 +64,6 @@ def metric_visualization (experiments=[-1,-2], run_number=0, root_folder=None, m
         metrics = metric
 
     experiments = include_best_and_last_experiment (metrics, experiments=experiments,
-                                                    root_folder=root_folder,
                                                     run_number=run_number, op=op,
                                                     manager_path=manager_path)
 
@@ -77,7 +75,7 @@ def metric_visualization (experiments=[-1,-2], run_number=0, root_folder=None, m
         visualization = 'history'
 
     ev.visualize_experiments(visualization=visualization,
-                             experiments=experiments, run_number=run_number, root_folder=root_folder,
+                             experiments=experiments, run_number=run_number,
                              metrics=metrics, parameters=parameters, name_file=name_file,
                              **visualization_options, backend=backend)
 
@@ -88,7 +86,7 @@ def parse_args(args):
     parser.add_argument('-e', nargs='+', default=[-1, -2], type=int,
                         help="experiments")
     parser.add_argument('-m', '--metric', nargs='+', type=str, default=None, help="metrics")
-    parser.add_argument('--root', type=str, default=None)
+    parser.add_argument('--folder', type=str, default=None)
     parser.add_argument('-l','--labels',nargs='+', default=None, type=str)
     parser.add_argument('--run', default=0, type=int)
     parser.add_argument('--op', default=None, type=str)
@@ -107,7 +105,7 @@ def parse_arguments_and_visualize (args):
 
     pars = parse_args(args)
 
-    metric_visualization (pars.e, run_number=pars.run, root_folder=pars.root, metric=pars.metric,
+    metric_visualization (pars.e, run_number=pars.run, folder=pars.folder, metric=pars.metric,
                           parameters=pars.labels, name_file=pars.file, backend=pars.backend,
                           visualization_options=pars.visualization, manager_path=pars.path)
 

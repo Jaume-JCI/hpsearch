@@ -14,38 +14,35 @@ import sys
 sys.path.append('.')
 sys.path.append('src')
 
-from ..config.hpconfig import get_path_experiments, get_default_operations
+from ..config.hpconfig import get_experiment_manager, get_path_experiments
 import hpsearch.utils.experiment_utils as ut
 from .metric_visualization import include_best_and_last_experiment
 import hpsearch.config.hp_defaults as dflt
 
 # Cell
-def print_table (experiments=[-1, -2], base=None, root_folder=None, display_all=False,
+def print_table (experiments=[-1, -2], path_experiments=None, folder=None, display_all=False,
                  include_best=False, op=None, metric=None, round_digits=2, compare=True,
                  compact=0, run_number=0, manager_path=dflt.manager_path):
 
-    default_operations = get_default_operations (manager_path=manager_path)
-    if root_folder is None:
-        root_folder = default_operations.get('root', 'results')
-    if metric is None:
-        metric = default_operations.get('metric', 'accuracy')
-    if op is None:
-        op = default_operations.get('op', 'min')
+    em = get_experiment_manager (manager_path=manager_path)
+    if path_experiments is not None or folder is not None:
+        em.set_path_experiments (path_experiments=path_experiments, folder=folder)
+    if metric is not None:
+        em.key_score = metric
+    if op is not None:
+        em.op = op
 
-    if base is not None:
-        root_path = base
-    else:
-        root_path = get_path_experiments (folder = root_folder, manager_path=manager_path)
+    path_experiments = em.path_experiments
 
-    df = pd.read_csv('%s/experiments_data.csv' %root_path,index_col=0)
+    df = pd.read_pickle(path_experiments/'experiments_data.pk')
 
     if display_all:
-        display (df[metric])
+        display (df[em.key_score])
 
-    metric_column = f'{run_number}_{metric}'
+    metric_column = f'{run_number}_{em.key_score}'
 
-    experiments = include_best_and_last_experiment ([metric], experiments=experiments, root_folder=root_folder,
-                                                         run_number=run_number, op=op)
+    experiments = include_best_and_last_experiment ([metric], experiments=experiments,
+                                                    run_number=run_number, op=em.op)
 
 
     df_scores = None
@@ -55,7 +52,7 @@ def print_table (experiments=[-1, -2], base=None, root_folder=None, display_all=
         print ('\nparameters for %d:' %e)
         display (df.loc[e,parameters])
         print ('scores for all experiments:')
-        df_scores = ut.get_experiment_scores(df.loc[[e]], suffix_results='_%s' %metric, remove_suffix=True)
+        df_scores = ut.get_experiment_scores(df.loc[[e]], suffix_results='_%s' %em.key_score, remove_suffix=True)
         display(df_scores.round(round_digits))
         print ('score:')
         display (df.loc[e, metric_column])
@@ -83,8 +80,8 @@ def print_table (experiments=[-1, -2], base=None, root_folder=None, display_all=
 def parse_args(args):
     parser = argparse.ArgumentParser(description='print table')
     # Datasets
-    parser.add_argument('--root', type=str, default=None, help='name of root folder')
-    parser.add_argument('--base', type=str, default=None, help='full root path')
+    parser.add_argument('--folder', type=str, default=None, help='name of experiments folder')
+    parser.add_argument('--path_experiments', type=str, default=None, help='full path')
     parser.add_argument('-m', '--metric', type=str, default=None, help='metric score')
     parser.add_argument('-e', type=int, nargs='+', default=[-1, -2], help='experiment numbers')
     parser.add_argument('-a', type=bool, default=False)
@@ -103,7 +100,8 @@ def parse_arguments_and_run (args):
 
     pars = parse_args(args)
 
-    df, df2, df_scores=print_table (experiments=pars.e, base = pars.base, root_folder=pars.root,
+    df, df2, df_scores=print_table (experiments=pars.e, path_experiments = pars.path_experiments,
+                                    folder=pars.folder,
                                     display_all=pars.a, include_best=pars.best, op=pars.op,
                                     metric=pars.metric, round_digits=pars.round,
                                     compare=not pars.no_comp, compact=pars.compact,

@@ -14,6 +14,7 @@ from dsblocks.utils.nbdev_utils import md
 from hpsearch.visualization.experiment_visualization import *
 from hpsearch.examples.dummy_experiment_manager import generate_data
 from hpsearch.examples.dummy_experiment_manager import run_multiple_experiments
+from hpsearch.visualization import plot_utils
 
 # Comes from experiment_visualization.ipynb, cell
 def generate_data_plot (folder):
@@ -42,7 +43,7 @@ def test_plot_history ():
     plot_multiple_histories ([8, 12, 16], run_number=0, op='max', metrics = 'test_accuracy',
                              backend='plotly')
 
-    em.remove_previous_experiments()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from experiment_visualization.ipynb, cell
 def test_multiple_runs ():
@@ -61,15 +62,14 @@ def test_multiple_runs ():
     plot_utils.plot(title=title, xlabel='epoch', ylabel='test_accuracy', traces=traces,
                     backend='matplotlib');
 
-    md ('#### plotting multiple runs, and indicating a different root_path')
+    md ('#### plotting multiple runs, and indicating a different path_experiments')
     import shutil
     shutil.move ('test_multiple_runs', 'test_another_location')
-    multi_history_plotter = MultiHistoryPlotter (root_path='test_another_location',
+    multi_history_plotter = MultiHistoryPlotter (path_experiments='test_another_location/default',
                                                  backend='matplotlib')
     multi_history_plotter.plot_multiple_histories (experiments=[8], run_number=list(range(5))+['mean'],
                                                    metrics='test_accuracy')
-    shutil.move ('test_another_location', 'test_multiple_runs')
-    em.remove_previous_experiments()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from experiment_visualization.ipynb, cell
 def test_plot_metric_relationship ():
@@ -81,7 +81,7 @@ def test_plot_metric_relationship ():
     md ('Highlight selected experiments')
     plot_metric_relationship ('validation_accuracy', 'test_accuracy', experiment_subset=[5,2], backend='plotly')
 
-    em.remove_previous_experiments()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from experiment_visualization.ipynb, cell
 def test_visualize_experiments ():
@@ -92,4 +92,4 @@ def test_visualize_experiments ():
                        metric_1='test_accuracy', metric_2='validation_accuracy')
 
 
-    em.remove_previous_experiments()
+    em.remove_previous_experiments (parent=True)

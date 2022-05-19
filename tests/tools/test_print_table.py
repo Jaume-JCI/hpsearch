@@ -23,7 +23,7 @@ def test_print_table ():
 
     print_table (experiments=[2, 6, -2], compare=True, compact=3, manager_path=em.manager_path)
 
-    em.remove_previous_experiments ()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from print_table.ipynb, cell
 def test_parse_arguments_and_run ():
@@ -35,4 +35,4 @@ def test_parse_arguments_and_run ():
            '-p', em.manager_path]
     parse_arguments_and_run (args)
 
-    em.remove_previous_experiments ()
+    em.remove_previous_experiments (parent=True)

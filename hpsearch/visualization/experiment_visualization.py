@@ -11,7 +11,7 @@ import joblib
 import pandas as pd
 from IPython.display import display
 import visdom
-from ..config.hpconfig import get_path_results, get_path_experiments
+from ..config.hpconfig import get_path_results, get_path_experiments, get_experiment_manager
 import hpsearch.utils.experiment_utils as ut
 from . import plot_utils
 import warnings
@@ -19,7 +19,7 @@ warnings.filterwarnings('ignore')
 
 # Cell
 class MultiHistoryPlotter ():
-    def __init__ (self, experiments=None, run_number=0, root_path=None, root_folder=None,
+    def __init__ (self, experiments=None, run_number=0, path_experiments=None,
                   metrics='all', metrics_second=None, parameters = None, compare = True,
                   ylegend=0.5, name_file='model_history.pk', op='max',
                   include_parameters_in_legend=False, backend='visdom',
@@ -27,8 +27,10 @@ class MultiHistoryPlotter ():
                   write_scores_in_title=True, **kwargs):
         self.experiments = experiments
         self.run_number = run_number
-        self.root_path = root_path
-        self.root_folder = root_folder
+        self.path_experiments = path_experiments
+        if path_experiments is not None:
+            em = get_experiment_manager ()
+            em.set_path_experiments (path_experiments=path_experiments)
         self.metrics = metrics
         self.metrics_second = [] if metrics_second is None else metrics_second
         self.parameters = parameters
@@ -38,8 +40,8 @@ class MultiHistoryPlotter ():
         self.op = op
         self.include_parameters_in_legend = include_parameters_in_legend
         self.backend = backend
-        if self.root_path is None:
-            self.root_path = get_path_experiments(folder=self.root_folder)
+        if self.path_experiments is None:
+            self.path_experiments = get_path_experiments()
         self.use_run_number_in_label = use_run_number_in_label
         self.use_run_number_in_title = use_run_number_in_title
         self.write_scores_in_title = write_scores_in_title
@@ -53,7 +55,7 @@ class MultiHistoryPlotter ():
         self.metrics = metrics if metrics is not None else self.metrics
         self.metrics_second = metrics_second if metrics_second is not None else self.metrics_second
 
-        df = pd.read_csv(f'{self.root_path}/experiments_data.csv', index_col=0)
+        df = pd.read_csv(f'{self.path_experiments}/experiments_data.csv', index_col=0)
         df = ut.replace_with_default_values (df)
         df2 = ut.get_experiment_parameters (df.loc[self.experiments], only_not_null=True)
         parameters2, df2 = ut.get_parameters_unique(df2)
@@ -64,8 +66,7 @@ class MultiHistoryPlotter ():
             df = df.loc[self.experiments, self.parameters]
 
         if type(self.metrics)==str and (self.metrics == 'all'):
-            path_results = get_path_results (self.experiments[0], run_number=self.run_number,
-                                             root_path=self.root_path)
+            path_results = get_path_results (self.experiments[0], run_number=self.run_number)
             history = joblib.load (f'{path_results}/{self.name_file}')
             self.metrics = history.keys()
         if type(self.metrics) == str:
@@ -122,8 +123,7 @@ class MultiHistoryPlotter ():
                 raise ValueError ('if history is None, experiment_id and run_number must be '
                                   'introduced')
             if path_results is None:
-                path_results = get_path_results (experiment_id, run_number=run_number,
-                                                 root_path=self.root_path)
+                path_results = get_path_results (experiment_id, run_number=run_number)
             path_history = f'{path_results}/{self.name_file}'
             if os.path.exists(path_history):
                 history = joblib.load (path_history)
@@ -187,8 +187,7 @@ class MultiHistoryPlotter ():
         run_number = 0
         avg_history = None
         while True:
-            path_results = get_path_results (experiment_id, run_number=run_number,
-                                             root_path=self.root_path)
+            path_results = get_path_results (experiment_id, run_number=run_number)
             path_history = f'{path_results}/{self.name_file}'
             if os.path.exists (path_history):
                 history = joblib.load (path_history)

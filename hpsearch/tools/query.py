@@ -18,12 +18,12 @@ import hpsearch.utils.experiment_utils as ut
 import hpsearch.config.hp_defaults as dflt
 
 # Cell
-def query (pv = {}, pf = {}, pall=[], pexact=False, root= None,
+def query (pv = {}, pf = {}, pall=[], pexact=False, folder=None,
            metric=None, experiments=None, runs=None, op=None, stats=['mean'],
            results=0, other_parameters=False):
 
 
-    result_query = ut.query(folder_experiments=root, suffix_results='_'+metric, experiments = experiments,
+    result_query = ut.query(folder_experiments=folder, suffix_results='_'+metric, experiments=experiments,
                         classes=runs, parameters_fixed=pf, parameters_variable=pv, parameters_all = pall, exact_match=pexact,
                         ascending=op=='min', stats=stats, min_results=results, query_other_parameters=other_parameters)
 
@@ -36,27 +36,24 @@ def query (pv = {}, pf = {}, pall=[], pexact=False, root= None,
 # Cell
 def do_query_and_show (pall=[], best=None, compact=0, exact=False, experiments=None, pf={}, last=None,
                        metric=None, op=None, other_parameters=False, input_range=None, results=0,
-                       root=None, round=2, runs=None, show=False, stats=['mean'], pv={},
+                       folder=None, round=2, runs=None, show=False, stats=['mean'], pv={},
                        sort=None, display_all_columns=False, col_width=None,
                        manager_path=dflt.manager_path):
 
-    from ..config.hpconfig import get_default_operations
-    default_operations = get_default_operations (manager_path=manager_path)
-    if root is None:
-        root = default_operations.get('root', 'results')
-    if metric is None:
-        metric = default_operations.get('metric', 'accuracy')
-    if op is None:
-        op = default_operations.get('op', 'min')
+    from ..config.hpconfig import get_experiment_manager
+    em = get_experiment_manager (manager_path=manager_path)
+    if folder is not None or metric is not None or op is not None:
+        if folder is not None: em.set_path_experiments (folder=folder)
+        if metric is not None: em.key_score = metric
+        if op is not None: em.op = op
 
-
-    df = query (pv=pv, pf=pf, pall=pall, pexact=exact, root=root,
-               metric=metric, experiments=experiments, runs=runs, op=op, stats=stats,
+    df = query (pv=pv, pf=pf, pall=pall, pexact=exact, folder=em.folder,
+               metric=em.key_score, experiments=experiments, runs=runs, op=em.op, stats=stats,
                results=results, other_parameters=other_parameters)
     df = ut.replace_with_default_values (df)
     if sort is not None:
         assert sort in df.columns, f'sort must be a column in dataframe ({df.columns})'
-        df = df.sort_values(by=sort, ascending=(op=='min'))
+        df = df.sort_values(by=sort, ascending=(em.op=='min'))
     if experiments is None:
         experiments = []
     if last is not None:
@@ -92,7 +89,7 @@ def do_query_and_show (pall=[], best=None, compact=0, exact=False, experiments=N
 
     if show:
         import hpsearch.visualization.plot_visdom as pv
-        pv.plot_multiple_histories(df.index, root_folder=root,metrics=metric, parameters=None)
+        pv.plot_multiple_histories(df.index, folder=em.folder,metrics=em.key_score, parameters=None)
     return df2
 
 # Cell
@@ -104,7 +101,7 @@ def parse_args(args):
     parser.add_argument('-m','--metric', type=str, default=None, help="metrics scores")
     parser.add_argument('--stats', type=str, nargs='+', default=['mean'],  help="statistics for multiple runs")
     parser.add_argument('--experiments', type=int, nargs='+', default=None,  help="experiment numbers")
-    parser.add_argument('-r','--root', type=str, default=None)
+    parser.add_argument('--folder', type=str, default=None)
     parser.add_argument('-v', type=str, default='{}', help='variable parameters')
     parser.add_argument('-f', type=str, default='{}', help='fixed parameters')
     parser.add_argument('-a', type=str, default='[]', help='all parameters')
@@ -143,7 +140,7 @@ def parse_arguments_and_query (args):
     do_query_and_show (pall=pars.a, best = pars.best, compact = pars.compact, exact=pars.exact,
                        experiments=pars.experiments, pf = pars.f, last=pars.last,
                        metric = pars.metric, op = pars.op, other_parameters=pars.other,
-                       input_range=pars.range, results=pars.results, root= pars.root,
+                       input_range=pars.range, results=pars.results, folder= pars.folder,
                        round=pars.round, runs = pars.runs, show=pars.show, stats=pars.stats,
                        pv = pars.v, sort=pars.sort, col_width=pars.width, manager_path=pars.path)
 

@@ -14,15 +14,14 @@ from IPython.display import display
 import hpsearch.config.hp_defaults as dflt
 
 # Cell
-def print_parameters (experiment, root=None, manager_path=dflt.manager_path):
+def print_parameters (experiment, folder=None, manager_path=dflt.manager_path):
 
-    from ..config.hpconfig import get_default_operations, get_path_experiment
-    if root is None:
+    from ..config.hpconfig import get_experiment_manager
+    em = get_experiment_manager (manager_path=manager_path)
+    if folder is not None:
+        em.set_path_experiments (folder=folder)
 
-        default_operations = get_default_operations (manager_path=manager_path)
-        root = default_operations.get('root', 'results')
-
-    path_experiment = get_path_experiment (experiment, root_folder=root, manager_path=manager_path)
+    path_experiment = em.get_path_experiment (experiment)
     parameters_text_file = open(f'{path_experiment}/parameters.txt', 'rt')
     print (parameters_text_file.read())
     parameters_text_file.close()
@@ -31,7 +30,7 @@ def print_parameters (experiment, root=None, manager_path=dflt.manager_path):
 def parse_args(args):
     parser = argparse.ArgumentParser(description='display dictionary of parameters used by this experiment')
     parser.add_argument('-e', '--experiment', type=int, required=True,  help="experiment number")
-    parser.add_argument('-r','--root', type=str, default=None)
+    parser.add_argument('-f','--folder', type=str, default=None)
     parser.add_argument('-p', '--path', default=dflt.manager_path, type=str)
     pars = parser.parse_args(args)
 
@@ -41,7 +40,7 @@ def parse_arguments_and_print (args):
 
     pars = parse_args(args)
 
-    print_parameters (pars.experiment, pars.root, manager_path=pars.path)
+    print_parameters (pars.experiment, pars.folder, manager_path=pars.path)
 
 def main():
     parse_arguments_and_print (sys.argv[1:])

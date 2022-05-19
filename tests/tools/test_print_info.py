@@ -19,7 +19,7 @@ def test_print_info ():
 
     print_info (manager_path=em.manager_path)
 
-    em.remove_previous_experiments ()
+    em.remove_previous_experiments (parent=True)
 
 # Comes from print_info.ipynb, cell
 def test_parse_args ():
@@ -31,4 +31,4 @@ def test_parse_args ():
        '-p', em.manager_path]
     parse_arguments_and_run (args)
 
-    em.remove_previous_experiments ()
+    em.remove_previous_experiments (parent=True)

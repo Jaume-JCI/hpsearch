@@ -19,4 +19,4 @@ def test_print_parameters ():
 
     print_parameters (3, manager_path=em.manager_path)
 
-    em.remove_previous_experiments ()
+    em.remove_previous_experiments (parent=True)

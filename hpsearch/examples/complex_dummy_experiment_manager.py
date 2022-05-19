@@ -10,6 +10,8 @@ import os
 import pytest
 import numpy as np
 
+from dsblocks.utils.utils import check_last_part
+
 from .dummy_experiment_manager import DummyExperimentManager, FakeModel
 import hpsearch.examples.dummy_experiment_manager as dummy_em
 from ..visualization import plot_utils
@@ -53,7 +55,9 @@ class ComplexDummyExperimentManager (DummyExperimentManager):
         path_results_previous_experiment = parameters.get('prev_path_results')
         if path_results_previous_experiment is not None:
             model.load_model_and_history (path_results_previous_experiment)
-            assert self.desired_path_results_previous_experiment is None or self.desired_path_results_previous_experiment==path_results_previous_experiment
+            if self.desired_path_results_previous_experiment is not None:
+                check_last_part (path_results_previous_experiment,
+                                 self.desired_path_results_previous_experiment)
 
         # fit model with training data
         model.fit ()
@@ -89,15 +93,15 @@ class DummyManagerAvoidSaving (ComplexDummyExperimentManager):
         super ().__init__ (avoid_saving_fields=['my_new_field', 'greeting_message'], **kwargs)
 
 # Cell
-def init_em (name_folder):
-    path_experiments = f'test_{name_folder}'
+def init_em (name_folder, **kwargs):
+    path_experiments = f'test_{name_folder}/default'
     manager_path = f'{path_experiments}/managers'
-    em = ComplexDummyExperimentManager (path_experiments=path_experiments, manager_path=manager_path)
+    em = ComplexDummyExperimentManager (path_experiments=path_experiments, manager_path=manager_path, **kwargs)
 
-    em.remove_previous_experiments()
+    em.remove_previous_experiments(parent=True)
 
     with pytest.raises (FileNotFoundError):
-        os.listdir(em.get_path_experiments())
+        os.listdir(em.path_experiments)
 
     return em
 
@@ -111,15 +115,15 @@ def remove_previous_experiments ():
 # Cell
 def generate_data (name_folder, nruns=5, noise=0.1, verbose_model=False, verbose=0,
                    parameters_multiple_values=None, parameters_single_value=None,
-                   other_parameters={}, **kwargs):
+                   other_parameters={}, em_args={}, **kwargs):
     np.random.seed (42)
-    path_experiments = f'test_{name_folder}'
+    path_experiments = f'test_{name_folder}/default'
     manager_path = f'{path_experiments}/managers'
     em = ComplexDummyExperimentManager (path_experiments=path_experiments, manager_path=manager_path,
                                         verbose=verbose, **kwargs)
-    em.remove_previous_experiments ()
+    em.remove_previous_experiments (parent=True)
     run_multiple_experiments (em=em, nruns=nruns, noise=noise, verbose=verbose,
                               values_to_explore=parameters_multiple_values,
                               parameters_single_value=parameters_single_value,
-                              other_parameters=other_parameters)
+                              other_parameters=other_parameters, em_args=em_args)
     return em
