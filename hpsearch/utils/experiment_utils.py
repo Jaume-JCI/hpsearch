@@ -49,24 +49,21 @@ def get_scores_columns (experiment_data=None, suffix_results='', class_ids = Non
     do not start with a digit.
     """
     if class_ids is not None:
-        scores_columns = ['%d%s' %(col,suffix_results) for col in class_ids]
+        scores_columns = experiment_data[dflt.scores_col].columns.get_level_values(0)
+        scores_columns = [(dflt.scores_col, x) for x in scores_columns]
     else:
         if experiment_data is None:
             raise ValueError ('Either experiment_data or class_ids should be different than None')
-        scores_columns = [col for col in experiment_data.columns if col[0].isdigit()]
-        # For some experiments, we have multiple scores per class (e.g., due to different evaluation criteria). The argument suffix_results can be used to select the appropriate score.
         if len(suffix_results) > 0:
-            scores_columns = [col for col in scores_columns if (len(col.split(suffix_results))==2) and (len(col.split(suffix_results)[1])==0) and (col.split(suffix_results)[0].isdigit()) ]
+            scores_columns = (dflt.scores_col, suffix_results)
         else:
-            # We assume that default scores are in columns whose names only have the class number
-            scores_columns = [col for col in scores_columns if (len(col.split('_'))>=1)]
+            scores_columns = experiment_data[dflt.scores_col].columns
+            scores_columns = [(dflt.scores_col, *x) for x in parameters]
     return scores_columns
 
 # Cell
 def get_experiment_scores (experiment_data = None, suffix_results = '', class_ids = None, remove_suffix=False):
     df = experiment_data[get_scores_columns (experiment_data, suffix_results=suffix_results, class_ids=class_ids)]
-    if remove_suffix:
-        df.columns=[c.split('_')[0] for c in df.columns]
     return df
 
 # Cell

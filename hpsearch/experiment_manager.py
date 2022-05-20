@@ -359,7 +359,7 @@ class ExperimentManager (object):
         #   remove unfinished experiments
         # ****************************************************
         if remove_not_finished:
-            name_finished = '%d_finished' %run_number
+            name_finished = (dflt.run_info_col, 'finished', run_number)
             if not isnull(experiment_data, experiment_number, name_finished):
                 finished = experiment_data.loc[experiment_number, name_finished]
                 self.logger.info (f'experiment {experiment_number}, run number {run_number}, finished {finished}')
@@ -559,19 +559,8 @@ class ExperimentManager (object):
         # ****************************************************************
         #  Retrieve and store results
         # ****************************************************************
-        if not isinstance(dict_results, dict): dict_results = {name_score: dict_results}
-        columns = pd.MultiIndex.from_product ([[dflt.scores_col], list(dict_results.keys()), [run_number]])
-        experiment_data[[x for x in columns if x not in experiment_data]] = None
-        experiment_data.loc[experiment_number, columns]=dict_results.values()
-        experiment_data = experiment_data[experiment_data.columns.sort_values()]
-
-        if isnull(experiment_data, experiment_number, 'time_'+str(run_number)) and finished:
-            experiment_data.loc[experiment_number,'time_'+str(run_number)]=time_spent
-        experiment_data.loc[experiment_number, 'date']=datetime.datetime.time(datetime.datetime.now())
-        experiment_data.loc[experiment_number, '%d_finished' %run_number]=finished
-
-        experiment_data.to_csv(path_csv)
-        experiment_data.to_pickle(path_pickle)
+        self.log_results (dict_results, experiment_data, experiment_number, run_number,
+                    path_csv, path_pickle, name_score=name_score, finished=finished)
 
         try:
             save_other_parameters (experiment_number, {**other_parameters, **em_args, **info}, path_experiments)
@@ -584,6 +573,28 @@ class ExperimentManager (object):
         # return final score
         result = dict_results.get(key_score)
         return result, dict_results
+
+    def log_results (self, dict_results, experiment_data, experiment_number, run_number,
+                path_csv, path_pickle, name_score='score', finished=True):
+        if not isinstance(dict_results, dict): dict_results = {name_score: dict_results}
+        columns = pd.MultiIndex.from_product ([[dflt.scores_col],
+                                               list(dict_results.keys()),
+                                               [run_number]])
+        experiment_data[[x for x in columns if x not in experiment_data]] = None
+        experiment_data.loc[experiment_number, columns]=dict_results.values()
+
+        mi_col = (dflt.run_info_col, 'time', run_number)
+        if isnull(experiment_data, experiment_number,  mi_col) and finished:
+            experiment_data.loc[experiment_number, mi_col]=time_spent
+        mi_col = (dflt.run_info_col, 'date', run_number)
+        experiment_data.loc[experiment_number, mi_col]=datetime.datetime.time(datetime.datetime.now())
+        mi_col = (dflt.run_info_col, 'finished', run_number)
+        experiment_data.loc[experiment_number, mi_col]=finished
+
+        experiment_data = experiment_data[experiment_data.columns.sort_values()]
+        experiment_data.to_csv(path_csv)
+        experiment_data.to_pickle(path_pickle)
+
 
     def grid_search (self, parameters_multiple_values={}, parameters_single_value={}, other_parameters={},
                      info=Bunch(), run_numbers=[0], random_search=False, load_previous=False,
@@ -886,16 +897,8 @@ class ExperimentManager (object):
                         experiment_data = pd.read_pickle (path_pickle)
                     else:
                         experiment_data = pd.read_csv (path_csv, index_col=0)
-                    if type(score)==dict:
-                        for key in score.keys():
-                            if key != '':
-                                experiment_data.loc[experiment_number, '%d_%s' %(run_number, key)]=score[key]
-                            else:
-                                experiment_data.loc[experiment_number, '%d' %run_number]=score[key]
-                    else:
-                        experiment_data.loc[experiment_number, name_score]=score
-                    experiment_data.to_csv(path_csv)
-                    experiment_data.to_pickle(path_pickle)
+                    self.log_results (dict_results, experiment_data, experiment_number, run_number,
+                        path_csv, path_pickle)
 
     def rerun_experiment_par (self, experiments, run_numbers=None, parameters={}):
 
@@ -1229,12 +1232,18 @@ def load_or_create_experiment_values (path_csv, parameters, precision=1e-15, log
         experiment_data = pd.DataFrame()
 
     if len(experiment_numbers) == 0:
-        experiment_data = experiment_data.append (parameters, ignore_index=True)
-        experiment_data.columns = pd.MultiIndex.from_product (
+        columns = pd.MultiIndex.from_product (
             [[dflt.parameters_col], list(parameters.keys()), ['']])
-        experiment_data = experiment_data[experiment_data.columns.sort_values()]
+        experiment_number = experiment_data.shape[0]
+        if experiment_data.empty:
+            experiment_data = experiment_data.append (parameters, ignore_index=True)
+            experiment_data.columns = columns
+        else:
+            experiment_data.loc[experiment_number]=None
+            experiment_data[[c for c in columns if c not in experiment_data]] = None
+            experiment_data.loc [experiment_number, columns] = parameters.values()
+            experiment_data = experiment_data[experiment_data.columns.sort_values()]
         changed_dataframe = True
-        experiment_number = experiment_data.shape[0]-1
     else:
         experiment_number = experiment_numbers[0]
 

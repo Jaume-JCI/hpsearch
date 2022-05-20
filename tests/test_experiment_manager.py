@@ -1041,4 +1041,43 @@ def test_get_git_revision_hash ():
 def test_load_or_create_experiment_values ():
     path_csv_folder = 'test_load_or_create_experiment_values'
     os.makedirs (path_csv_folder, exist_ok=True)
-    load_or_create_experiment_values (path_csv, parameters, precision=1e-15, logger=None)
+    parameters = dict (a='yes', b=1.2, c=True)
+    experiment_number, experiment_data = load_or_create_experiment_values (
+        f'{path_csv_folder}/experiments_data.csv', parameters)
+    display(experiment_data)
+    assert experiment_data.shape==(1, 3)
+    assert (experiment_data.columns==pd.MultiIndex.from_product (
+                [[dflt.parameters_col], list(parameters.keys()), ['']])).all()
+    assert experiment_data.values[0].tolist() == list(parameters.values())
+    assert experiment_number==0
+
+    parameters = dict (a='no', b=1.2, c=True)
+    experiment_number, experiment_data = load_or_create_experiment_values (
+        f'{path_csv_folder}/experiments_data.csv', parameters)
+    display(experiment_data)
+    assert experiment_data.shape==(2, 3)
+    assert (experiment_data.columns==pd.MultiIndex.from_product (
+                [[dflt.parameters_col], list(parameters.keys()), ['']])).all()
+    assert experiment_data.values[1].tolist() == list(parameters.values())
+    assert experiment_number==1
+
+    parameters = dict (a='no', d=12, c=True)
+    experiment_number, experiment_data = load_or_create_experiment_values (
+        f'{path_csv_folder}/experiments_data.csv', parameters)
+    assert experiment_data.shape==(3, 4)
+    assert (experiment_data.columns==pd.MultiIndex.from_product (
+                [[dflt.parameters_col], ['a','b','c','d'], ['']])).all()
+    c = pd.MultiIndex.from_product (
+                [[dflt.parameters_col], ['a','d','c'], ['']])
+    assert experiment_data[c].values[2].tolist() == list(parameters.values())
+    assert np.isnan(experiment_data.loc[2, (dflt.parameters_col, 'b', '')])
+    experiment_data_before = experiment_data.copy()
+    display(experiment_data)
+
+    parameters = dict (a='no', b=1.2, c=True)
+    experiment_number, experiment_data = load_or_create_experiment_values (
+        f'{path_csv_folder}/experiments_data.csv', parameters)
+    assert experiment_number==1
+    pd.testing.assert_frame_equal (experiment_data_before,experiment_data)
+
+    remove_previous_results (path_csv_folder)
