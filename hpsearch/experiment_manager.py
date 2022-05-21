@@ -560,7 +560,7 @@ class ExperimentManager (object):
         #  Retrieve and store results
         # ****************************************************************
         self.log_results (dict_results, experiment_data, experiment_number, run_number,
-                    path_csv, path_pickle, name_score=name_score, finished=finished)
+                    path_csv, path_pickle, time_spent, name_score=name_score, finished=finished)
 
         try:
             save_other_parameters (experiment_number, {**other_parameters, **em_args, **info}, path_experiments)
@@ -575,7 +575,7 @@ class ExperimentManager (object):
         return result, dict_results
 
     def log_results (self, dict_results, experiment_data, experiment_number, run_number,
-                path_csv, path_pickle, name_score='score', finished=True):
+                path_csv, path_pickle, time_spent, name_score='score', finished=True):
         if not isinstance(dict_results, dict): dict_results = {name_score: dict_results}
         columns = pd.MultiIndex.from_product ([[dflt.scores_col],
                                                list(dict_results.keys()),
@@ -886,7 +886,7 @@ class ExperimentManager (object):
             for run_number in run_numbers:
                 path_results = path_experiment/f'{run_number}'
                 path_data = self.get_path_data (run_number, parameters)
-                score, _ = self.run_experiment_pipeline (run_number, path_results,
+                score, time_spent = self.run_experiment_pipeline (run_number, path_results,
                                                          parameters=parameters)
 
                 if save_results:
@@ -898,7 +898,7 @@ class ExperimentManager (object):
                     else:
                         experiment_data = pd.read_csv (path_csv, index_col=0)
                     self.log_results (dict_results, experiment_data, experiment_number, run_number,
-                        path_csv, path_pickle)
+                                      path_csv, path_pickle, time_spent)
 
     def rerun_experiment_par (self, experiments, run_numbers=None, parameters={}):
 
