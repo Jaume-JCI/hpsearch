@@ -212,7 +212,7 @@ class ExperimentManager (object):
         # #####################################
         # Final scores
         # #####################################
-        score_name = parameters.get('suffix_results','')
+        score_name = self.key_score
         if len(score_name) > 0:
             if score_name[0] == '_':
                 score_name = score_name[1:]
@@ -329,28 +329,30 @@ class ExperimentManager (object):
         other_parameters['experiment_number'] = experiment_number
 
         # ****************************************************
-        # get key_score and suffix_results
+        # get key_score
         # ****************************************************
         key_score = self.key_score
-        suffix_results = f'_{key_score}'
 
         # ****************************************************
         #   get run_id, if not given
         # ****************************************************
         if run_number is None:
             run_number = 0
-            name_score = '%d%s' %(run_number, suffix_results)
-            while not isnull(experiment_data, experiment_number, name_score):
-                self.logger.info ('found previous run for experiment number {}, run {}, with score {} = {}'.format(experiment_number, run_number, key_score, experiment_data.loc[experiment_number, name_score]))
+            mi_score = (dflt.scores_col, key_score, run_number)
+            while not isnull(experiment_data, experiment_number, mi_score):
+                score = experiment_data.loc[experiment_number, mi_score]
+                self.logger.info (f'found previous run for experiment number {experiment_number}, '
+                                  f'run {run_number}, with score {key_score} = {score}')
                 run_number += 1
-                name_score = '%d%s' %(run_number, suffix_results)
-            self.logger.info ('starting experiment {} with run number {}'.format(experiment_number, run_number))
+                mi_score = (dflt.scores_col, key_score, run_number)
+            self.logger.info (f'starting experiment {experiment_number} with run number {run_number}')
 
         else:
-            name_score = '%d%s' %(run_number, suffix_results)
-            if not isnull(experiment_data, experiment_number, name_score):
-                previous_result = experiment_data.loc[experiment_number, name_score]
-                self.logger.info ('found completed: experiment number: %d, run number: %d - score: %f' %(experiment_number, run_number, previous_result))
+            mi_score = (dflt.scores_col, key_score, run_number)
+            if not isnull(experiment_data, experiment_number, mi_score):
+                previous_result = experiment_data.loc[experiment_number, mi_score]
+                self.logger.info (f'found completed: experiment number: {experiment_number}, '
+                                  f'run number: {run_number} - score: {previous_result}')
                 self.logger.info (parameters)
                 if repeat_experiment:
                     self.logger.info ('redoing experiment')
@@ -364,7 +366,7 @@ class ExperimentManager (object):
                 finished = experiment_data.loc[experiment_number, name_finished]
                 self.logger.info (f'experiment {experiment_number}, run number {run_number}, finished {finished}')
                 if not finished:
-                    experiment_data.loc[experiment_number, name_score] = None
+                    experiment_data.loc[experiment_number, mi_score] = None
                     experiment_data.to_csv (path_csv)
                     experiment_data.to_pickle (path_pickle)
                     self.logger.info (f'removed experiment {experiment_number}, '
@@ -379,14 +381,14 @@ class ExperimentManager (object):
         # ****************************************************
         #   check conditions for skipping experiment
         # ****************************************************
-        if not isnull(experiment_data, experiment_number, name_score) and not repeat_experiment:
+        if not isnull(experiment_data, experiment_number, mi_score) and not repeat_experiment:
             if (check_finished
                 and not self.finished_all_epochs (parameters, current_path_results)):
                 unfinished_flag = True
             else:
                 self.logger.info ('skipping...')
                 return previous_result, {key_score: previous_result}
-        elif (isnull(experiment_data, experiment_number, name_score)
+        elif (isnull(experiment_data, experiment_number, mi_score)
               and recompute_metrics
               and not force_recompute_metrics):
             self.logger.info (f'experiment not found, skipping {run_number} due to only recompute_metrics')
@@ -469,7 +471,7 @@ class ExperimentManager (object):
         # ***********************************************************
         # resume from previous experiment
         # ***********************************************************
-        if (isnull(experiment_data, experiment_number, name_score)
+        if (isnull(experiment_data, experiment_number, mi_score)
             and check_finished_if_interrupted
             and not self.finished_all_epochs (parameters, current_path_results)):
             unfinished_flag = True
@@ -479,7 +481,7 @@ class ExperimentManager (object):
             self.logger.info('trying prev_epoch')
             experiment_data2 = experiment_data.copy()
             if (not unfinished_flag
-                and (repeat_experiment or isnull(experiment_data, experiment_number, name_score))):
+                and (repeat_experiment or isnull(experiment_data, experiment_number, mi_score))):
                     experiment_data2 = experiment_data2.drop(experiment_number,axis=0)
             prev_experiment_number = self.find_closest_epoch (experiment_data2, original_parameters)
             if prev_experiment_number is not None:
@@ -560,7 +562,7 @@ class ExperimentManager (object):
         #  Retrieve and store results
         # ****************************************************************
         self.log_results (dict_results, experiment_data, experiment_number, run_number,
-                    path_csv, path_pickle, time_spent, name_score=name_score, finished=finished)
+                    path_csv, path_pickle, time_spent, finished=finished)
 
         try:
             save_other_parameters (experiment_number, {**other_parameters, **em_args, **info}, path_experiments)
@@ -575,8 +577,8 @@ class ExperimentManager (object):
         return result, dict_results
 
     def log_results (self, dict_results, experiment_data, experiment_number, run_number,
-                path_csv, path_pickle, time_spent, name_score='score', finished=True):
-        if not isinstance(dict_results, dict): dict_results = {name_score: dict_results}
+                path_csv, path_pickle, time_spent, finished=True):
+        if not isinstance(dict_results, dict): dict_results = {self.key_score: dict_results}
         columns = pd.MultiIndex.from_product ([[dflt.scores_col],
                                                list(dict_results.keys()),
                                                [run_number]])
@@ -641,9 +643,9 @@ class ExperimentManager (object):
             parameters.update(parameters_single_value)
 
             for (i_run, run_number) in enumerate (run_numbers):
-                self.logger.info (f'processing hyper-parameter {i_hp} '
+                self.logger.info (f'processing hyper-parameter {i_hp+1} '
                                  f'out of {len(parameters_multiple_values_all)}')
-                self.logger.info (f'doing run {i_run} out of {len(run_numbers)}')
+                self.logger.info (f'doing run {i_run+1} out of {len(run_numbers)}')
                 self.logger.info (log_message)
 
                 self.create_experiment_and_run (parameters=parameters, other_parameters=other_parameters,
@@ -666,7 +668,7 @@ class ExperimentManager (object):
 
         results = np.zeros((len(run_numbers),))
         for (i_run, run_number) in enumerate(run_numbers):
-                self.logger.info('doing run %d out of %d' %(i_run, len(run_numbers)))
+                self.logger.info('doing run %d out of %d' %(i_run+1, len(run_numbers)))
                 self.logger.info('%s' %log_message)
 
                 results[i_run], dict_results  = self.create_experiment_and_run (
@@ -920,10 +922,11 @@ class ExperimentManager (object):
 
         defaults = self.get_default_parameters(parameters)
         current_epoch = parameters.get(name_epoch, defaults.get(name_epoch))
+        mi_epoch = (dflt.parameters_col, name_epoch, '')
         if current_epoch is None:
             current_epoch = -1
         if len(experiment_numbers) > 1:
-            epochs = experiment_data.loc[experiment_numbers,name_epoch].copy()
+            epochs = experiment_data.loc[experiment_numbers, mi_epoch].copy()
             epochs[epochs.isnull()]=defaults.get(name_epoch)
             epochs = epochs.loc[epochs<=current_epoch]
             if epochs.shape[0] == 0:

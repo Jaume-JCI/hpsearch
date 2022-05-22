@@ -25,6 +25,7 @@ from dsblocks.utils.utils import check_last_part, remove_previous_results
 from hpsearch.experiment_manager import *
 from hpsearch.examples.complex_dummy_experiment_manager import ComplexDummyExperimentManager
 from hpsearch.examples.complex_dummy_experiment_manager import init_em
+import hpsearch.config.hp_defaults as dflt
 
 # Cell
 @pytest.fixture (name='init_em')
@@ -298,9 +299,9 @@ def test_new_parameter ():
     # This means that the default value of epochs is used for that parameter.
     # In our case, if we look at the implementation of DummyExperimentManager, we can see that
     # the default value for epochs is 10.
-    assert df.isna().loc[0,'epochs']
-
-    assert df.loc[1,'epochs'] == 5.0
+    mi_epochs = (dflt.parameters_col, 'epochs', '')
+    assert df.isna().loc[0, mi_epochs]
+    assert df.loc[1, mi_epochs] == 5.0
 
     md ('experiment dataframe:'); display(df)
 
@@ -410,7 +411,8 @@ def test_repeat_experiment ():
 
     df = em.get_experiment_data ()
     display(df)
-    date = df.date.values[0]
+    mi_date = (dflt.run_info_col, 'date', 0)
+    date = df[mi_date].values[0]
 
     # second experiment
     result, dict_results = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.05},
@@ -418,7 +420,7 @@ def test_repeat_experiment ():
 
     df = em.get_experiment_data ()
     display(df)
-    assert df.date.values[0] != date
+    assert df[mi_date].values[0] != date
 
 
     # in this case, no new experiment is added, since the new parameter has the same value as the default value
@@ -444,16 +446,17 @@ def test_check_finished ():
                                                          other_parameters={'actual_epochs': 5})
 
     df = em.get_experiment_data ()
-    date = df.date.values[0]
-    mi_column = ('scores', 'validation_accuracy', 0)
-    score = df[mi_column].values[0]
+    mi_date = (dflt.run_info_col, 'date', 0)
+    date = df[mi_date].values[0]
+    mi_validation = ('scores', 'validation_accuracy', 0)
+    score = df[mi_validation].values[0]
 
     # second experiment: same values in parameters dictionary, without other_parameters
     result, dict_results = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.05, 'epochs': 10})
 
     df = em.get_experiment_data ()
 
-    assert (date==df.date.values[0]) and (score==df[mi_column].values[0])
+    assert (date==df[mi_date].values[0]) and (score==df[mi_validation].values[0])
 
     # third experiment: same values in parameters dictionary, with other_parameters indicating check_finished
     result, dict_results = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.05, 'epochs': 10},
@@ -461,13 +464,13 @@ def test_check_finished ():
 
     df = em.get_experiment_data ()
     expected_col = list(pd.MultiIndex.from_product([['parameters'],['offset','rate'],['']]))
-    expected_col += list(pd.MultiIndex.from_product([['run_info'],['date','finished','time'],[0, 1]]))
-    expected_col += list(pd.MultiIndex.from_product([['scores'],['test_accuracy','validation_accuracy',],[0, 1]]))
+    expected_col += list(pd.MultiIndex.from_product([['run_info'],['date','finished','time'],[0]]))
+    expected_col += list(pd.MultiIndex.from_product([['scores'],['test_accuracy','validation_accuracy',],[0]]))
     assert df.columns.tolist()==expected_col
     assert df.shape[0]==1
 
     assert (df.index==[0]).all()
-    assert (date!=df.date.values[0]) and (score!=df[mi_column].values[0])
+    assert (date!=df[mi_date].values[0]) and (score!=df[mi_validation].values[0])
 
     em.remove_previous_experiments (parent=True)
 
@@ -490,8 +493,8 @@ def test_recompute_metrics ():
     assert df.columns.tolist()==expected_col
     assert df.shape[0]==2
 
-    mi_column = ('scores', 'validation_accuracy', 0)
-    assert np.isnan(df[mi_column].values[1])
+    mi_validation = ('scores', 'validation_accuracy', 0)
+    assert np.isnan(df[mi_validation].values[1])
 
     # third experiment: new values
     em.raise_error_if_run = False
@@ -508,7 +511,7 @@ def test_recompute_metrics ():
     assert df.shape[0]==2
 
     assert (df.index==[0,1]).all()
-    assert df[mi_column].values[1]==0.3
+    assert df[mi_validation].values[1]==0.3
 
     em.remove_previous_experiments (parent=True)
 
@@ -579,7 +582,8 @@ def test_prev_epoch2 ():
     assert score==0.25 and results['validation_accuracy']==0.25
     assert em.model.current_epoch==5 and em.model.epochs==3
     df = em.get_experiment_data ()
-    assert (df[mi_column]==[0.25, 0.30]).all()
+    mi_validation = ('scores', 'validation_accuracy', 0)
+    assert (df[mi_validation]==[0.25, 0.30]).all()
 
 
     em.remove_previous_experiments (parent=True)
@@ -600,7 +604,7 @@ def test_prev_epoch2 ():
     assert score==0.25 and results['validation_accuracy']==0.25
     assert em.model.current_epoch==5 and em.model.epochs==3
     df = em.get_experiment_data ()
-    assert (df[mi_column]==[0.25, 0.30]).all()
+    assert (df[mi_validation]==[0.25, 0.30]).all()
     em.remove_previous_experiments (parent=True)
 
 # Comes from experiment_manager.ipynb, cell
@@ -679,8 +683,8 @@ def test_use_last_result ():
     _ = em.create_experiment_and_run (parameters={'offset':0.1, 'rate': 0.04, 'epochs': 5})
 
     df = em.get_experiment_data ()
-    mi_column = ('scores', 'validation_accuracy', 0)
-    assert (df.isna()[mi_column] == [True, False]).all()
+    mi_validation = ('scores', 'validation_accuracy', 0)
+    assert (df.isna()[mi_validation] == [True, False]).all()
 
     # We use last result but require that number of epochs is at least 50.
     # Since this is not true, the last result is not used.
@@ -690,7 +694,7 @@ def test_use_last_result ():
     assert score is None and results=={}
     df = em.get_experiment_data ()
     display(df)
-    assert (df.isna()[mi_column] == [True, False]).all()
+    assert (df.isna()[mi_validation] == [True, False]).all()
 
     # We use last result and lower the required number of epochs to 2
     score, results = em.create_experiment_and_run (
@@ -700,8 +704,8 @@ def test_use_last_result ():
     assert score==0.25 and results=={'validation_accuracy': 0.25, 'test_accuracy': 0.35, 'accuracy': 0.25, 'last': 5}
     df = em.get_experiment_data ()
     display(df)
-    assert (df.isna()[mi_column] == [False, False]).all()
-    assert (df[mi_column] == [0.25, 0.30]).all()
+    assert (df.isna()[mi_validation] == [False, False]).all()
+    assert (df[mi_validation] == [0.25, 0.30]).all()
 
     # We use last result and increase the required number of epochs to default number (50)
     # But we request to run the experiment until the end
@@ -729,8 +733,8 @@ def test_use_last_result_run_interrupted ():
 
     df = em.get_experiment_data ()
     #display (df)
-    mi_column = ('scores', 'validation_accuracy', 0)
-    assert (df.isna()[mi_column] == [True, False]).all()
+    mi_validation = ('scores', 'validation_accuracy', 0)
+    assert (df.isna()[mi_validation] == [True, False]).all()
 
     # We use last result and have the required number of epochs to default number (50)
     # But we request to run the experiment until the end
@@ -742,8 +746,8 @@ def test_use_last_result_run_interrupted ():
     df = em.get_experiment_data ()
     #display(df)
     assert em.model.current_epoch==5 and em.model.epochs==5
-    assert (df.isna()[mi_column] == [False, False]).all()
-    assert (df[mi_column] == [0.25, 0.30]).all()
+    assert (df.isna()[mi_validation] == [False, False]).all()
+    assert (df[mi_validation] == [0.25, 0.30]).all()
 
     em.remove_previous_experiments (parent=True)
 
@@ -779,15 +783,18 @@ def test_grid_search ():
                     parameters_single_value={'offset':0.1},
                     other_parameters={'verbose':False})
     df = em.get_experiment_data ()
-    assert (df['epochs']==[5.0, 5.0, 7.0, 7.0]).all()
-    assert (df['rate'].values[[0,2]]==[0.03, 0.03]).all()
-    assert (df.isna()['rate']==[False, True, False, True]).all()
-    assert (df['offset']==0.1).all()
-    mi_column = ('scores', 'validation_accuracy', 0)
-    mi_column_1 = ('scores', 'validation_accuracy', 1)
-    assert (np.abs(df[mi_column]-[0.25, 0.15, 0.31, 0.17])<1.0e-15).all()
+    mi_epochs = (dflt.parameters_col, 'epochs', '')
+    mi_rate = (dflt.parameters_col, 'rate', '')
+    mi_offset = (dflt.parameters_col, 'offset', '')
+    assert (df[mi_epochs]==[5.0, 5.0, 7.0, 7.0]).all()
+    assert (df[mi_rate].values[[0,2]]==[0.03, 0.03]).all()
+    assert (df.isna()[mi_rate]==[False, True, False, True]).all()
+    assert (df[mi_offset]==0.1).all()
+    mi_validation = ('scores', 'validation_accuracy', 0)
+    mi_validation_1 = ('scores', 'validation_accuracy', 1)
+    assert (np.abs(df[mi_validation]-[0.25, 0.15, 0.31, 0.17])<1.0e-15).all()
 
-    #assert (df.isna()[mi_column] == [True, False]).all()
+    #assert (df.isna()[mi_validation] == [True, False]).all()
 
     # *********************************
     # *********************************
@@ -795,11 +802,11 @@ def test_grid_search ():
     em.grid_search (parameters_multiple_values={'rate': [0.01,0.03], 'epochs': [7, 5]},
                     parameters_single_value={'offset':0.1})
     df = em.get_experiment_data ()
-    assert (df['epochs']==[5.0, 5.0, 7.0, 7.0]).all()
-    assert (df['rate'].values[[0,2]]==[0.03, 0.03]).all()
-    assert (df.isna()['rate']==[False, True, False, True]).all()
-    assert (df['offset']==0.1).all()
-    assert (np.abs(df[mi_column]-[0.25, 0.15, 0.31, 0.17])<1.0e-15).all()
+    assert (df[mi_epochs]==[5.0, 5.0, 7.0, 7.0]).all()
+    assert (df[mi_rate].values[[0,2]]==[0.03, 0.03]).all()
+    assert (df.isna()[mi_rate]==[False, True, False, True]).all()
+    assert (df[mi_offset]==0.1).all()
+    assert (np.abs(df[mi_validation]-[0.25, 0.15, 0.31, 0.17])<1.0e-15).all()
 
     # *********************************
     # *********************************
@@ -808,13 +815,13 @@ def test_grid_search ():
     em.grid_search (parameters_multiple_values={'rate': [0.01,0.03], 'epochs': [7, 5]},
                     parameters_single_value={'offset':0.1, 'noise':0.0001}, nruns=2)
     df = em.get_experiment_data ()
-    assert (df['epochs']==[7.0, 7.0, 5.0, 5.0]).all()
-    assert (df['rate'].values[[1,3]]==[0.03, 0.03]).all()
-    assert (df.isna()['rate']==[True, False, True, False]).all()
-    assert (df['offset']==0.1).all()
-    assert (np.abs(df[mi_column]-[0.17, 0.31, 0.15, 0.25])<0.1).all()
-    assert (np.abs(df[mi_column_1]-[0.17, 0.31, 0.15, 0.25])<0.1).all()
-    assert (df[mi_column]!=df[mi_column_1]).all()
+    assert (df[mi_epochs]==[7.0, 7.0, 5.0, 5.0]).all()
+    assert (df[mi_rate].values[[1,3]]==[0.03, 0.03]).all()
+    assert (df.isna()[mi_rate]==[True, False, True, False]).all()
+    assert (df[mi_offset]==0.1).all()
+    assert (np.abs(df[mi_validation]-[0.17, 0.31, 0.15, 0.25])<0.1).all()
+    assert (np.abs(df[mi_validation_1]-[0.17, 0.31, 0.15, 0.25])<0.1).all()
+    assert (df[mi_validation]!=df[mi_validation_1]).all()
 
     # *********************************
     # *********************************
@@ -825,11 +832,11 @@ def test_grid_search ():
                     other_parameters={'verbose':False})
 
     df = em.get_experiment_data ()
-    assert (df['epochs']==[7., 5., 7., 5.]).all()
-    assert (df['rate'].values[[0,1]]==[0.03, 0.03]).all()
-    assert (df.isna()['rate']==[False, False, True, True]).all()
-    assert (df['offset']==0.1).all()
-    assert (np.abs(df[mi_column]-[0.31, 0.25, 0.17, 0.15])<1e-15).all()
+    assert (df[mi_epochs]==[7., 5., 7., 5.]).all()
+    assert (df[mi_rate].values[[0,1]]==[0.03, 0.03]).all()
+    assert (df.isna()[mi_rate]==[False, False, True, True]).all()
+    assert (df[mi_offset]==0.1).all()
+    assert (np.abs(df[mi_validation]-[0.31, 0.25, 0.17, 0.15])<1e-15).all()
 
     em.remove_previous_experiments (parent=True)
 
@@ -922,9 +929,9 @@ def test_rerun_experiment ():
     em.raise_error_if_run = False
     em.rerun_experiment (experiments=[0], other_parameters={'halt':False, 'verbose':False})
     df = em.get_experiment_data ()
-    mi_column = ('scores', 'validation_accuracy', 0)
-    mi_column_1 = ('scores', 'validation_accuracy', 1)
-    assert df.loc[0,mi_column]==0.35
+    mi_validation = ('scores', 'validation_accuracy', 0)
+    mi_validation_1 = ('scores', 'validation_accuracy', 1)
+    assert df.loc[0,mi_validation]==0.35
 
     # ****************************************
     # case 3: adding more runs to previous experiment
@@ -944,10 +951,10 @@ def test_rerun_experiment ():
                          nruns=2)
     df = em.get_experiment_data ()
     assert df.shape==(7,24)
-    assert np.max(np.abs(df[mi_column].values- [0.35, 0.16, 0.9,  0.13, 0.17, 0.21, 0.25])) < 1e-10
-    assert df.isna()[mi_column_1].sum()==2
-    n1 = (~df.isna())[mi_column_1].sum()
-    n0 = (~df.isna())[mi_column].sum()
+    assert np.max(np.abs(df[mi_validation].values- [0.35, 0.16, 0.9,  0.13, 0.17, 0.21, 0.25])) < 1e-10
+    assert df.isna()[mi_validation_1].sum()==2
+    n1 = (~df.isna())[mi_validation_1].sum()
+    n0 = (~df.isna())[mi_validation].sum()
 
     # ****************************************
     # case 5: using previous experiment parameters as fixed, and using BO with other
@@ -961,8 +968,8 @@ def test_rerun_experiment ():
     display (df2)
     print (df2.shape)
     assert df2.shape[0]>7
-    n1 = (~df2.isna())[mi_column_1].sum()
-    n0 = (~df2.isna())[mi_column].sum()
+    n1 = (~df2.isna())[mi_validation_1].sum()
+    n0 = (~df2.isna())[mi_validation].sum()
     #assert (n0+n1)==16
 
     em.remove_previous_experiments (parent=True)
@@ -979,9 +986,9 @@ def test_rerun_experiment_pipeline ():
     _ = em.run_multiple_repetitions (parameters={'rate': 0.04}, nruns=5)
     df = em.get_experiment_data ()
     display (df)
-    mi_column = ('scores', 'validation_accuracy', 0)
-    mi_column_test = ('scores', 'test_accuracy', 0)
-    assert np.abs(df.loc[1,mi_column]-0.16)<1e-5 and (df.loc[1, mi_column_test]-0.26)<1e-5
+    mi_validation = ('scores', 'validation_accuracy', 0)
+    mi_test = ('scores', 'test_accuracy', 0)
+    assert np.abs(df.loc[1,mi_validation]-0.16)<1e-5 and (df.loc[1, mi_test]-0.26)<1e-5
     #print (df.shape)
     assert df.shape==(3,24)
 
@@ -1002,7 +1009,7 @@ def test_rerun_experiment_pipeline ():
     em.rerun_experiment_pipeline (experiments=[1], run_numbers=[0],
                                   new_parameters={'rate': 0.04}, save_results=True)
     df = em.get_experiment_data ()
-    assert np.abs(df.loc[1,mi_column]-0.18)<1e-5 and np.abs(df.loc[1, mi_column_test]-0.28)<1e-5
+    assert np.abs(df.loc[1,mi_validation]-0.18)<1e-5 and np.abs(df.loc[1, mi_test]-0.28)<1e-5
 
     # ****************************************
     # case 2: re-running interrupted experiment
@@ -1036,9 +1043,9 @@ def test_rerun_experiment_par ():
     _ = em.run_multiple_repetitions (parameters={'rate': 0.04}, nruns=5)
     df = em.get_experiment_data ()
     display (df)
-    mi_column = ('scores', 'validation_accuracy', 0)
-    mi_column_test = ('scores', 'test_accuracy', 0)
-    assert np.abs(df.loc[1,mi_column]-0.16)<1e-5 and (df.loc[1, mi_column_test]-0.26)<1e-5
+    mi_validation = ('scores', 'validation_accuracy', 0)
+    mi_test = ('scores', 'test_accuracy', 0)
+    assert np.abs(df.loc[1,mi_validation]-0.16)<1e-5 and (df.loc[1, mi_test]-0.26)<1e-5
     #print (df.shape)
     assert df.shape==(3,24)
 
