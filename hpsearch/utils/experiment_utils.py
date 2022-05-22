@@ -34,6 +34,7 @@ def get_parameters_columns (experiment_data, only_not_null=False):
     parameters = [(dflt.parameters_col, *x) for x in parameters]
     if only_not_null:
         parameters = np.array(parameters)[~experiment_data.loc[:,parameters].isnull().all(axis=0)].tolist()
+        parameters = [(*x,) for x in parameters]
     return parameters
 
 # Cell
@@ -41,29 +42,26 @@ def get_experiment_parameters (experiment_data, only_not_null=False):
     return experiment_data[get_parameters_columns (experiment_data, only_not_null=only_not_null)]
 
 # Cell
-def get_scores_columns (experiment_data=None, suffix_results='', class_ids = None):
+def get_scores_columns (experiment_data=None, score_name=None, run_number = None):
     """
     Determine the columnns that provide evaluation scores.
-
-    We assume that they start with the class number, and that the other columns
-    do not start with a digit.
     """
-    if class_ids is not None:
+    if run_number is not None:
         scores_columns = experiment_data[dflt.scores_col].columns.get_level_values(0)
         scores_columns = [(dflt.scores_col, x) for x in scores_columns]
     else:
         if experiment_data is None:
             raise ValueError ('Either experiment_data or class_ids should be different than None')
-        if len(suffix_results) > 0:
-            scores_columns = (dflt.scores_col, suffix_results)
+        if score_name is not None:
+            scores_columns = (dflt.scores_col, score_name)
         else:
             scores_columns = experiment_data[dflt.scores_col].columns
-            scores_columns = [(dflt.scores_col, *x) for x in parameters]
+            scores_columns = [(dflt.scores_col, *x) for x in scores_columns]
     return scores_columns
 
 # Cell
-def get_experiment_scores (experiment_data = None, suffix_results = '', class_ids = None, remove_suffix=False):
-    df = experiment_data[get_scores_columns (experiment_data, suffix_results=suffix_results, class_ids=class_ids)]
+def get_experiment_scores (experiment_data = None, score_name=None, run_number=None, remove_score_name=False):
+    df = experiment_data[get_scores_columns (experiment_data, score_name=score_name, run_number=run_number)]
     return df
 
 # Cell

@@ -850,8 +850,8 @@ def test_run_multiple_repetitions ():
         other_parameters = {'verbose': False, 'noise': 0.001}, nruns=5
     )
     df = em.get_experiment_data ()
-    assert df.shape==(1,24)
-    x=[f'{i}_validation_accuracy' for i in range(5)]; assert df.columns.isin(x).sum()==5
+    assert df.shape==(1,28)
+    x=[(dflt.scores_col, 'validation_accuracy', i) for i in range(5)]; assert df.columns.isin(x).sum()==5
     assert (0 < np.abs(mu-0.25) < 1e-3) and (0 < std < 1e-3)
 
     # *********************************
@@ -938,8 +938,8 @@ def test_rerun_experiment ():
     # ****************************************
     em.rerun_experiment (experiments=[1], nruns=5, other_parameters={'noise': 0.001, 'verbose':False})
     df = em.get_experiment_data ()
-    x=[f'{i}_validation_accuracy' for i in range(5)]; assert df.columns.isin(x).sum()==5
-    assert df.shape==(3,24)
+    x=[(dflt.scores_col, 'validation_accuracy', i) for i in range(5)]; assert df.columns.isin(x).sum()==5
+    assert df.shape==(3,28)
 
     # ****************************************
     # case 4: using previous experiment parameters as fixed, and using grid search with other
@@ -950,7 +950,7 @@ def test_rerun_experiment ():
                          other_parameters={'verbose':False},
                          nruns=2)
     df = em.get_experiment_data ()
-    assert df.shape==(7,24)
+    assert df.shape==(7,28)
     assert np.max(np.abs(df[mi_validation].values- [0.35, 0.16, 0.9,  0.13, 0.17, 0.21, 0.25])) < 1e-10
     assert df.isna()[mi_validation_1].sum()==2
     n1 = (~df.isna())[mi_validation_1].sum()
@@ -990,7 +990,7 @@ def test_rerun_experiment_pipeline ():
     mi_test = ('scores', 'test_accuracy', 0)
     assert np.abs(df.loc[1,mi_validation]-0.16)<1e-5 and (df.loc[1, mi_test]-0.26)<1e-5
     #print (df.shape)
-    assert df.shape==(3,24)
+    assert df.shape==(3,28)
 
     # ****************************************
     # case 1: re-running finished experiment
@@ -1047,7 +1047,7 @@ def test_rerun_experiment_par ():
     mi_test = ('scores', 'test_accuracy', 0)
     assert np.abs(df.loc[1,mi_validation]-0.16)<1e-5 and (df.loc[1, mi_test]-0.26)<1e-5
     #print (df.shape)
-    assert df.shape==(3,24)
+    assert df.shape==(3,28)
 
     # ****************************************
     # case 1: re-running finished experiment

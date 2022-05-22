@@ -19,6 +19,7 @@ from hpsearch.utils.experiment_utils import *
 from hpsearch.examples.dummy_experiment_manager import (DummyExperimentManager,
                                                         run_multiple_experiments)
 from hpsearch.examples.complex_dummy_experiment_manager import generate_data, init_em
+from hpsearch.config import hp_defaults as dflt
 
 # Comes from experiment_utils.ipynb, cell
 def generate_data_exp_utils (name_folder):
@@ -53,18 +54,22 @@ def test_get_parameters_and_scores ():
     # ************************************************************
     # get_parameters_columns
     # ************************************************************
-    assert get_parameters_columns (df) ==['epochs', 'offset', 'rate', 'noise']
+    expected_result = [(dflt.parameters_col, x, '') for x in ['epochs', 'noise', 'offset', 'rate']]
+    assert get_parameters_columns (df) == expected_result
 
-    offset = df.offset.values.copy()
+    mi_offset = (dflt.parameters_col, 'offset', '')
+    offset = df[mi_offset].values.copy()
     md ('- We can take only those which have at least some value that is not None.')
-    df.loc[:, 'offset'] = None
-    assert get_parameters_columns (df, only_not_null=True)==['epochs', 'rate', 'noise']
+    df.loc[:, mi_offset] = None
+    expected_result = [(dflt.parameters_col, x, '') for x in ['epochs', 'noise', 'rate']]
+    assert get_parameters_columns (df, only_not_null=True) == expected_result
 
     md ('- If only some elements are None for a given parameter, we still include it.')
-    df.loc[:, 'offset'] = offset
-    df.loc[2, 'offset'] = None
-    assert get_parameters_columns (df, only_not_null=True)==['epochs', 'offset', 'rate', 'noise']
-    df.loc[:, 'offset'] = offset
+    df.loc[:, mi_offset] = offset
+    df.loc[2, mi_offset] = None
+    expected_result = [(dflt.parameters_col, x, '') for x in ['epochs', 'noise', 'offset', 'rate']]
+    assert get_parameters_columns (df, only_not_null=True)==expected_result
+    df.loc[:, mi_offset] = offset
 
     # ************************************************************
     # get_experiment_parameters
@@ -72,40 +77,26 @@ def test_get_parameters_and_scores ():
     md ('- Same as get_parameters_columns, but returning dataframe of parameter values.')
     result = get_experiment_parameters (df)
     assert result.shape == (9, 4)
-    assert sorted(result.columns) == sorted(['epochs', 'offset', 'rate', 'noise'])
+    expected_result = [(dflt.parameters_col, x, '') for x in ['epochs', 'noise', 'offset', 'rate']]
+    assert result.columns == expected_result
 
     # ************************************************************
     # get_scores_columns
     # ************************************************************
     md ('- Retrieve all columns that have scores, for all runs')
-    assert get_scores_columns (df) == ['0_validation_accuracy',
-     '0_test_accuracy',
-     '0_finished',
-     '1_validation_accuracy',
-     '1_test_accuracy',
-     '1_finished',
-     '2_validation_accuracy',
-     '2_test_accuracy',
-     '2_finished',
-     '3_validation_accuracy',
-     '3_test_accuracy',
-     '3_finished',
-     '4_validation_accuracy',
-     '4_test_accuracy',
-     '4_finished']
+    expected_result = [(dflt.scores_col, x, y) for x in ['validation_accuracy', 'test_accuracy']
+                       for y in range(5)]
+    assert get_scores_columns (df) == expected_result
 
     md ('- Retrieve all columns for given score name, for all runs')
-    assert get_scores_columns (df, suffix_results='_test_accuracy') == [
-         '0_test_accuracy',
-         '1_test_accuracy',
-         '2_test_accuracy',
-         '3_test_accuracy',
-         '4_test_accuracy']
+    expected_result = [(dflt.scores_col, x, y) for x in ['test_accuracy']
+                       for y in range(5)]
+    assert get_scores_columns (df, suffix_results='_test_accuracy') == expected_result
 
     md ('- Retrieve all columns for given score name, for given runs')
-    assert get_scores_columns (df, suffix_results='_test_accuracy', class_ids=[2, 4]) == [
-     '2_test_accuracy',
-     '4_test_accuracy']
+    expected_result = [(dflt.scores_col, x, y) for x in ['test_accuracy']
+                       for y in [2, 4]]
+    assert get_scores_columns (df, suffix_results='_test_accuracy', class_ids=[2, 4]) == expected_result
 
     # ************************************************************
     # get_experiment_scores
@@ -131,18 +122,16 @@ def test_get_parameters_and_scores ():
     # ************************************************************
     # get_scores_columns, first usage example: we do not indicate the name of the score
     # ************************************************************
-    assert get_scores_columns (df)==['0_validation_accuracy', '0_test_accuracy', '0_finished',
-                                     '1_validation_accuracy', '1_test_accuracy', '1_finished',
-                                     '2_validation_accuracy', '2_test_accuracy', '2_finished',
-                                     '3_validation_accuracy', '3_test_accuracy', '3_finished',
-                                     '4_validation_accuracy', '4_test_accuracy', '4_finished']
+    expected_result = [(dflt.scores_col, x, y) for x in ['validation_accuracy', 'test_accuracy']
+                       for y in range(5)]
+    assert get_scores_columns (df)==expected_result
 
     # ************************************************************
     # get_scores_columns, second usage: we indicate the name of the score
     # ************************************************************
     result = get_scores_columns (df, class_ids=range(5), suffix_results='_validation_accuracy')
-    assert result == ['0_validation_accuracy', '1_validation_accuracy', '2_validation_accuracy',
-                     '3_validation_accuracy', '4_validation_accuracy']
+    expected_result = [(dflt.scores_col, 'validation_accuracy', y) for y in range(5)]
+    assert result == expected_result
     em.remove_previous_experiments (parent=True)
 
 # Comes from experiment_utils.ipynb, cell
@@ -251,7 +240,8 @@ def test_replace_with_default_values ():
 
     df = em.get_experiment_data ()
     df=replace_with_default_values(df)
-    assert (df.epochs.values == ([5.]*3 + [10.]*3 + [100.]*3)*2).all()
+    mi_epoch = (dflt.parameters_col, 'epochs', '')
+    assert (df[mi_epoch].values == ([5.]*3 + [10.]*3 + [100.]*3)*2).all()
 
     em.remove_previous_experiments (parent=True)
 
@@ -293,7 +283,8 @@ def test_find_rows_with_parameters_dict ():
     matching_rows, changed_dataframe, matching_all_condition = result
     assert matching_rows==[11, 14, 17]
 
-    df.loc[16, 'rate']=0.00011
+    mi_rate = (dflt.parameters_col, 'rate', '')
+    df.loc[16, mi_rate]=0.00011
     result = find_rows_with_parameters_dict (df, dict (rate=0.0001), exact_match=False)
     matching_rows, changed_dataframe, matching_all_condition = result
     assert matching_rows==[9, 10, 11, 12, 13, 14, 15, 17]

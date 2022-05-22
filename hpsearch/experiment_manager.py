@@ -500,7 +500,8 @@ class ExperimentManager (object):
                             parameters[name_epoch] = parameters[name_epoch] - prev_epoch
                         self.logger.info ('using previous best')
                     else:
-                        prev_epoch = experiment_data.loc[prev_experiment_number,name_epoch]
+                        mi_epoch = (dflt.parameters_col, name_epoch, '')
+                        prev_epoch = experiment_data.loc[prev_experiment_number,mi_epoch]
                         prev_epoch = (int(prev_epoch) if prev_epoch is not None
                                       else defaults.get(name_epoch))
                         parameters[name_epoch] = parameters[name_epoch] - prev_epoch
@@ -537,12 +538,12 @@ class ExperimentManager (object):
         # ****************************************************************
         run_pipeline = True
         if use_last_result:
-            experiment_result = self.obtain_last_result (
+            dict_results = self.obtain_last_result (
                 parameters, path_results, use_last_result_from_dict=use_last_result_from_dict,
                 min_iterations=min_iterations)
-            if experiment_result is None and run_if_not_interrumpted:
+            if dict_results is None and run_if_not_interrumpted:
                 run_pipeline = True
-            elif experiment_result is None:
+            elif dict_results is None:
                 return None, {}
             else:
                 run_pipeline = False
@@ -557,6 +558,7 @@ class ExperimentManager (object):
             finished = True
         else:
             finished = False
+            time_spent = None
 
         # ****************************************************************
         #  Retrieve and store results
@@ -888,7 +890,7 @@ class ExperimentManager (object):
             for run_number in run_numbers:
                 path_results = path_experiment/f'{run_number}'
                 path_data = self.get_path_data (run_number, parameters)
-                score, time_spent = self.run_experiment_pipeline (run_number, path_results,
+                dict_results, time_spent = self.run_experiment_pipeline (run_number, path_results,
                                                          parameters=parameters)
 
                 if save_results:
