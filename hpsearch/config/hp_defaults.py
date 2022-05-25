@@ -3,7 +3,7 @@
 __all__ = ['allow_base_class', 'name_epoch', 'name_last_epoch', 'name_model_history', 'model_file_name',
            'path_experiments', 'defaults', 'folder', 'metric', 'op', 'result_file', 'min_iterations',
            'use_previous_best', 'name_logger', 'manager_path', 'verbose', 'parameters_col', 'scores_col',
-           'run_info_col', 'name_logger_factory']
+           'run_info_col', 'stats_col', 'name_logger_factory']
 
 # Cell
 allow_base_class=False
@@ -25,6 +25,9 @@ verbose=0
 parameters_col='parameters'
 scores_col='scores'
 run_info_col='run_info'
+
+# Cell
+stats_col='stats'
 
 # Cell
 name_logger_factory = 'manager_factory'

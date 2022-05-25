@@ -7,7 +7,6 @@ __all__ = ['ExperimentManager', 'get_git_revision_hash', 'record_parameters', 'm
 
 # Cell
 # coding: utf-8
-import pickle
 import joblib
 import sys
 import os
@@ -20,14 +19,13 @@ from sklearn.utils import Bunch
 import platform
 import pprint
 import subprocess
-import json
 from multiprocessing import Process
 import logging
 import traceback
 import shutil
 from pathlib import Path
 
-from dsblocks.utils.utils import set_logger, set_verbosity, store_attr
+from dsblocks.utils.utils import set_logger, set_verbosity, store_attr, json_load, json_dump
 
 # hpsearch core API
 from .config.manager_factory import ManagerFactory
@@ -250,7 +248,7 @@ class ExperimentManager (object):
 
         path_dict_results = f'{path_results}/dict_results.pk'
         try:
-            dict_results = pickle.load (open (path_dict_results, 'rb'))
+            dict_results = joblib.load (path_dict_results)
         except FileNotFoundError:
             raise RuntimeError (f'{path_dict_results} not found: probably there is an error in run_pipeline'
                                 'function. Please run in debug mode, without multi-processing')
@@ -259,7 +257,7 @@ class ExperimentManager (object):
 
     def run_experiment_saving_results (self, parameters={}, path_results='./results'):
         dict_results = self.run_experiment (parameters=parameters, path_results=path_results)
-        pickle.dump (dict_results, open ('%s/dict_results.pk' %path_results, 'wb'))
+        joblib.dump (dict_results, '%s/dict_results.pk' %path_results)
 
     def run_experiment (self, parameters={}, path_results='./results'):
         raise NotImplementedError ('This method needs to be defined in subclass')
@@ -636,10 +634,10 @@ class ExperimentManager (object):
         if random_search:
             path_random_hp = '%s/random_hp.pk' %path_results_base
             if load_previous and os.path.exists(path_random_hp):
-                parameters_multiple_values_all = pickle.load (open(path_random_hp,'rb'))
+                parameters_multiple_values_all = joblib.load (path_random_hp)
             else:
                 parameters_multiple_values_all = list (np.random.permutation(parameters_multiple_values_all))
-                pickle.dump (parameters_multiple_values_all, open (path_random_hp,'wb'))
+                joblib.dump (parameters_multiple_values_all, path_random_hp)
         for (i_hp, parameters_multiple_values) in enumerate (parameters_multiple_values_all):
             parameters = parameters_multiple_values.copy()
             parameters.update(parameters_single_value)
@@ -948,7 +946,7 @@ class ExperimentManager (object):
 
         prev_epoch = -1
         if os.path.exists(path_model_history):
-            summary = pickle.load(open(path_model_history, 'rb'))
+            summary = joblib.load (path_model_history)
             prev_epoch = summary.get(name_last_epoch)
             if prev_epoch is None:
                 key_score = self.key_score
@@ -987,7 +985,7 @@ class ExperimentManager (object):
             elif use_best:
                 parameters['resume'] = f'{prev_path_results}/{name_best_model}.{model_extension}'
             else:
-                summary = pickle.load(open(path_model_history, 'rb'))
+                summary = joblib.load (path_model_history)
                 prev_epoch = summary.get(name_last_epoch)
                 key_score = self.key_score
                 if prev_epoch is None:
@@ -1026,7 +1024,7 @@ class ExperimentManager (object):
         path_results_file = f'{path_results}/{name_result_file}'
         dict_results = None
         if os.path.exists (path_results_file):
-            history = pickle.load(open(path_results_file, 'rb'))
+            history = joblib.load (path_results_file)
             metrics = parameters.get('key_scores')
             if metrics is None:
                 metrics = history.keys()
@@ -1075,7 +1073,7 @@ class ExperimentManager (object):
         path_results_file = f'{path_results}/{name_result_file}'
         dict_results = None
         if os.path.exists (path_results_file):
-            dict_results = pickle.load(open(path_results_file, 'rb'))
+            dict_results = joblib.load (path_results_file)
             if 'last' not in dict_results.keys() and 'epoch' in dict_results.keys():
                 dict_results['last'] = dict_results['epoch']
             if 'last' not in dict_results:
@@ -1109,12 +1107,12 @@ def get_git_revision_hash (path_experiments=None):
         git_hash = subprocess.check_output(['git', 'rev-parse', 'HEAD'])
         git_hash = str(git_hash)
         if path_experiments is not None:
-            json.dump(git_hash, open(path_experiments/'git_hash.json', 'wt'))
+            json_dump(git_hash, path_experiments/'git_hash.json')
     except:
         logger = logging.getLogger("experiment_manager")
         if path_experiments is not None and os.path.exists(path_experiments):
             logger.info ('could not get git hash, retrieving it from disk...')
-            git_hash = json.load(open(path_experiments/'git_hash.json', 'rt'))
+            git_hash = json_load (path_experiments/'git_hash.json')
         else:
             logger.info ('could not get git hash, using empty string...')
             git_hash = ''
@@ -1150,27 +1148,27 @@ def record_parameters (path_save, parameters, other_parameters=None, em_args=Non
     joblib.dump (to_pickle,f'{path_save}/parameters.pk')
 
     try:
-        json.dump(parameters, open(f'{path_save}/parameters.json', 'wt'))
+        json_dump(parameters, f'{path_save}/parameters.json')
     except:
         pass
     if other_parameters is not None:
         try:
-            json.dump(other_parameters, open (f'{path_save}/other_parameters.json', 'wt'))
+            json_dump(other_parameters, f'{path_save}/other_parameters.json')
         except:
             pass
     if em_args is not None:
         try:
-            json.dump(em_args, open (f'{path_save}/em_args.json', 'wt'))
+            json_dump(em_args, f'{path_save}/em_args.json')
         except:
             pass
     if info is not None:
         try:
-            json.dump(info, open (f'{path_save}/info.json', 'wt'))
+            json_dump(info, f'{path_save}/info.json')
         except:
             pass
     if em_attrs is not None:
         try:
-            json.dump(em_attrs, open (f'{path_save}/em_attrs.json', 'wt'))
+            json_dump(em_attrs, f'{path_save}/em_attrs.json')
         except:
             pass
 
@@ -1226,7 +1224,7 @@ def load_or_create_experiment_values (path_csv, parameters, precision=1e-15, log
         # Finds rows that match parameters. If the dataframe doesn't have any parameter with that name,
         # a new column is created and changed_dataframe is set to True
         experiment_numbers, changed_dataframe, _ = experiment_utils.find_rows_with_parameters_dict (
-            experiment_data, parameters, precision = precision
+            experiment_data, parameters, precision=precision
         )
 
         changed_dataframe = changed_dataframe or removed_defaults
@@ -1264,7 +1262,7 @@ def store_parameters (path_experiments, experiment_number, parameters):
     path_experiments = Path(path_experiments).resolve() if path_experiments is not None else None
     path_hp_dictionary = path_experiments/'parameters.pk'
     if os.path.exists(path_hp_dictionary):
-        all_parameters = pickle.load (open(path_hp_dictionary,'rb'))
+        all_parameters = joblib.load (path_hp_dictionary)
     else:
         all_parameters = {}
     if experiment_number not in all_parameters.keys():
@@ -1273,10 +1271,10 @@ def store_parameters (path_experiments, experiment_number, parameters):
         f.write(str_par)
         f.close()
         all_parameters[experiment_number] = parameters
-        pickle.dump (all_parameters, open(path_hp_dictionary,'wb'))
+        joblib.dump (all_parameters, path_hp_dictionary)
 
     # pickle number of current experiment, for visualization
-    pickle.dump (experiment_number, open(path_experiments/'current_experiment_number.pkl','wb'))
+    joblib.dump (experiment_number, path_experiments/'current_experiment_number.pkl')
 
 # Cell
 def isnull (experiment_data, experiment_number, name_column):
