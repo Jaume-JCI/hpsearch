@@ -215,14 +215,14 @@ def plot_metric_relationship (metric_1, metric_2, folder_experiments=None, run_n
                               experiments=None, experiment_subset=None,
                               backend='visdom', **kwargs):
     df = ut.get_experiment_data (folder_experiments=folder_experiments, experiments=experiments)
-    df_metric_1 = ut.get_experiment_scores (experiment_data=df, suffix_results=f'_{metric_1}', remove_suffix=True, class_ids=run_numbers)
-    df_metric_2 = ut.get_experiment_scores (experiment_data=df, suffix_results=f'_{metric_2}', remove_suffix=True, class_ids=run_numbers)
+    df_metric_1 = ut.get_experiment_scores (experiment_data=df, score_name=f'{metric_1}', remove_suffix=True, run_number=run_numbers)
+    df_metric_2 = ut.get_experiment_scores (experiment_data=df, score_name=f'{metric_2}', remove_suffix=True, run_number=run_numbers)
 
     traces=plot_utils.add_trace(df_metric_1.values, df_metric_2.values, traces=[], style='A.', label='all experiments', backend=backend);
 
     if experiment_subset is not None:
-        df_metric_1_subset = ut.get_experiment_scores (experiment_data=df.loc[experiment_subset], suffix_results=f'_{metric_1}', remove_suffix=True, class_ids=run_numbers)
-        df_metric_2_subset = ut.get_experiment_scores (experiment_data=df.loc[experiment_subset], suffix_results=f'_{metric_2}', remove_suffix=True, class_ids=run_numbers)
+        df_metric_1_subset = ut.get_experiment_scores (experiment_data=df.loc[experiment_subset], score_name=f'{metric_1}', remove_suffix=True, run_number=run_numbers)
+        df_metric_2_subset = ut.get_experiment_scores (experiment_data=df.loc[experiment_subset], score_name=f'{metric_2}', remove_suffix=True, run_number=run_numbers)
         traces=plot_utils.add_trace(df_metric_1_subset.values, df_metric_2_subset.values, traces=traces, style='A.', label=f'selected subset', backend=backend);
 
     plot_utils.plot(np.linspace(df_metric_1.values.min(), df_metric_1.values.max(), 100),

@@ -51,7 +51,7 @@ def print_info (experiments=[-1], path_experiments=None, folder=None, display_al
         df2[metric] = df.loc[experiment, metric_column]
         display (df2.loc[experiment, parameters + [metric]])
         print ('scores for all experiments:')
-        df_scores = ut.get_experiment_scores(df.loc[[experiment]], suffix_results='_%s' %metric, remove_suffix=True)
+        df_scores = ut.get_experiment_scores(df.loc[[experiment]], score_name='%s' %metric, remove_suffix=True)
         display(df_scores.round(round_digits))
 
         path_results = em.get_path_results (experiment, run_number)

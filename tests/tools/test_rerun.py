@@ -110,8 +110,8 @@ def test_parse_arguments_and_run_store ():
 
     df = em.get_experiment_data ()
     assert df.shape==(9,25)
-    columns = ut.get_scores_columns (df, class_ids=range(5), suffix_results='_validation_accuracy')
-    columns += ut.get_scores_columns (df, class_ids=range(5), suffix_results='_test_accuracy')
+    columns = ut.get_scores_columns (df, run_number=range(5), score_name='validation_accuracy')
+    columns += ut.get_scores_columns (df, run_number=range(5), score_name='test_accuracy')
 
     # *************************************************
     # The following simulates the case where

@@ -18,13 +18,13 @@ import hpsearch.utils.experiment_utils as ut
 import hpsearch.config.hp_defaults as dflt
 
 # Cell
-def query (pv = {}, pf = {}, pall=[], pexact=False, folder=None,
+def query (pv={}, pf={}, pall=[], pexact=False, folder=None,
            metric=None, experiments=None, runs=None, op=None, stats=['mean'],
            results=0, other_parameters=False):
 
 
-    result_query = ut.query(folder_experiments=folder, suffix_results='_'+metric, experiments=experiments,
-                        classes=runs, parameters_fixed=pf, parameters_variable=pv, parameters_all = pall, exact_match=pexact,
+    result_query = ut.query(folder_experiments=folder, score_name=''+metric, experiments=experiments,
+                        run_number=runs, parameters_fixed=pf, parameters_variable=pv, parameters_all = pall, exact_match=pexact,
                         ascending=op=='min', stats=stats, min_results=results, query_other_parameters=other_parameters)
 
     if not other_parameters:
@@ -52,8 +52,18 @@ def do_query_and_show (pall=[], best=None, compact=0, exact=False, experiments=N
                results=results, other_parameters=other_parameters)
     df = ut.replace_with_default_values (df)
     if sort is not None:
-        assert sort in df.columns, f'sort must be a column in dataframe ({df.columns})'
-        df = df.sort_values(by=sort, ascending=(em.op=='min'))
+        stats_cols = df[dflt.stats_col].columns.get_level_values(1)
+        pars_cols = df[dflt.parameters_col].columns.get_level_values(0)
+        if sort in stats_cols:
+            score_name_sort = df[dflt.stats_col].columns.get_level_values(0).unique()
+            if len(score_name_sort)>1: print (f'sorting using first score_name from {score_name_sort}')
+            score_name_sort = score_name_sort[0]
+            sort_col = (dflt.stats_col, score_name_sort, sort)
+        elif sort in pars_col:
+            sort_col = (dflt.parameters_col, sort, '')
+        else:
+            raise ValueError (f'sort must be in {stats_cols.tolist()+pars_cols.tolist()}')
+        df = df.sort_values(by=sort_col, ascending=(em.op=='min'))
     if experiments is None:
         experiments = []
     if last is not None:
@@ -70,7 +80,10 @@ def do_query_and_show (pall=[], best=None, compact=0, exact=False, experiments=N
         pd.set_option('max_colwidth', col_width)
 
     if (round is not None) and (round != 0):
-        df[stats] = df[stats].round(round)
+        stats_col = pd.MultiIndex.from_product ([[dflt.stats_col],
+                                                 df[dflt.stats_col].columns.get_level_values(0).unique(),
+                                                 stats])
+        df[stats_col] = df[stats_col].round(round)
     if display_all_columns:
         display (df)
 

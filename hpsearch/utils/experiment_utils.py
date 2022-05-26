@@ -42,7 +42,7 @@ def get_experiment_parameters (experiment_data, only_not_null=False):
     return experiment_data[get_parameters_columns (experiment_data, only_not_null=only_not_null)]
 
 # Cell
-def get_scores_columns (experiment_data=None, score_name=None, run_number = None):
+def get_scores_columns (experiment_data=None, score_name=None, run_number=None):
     """
     Determine the columnns that provide evaluation scores.
     """
