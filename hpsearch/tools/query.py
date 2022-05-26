@@ -20,16 +20,13 @@ import hpsearch.config.hp_defaults as dflt
 # Cell
 def query (pv={}, pf={}, pall=[], pexact=False, folder=None,
            metric=None, experiments=None, runs=None, op=None, stats=['mean'],
-           results=0, other_parameters=False):
+           results=0, other_parameters=False, **kwargs):
 
-
-    result_query = ut.query(folder_experiments=folder, score_name=''+metric, experiments=experiments,
-                        run_number=runs, parameters_fixed=pf, parameters_variable=pv, parameters_all = pall, exact_match=pexact,
-                        ascending=op=='min', stats=stats, min_results=results, query_other_parameters=other_parameters)
-
-    if not other_parameters:
-        result_query = result_query[1]
-        result_query = result_query['stats']
+    result_query = ut.query(folder_experiments=folder, score_name=metric, experiments=experiments,
+                            run_number=runs, parameters_fixed=pf, parameters_variable=pv,
+                            parameters_all=pall, exact_match=pexact, ascending=op=='min',
+                            stats=stats, min_results=results,
+                            query_other_parameters=other_parameters, **kwargs)
 
     return result_query
 
@@ -38,7 +35,7 @@ def do_query_and_show (pall=[], best=None, compact=0, exact=False, experiments=N
                        metric=None, op=None, other_parameters=False, input_range=None, results=0,
                        folder=None, round=2, runs=None, show=False, stats=['mean'], pv={},
                        sort=None, display_all_columns=False, col_width=None,
-                       manager_path=dflt.manager_path):
+                       manager_path=dflt.manager_path, **kwargs):
 
     from ..config.hpconfig import get_experiment_manager
     em = get_experiment_manager (manager_path=manager_path)
@@ -49,7 +46,7 @@ def do_query_and_show (pall=[], best=None, compact=0, exact=False, experiments=N
 
     df = query (pv=pv, pf=pf, pall=pall, pexact=exact, folder=em.folder,
                metric=em.key_score, experiments=experiments, runs=runs, op=em.op, stats=stats,
-               results=results, other_parameters=other_parameters)
+               results=results, other_parameters=other_parameters, **kwargs)
     df = ut.replace_with_default_values (df)
     if sort is not None:
         stats_cols = df[dflt.stats_col].columns.get_level_values(1)

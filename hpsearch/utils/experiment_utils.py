@@ -44,7 +44,7 @@ def write_binary_df_if_not_exists (df, path, name='experiments_data'):
     df.to_pickle (path_pickle)
 
 # Cell
-def get_experiment_data (path_experiments=None, folder_experiments=None, experiments=None):
+def get_experiment_data (experiments=None):
     """
     Returns data stored from previous experiments in the form DataFrame.
 
@@ -262,17 +262,18 @@ def find_rows_with_parameters_dict (experiment_data, parameters_dict, create_if_
     return matching_rows, changed_dataframe, matching_all_condition
 
 # Cell
-def summarize_results(path_experiments = None,
-                      folder_experiments = None,
-                      intersection = False,
-                      experiments = None,
+def summarize_results(intersection=False,
+                      experiments=None,
                       score_name=None,
                       min_results=0,
-                      run_number = None,
-                      parameters = None,
-                      output='all',
-                      data = None,
+                      run_number=None,
+                      parameters=None,
+                      include_parameters=True,
+                      include_num_results=True,
+                      other_columns=None,
+                      data=None,
                       ascending=False,
+                      sort_key='mean',
                       #stats = ['mean','median','rank','min','max','std'],
                       stats = ['mean','median','min','max','std']):
     """
@@ -282,32 +283,39 @@ def summarize_results(path_experiments = None,
     """
 
     if data is None:
-        experiment_data = get_experiment_data (path_experiments=path_experiments, folder_experiments=folder_experiments)
+        experiment_data = get_experiment_data ()
         experiment_data_original = experiment_data.copy()
         if experiments is not None:
             experiment_data = experiment_data.loc[experiments,:]
         if parameters is not None:
-            experiment_rows, _, _ = find_rows_with_parameters_dict (experiment_data, parameters, create_if_not_exists=False, exact_match=False)
+            experiment_rows, _, _ = find_rows_with_parameters_dict (experiment_data, parameters,
+                                                                    create_if_not_exists=False,
+                                                                    exact_match=False)
             experiment_data = experiment_data.loc[experiment_rows]
     else:
         experiment_data = data.copy()
-        experiment_data_original = experiment_data.copy()
 
     # Determine the columnns that provide evaluation scores.
     result_columns = get_scores_columns (experiment_data, score_name=score_name, run_number=run_number)
 
+    # Determine num_results and select those with minimum number of runs
     #num_results = (~experiment_data.loc[:,result_columns].isnull()).sum(axis=1, level=1)
     num_results = (~experiment_data.loc[:,result_columns].isnull()).groupby(axis=1, level=1).sum()
-    num_results.columns = pd.MultiIndex.from_product ([[dflt.stats_col], num_results.columns.tolist(), ['num_results']])
+    num_results.columns = pd.MultiIndex.from_product ([[dflt.stats_col], num_results.columns.tolist(),
+                                                       ['num_results']])
     experiment_data = pd.concat([experiment_data, num_results], axis=1)
     num_results_columns = experiment_data.columns[
         experiment_data.columns.get_level_values(2) == 'num_results'
     ]
     min_num_results = experiment_data[num_results_columns].min(axis=1)
+    experiment_data = experiment_data.drop (columns=num_results_columns)
+    num_results_column = (dflt.stats_col, 'num_results', '')
+    experiment_data[num_results_column] = min_num_results
     if min_results > 0:
         number_before = experiment_data.shape[0]
         experiment_data = experiment_data[min_num_results>=min_results]
-        print (f'{experiment_data.shape[0]} out of {number_before} experiments have {min_results} runs completed')
+        print (f'{experiment_data.shape[0]} out of {number_before} experiments have {min_results} runs '
+               'completed')
 
     # Take only those run_number where all experiments provide some score
     if intersection:
@@ -320,21 +328,29 @@ def summarize_results(path_experiments = None,
     print (f'total data examined: {experiment_data.shape[0]} experiments '
            f'with at least {min_num_results.min()} runs done for each one')
 
-    scores = experiment_data.loc[:, result_columns]
-    scores[scores.isna()]=np.nan
-    scores = -scores.values
     # TODO: make it work across different metrics
+    #scores = experiment_data.loc[:, result_columns]
+    #scores[scores.isna()]=np.nan
+    #scores = -scores.values
     #rank = np.argsort(scores,axis=0)
     #rank = np.argsort(rank,axis=0).astype(np.float32)
     #rank[experiment_data.loc[:,result_columns].isnull()]=np.nan
 
-    parameters = get_parameters_columns(experiment_data, True)
-    parameters.extend (num_results_columns.tolist())
+    if other_columns != 'all':
+        if include_parameters:
+            columns_to_include = get_parameters_columns(experiment_data, True)
+        else:
+            columns_to_include = []
+        if include_num_results:
+            columns_to_include.append (num_results_column)
+        if other_columns is not None:
+            columns_to_include.extend(other_columns)
+    else:
+        columns_to_include = experiment_data.columns.tolist()
     scores_to_return={}
     stat_df_all = []
     stats_columns=[]
-    #for stat in ['mean', 'min', 'max', 'std', 'median', 'rank']:
-    for stat in ['mean', 'min', 'max', 'std', 'median']:
+    for stat in stats:
         stat_df = experiment_data.loc[:,result_columns].groupby (level=1, axis=1).agg(stat)
         #stat_df = experiment_data.loc[:,result_columns].agg(stat, axis=1, level=1)
         stat_df.columns = pd.MultiIndex.from_product (
@@ -348,49 +364,33 @@ def summarize_results(path_experiments = None,
         score_name = score_name[0]
     elif isinstance (score_name, list):
         score_name = score_name[0]
-    stat2tuple = lambda stat: (dflt.stats_col, score_name, stat)
-    if output == 'all':
-        summary = dict (mean=experiment_data.loc[:,parameters+scores_to_return['mean']].sort_values(by=stat2tuple('mean'),ascending=ascending),
-                        median=experiment_data.loc[:,parameters+scores_to_return['median']].sort_values(by=stat2tuple('median'),ascending=ascending),
-                        #rank=experiment_data.loc[:,parameters+scores_to_return['rank']].sort_values(by=(dflt.stats_col, '', 'rank')),
-                        stats=experiment_data.loc[:,parameters+stats_columns].sort_values(by=stat2tuple('mean'),ascending=ascending),
-                        unordered=experiment_data.loc[:,parameters],
-                        allcols=experiment_data,
-                        original=experiment_data_original
-                        )
-        for k in summary:
-            summary[k] = summary[k][summary[k].columns.sort_values()]
-    elif output == 'stats':
-        summary = experiment_data.loc[:,parameters+stats_columns].sort_values(by=stat2tuple('mean'),ascending=ascending)
-    elif output == 'unordered':
-        summary = experiment_data.loc[:,parameters]
-    elif output == 'allcols':
-        summary = experiment_data
-    elif output == 'original':
-        summary = experiment_data_original
-    else:
-        summary = experiment_data.loc[:,parameters+[output]].sort_values(by=output, ascending=ascending)
-    if output != 'all':
-        summary = summary[summary.columns.sort_values()]
+    summary = experiment_data.loc[:,columns_to_include+stats_columns]
+    sort_column = None
+    if sort_key is not None:
+        if sort_key in stats:
+            sort_column = (dflt.stats_col, score_name, sort_key)
+        elif sort_key in summary[dflt.parameters_col].columns.get_level_values(0):
+            sort_column = (dflt.parameters_col, sort_key, '')
+        elif (dflt.scores_col in summary.columns.get_level_values(0) and
+              sort_key in summary[dflt.scores_col].columns.get_level_values(0)):
+            run_number = summary[dflt.scores_col].columns.get_level_values(1)[0]
+            sort_column = (dflt.scores_col, sort_key, run_number)
+    if sort_column is not None:
+        summary = summary.sort_values(by=sort_column,ascending=ascending)
+    summary = summary[summary.columns.sort_values()]
 
     return summary
 
 # Cell
-def query (path_experiments = None,
-              folder_experiments = None,
-              intersection = False,
-              experiments = None,
-              score_name=None,
-              min_results=0,
-              run_number=None,
-              parameters_fixed = {},
-              parameters_variable = {},
-              parameters_all = [],
-              exact_match = True,
-              output='all',
-              ascending=False,
-              stats = ['mean','median','rank','min','max','std'],
-              query_other_parameters=False):
+def query (path_experiments=None,
+              folder_experiments=None,
+              experiments=None,
+              parameters_fixed={},
+              parameters_variable={},
+              parameters_all=[],
+              exact_match=True,
+              query_other_parameters=False,
+              **kwargs):
 
     if path_experiments is None:
         from ..config.hpconfig import get_path_experiments
@@ -423,7 +423,9 @@ def query (path_experiments = None,
         parameters = remove_defaults (parameters_not_none)
         parameters.update(parameters_none)
 
-        experiment_numbers_i, _, _ = find_rows_with_parameters_dict (experiment_data, parameters, ignore_keys=parameters_all, exact_match = exact_match)
+        experiment_numbers_i, _, _ = find_rows_with_parameters_dict (experiment_data, parameters,
+                                                                     ignore_keys=parameters_all,
+                                                                     exact_match=exact_match)
         experiment_numbers += experiment_numbers_i
 
     experiment_data = experiment_data.iloc[experiment_numbers]
@@ -434,20 +436,9 @@ def query (path_experiments = None,
     if query_other_parameters:
         return experiment_data
 
-    d=summarize_results(path_experiments=path_experiments,
-                      folder_experiments=folder_experiments,
-                      intersection=intersection,
-                      experiments=experiments,
-                      score_name=score_name,
-                      min_results=min_results,
-                      run_number=run_number,
-                      parameters=None,
-                      output='all',
-                      data=experiment_data,
-                      ascending=ascending,
-                      stats=stats)
+    summary = summarize_results (data=experiment_data, **kwargs)
 
-    return d['mean'], d
+    return summary
 
 # Cell
 def summary (df, experiments = None, score=None, compact=True):

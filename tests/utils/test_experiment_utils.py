@@ -316,75 +316,82 @@ def test_summarize_results ():
     em.run_multiple_repetitions (parameters=dict(offset=0.3, rate=0.02), nruns=2)
 
     md ('\n\n')
-    d = summarize_results ()
-    display (d['mean'])
-    mi_num_results = (dflt.stats_col, 'validation_accuracy', 'num_results')
-    assert d['mean'][mi_num_results].sum() == 10
-    assert d['mean'].shape==(3, 6)
+    summary = summarize_results ()
+    display (summary)
+    mi_num_results = (dflt.stats_col, 'num_results', '')
+    assert summary[mi_num_results].sum() == 10
+    assert summary.shape==(3, 13)
 
     md ('\n\n')
-    md ('- The metric is indicated with `_` at the beginning: ')
-    d = summarize_results (score_name='validation_accuracy')
-    display (d['mean'])
-    assert d['mean'][mi_num_results].sum() == 10
-    assert d['mean'].shape==(3, 4)
+    md ('- We can restrict the metric to be the indicated one:')
+    summary = summarize_results (score_name='validation_accuracy')
+    display (summary)
+    assert summary[mi_num_results].sum() == 10
+    assert summary.shape==(3, 8)
+    assert set(['mean','median','min','max','std'])==set(summary[dflt.stats_col, 'validation_accuracy'].columns)
+
+    md ('\n\n')
+    md ('- We can also restrict the stats to be provided:')
+    summary = summarize_results (score_name='validation_accuracy', stats=['mean', 'min', 'max'])
+    assert summary.shape == (3, 6)
+    assert set(['mean','min','max'])==set(summary[dflt.stats_col, 'validation_accuracy'].columns)
 
     md ('\n\n')
     md ('- We can filter those results that have less than X runs: ')
-    d = summarize_results (score_name='validation_accuracy', min_results=5)
-    display (d['mean'])
-    assert d['mean'][mi_num_results].sum() == 5
-    assert d['mean'].shape==(1, 4)
+    summary = summarize_results (score_name='validation_accuracy', min_results=5)
+    display (summary)
+    assert summary[mi_num_results].sum() == 5
+    assert summary.shape==(1, 8)
 
     md ('\n\n')
     md ('- We can filter by experiment number and/or number of results, and retrieve the original dataframe,'
         'plus new columns with stats: ')
-    d = summarize_results (score_name='validation_accuracy', experiments=[0,2], output='allcols')
-    display (d)
-    assert d.shape==(2, 33)
-    assert all(d.index==[0,2])
-    assert d['stats'].columns.get_level_values(0).unique().tolist()==['validation_accuracy']
-    assert d['stats','validation_accuracy'].columns.tolist()==['max', 'mean', 'median', 'min', 'num_results', 'std']
+    summary = summarize_results (score_name='validation_accuracy', experiments=[0,2])
+    display (summary)
+    assert summary.shape==(2, 8)
+    assert all(summary.index==[0,2])
+    assert (sorted(summary.columns.get_level_values(1).unique().tolist())==
+            sorted(['offset', 'rate', 'num_results', 'validation_accuracy']))
+    assert summary['stats','validation_accuracy'].columns.tolist()==['max', 'mean', 'median', 'min', 'std']
     em.remove_previous_experiments (parent=True)
 
 # Comes from experiment_utils.ipynb, cell
 def test_query ():
     em = generate_data_exp_utils ('query')
 
-    dmean, d = query (parameters_fixed=dict (rate=0.0001))
-    assert dmean.empty
+    summary = query (parameters_fixed=dict (rate=0.0001))
+    assert summary.empty
 
     md ('the dataframe only has mean. Results are sorted by mean score')
-    dmean, d = query (parameters_fixed=dict (rate=0.0001), exact_match=False)
+    summary = query (parameters_fixed=dict (rate=0.0001), exact_match=False)
     par = lambda parameter: (dflt.parameters_col, parameter, '')
     stat = lambda statv: (dflt.stats_col, 'test_accuracy', statv)
-    assert (dmean.shape[0]==9 and (dmean[par('rate')]==0.0001).all() and
-            len(dmean[par('offset')].unique())==3 and
-            dmean[stat('mean')].iloc[0]>dmean[stat('mean')].iloc[1]
-            and dmean[stat('mean')].iloc[1] > dmean[stat('mean')].iloc[2])
+    assert (summary.shape[0]==9 and (summary[par('rate')]==0.0001).all() and
+            len(summary[par('offset')].unique())==3 and
+            summary[stat('mean')].iloc[0]>summary[stat('mean')].iloc[1]
+            and summary[stat('mean')].iloc[1] > summary[stat('mean')].iloc[2])
 
-    display (dmean)
+    display (summary)
     md ('The second output d contains a field "stats" which is a dataframe. Results are sorted by mean score')
-    assert (d['stats']['stats','validation_accuracy'].columns.tolist()==[
-        'max', 'mean', 'median', 'min', 'num_results', 'std'])
-    assert d['stats'].shape==(9,16)
-    display (d['stats'])
+    assert (summary['stats','validation_accuracy'].columns.tolist()==[
+        'max', 'mean', 'median', 'min', 'std'])
+    assert summary.shape==(9, 15)
 
     md ('We can request parameter be in specific list of values')
-    dmean, d = query (parameters_fixed=dict(rate=0.0001), exact_match=False,
+    summary = query (parameters_fixed=dict(rate=0.0001), exact_match=False,
                   parameters_variable=dict(epochs=[5,10], offset=[0.1, 0.3]))
-    assert sorted(dmean[par('epochs')].unique()) == [5,10]
-    assert sorted(dmean[par('offset')].unique()) == [0.1, 0.3]
-    assert dmean.shape[0]==4
-    display (dmean)
+    assert sorted(summary[par('epochs')].unique()) == [5,10]
+    assert sorted(summary[par('offset')].unique()) == [0.1, 0.3]
+    assert summary.shape==(4, 15)
+    display (summary)
 
     md ('If we want a value that is the default, we need to indicate None')
-    dmean, d = query (parameters_fixed=dict(rate=0.0001), exact_match=False,
+    summary = query (parameters_fixed=dict(rate=0.0001), exact_match=False,
               parameters_variable=dict(epochs=[10, None], offset=[0.1, 0.3]))
-    assert dmean.shape[0]==4
-    assert dmean[par('epochs')].isna().sum() == 2
-    assert (dmean[par('epochs')] == 10).sum() == 2
-    display (dmean)
+    assert summary.shape==(4, 15)
+    assert summary[par('epochs')].isna().sum() == 2
+    assert (summary[par('epochs')] == 10).sum() == 2
+    display (summary)
 
     em.remove_previous_experiments (parent=True)
 
