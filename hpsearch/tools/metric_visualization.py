@@ -14,6 +14,7 @@ sys.path.append('src')
 import pandas as pd
 import pickle
 
+from ..utils.experiment_utils import read_df, write_df
 import hpsearch.visualization.experiment_visualization as ev
 from ..config.hpconfig import get_experiment_manager, get_path_experiments
 import hpsearch.config.hp_defaults as dflt
@@ -22,6 +23,7 @@ import hpsearch.config.hp_defaults as dflt
 def include_best_and_last_experiment (metrics, experiments=[-1, -2], run_number=0,
                                       op='max', manager_path=dflt.manager_path,):
     path_experiments = get_path_experiments (manager_path=manager_path)
+    remove_experiment = None
     for i in range(len(experiments)):
         if experiments[i] == -1:
             experiment_number = pickle.load(open(path_experiments/'current_experiment_number.pkl','rb'))
@@ -30,17 +32,19 @@ def include_best_and_last_experiment (metrics, experiments=[-1, -2], run_number=
         if experiments[i] == -2:
             first_metric = metrics[0]
             if len(metrics)>1:
-                print (f'we use the first metric {first_metric} in given list {metrics} for obtaining the best experiment')
-            df = pd.read_csv(path_experiments/'experiments_data.csv',index_col=0)
-            score_column = f'{run_number}_{first_metric}'
+                print (f'we use the first metric {first_metric} in given list {metrics} '
+                        'for obtaining the best experiment')
+            df = read_df (path_experiments)
+            score_column = (dflt.scores_col, first_metric, run_number)
             if score_column in df.columns:
                 if op=='max':
-                    experiments[i] = df[score_column].idxmax()
+                    experiments[i] = df[score_column].astype(float).idxmax()
                 else:
-                    experiments[i] = df[score_column].idxmin()
+                    experiments[i] = df[score_column].astype(float).idxmin()
             else:
-                del experiments[i]
-
+                if remove_experiment is not None: raise ValueError ('more than one experiment is -2')
+                remove_experiment = i
+    if remove_experiment is not None: del experiments[remove_experiment]
     return experiments
 
 # Cell

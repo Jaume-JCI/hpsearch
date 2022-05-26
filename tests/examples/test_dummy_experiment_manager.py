@@ -11,22 +11,21 @@ import joblib
 from IPython.display import display
 from dsblocks.utils.nbdev_utils import md
 
+import hpsearch.config.hp_defaults as dflt
 from hpsearch.examples.dummy_experiment_manager import *
 from hpsearch.examples.dummy_experiment_manager import generate_data
 
 # Comes from dummy_experiment_manager.ipynb, cell
 def test_dummy_experiment_manager ():
     em = generate_data ('dummy_experiment_manager')
-
-    path_experiments = em.path_experiments
-    df = pd.read_csv (path_experiments/'experiments_data.csv', index_col=0)
+    df = em.get_experiment_data ()
     display (df)
 
     # check that stored parameters are correct
     par = lambda parameter: (dflt.parameters_col, parameter, '')
     assert (df[par('epochs')].values == np.array([ 5.,  5.,  5., 15., 15., 15., 30., 30., 30.])).all()
-    assert (dff[par('offset')].values == np.array([0.1, 0.3, 0.6, 0.1, 0.3, 0.6, 0.1, 0.3, 0.6])).all()
-    assert (dff[par('rate')].values == 0.03).all()
+    assert (df[par('offset')].values == np.array([0.1, 0.3, 0.6, 0.1, 0.3, 0.6, 0.1, 0.3, 0.6])).all()
+    assert (df[par('rate')].values == 0.03).all()
 
     # check that the accuracy values are correct
     epochs_before_overfitting = 20

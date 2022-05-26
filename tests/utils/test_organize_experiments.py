@@ -13,6 +13,7 @@ from dsblocks.utils.nbdev_utils import md
 from hpsearch.utils.organize_experiments import *
 from hpsearch.examples.dummy_experiment_manager import generate_data
 from hpsearch.config.hpconfig import get_path_experiments
+from hpsearch.utils.experiment_utils import read_df, write_df
 
 # Comes from organize_experiments.ipynb, cell
 def test_remove_experiments ():
@@ -23,7 +24,7 @@ def test_remove_experiments ():
     print (f'experiments content: {os.listdir(path_experiments)}\n')
     print (f'experiments inside: {os.listdir(f"{path_experiments}/experiments")}\n')
 
-    experiments_data = pd.read_pickle (f'{path_experiments}/experiments_data.pk')
+    experiments_data = read_df (path_experiments)
     old_experiments_data = experiments_data
     print (f'csv data index {experiments_data.index}\n')
     print ('csv content:')
@@ -36,7 +37,7 @@ def test_remove_experiments ():
     assert len(experiment_folders)==7 and ('00007' not in experiment_folders) and ('00008' not in experiment_folders)
 
     # we check that neither 3 nor 7 are in the new dataframe index
-    experiments_data = pd.read_pickle (f'{path_experiments}/experiments_data.pk')
+    experiments_data = read_df (path_experiments)
     print (f'csv data index after removal: {experiments_data.index}\n')
     assert (experiments_data.index==range(7)).all()
 

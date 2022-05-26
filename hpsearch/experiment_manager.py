@@ -30,7 +30,7 @@ from dsblocks.utils.utils import set_logger, set_verbosity, store_attr, json_loa
 # hpsearch core API
 from .config.manager_factory import ManagerFactory
 from .utils import experiment_utils
-from .utils.experiment_utils import remove_defaults
+from .utils.experiment_utils import remove_defaults, read_df, write_df, write_binary_df_if_not_exists
 from .utils.organize_experiments import remove_defaults_from_experiment_data
 import hpsearch.config.hp_defaults as dflt
 
@@ -165,15 +165,9 @@ class ExperimentManager (object):
             return self.path_data
 
     def get_experiment_data (self, experiments=None):
-        path_csv = '%s/experiments_data.csv' %self.path_experiments
-        path_pickle = path_csv.replace('csv', 'pk')
-        try:
-            experiment_data = pd.read_pickle (path_pickle)
-        except:
-            experiment_data = pd.read_csv (path_csv, index_col=0)
+        experiment_data = read_df (self.path_experiments)
         if experiments is not None:
             experiment_data = experiment_data.loc[experiments,:]
-
         return experiment_data
 
     def remove_previous_experiments (self, parent=False, only_test=True):
@@ -314,10 +308,8 @@ class ExperimentManager (object):
         # ****************************************************
         parameters = remove_defaults (parameters)
 
-        path_csv = f'{path_experiments}/experiments_data.csv'
-        path_pickle = path_csv.replace('csv', 'pk')
         experiment_number, experiment_data = load_or_create_experiment_values (
-            path_csv, parameters, precision=precision)
+            path_experiments, parameters, precision=precision)
 
         # if old experiment, we can require that given parameters match with experiment number
         if (requested_experiment_number is not None
@@ -365,8 +357,7 @@ class ExperimentManager (object):
                 self.logger.info (f'experiment {experiment_number}, run number {run_number}, finished {finished}')
                 if not finished:
                     experiment_data.loc[experiment_number, mi_score] = None
-                    experiment_data.to_csv (path_csv)
-                    experiment_data.to_pickle (path_pickle)
+                    write_df (experiment_data, path_experiments)
                     self.logger.info (f'removed experiment {experiment_number}, '
                                  f'run number {run_number}, finished {finished}')
             if only_remove_not_finished:
@@ -561,8 +552,8 @@ class ExperimentManager (object):
         # ****************************************************************
         #  Retrieve and store results
         # ****************************************************************
-        self.log_results (dict_results, experiment_data, experiment_number, run_number,
-                    path_csv, path_pickle, time_spent, finished=finished)
+        self.log_results (dict_results, experiment_data, experiment_number, run_number, time_spent,
+                          finished=finished)
 
         try:
             save_other_parameters (experiment_number, {**other_parameters, **em_args, **info}, path_experiments)
@@ -577,7 +568,7 @@ class ExperimentManager (object):
         return result, dict_results
 
     def log_results (self, dict_results, experiment_data, experiment_number, run_number,
-                path_csv, path_pickle, time_spent, finished=True):
+                time_spent, finished=True):
         if not isinstance(dict_results, dict): dict_results = {self.key_score: dict_results}
         columns = pd.MultiIndex.from_product ([[dflt.scores_col],
                                                list(dict_results.keys()),
@@ -594,9 +585,7 @@ class ExperimentManager (object):
         experiment_data.loc[experiment_number, mi_col]=finished
 
         experiment_data = experiment_data[experiment_data.columns.sort_values()]
-        experiment_data.to_csv(path_csv)
-        experiment_data.to_pickle(path_pickle)
-
+        write_df (experiment_data, self.path_experiments)
 
     def grid_search (self, parameters_multiple_values={}, parameters_single_value={}, other_parameters={},
                      info=Bunch(), run_numbers=[0], random_search=False, load_previous=False,
@@ -893,14 +882,8 @@ class ExperimentManager (object):
 
                 if save_results:
                     experiment_number = experiment_id
-                    path_csv = path_experiments/'experiments_data.csv'
-                    path_pickle = str(path_csv).replace('csv', 'pk')
-                    if os.path.exists(path_pickle):
-                        experiment_data = pd.read_pickle (path_pickle)
-                    else:
-                        experiment_data = pd.read_csv (path_csv, index_col=0)
-                    self.log_results (dict_results, experiment_data, experiment_number, run_number,
-                                      path_csv, path_pickle, time_spent)
+                    experiment_data = read_df (path_experiments)
+                    self.log_results (dict_results, experiment_data, experiment_number, run_number, time_spent)
 
     def rerun_experiment_par (self, experiments, run_numbers=None, parameters={}):
 
@@ -1195,30 +1178,15 @@ def mypprint(parameters, dict_name=None):
     return text
 
 # Cell
-def load_or_create_experiment_values (path_csv, parameters, precision=1e-15, logger=None):
-
+def load_or_create_experiment_values (path_experiments, parameters, precision=1e-15, logger=None):
     if logger is None: logger = logging.getLogger("experiment_manager")
-    path_pickle = path_csv.replace('csv', 'pk')
     experiment_numbers = []
     changed_dataframe = False
 
-    if os.path.exists (path_pickle) or os.path.exists (path_csv):
-        read_csv_flag = False
-        if os.path.exists (path_pickle):
-            # work-around for solving the issue with pandas versions
-            # Pandas >= 1.1.0 presents problems when reading pickle files
-            # from earlier versions
-            try:
-                experiment_data = pd.read_pickle (path_pickle)
-                experiment_data = experiment_data.copy()
-            except AttributeError:
-                read_csv_flag = True
-        else:
-            read_csv_flag = True
-        if read_csv_flag:
-            experiment_data = pd.read_csv (path_csv, index_col=0)
-            experiment_data.to_pickle(path_pickle)
-
+    experiment_data = read_df (path_experiments)
+    if experiment_data is not None:
+        write_binary_df_if_not_exists (experiment_data, path_experiments)
+        experiment_data = experiment_data.copy()
         experiment_data, removed_defaults = remove_defaults_from_experiment_data (experiment_data)
 
         # Finds rows that match parameters. If the dataframe doesn't have any parameter with that name,
@@ -1251,8 +1219,7 @@ def load_or_create_experiment_values (path_csv, parameters, precision=1e-15, log
         experiment_number = experiment_numbers[0]
 
     if changed_dataframe:
-        experiment_data.to_csv(path_csv)
-        experiment_data.to_pickle(path_pickle)
+        write_df (experiment_data, path_experiments)
 
     return experiment_number, experiment_data
 
@@ -1282,10 +1249,7 @@ def isnull (experiment_data, experiment_number, name_column):
 
 # Cell
 def get_experiment_number (path_experiments, parameters = {}):
-
-    path_csv = path_experiments/'experiments_data.csv'
-    path_pickle = path_csv.replace('csv', 'pk')
-    experiment_number, _ = load_or_create_experiment_values (path_csv, parameters)
+    experiment_number, _ = load_or_create_experiment_values (path_experiments, parameters)
 
     return experiment_number
 

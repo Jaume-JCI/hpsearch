@@ -10,6 +10,7 @@ import joblib
 from IPython.display import display
 from dsblocks.utils.nbdev_utils import md
 
+import hpsearch.config.hp_defaults as dflt
 from hpsearch.tools.more_runs import *
 from hpsearch.examples.complex_dummy_experiment_manager import generate_data
 
@@ -24,14 +25,14 @@ def test_parse_arguments_and_run_more_runs ():
     parse_arguments_and_run (args)
     em.raise_error_if_run=True
     df = em.get_experiment_data ()
-    x=[f'{i}_validation_accuracy' for i in range(5)]; assert df.columns.isin(x).sum()==5
-    assert df.shape==(9,25)
+    assert df[dflt.scores_col, 'validation_accuracy'].columns.tolist() == list(range(5))
+    assert df.shape==(9,29)
 
     args = ['-e', '4', '3', '--runs', '10', '-p', em.manager_path]
     em.raise_error_if_run=False
     parse_arguments_and_run (args)
     df = em.get_experiment_data ()
-    assert df.shape==(9,45)
-    x=[f'{i}_validation_accuracy' for i in range(10)]; assert df.columns.isin(x).sum()==10
+    assert df.shape==(9,54)
+    assert df[dflt.scores_col, 'validation_accuracy'].columns.tolist() == list(range(10))
 
     em.remove_previous_experiments (parent=True)

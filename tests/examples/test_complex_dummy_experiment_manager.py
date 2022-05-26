@@ -12,6 +12,7 @@ from dsblocks.utils.nbdev_utils import md
 
 from hpsearch.examples.complex_dummy_experiment_manager import *
 from hpsearch.examples.dummy_experiment_manager import generate_data
+from hpsearch.utils.experiment_utils import read_df, write_df
 
 # Comes from complex_dummy_experiment_manager.ipynb, cell
 def test_complex_dummy_experiment_manager ():
@@ -42,7 +43,7 @@ and remove the experiment
     path_experiments = get_path_experiments ()
     print (f'experiments folders: {os.listdir(f"{path_experiments}/experiments")}\n')
 
-    experiments_data = pd.read_pickle (f'{path_experiments}/experiments_data.pk')
+    experiments_data = read_df (path_experiments)
     print ('csv data')
     display (experiments_data)
 
@@ -63,7 +64,7 @@ and remove the experiment
 
     print (f'experiments folders: {os.listdir(f"{path_experiments}/experiments")}\n')
 
-    experiments_data = pd.read_pickle (f'{path_experiments}/experiments_data.pk')
+    experiments_data = read_df (path_experiments)
     print ('csv data')
     display(experiments_data)
     print (f'weight: {em.model.weight}, accuracy: {em.model.accuracy}')
@@ -73,7 +74,7 @@ and remove the experiment
     em.create_experiment_and_run (parameters = {'epochs': 30},
                                   prev_epoch=True, previous_model_file_name='model_weights.pk');
 
-    experiments_data = pd.read_pickle (f'{path_experiments}/experiments_data.pk')
+    experiments_data = read_df (path_experiments)
     print ('csv data')
     display(experiments_data)
 

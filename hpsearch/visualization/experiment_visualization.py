@@ -11,11 +11,13 @@ import joblib
 import pandas as pd
 from IPython.display import display
 import visdom
+import warnings
+warnings.filterwarnings('ignore')
+
 from ..config.hpconfig import get_path_results, get_path_experiments, get_experiment_manager
 import hpsearch.utils.experiment_utils as ut
 from . import plot_utils
-import warnings
-warnings.filterwarnings('ignore')
+from ..utils.experiment_utils import read_df, write_df
 
 # Cell
 class MultiHistoryPlotter ():
@@ -55,7 +57,7 @@ class MultiHistoryPlotter ():
         self.metrics = metrics if metrics is not None else self.metrics
         self.metrics_second = metrics_second if metrics_second is not None else self.metrics_second
 
-        df = pd.read_csv(f'{self.path_experiments}/experiments_data.csv', index_col=0)
+        df = read_df (self.path_experiments)
         df = ut.replace_with_default_values (df)
         df2 = ut.get_experiment_parameters (df.loc[self.experiments], only_not_null=True)
         parameters2, df2 = ut.get_parameters_unique(df2)

@@ -23,6 +23,7 @@ from dsblocks.utils.nbdev_utils import md
 from dsblocks.utils.utils import check_last_part, remove_previous_results
 
 from hpsearch.experiment_manager import *
+from hpsearch.utils.experiment_utils import read_df, write_df
 from hpsearch.examples.complex_dummy_experiment_manager import ComplexDummyExperimentManager
 from hpsearch.examples.complex_dummy_experiment_manager import init_em
 import hpsearch.config.hp_defaults as dflt
@@ -74,7 +75,8 @@ def test_basic_usage ():
 
     import pandas as pd
 
-    df = pd.read_pickle (f'{path_experiments}/experiments_data.pk')
+    df = read_df (path_experiments)
+    #df = em.get_experiment_data ()
     expected_col = list(pd.MultiIndex.from_product([['parameters'],['offset','rate'],['']]))
     expected_col += list(pd.MultiIndex.from_product([['run_info'],['date','finished','time'],[0]]))
     expected_col += list(pd.MultiIndex.from_product([['scores'],['test_accuracy','validation_accuracy',],[0]]))
@@ -1099,8 +1101,7 @@ def test_load_or_create_experiment_values ():
     path_csv_folder = 'test_load_or_create_experiment_values'
     os.makedirs (path_csv_folder, exist_ok=True)
     parameters = dict (a='yes', b=1.2, c=True)
-    experiment_number, experiment_data = load_or_create_experiment_values (
-        f'{path_csv_folder}/experiments_data.csv', parameters)
+    experiment_number, experiment_data = load_or_create_experiment_values (path_csv_folder, parameters)
     display(experiment_data)
     assert experiment_data.shape==(1, 3)
     assert (experiment_data.columns==pd.MultiIndex.from_product (
@@ -1109,8 +1110,7 @@ def test_load_or_create_experiment_values ():
     assert experiment_number==0
 
     parameters = dict (a='no', b=1.2, c=True)
-    experiment_number, experiment_data = load_or_create_experiment_values (
-        f'{path_csv_folder}/experiments_data.csv', parameters)
+    experiment_number, experiment_data = load_or_create_experiment_values (path_csv_folder, parameters)
     display(experiment_data)
     assert experiment_data.shape==(2, 3)
     assert (experiment_data.columns==pd.MultiIndex.from_product (
@@ -1119,8 +1119,7 @@ def test_load_or_create_experiment_values ():
     assert experiment_number==1
 
     parameters = dict (a='no', d=12, c=True)
-    experiment_number, experiment_data = load_or_create_experiment_values (
-        f'{path_csv_folder}/experiments_data.csv', parameters)
+    experiment_number, experiment_data = load_or_create_experiment_values (path_csv_folder, parameters)
     assert experiment_data.shape==(3, 4)
     assert (experiment_data.columns==pd.MultiIndex.from_product (
                 [[dflt.parameters_col], ['a','b','c','d'], ['']])).all()
@@ -1132,8 +1131,7 @@ def test_load_or_create_experiment_values ():
     display(experiment_data)
 
     parameters = dict (a='no', b=1.2, c=True)
-    experiment_number, experiment_data = load_or_create_experiment_values (
-        f'{path_csv_folder}/experiments_data.csv', parameters)
+    experiment_number, experiment_data = load_or_create_experiment_values (path_csv_folder, parameters)
     assert experiment_number==1
     pd.testing.assert_frame_equal (experiment_data_before,experiment_data)
 

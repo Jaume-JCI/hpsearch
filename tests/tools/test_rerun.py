@@ -11,6 +11,7 @@ import joblib
 from IPython.display import display
 from dsblocks.utils.nbdev_utils import md
 
+import hpsearch.config.hp_defaults as dflt
 from hpsearch.tools.rerun import *
 from hpsearch.examples.complex_dummy_experiment_manager import generate_data, init_em
 import hpsearch.utils.experiment_utils as ut
@@ -27,15 +28,15 @@ def test_parse_arguments_and_run_more_runs ():
     parse_arguments_and_run (args)
     em.raise_error_if_run=True
     df = em.get_experiment_data ()
-    x=[f'{i}_validation_accuracy' for i in range(5)]; assert df.columns.isin(x).sum()==5
-    assert df.shape==(9,25)
+    assert df[dflt.scores_col, 'validation_accuracy'].columns.tolist() == list(range(5))
+    assert df.shape==(9, 29)
 
     args = ['-e', '4', '3', '--runs', '10', '-p', em.manager_path]
     em.raise_error_if_run=False
     parse_arguments_and_run (args)
     df = em.get_experiment_data ()
-    assert df.shape==(9,45)
-    x=[f'{i}_validation_accuracy' for i in range(10)]; assert df.columns.isin(x).sum()==10
+    assert df.shape==(9,54)
+    assert df[dflt.scores_col, 'validation_accuracy'].columns.tolist() == list(range(10))
 
     em.remove_previous_experiments (parent=True)
 
@@ -134,7 +135,7 @@ def test_parse_arguments_and_run_store ():
     # TODO: see why finished is False after storing
     #assert (df_orig[columns]==df_new[columns]).all().all()
     x, y = df_orig[columns].astype('float'), df_new[columns].astype('float')
-    y[[f'{x}_finished' for x in range(5)]]=1.0
+    #y[[f'{x}_finished' for x in range(5)]]=1.0
     pd.testing.assert_frame_equal(x,y)
 
     df = df_orig.copy()
@@ -153,7 +154,7 @@ def test_parse_arguments_and_run_store ():
     df_new = em.get_experiment_data ()
     #assert (df_orig[columns]==df_new[columns]).all().all()
     x, y = df_orig[columns].astype('float'), df_new[columns].astype('float')
-    y[[f'{x}_finished' for x in range(5)]]=1.0
+    #y[[f'{x}_finished' for x in range(5)]]=1.0
     pd.testing.assert_frame_equal(x,y)
 
     # *************************************************
@@ -168,9 +169,9 @@ def test_parse_arguments_and_run_store ():
     df.to_csv (f'{path}/experiments_data.csv')
     df.to_pickle (f'{path}/experiments_data.pk')
     df_overwritten = em.get_experiment_data ()
-    assert df_overwritten.shape==(3,25)
+    assert df_overwritten.shape==(3, 29)
 
-    assert df_overwritten.isna().sum().sum()==15
+    assert df_overwritten.isna().sum().sum()==10
 
     parse_arguments_and_run ('--range-exp 0 9 --store --from-dict --runs 5 '
                              f'--min-iterations 1 -p {em.manager_path}'.split())
@@ -178,7 +179,7 @@ def test_parse_arguments_and_run_store ():
     df_new = em.get_experiment_data ()
     #assert (df_orig[columns]==df_new[columns]).all().all()
     x, y = df_orig[columns].astype('float'), df_new[columns].astype('float')
-    y[[f'{x}_finished' for x in range(5)]]=1.0
+    #y[[f'{x}_finished' for x in range(5)]]=1.0
     pd.testing.assert_frame_equal(x,y)
 
     # *************************************************

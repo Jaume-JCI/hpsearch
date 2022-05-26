@@ -18,6 +18,7 @@ from ..config.hpconfig import get_path_experiments, get_path_results, get_experi
 import hpsearch.utils.experiment_utils as ut
 from .metric_visualization import include_best_and_last_experiment
 import hpsearch.config.hp_defaults as dflt
+from ..utils.experiment_utils import read_df, write_df
 
 # Cell
 def print_info (experiments=[-1], path_experiments=None, folder=None, display_all=False, include_best=False,
@@ -34,7 +35,7 @@ def print_info (experiments=[-1], path_experiments=None, folder=None, display_al
 
     path_experiments = em.path_experiments
 
-    df = pd.read_pickle (path_experiments/'experiments_data.pk')
+    df = read_df (path_experiments)
 
     metric_column = (dflt.scores_col, em.key_score, run_number)
 
