@@ -52,7 +52,7 @@ def print_table (experiments=[-1, -2], path_experiments=None, folder=None, displ
         print ('\nparameters for %d:' %e)
         display (df.loc[e,parameters])
         print ('scores for all experiments:')
-        df_scores = ut.get_experiment_scores(df.loc[[e]], score_name='%s' %em.key_score, remove_suffix=True)
+        df_scores = ut.get_experiment_scores(df.loc[[e]], score_name='%s' %em.key_score, remove_score_name=True)
         display(df_scores.round(round_digits))
         print ('score:')
         display (df.loc[e, metric_column])

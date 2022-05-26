@@ -100,7 +100,7 @@ def test_parse_arguments_copy_experiment ():
     em = generate_data ('parse_arguments_copy_experiment', folder='new_folder')
 
     df = em.get_experiment_data ()
-    assert df.shape==(9,25)
+    assert df.shape==(9,29)
 
     args = ('-e 2 --content test_dest_folder_copy_exp_content '
            f'--run 1 --file test_file.py --code test_my_code -p {em.manager_path}')

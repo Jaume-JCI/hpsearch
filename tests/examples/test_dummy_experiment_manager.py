@@ -23,20 +23,24 @@ def test_dummy_experiment_manager ():
     display (df)
 
     # check that stored parameters are correct
-    assert (df.epochs.values == np.array([ 5.,  5.,  5., 15., 15., 15., 30., 30., 30.])).all()
-    assert (df.offset.values == np.array([0.1, 0.3, 0.6, 0.1, 0.3, 0.6, 0.1, 0.3, 0.6])).all()
-    assert (df.rate.values == 0.03).all()
+    par = lambda parameter: (dflt.parameters_col, parameter, '')
+    assert (df[par('epochs')].values == np.array([ 5.,  5.,  5., 15., 15., 15., 30., 30., 30.])).all()
+    assert (dff[par('offset')].values == np.array([0.1, 0.3, 0.6, 0.1, 0.3, 0.6, 0.1, 0.3, 0.6])).all()
+    assert (dff[par('rate')].values == 0.03).all()
 
     # check that the accuracy values are correct
     epochs_before_overfitting = 20
     epochs_test = 10
     for experiment_id in df.index:
-        if df.loc[experiment_id, 'epochs'] < epochs_before_overfitting:
-            accuracy = df.loc[experiment_id, 'offset'] + df.loc[experiment_id, 'rate'] * df.loc[experiment_id, 'epochs']
+        if df.loc[experiment_id, par('epochs')] < epochs_before_overfitting:
+            accuracy = (df.loc[experiment_id, par('offset')] +
+                        df.loc[experiment_id, par('rate')] * df.loc[experiment_id, par('epochs')])
         else:
-            epochs_after_overfitting = df.loc[experiment_id, 'epochs']-epochs_before_overfitting
-            accuracy = df.loc[experiment_id, 'offset'] + df.loc[experiment_id, 'rate'] * (epochs_before_overfitting  - epochs_after_overfitting)
-        if df.loc[experiment_id, 'epochs'] < epochs_test:
+            epochs_after_overfitting = df.loc[experiment_id, par('epochs')]-epochs_before_overfitting
+            accuracy = (df.loc[experiment_id, par('offset')] +
+                        df.loc[experiment_id, par('rate')] *
+                        (epochs_before_overfitting  - epochs_after_overfitting))
+        if df.loc[experiment_id, par('epochs')] < epochs_test:
             test_accuracy = accuracy + 0.1
         else:
             test_accuracy = accuracy - 0.1

@@ -18,7 +18,7 @@ def test_parse_arguments_and_run_more_runs ():
     em = generate_data ('test_parse_arguments_and_run_more_runs')
 
     df = em.get_experiment_data ()
-    assert df.shape==(9,25)
+    assert df.shape==(9,29)
 
     args = ['-e', '4', '3', '-p', em.manager_path]
     parse_arguments_and_run (args)

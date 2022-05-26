@@ -21,7 +21,7 @@ def test_parse_arguments_and_run_more_runs ():
                         folder='new_folder')
 
     df = em.get_experiment_data ()
-    assert df.shape==(9,25)
+    assert df.shape==(9,29)
 
     args = ['-e', '4', '3', '--verbose', '1', '-p', em.manager_path]
     parse_arguments_and_run (args)
@@ -109,7 +109,7 @@ def test_parse_arguments_and_run_store ():
                         folder='new_folder')
 
     df = em.get_experiment_data ()
-    assert df.shape==(9,25)
+    assert df.shape==(9,29)
     columns = ut.get_scores_columns (df, run_number=range(5), score_name='validation_accuracy')
     columns += ut.get_scores_columns (df, run_number=range(5), score_name='test_accuracy')
 
