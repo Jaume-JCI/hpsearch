@@ -318,7 +318,7 @@ def test_summarize_results ():
     md ('\n\n')
     summary = summarize_results ()
     display (summary)
-    mi_num_results = (dflt.stats_col, 'num_results', '')
+    mi_num_results = (dflt.num_results_col, 'num_results', '')
     assert summary[mi_num_results].sum() == 10
     assert summary.shape==(3, 13)
 
@@ -349,7 +349,7 @@ def test_summarize_results ():
     summary = summarize_results (score_name='validation_accuracy', experiments=[0,2])
     display (summary)
     assert summary.shape==(2, 8)
-    assert all(summary.index==[0,2])
+    assert all(summary.index==[2, 0])
     assert (sorted(summary.columns.get_level_values(1).unique().tolist())==
             sorted(['offset', 'rate', 'num_results', 'validation_accuracy']))
     assert summary['stats','validation_accuracy'].columns.tolist()==['max', 'mean', 'median', 'min', 'std']

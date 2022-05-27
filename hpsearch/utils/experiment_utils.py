@@ -309,7 +309,7 @@ def summarize_results(intersection=False,
     ]
     min_num_results = experiment_data[num_results_columns].min(axis=1)
     experiment_data = experiment_data.drop (columns=num_results_columns)
-    num_results_column = (dflt.stats_col, 'num_results', '')
+    num_results_column = (dflt.num_results_col, 'num_results', '')
     experiment_data[num_results_column] = min_num_results
     if min_results > 0:
         number_before = experiment_data.shape[0]
