@@ -5,7 +5,7 @@ __all__ = ['FakeModel', 'DummyExperimentManager', 'run_multiple_experiments', 'g
 
 # Cell
 import numpy as np
-import pickle
+import joblib
 
 # Cell
 class FakeModel (object):
@@ -76,15 +76,15 @@ class FakeModel (object):
                                   test_accuracy=test_accuracy)
 
     def save_model_and_history (self, path_results):
-        pickle.dump (self.weight, open(f'{path_results}/model_weights.pk','wb'))
-        pickle.dump (self.history, open(f'{path_results}/model_history.pk','wb'))
-        pickle.dump (self.dict_results, open(f'{path_results}/dict_results.pk','wb'))
+        joblib.dump (self.weight, f'{path_results}/model_weights.pk')
+        joblib.dump (self.history, f'{path_results}/model_history.pk')
+        joblib.dump (self.dict_results, f'{path_results}/dict_results.pk')
 
     def load_model_and_history (self, path_results):
         if os.path.exists(f'{path_results}/model_weights.pk'):
             print (f'reading model from {path_results}/model_weights.pk')
-            self.weight = pickle.load (open(f'{path_results}/model_weights.pk','rb'))
-            self.history = pickle.load (open(f'{path_results}/model_history.pk','rb'))
+            self.weight = joblib.load (f'{path_results}/model_weights.pk')
+            self.history = joblib.load (f'{path_results}/model_history.pk')
             self.current_epoch = len(self.history['accuracy'])
             if self.current_epoch > 0:
                 self.accuracy = self.history['accuracy'][-1]
@@ -95,7 +95,7 @@ class FakeModel (object):
 
     def retrieve_score (self):
         if self.dict_results is None:
-            self.dict_results = pickle.load (open(f'{path_results}/dict_results.pk','rb'))
+            self.dict_results = joblib.load (f'{path_results}/dict_results.pk')
         return self.dict_results['validation_accuracy'], self.dict_results['test_accuracy']
 
     def score (self):
@@ -200,7 +200,7 @@ class DummyExperimentManager (ExperimentManager):
         for experiment_id in experiments:
             path_results = self.get_path_results (experiment_id, run_number=run_number)
             if os.path.exists('%s/%s' %(path_results, name_file)):
-                history = pickle.load(open('%s/%s' %(path_results, name_file),'rb'))
+                history = joblib.load('%s/%s' %(path_results, name_file))
                 label = '{}'.format(experiment_id)
                 traces = plot_utils.add_trace ((1-np.array(history[metric]))*20, style='A.-', label=label,
                                                backend=backend, traces=traces)

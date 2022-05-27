@@ -100,7 +100,7 @@ def test_parse_arguments_copy_experiment ():
     em = generate_data ('parse_arguments_copy_experiment', folder='new_folder')
 
     df = em.get_experiment_data ()
-    assert df.shape==(9,25)
+    assert df.shape==(9,29)
 
     args = ('-e 2 --content test_dest_folder_copy_exp_content '
            f'--run 1 --file test_file.py --code test_my_code -p {em.manager_path}')
@@ -109,34 +109,30 @@ def test_parse_arguments_copy_experiment ():
     parse_arguments_and_run (args.split (), desired=desired)
 
     content_list = sorted(os.listdir ('test_dest_folder_copy_exp_content'))
-    if __name__ == 'tests.tools.test_copy_experiment':
-        expected_list = [
-             'dict_results.pk',
-             'logs.txt',
-             'model_history.pk',
-             'model_weights.pk',
-             'parameters.json',
-             'parameters.pk',
-             'parameters.txt',
-             'separate_parameters.pk',
-             'summary.txt',
-             'test_experiment_manager.py']
-    else:
-         expected_list = [
-             'dict_results.pk',
-             'dummy_experiment_manager.py',
-             'logs.txt',
-             'model_history.pk',
-             'model_weights.pk',
-             'parameters.json',
-             'parameters.pk',
-             'parameters.txt',
-             'separate_parameters.pk',
-             'summary.txt']
-    assert content_list == expected_list
+    expected_list1 = [
+         'dict_results.pk',
+         'logs.txt',
+         'model_history.pk',
+         'model_weights.pk',
+         'parameters.json',
+         'parameters.pk',
+         'parameters.txt',
+         'separate_parameters.pk',
+         'summary.txt',
+         'test_experiment_manager.py']
+    expected_list2 = [
+         'dict_results.pk',
+         'dummy_experiment_manager.py',
+         'logs.txt',
+         'model_history.pk',
+         'model_weights.pk',
+         'parameters.json',
+         'parameters.pk',
+         'parameters.txt',
+         'separate_parameters.pk',
+         'summary.txt']
 
-
-
+    assert (content_list == expected_list1) or (content_list == expected_list2)
 
     # checks
     assert os.listdir ('test_my_code')==['test_file.py']

@@ -97,7 +97,7 @@ class ManagerFactory (object):
     def load_manager (self):
         whole_object_path = self.manager_path / 'whole'
         self.logger.debug (f'loading manager from {whole_object_path}')
-        em = cloudpickle.load (open(whole_object_path / 'last.pk', 'rb'))
+        with open(whole_object_path / 'last.pk', 'rb') as f: em = cloudpickle.load (f)
         return em
 
     def load_pickle_and_set_em_fields (self, em, manager_path=None):
@@ -150,8 +150,8 @@ class ManagerFactory (object):
         # store pickable and non-pickable fields
         fields = {k: getattr (em, k) for k in em.avoid_saving_fields}
         for k in em.avoid_saving_fields: setattr (em, k, None)
-        cloudpickle.dump (em, open(whole_object_path / f'{em.registered_name}.pk', 'wb'))
-        cloudpickle.dump (em, open(whole_object_path / 'last.pk', 'wb'))
+        with open(whole_object_path / f'{em.registered_name}.pk', 'wb') as f:  cloudpickle.dump (em, f)
+        with open(whole_object_path / 'last.pk', 'wb') as f: cloudpickle.dump (em, f)
         for k in em.avoid_saving_fields: setattr (em, k, fields[k])
 
         # info file

@@ -16,6 +16,7 @@ from .dummy_experiment_manager import DummyExperimentManager, FakeModel
 import hpsearch.examples.dummy_experiment_manager as dummy_em
 from ..visualization import plot_utils
 import hpsearch
+from ..utils.experiment_utils import read_df, write_df
 
 # Cell
 class ComplexDummyExperimentManager (DummyExperimentManager):

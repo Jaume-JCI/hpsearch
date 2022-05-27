@@ -7,7 +7,6 @@ __all__ = ['ExperimentManager', 'get_git_revision_hash', 'record_parameters', 'm
 
 # Cell
 # coding: utf-8
-import pickle
 import joblib
 import sys
 import os
@@ -20,19 +19,18 @@ from sklearn.utils import Bunch
 import platform
 import pprint
 import subprocess
-import json
 from multiprocessing import Process
 import logging
 import traceback
 import shutil
 from pathlib import Path
 
-from dsblocks.utils.utils import set_logger, set_verbosity, store_attr
+from dsblocks.utils.utils import set_logger, set_verbosity, store_attr, json_load, json_dump
 
 # hpsearch core API
 from .config.manager_factory import ManagerFactory
 from .utils import experiment_utils
-from .utils.experiment_utils import remove_defaults
+from .utils.experiment_utils import remove_defaults, read_df, write_df, write_binary_df_if_not_exists
 from .utils.organize_experiments import remove_defaults_from_experiment_data
 import hpsearch.config.hp_defaults as dflt
 
@@ -167,15 +165,9 @@ class ExperimentManager (object):
             return self.path_data
 
     def get_experiment_data (self, experiments=None):
-        path_csv = '%s/experiments_data.csv' %self.path_experiments
-        path_pickle = path_csv.replace('csv', 'pk')
-        try:
-            experiment_data = pd.read_pickle (path_pickle)
-        except:
-            experiment_data = pd.read_csv (path_csv, index_col=0)
+        experiment_data = read_df (self.path_experiments)
         if experiments is not None:
             experiment_data = experiment_data.loc[experiments,:]
-
         return experiment_data
 
     def remove_previous_experiments (self, parent=False, only_test=True):
@@ -212,7 +204,7 @@ class ExperimentManager (object):
         # #####################################
         # Final scores
         # #####################################
-        score_name = parameters.get('suffix_results','')
+        score_name = self.key_score
         if len(score_name) > 0:
             if score_name[0] == '_':
                 score_name = score_name[1:]
@@ -250,7 +242,7 @@ class ExperimentManager (object):
 
         path_dict_results = f'{path_results}/dict_results.pk'
         try:
-            dict_results = pickle.load (open (path_dict_results, 'rb'))
+            dict_results = joblib.load (path_dict_results)
         except FileNotFoundError:
             raise RuntimeError (f'{path_dict_results} not found: probably there is an error in run_pipeline'
                                 'function. Please run in debug mode, without multi-processing')
@@ -259,7 +251,7 @@ class ExperimentManager (object):
 
     def run_experiment_saving_results (self, parameters={}, path_results='./results'):
         dict_results = self.run_experiment (parameters=parameters, path_results=path_results)
-        pickle.dump (dict_results, open ('%s/dict_results.pk' %path_results, 'wb'))
+        joblib.dump (dict_results, '%s/dict_results.pk' %path_results)
 
     def run_experiment (self, parameters={}, path_results='./results'):
         raise NotImplementedError ('This method needs to be defined in subclass')
@@ -316,10 +308,8 @@ class ExperimentManager (object):
         # ****************************************************
         parameters = remove_defaults (parameters)
 
-        path_csv = f'{path_experiments}/experiments_data.csv'
-        path_pickle = path_csv.replace('csv', 'pk')
         experiment_number, experiment_data = load_or_create_experiment_values (
-            path_csv, parameters, precision=precision)
+            path_experiments, parameters, precision=precision)
 
         # if old experiment, we can require that given parameters match with experiment number
         if (requested_experiment_number is not None
@@ -329,28 +319,30 @@ class ExperimentManager (object):
         other_parameters['experiment_number'] = experiment_number
 
         # ****************************************************
-        # get key_score and suffix_results
+        # get key_score
         # ****************************************************
         key_score = self.key_score
-        suffix_results = f'_{key_score}'
 
         # ****************************************************
         #   get run_id, if not given
         # ****************************************************
         if run_number is None:
             run_number = 0
-            name_score = '%d%s' %(run_number, suffix_results)
-            while not isnull(experiment_data, experiment_number, name_score):
-                self.logger.info ('found previous run for experiment number {}, run {}, with score {} = {}'.format(experiment_number, run_number, key_score, experiment_data.loc[experiment_number, name_score]))
+            mi_score = (dflt.scores_col, key_score, run_number)
+            while not isnull(experiment_data, experiment_number, mi_score):
+                score = experiment_data.loc[experiment_number, mi_score]
+                self.logger.info (f'found previous run for experiment number {experiment_number}, '
+                                  f'run {run_number}, with score {key_score} = {score}')
                 run_number += 1
-                name_score = '%d%s' %(run_number, suffix_results)
-            self.logger.info ('starting experiment {} with run number {}'.format(experiment_number, run_number))
+                mi_score = (dflt.scores_col, key_score, run_number)
+            self.logger.info (f'starting experiment {experiment_number} with run number {run_number}')
 
         else:
-            name_score = '%d%s' %(run_number, suffix_results)
-            if not isnull(experiment_data, experiment_number, name_score):
-                previous_result = experiment_data.loc[experiment_number, name_score]
-                self.logger.info ('found completed: experiment number: %d, run number: %d - score: %f' %(experiment_number, run_number, previous_result))
+            mi_score = (dflt.scores_col, key_score, run_number)
+            if not isnull(experiment_data, experiment_number, mi_score):
+                previous_result = experiment_data.loc[experiment_number, mi_score]
+                self.logger.info (f'found completed: experiment number: {experiment_number}, '
+                                  f'run number: {run_number} - score: {previous_result}')
                 self.logger.info (parameters)
                 if repeat_experiment:
                     self.logger.info ('redoing experiment')
@@ -359,14 +351,13 @@ class ExperimentManager (object):
         #   remove unfinished experiments
         # ****************************************************
         if remove_not_finished:
-            name_finished = '%d_finished' %run_number
+            name_finished = (dflt.run_info_col, 'finished', run_number)
             if not isnull(experiment_data, experiment_number, name_finished):
                 finished = experiment_data.loc[experiment_number, name_finished]
                 self.logger.info (f'experiment {experiment_number}, run number {run_number}, finished {finished}')
                 if not finished:
-                    experiment_data.loc[experiment_number, name_score] = None
-                    experiment_data.to_csv (path_csv)
-                    experiment_data.to_pickle (path_pickle)
+                    experiment_data.loc[experiment_number, mi_score] = None
+                    write_df (experiment_data, path_experiments)
                     self.logger.info (f'removed experiment {experiment_number}, '
                                  f'run number {run_number}, finished {finished}')
             if only_remove_not_finished:
@@ -379,14 +370,14 @@ class ExperimentManager (object):
         # ****************************************************
         #   check conditions for skipping experiment
         # ****************************************************
-        if not isnull(experiment_data, experiment_number, name_score) and not repeat_experiment:
+        if not isnull(experiment_data, experiment_number, mi_score) and not repeat_experiment:
             if (check_finished
                 and not self.finished_all_epochs (parameters, current_path_results)):
                 unfinished_flag = True
             else:
                 self.logger.info ('skipping...')
                 return previous_result, {key_score: previous_result}
-        elif (isnull(experiment_data, experiment_number, name_score)
+        elif (isnull(experiment_data, experiment_number, mi_score)
               and recompute_metrics
               and not force_recompute_metrics):
             self.logger.info (f'experiment not found, skipping {run_number} due to only recompute_metrics')
@@ -469,7 +460,7 @@ class ExperimentManager (object):
         # ***********************************************************
         # resume from previous experiment
         # ***********************************************************
-        if (isnull(experiment_data, experiment_number, name_score)
+        if (isnull(experiment_data, experiment_number, mi_score)
             and check_finished_if_interrupted
             and not self.finished_all_epochs (parameters, current_path_results)):
             unfinished_flag = True
@@ -479,7 +470,7 @@ class ExperimentManager (object):
             self.logger.info('trying prev_epoch')
             experiment_data2 = experiment_data.copy()
             if (not unfinished_flag
-                and (repeat_experiment or isnull(experiment_data, experiment_number, name_score))):
+                and (repeat_experiment or isnull(experiment_data, experiment_number, mi_score))):
                     experiment_data2 = experiment_data2.drop(experiment_number,axis=0)
             prev_experiment_number = self.find_closest_epoch (experiment_data2, original_parameters)
             if prev_experiment_number is not None:
@@ -498,7 +489,8 @@ class ExperimentManager (object):
                             parameters[name_epoch] = parameters[name_epoch] - prev_epoch
                         self.logger.info ('using previous best')
                     else:
-                        prev_epoch = experiment_data.loc[prev_experiment_number,name_epoch]
+                        mi_epoch = (dflt.parameters_col, name_epoch, '')
+                        prev_epoch = experiment_data.loc[prev_experiment_number,mi_epoch]
                         prev_epoch = (int(prev_epoch) if prev_epoch is not None
                                       else defaults.get(name_epoch))
                         parameters[name_epoch] = parameters[name_epoch] - prev_epoch
@@ -535,12 +527,12 @@ class ExperimentManager (object):
         # ****************************************************************
         run_pipeline = True
         if use_last_result:
-            experiment_result = self.obtain_last_result (
+            dict_results = self.obtain_last_result (
                 parameters, path_results, use_last_result_from_dict=use_last_result_from_dict,
                 min_iterations=min_iterations)
-            if experiment_result is None and run_if_not_interrumpted:
+            if dict_results is None and run_if_not_interrumpted:
                 run_pipeline = True
-            elif experiment_result is None:
+            elif dict_results is None:
                 return None, {}
             else:
                 run_pipeline = False
@@ -549,36 +541,19 @@ class ExperimentManager (object):
         # run experiment
         # ****************************************************************
         if run_pipeline:
-            experiment_result, time_spent = self.run_experiment_pipeline (run_number, path_results,
+            dict_results, time_spent = self.run_experiment_pipeline (run_number, path_results,
                                                                           parameters=parameters,
                                                                           use_process=use_process)
             finished = True
         else:
             finished = False
+            time_spent = None
 
         # ****************************************************************
         #  Retrieve and store results
         # ****************************************************************
-        if type(experiment_result)==dict:
-            dict_results = experiment_result
-            for key in dict_results.keys():
-                if key != '':
-                    experiment_data.loc[experiment_number, '%d_%s' %(run_number, key)]=dict_results[key]
-                else:
-                    experiment_data.loc[experiment_number, '%d' %run_number]=dict_results[key]
-                self.logger.info('{} - {}: {}'.format(run_number, key, dict_results[key]))
-        else:
-            experiment_data.loc[experiment_number, name_score]=experiment_result
-            self.logger.info('{} - {}: {}'.format(run_number, name_score, experiment_result))
-            dict_results = {name_score:experiment_result}
-
-        if isnull(experiment_data, experiment_number, 'time_'+str(run_number)) and finished:
-            experiment_data.loc[experiment_number,'time_'+str(run_number)]=time_spent
-        experiment_data.loc[experiment_number, 'date']=datetime.datetime.time(datetime.datetime.now())
-        experiment_data.loc[experiment_number, '%d_finished' %run_number]=finished
-
-        experiment_data.to_csv(path_csv)
-        experiment_data.to_pickle(path_pickle)
+        self.log_results (dict_results, experiment_data, experiment_number, run_number, time_spent,
+                          finished=finished)
 
         try:
             save_other_parameters (experiment_number, {**other_parameters, **em_args, **info}, path_experiments)
@@ -591,6 +566,26 @@ class ExperimentManager (object):
         # return final score
         result = dict_results.get(key_score)
         return result, dict_results
+
+    def log_results (self, dict_results, experiment_data, experiment_number, run_number,
+                time_spent, finished=True):
+        if not isinstance(dict_results, dict): dict_results = {self.key_score: dict_results}
+        columns = pd.MultiIndex.from_product ([[dflt.scores_col],
+                                               list(dict_results.keys()),
+                                               [run_number]])
+        experiment_data[[x for x in columns if x not in experiment_data]] = None
+        experiment_data.loc[experiment_number, columns]=dict_results.values()
+
+        mi_col = (dflt.run_info_col, 'time', run_number)
+        if isnull(experiment_data, experiment_number,  mi_col) and finished:
+            experiment_data.loc[experiment_number, mi_col]=time_spent
+        mi_col = (dflt.run_info_col, 'date', run_number)
+        experiment_data.loc[experiment_number, mi_col]=datetime.datetime.time(datetime.datetime.now())
+        mi_col = (dflt.run_info_col, 'finished', run_number)
+        experiment_data.loc[experiment_number, mi_col]=finished
+
+        experiment_data = experiment_data[experiment_data.columns.sort_values()]
+        write_df (experiment_data, self.path_experiments)
 
     def grid_search (self, parameters_multiple_values={}, parameters_single_value={}, other_parameters={},
                      info=Bunch(), run_numbers=[0], random_search=False, load_previous=False,
@@ -628,18 +623,18 @@ class ExperimentManager (object):
         if random_search:
             path_random_hp = '%s/random_hp.pk' %path_results_base
             if load_previous and os.path.exists(path_random_hp):
-                parameters_multiple_values_all = pickle.load (open(path_random_hp,'rb'))
+                parameters_multiple_values_all = joblib.load (path_random_hp)
             else:
                 parameters_multiple_values_all = list (np.random.permutation(parameters_multiple_values_all))
-                pickle.dump (parameters_multiple_values_all, open (path_random_hp,'wb'))
+                joblib.dump (parameters_multiple_values_all, path_random_hp)
         for (i_hp, parameters_multiple_values) in enumerate (parameters_multiple_values_all):
             parameters = parameters_multiple_values.copy()
             parameters.update(parameters_single_value)
 
             for (i_run, run_number) in enumerate (run_numbers):
-                self.logger.info (f'processing hyper-parameter {i_hp} '
+                self.logger.info (f'processing hyper-parameter {i_hp+1} '
                                  f'out of {len(parameters_multiple_values_all)}')
-                self.logger.info (f'doing run {i_run} out of {len(run_numbers)}')
+                self.logger.info (f'doing run {i_run+1} out of {len(run_numbers)}')
                 self.logger.info (log_message)
 
                 self.create_experiment_and_run (parameters=parameters, other_parameters=other_parameters,
@@ -662,7 +657,7 @@ class ExperimentManager (object):
 
         results = np.zeros((len(run_numbers),))
         for (i_run, run_number) in enumerate(run_numbers):
-                self.logger.info('doing run %d out of %d' %(i_run, len(run_numbers)))
+                self.logger.info('doing run %d out of %d' %(i_run+1, len(run_numbers)))
                 self.logger.info('%s' %log_message)
 
                 results[i_run], dict_results  = self.create_experiment_and_run (
@@ -882,27 +877,13 @@ class ExperimentManager (object):
             for run_number in run_numbers:
                 path_results = path_experiment/f'{run_number}'
                 path_data = self.get_path_data (run_number, parameters)
-                score, _ = self.run_experiment_pipeline (run_number, path_results,
+                dict_results, time_spent = self.run_experiment_pipeline (run_number, path_results,
                                                          parameters=parameters)
 
                 if save_results:
                     experiment_number = experiment_id
-                    path_csv = path_experiments/'experiments_data.csv'
-                    path_pickle = str(path_csv).replace('csv', 'pk')
-                    if os.path.exists(path_pickle):
-                        experiment_data = pd.read_pickle (path_pickle)
-                    else:
-                        experiment_data = pd.read_csv (path_csv, index_col=0)
-                    if type(score)==dict:
-                        for key in score.keys():
-                            if key != '':
-                                experiment_data.loc[experiment_number, '%d_%s' %(run_number, key)]=score[key]
-                            else:
-                                experiment_data.loc[experiment_number, '%d' %run_number]=score[key]
-                    else:
-                        experiment_data.loc[experiment_number, name_score]=score
-                    experiment_data.to_csv(path_csv)
-                    experiment_data.to_pickle(path_pickle)
+                    experiment_data = read_df (path_experiments)
+                    self.log_results (dict_results, experiment_data, experiment_number, run_number, time_spent)
 
     def rerun_experiment_par (self, experiments, run_numbers=None, parameters={}):
 
@@ -924,10 +905,11 @@ class ExperimentManager (object):
 
         defaults = self.get_default_parameters(parameters)
         current_epoch = parameters.get(name_epoch, defaults.get(name_epoch))
+        mi_epoch = (dflt.parameters_col, name_epoch, '')
         if current_epoch is None:
             current_epoch = -1
         if len(experiment_numbers) > 1:
-            epochs = experiment_data.loc[experiment_numbers,name_epoch].copy()
+            epochs = experiment_data.loc[experiment_numbers, mi_epoch].copy()
             epochs[epochs.isnull()]=defaults.get(name_epoch)
             epochs = epochs.loc[epochs<=current_epoch]
             if epochs.shape[0] == 0:
@@ -947,7 +929,7 @@ class ExperimentManager (object):
 
         prev_epoch = -1
         if os.path.exists(path_model_history):
-            summary = pickle.load(open(path_model_history, 'rb'))
+            summary = joblib.load (path_model_history)
             prev_epoch = summary.get(name_last_epoch)
             if prev_epoch is None:
                 key_score = self.key_score
@@ -986,7 +968,7 @@ class ExperimentManager (object):
             elif use_best:
                 parameters['resume'] = f'{prev_path_results}/{name_best_model}.{model_extension}'
             else:
-                summary = pickle.load(open(path_model_history, 'rb'))
+                summary = joblib.load (path_model_history)
                 prev_epoch = summary.get(name_last_epoch)
                 key_score = self.key_score
                 if prev_epoch is None:
@@ -1025,7 +1007,7 @@ class ExperimentManager (object):
         path_results_file = f'{path_results}/{name_result_file}'
         dict_results = None
         if os.path.exists (path_results_file):
-            history = pickle.load(open(path_results_file, 'rb'))
+            history = joblib.load (path_results_file)
             metrics = parameters.get('key_scores')
             if metrics is None:
                 metrics = history.keys()
@@ -1074,7 +1056,7 @@ class ExperimentManager (object):
         path_results_file = f'{path_results}/{name_result_file}'
         dict_results = None
         if os.path.exists (path_results_file):
-            dict_results = pickle.load(open(path_results_file, 'rb'))
+            dict_results = joblib.load (path_results_file)
             if 'last' not in dict_results.keys() and 'epoch' in dict_results.keys():
                 dict_results['last'] = dict_results['epoch']
             if 'last' not in dict_results:
@@ -1108,12 +1090,12 @@ def get_git_revision_hash (path_experiments=None):
         git_hash = subprocess.check_output(['git', 'rev-parse', 'HEAD'])
         git_hash = str(git_hash)
         if path_experiments is not None:
-            json.dump(git_hash, open(path_experiments/'git_hash.json', 'wt'))
+            json_dump(git_hash, path_experiments/'git_hash.json')
     except:
         logger = logging.getLogger("experiment_manager")
         if path_experiments is not None and os.path.exists(path_experiments):
             logger.info ('could not get git hash, retrieving it from disk...')
-            git_hash = json.load(open(path_experiments/'git_hash.json', 'rt'))
+            git_hash = json_load (path_experiments/'git_hash.json')
         else:
             logger.info ('could not get git hash, using empty string...')
             git_hash = ''
@@ -1149,27 +1131,27 @@ def record_parameters (path_save, parameters, other_parameters=None, em_args=Non
     joblib.dump (to_pickle,f'{path_save}/parameters.pk')
 
     try:
-        json.dump(parameters, open(f'{path_save}/parameters.json', 'wt'))
+        json_dump(parameters, f'{path_save}/parameters.json')
     except:
         pass
     if other_parameters is not None:
         try:
-            json.dump(other_parameters, open (f'{path_save}/other_parameters.json', 'wt'))
+            json_dump(other_parameters, f'{path_save}/other_parameters.json')
         except:
             pass
     if em_args is not None:
         try:
-            json.dump(em_args, open (f'{path_save}/em_args.json', 'wt'))
+            json_dump(em_args, f'{path_save}/em_args.json')
         except:
             pass
     if info is not None:
         try:
-            json.dump(info, open (f'{path_save}/info.json', 'wt'))
+            json_dump(info, f'{path_save}/info.json')
         except:
             pass
     if em_attrs is not None:
         try:
-            json.dump(em_attrs, open (f'{path_save}/em_attrs.json', 'wt'))
+            json_dump(em_attrs, f'{path_save}/em_attrs.json')
         except:
             pass
 
@@ -1196,35 +1178,21 @@ def mypprint(parameters, dict_name=None):
     return text
 
 # Cell
-def load_or_create_experiment_values (path_csv, parameters, precision=1e-15):
-
-    logger = logging.getLogger("experiment_manager")
-    path_pickle = path_csv.replace('csv', 'pk')
+def load_or_create_experiment_values (path_experiments, parameters, precision=1e-15, logger=None):
+    if logger is None: logger = logging.getLogger("experiment_manager")
     experiment_numbers = []
     changed_dataframe = False
 
-    if os.path.exists (path_pickle) or os.path.exists (path_csv):
-        read_csv_flag = False
-        if os.path.exists (path_pickle):
-            # work-around for solving the issue with pandas versions
-            # Pandas >= 1.1.0 presents problems when reading pickle files
-            # from earlier versions
-            try:
-                experiment_data = pd.read_pickle (path_pickle)
-                experiment_data = experiment_data.copy()
-            except AttributeError:
-                read_csv_flag = True
-        else:
-            read_csv_flag = True
-        if read_csv_flag:
-            experiment_data = pd.read_csv (path_csv, index_col=0)
-            experiment_data.to_pickle(path_pickle)
-
+    experiment_data = read_df (path_experiments)
+    if experiment_data is not None:
+        write_binary_df_if_not_exists (experiment_data, path_experiments)
+        experiment_data = experiment_data.copy()
         experiment_data, removed_defaults = remove_defaults_from_experiment_data (experiment_data)
 
-        # Finds rows that match parameters. If the dataframe doesn't have any parameter with that name, a new column is created and changed_dataframe is set to True
+        # Finds rows that match parameters. If the dataframe doesn't have any parameter with that name,
+        # a new column is created and changed_dataframe is set to True
         experiment_numbers, changed_dataframe, _ = experiment_utils.find_rows_with_parameters_dict (
-            experiment_data, parameters, precision = precision
+            experiment_data, parameters, precision=precision
         )
 
         changed_dataframe = changed_dataframe or removed_defaults
@@ -1235,15 +1203,23 @@ def load_or_create_experiment_values (path_csv, parameters, precision=1e-15):
         experiment_data = pd.DataFrame()
 
     if len(experiment_numbers) == 0:
-        experiment_data = experiment_data.append (parameters, ignore_index=True)
+        columns = pd.MultiIndex.from_product (
+            [[dflt.parameters_col], list(parameters.keys()), ['']])
+        experiment_number = experiment_data.shape[0]
+        if experiment_data.empty:
+            experiment_data = experiment_data.append (parameters, ignore_index=True)
+            experiment_data.columns = columns
+        else:
+            experiment_data.loc[experiment_number]=None
+            experiment_data[[c for c in columns if c not in experiment_data]] = None
+            experiment_data.loc [experiment_number, columns] = parameters.values()
+            experiment_data = experiment_data[experiment_data.columns.sort_values()]
         changed_dataframe = True
-        experiment_number = experiment_data.shape[0]-1
     else:
         experiment_number = experiment_numbers[0]
 
     if changed_dataframe:
-        experiment_data.to_csv(path_csv)
-        experiment_data.to_pickle(path_pickle)
+        write_df (experiment_data, path_experiments)
 
     return experiment_number, experiment_data
 
@@ -1253,7 +1229,7 @@ def store_parameters (path_experiments, experiment_number, parameters):
     path_experiments = Path(path_experiments).resolve() if path_experiments is not None else None
     path_hp_dictionary = path_experiments/'parameters.pk'
     if os.path.exists(path_hp_dictionary):
-        all_parameters = pickle.load (open(path_hp_dictionary,'rb'))
+        all_parameters = joblib.load (path_hp_dictionary)
     else:
         all_parameters = {}
     if experiment_number not in all_parameters.keys():
@@ -1262,10 +1238,10 @@ def store_parameters (path_experiments, experiment_number, parameters):
         f.write(str_par)
         f.close()
         all_parameters[experiment_number] = parameters
-        pickle.dump (all_parameters, open(path_hp_dictionary,'wb'))
+        joblib.dump (all_parameters, path_hp_dictionary)
 
     # pickle number of current experiment, for visualization
-    pickle.dump (experiment_number, open(path_experiments/'current_experiment_number.pkl','wb'))
+    joblib.dump (experiment_number, path_experiments/'current_experiment_number.pkl')
 
 # Cell
 def isnull (experiment_data, experiment_number, name_column):
@@ -1273,10 +1249,7 @@ def isnull (experiment_data, experiment_number, name_column):
 
 # Cell
 def get_experiment_number (path_experiments, parameters = {}):
-
-    path_csv = path_experiments/'experiments_data.csv'
-    path_pickle = path_csv.replace('csv', 'pk')
-    experiment_number, _ = load_or_create_experiment_values (path_csv, parameters)
+    experiment_number, _ = load_or_create_experiment_values (path_experiments, parameters)
 
     return experiment_number
 

@@ -5,6 +5,7 @@ __all__ = ['parse_args', 'parse_arguments_and_run', 'main']
 # Cell
 import sys
 import argparse
+import warnings
 
 from ..config.hpconfig import get_experiment_manager
 import hpsearch.config.hp_defaults as dflt
@@ -22,6 +23,14 @@ def parse_args (args):
     return pars
 
 def parse_arguments_and_run (args):
+
+    print (f'\n{"*"*100}')
+    print (f'{"*"*100}')
+    print (f'{"*"*100}')
+    print ('WARNING: should use rerun instead')
+    print (f'{"*"*100}')
+    print (f'{"*"*100}\n')
+    warnings.warn ('WARNING: should use rerun instead')
 
     pars = parse_args(args)
 

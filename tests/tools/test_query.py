@@ -14,6 +14,7 @@ from dsblocks.utils.nbdev_utils import md
 
 from hpsearch.tools.query import *
 from hpsearch.examples.dummy_experiment_manager import generate_data
+import hpsearch.config.hp_defaults as dflt
 
 # Comes from query.ipynb, cell
 def test_do_query_and_show ():
@@ -23,9 +24,10 @@ def test_do_query_and_show ():
     df=do_query_and_show (manager_path=em.manager_path)
     assert sorted(os.listdir (f'test_{path_results}/default/managers'))==['fields', 'info', 'logs.txt', 'whole']
     assert sorted(os.listdir (f'test_{path_results}/default/managers/whole'))==['DummyExperimentManager-default.pk', 'last.pk']
-    assert (df.epochs == [15,30,5,15,30,15,5,30,5]).all()
-    assert (df.offset == [.6,.6,.6,.3,.3,.1,.3,.1,.1]).all()
-    assert (df['mean'] == [0.97, 0.89, 0.81, 0.8 , 0.65, 0.55, 0.46, 0.44, 0.19]).all()
+    par = lambda parameter: (dflt.parameters_col, parameter, '')
+    assert (df[par('epochs')] == [15,30,5,15,30,15,5,30,5]).all()
+    assert (df[par('offset')] == [.6,.6,.6,.3,.3,.1,.3,.1,.1]).all()
+    assert (df[(dflt.stats_col, 'validation_accuracy', 'mean')] == [0.97, 0.89, 0.81, 0.8 , 0.65, 0.55, 0.46, 0.44, 0.19]).all()
 
     em.remove_previous_experiments (parent=True)
 

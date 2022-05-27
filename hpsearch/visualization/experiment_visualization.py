@@ -11,11 +11,13 @@ import joblib
 import pandas as pd
 from IPython.display import display
 import visdom
+import warnings
+warnings.filterwarnings('ignore')
+
 from ..config.hpconfig import get_path_results, get_path_experiments, get_experiment_manager
 import hpsearch.utils.experiment_utils as ut
 from . import plot_utils
-import warnings
-warnings.filterwarnings('ignore')
+from ..utils.experiment_utils import read_df, write_df
 
 # Cell
 class MultiHistoryPlotter ():
@@ -55,7 +57,7 @@ class MultiHistoryPlotter ():
         self.metrics = metrics if metrics is not None else self.metrics
         self.metrics_second = metrics_second if metrics_second is not None else self.metrics_second
 
-        df = pd.read_csv(f'{self.path_experiments}/experiments_data.csv', index_col=0)
+        df = read_df (self.path_experiments)
         df = ut.replace_with_default_values (df)
         df2 = ut.get_experiment_parameters (df.loc[self.experiments], only_not_null=True)
         parameters2, df2 = ut.get_parameters_unique(df2)
@@ -211,23 +213,32 @@ def plot_multiple_histories (experiments, **kwargs):
     return multi_history_plotter
 
 # Cell
-def plot_metric_relationship (metric_1, metric_2, folder_experiments=None, run_numbers=None,
+def plot_metric_relationship (metric_1, metric_2, run_numbers=None,
                               experiments=None, experiment_subset=None,
                               backend='visdom', **kwargs):
-    df = ut.get_experiment_data (folder_experiments=folder_experiments, experiments=experiments)
-    df_metric_1 = ut.get_experiment_scores (experiment_data=df, suffix_results=f'_{metric_1}', remove_suffix=True, class_ids=run_numbers)
-    df_metric_2 = ut.get_experiment_scores (experiment_data=df, suffix_results=f'_{metric_2}', remove_suffix=True, class_ids=run_numbers)
+    df = ut.get_experiment_data ()
+    df_metric_1 = ut.get_experiment_scores (experiment_data=df, score_name=f'{metric_1}',
+                                            remove_score_name=True, run_number=run_numbers)
+    df_metric_2 = ut.get_experiment_scores (experiment_data=df, score_name=f'{metric_2}',
+                                            remove_score_name=True, run_number=run_numbers)
 
-    traces=plot_utils.add_trace(df_metric_1.values, df_metric_2.values, traces=[], style='A.', label='all experiments', backend=backend);
+    traces=plot_utils.add_trace(df_metric_1.values, df_metric_2.values, traces=[], style='A.',
+                                label='all experiments', backend=backend);
 
     if experiment_subset is not None:
-        df_metric_1_subset = ut.get_experiment_scores (experiment_data=df.loc[experiment_subset], suffix_results=f'_{metric_1}', remove_suffix=True, class_ids=run_numbers)
-        df_metric_2_subset = ut.get_experiment_scores (experiment_data=df.loc[experiment_subset], suffix_results=f'_{metric_2}', remove_suffix=True, class_ids=run_numbers)
-        traces=plot_utils.add_trace(df_metric_1_subset.values, df_metric_2_subset.values, traces=traces, style='A.', label=f'selected subset', backend=backend);
+        df_metric_1_subset = ut.get_experiment_scores (experiment_data=df.loc[experiment_subset],
+                                                       score_name=f'{metric_1}', remove_score_name=True,
+                                                       run_number=run_numbers)
+        df_metric_2_subset = ut.get_experiment_scores (experiment_data=df.loc[experiment_subset],
+                                                       score_name=f'{metric_2}', remove_score_name=True,
+                                                       run_number=run_numbers)
+        traces=plot_utils.add_trace(df_metric_1_subset.values, df_metric_2_subset.values, traces=traces,
+                                    style='A.', label=f'selected subset', backend=backend);
 
     plot_utils.plot(np.linspace(df_metric_1.values.min(), df_metric_1.values.max(), 100),
                 np.linspace(df_metric_2.values.min(), df_metric_2.values.max(), 100),
-                traces=traces, style='A-', label='linear', title=f'{metric_1} vs {metric_2}', xlabel=metric_1, ylabel=metric_2, backend=backend);
+                traces=traces, style='A-', label='linear', title=f'{metric_1} vs {metric_2}',
+                xlabel=metric_1, ylabel=metric_2, backend=backend);
 
 # Cell
 ## Generic Visualization

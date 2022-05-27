@@ -18,6 +18,7 @@ from ..config.hpconfig import get_path_experiments, get_path_results, get_experi
 import hpsearch.utils.experiment_utils as ut
 from .metric_visualization import include_best_and_last_experiment
 import hpsearch.config.hp_defaults as dflt
+from ..utils.experiment_utils import read_df, write_df
 
 # Cell
 def print_info (experiments=[-1], path_experiments=None, folder=None, display_all=False, include_best=False,
@@ -34,9 +35,9 @@ def print_info (experiments=[-1], path_experiments=None, folder=None, display_al
 
     path_experiments = em.path_experiments
 
-    df = pd.read_pickle (path_experiments/'experiments_data.pk')
+    df = read_df (path_experiments)
 
-    metric_column = f'{run_number}_{em.key_score}'
+    metric_column = (dflt.scores_col, em.key_score, run_number)
 
     experiments = include_best_and_last_experiment ([em.key_score], experiments=experiments,
                                                     run_number=run_number, op=em.op)
@@ -47,19 +48,17 @@ def print_info (experiments=[-1], path_experiments=None, folder=None, display_al
     for experiment in experiments:
         parameters = ut.get_parameters_columns(df.loc[[experiment]], True)
         print (f'\nparameters for {experiment}:')
-        df2 = df.copy()
-        df2[metric] = df.loc[experiment, metric_column]
-        display (df2.loc[experiment, parameters + [metric]])
+        display (df.loc[experiment, parameters + [metric_column]])
         print ('scores for all experiments:')
-        df_scores = ut.get_experiment_scores(df.loc[[experiment]], suffix_results='_%s' %metric, remove_suffix=True)
+        df_scores = ut.get_experiment_scores(df.loc[[experiment]], score_name=metric, remove_score_name=True)
         display(df_scores.round(round_digits))
 
         path_results = em.get_path_results (experiment, run_number)
         print (f'path to results: {path_results}')
         scores_names = ut.get_scores_names (df, experiment=experiment, run_number=run_number)
-        print (f'scores names: {scores_names}')
+        print (f'scores names: {sorted(scores_names)}')
         monitored_metrics = ut.get_monitored_training_metrics (experiment, run_number, path_results=path_results)
-        print (f'monitored metrics: {monitored_metrics}')
+        print (f'\nmonitored metrics: {sorted(monitored_metrics)}')
         print ('\n*****************************')
 
 # Cell

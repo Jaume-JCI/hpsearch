@@ -9,19 +9,20 @@ import shutil
 
 from . import experiment_utils
 import hpsearch.config.hp_defaults as dflt
+from .experiment_utils import read_df, write_df
 
 # Cell
 def join_experiments (path_source, path_destination, key_score=None):
-    experiment_data_source = pd.read_pickle ('%s/experiments_data.pk' %path_source)
-    experiment_data_destination = pd.read_pickle ('%s/experiments_data.pk' %path_destination)
+    experiment_data_source = read_df (path_source)
+    experiment_data_destination = read_df (path_destination)
     experiment_data_source, changed_source = remove_defaults_from_experiment_data (experiment_data_source)
     experiment_data_destination, changed_destination = remove_defaults_from_experiment_data (experiment_data_destination)
 
     for experiment_number_source in range(experiment_data_source.shape[0]):
         path_experiment_source = '%s/experiments/%05d' %(path_source, experiment_number_source)
-        parameters_source, _ = pickle.load(open('%s/parameters.pk' %path_experiment_source,'rb'))
+        parameters_source, _ = joblib.load(f'{path_experiment_source}/parameters.pk')
         experiment_number_destination, changed_dataframe, _ = experiment_utils.find_rows_with_parameters_dict (experiment_data_destination, parameters_source)
-        path_experiment_destination = '%s/experiments/%05d' %(path_destination, experiment_number_destination)
+        path_experiment_destination = f'{path_destination}/experiments/{experiment_number_destination:5d}'
         if changed_dataframe:
             # move folders
             os.rename (path_experiment_source, path_experiment_destination)
@@ -67,8 +68,7 @@ def join_experiments (path_source, path_destination, key_score=None):
                 for score_name_source, score_name_destination in zip(scores_name_source, scores_name_destination):
                     experiment_data_destination.loc[experiment_number_destination, score_name_destination] = experiment_data_source.loc[experiment_number_source, score_name_source]
 
-        experiment_data_destination.to_csv ('%s/experiments_data.csv' %path_destination)
-        experiment_data_destination.to_pickle ('%s/experiments_data.pk' %path_destination)
+        write_df (experiment_data_destination, path_destination)
 
 # Cell
 def remove_defaults_from_experiment_data (experiment_data):
@@ -113,9 +113,7 @@ def remove_experiments (experiments=[], folder=None, manager_path=dflt.manager_p
     path_experiments = em.path_experiments
 
     # 1. remove experiments from csv file
-    path_csv = path_experiments/'experiments_data.csv'
-    path_pickle = str(path_csv).replace('csv', 'pk')
-    experiment_data = pd.read_pickle (path_pickle)
+    experiment_data = read_df (path_experiments)
     experiment_data = experiment_data.drop (index=experiments)
 
     # 2. remove experiments folders
@@ -134,5 +132,4 @@ def remove_experiments (experiments=[], folder=None, manager_path=dflt.manager_p
     experiment_data.index = range(len(experiment_data.index))
 
     # 5. save experiment data
-    experiment_data.to_csv (path_csv)
-    experiment_data.to_pickle (path_pickle)
+    write_df (experiment_data, path_experiments)
