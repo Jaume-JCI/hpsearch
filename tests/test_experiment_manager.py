@@ -8,7 +8,7 @@ __all__ = ['init_em_fixture', 'test_get_path_alternative', 'test_basic_usage', '
            'test_storing_em_args_and_parameters', 'test_grid_search', 'test_run_multiple_repetitions',
            'parameter_sampler', 'test_hp_optimization', 'parameter_sampler', 'test_rerun_experiment',
            'test_rerun_experiment_pipeline', 'test_rerun_experiment_par', 'test_get_git_revision_hash',
-           'test_load_or_create_experiment_values']
+           'test_load_or_create_experiment_values', 'test_get_experiment_numbers']
 
 # Cell
 import pytest
@@ -41,7 +41,7 @@ def test_get_path_alternative ():
     path_results = em.get_path_results (experiment_id=1, run_number=2)
     check_last_part (path_results,'test_basic/default/experiments/00001/2')
     path_alternative = em.get_path_alternative (path_results)
-    check_last_part (path_alternative, 'other_path/experiments/00001/2')
+    check_last_part (path_alternative, 'other_path/default/experiments/00001/2')
 
     em.remove_previous_experiments (parent=True)
 
@@ -1136,3 +1136,25 @@ def test_load_or_create_experiment_values ():
     pd.testing.assert_frame_equal (experiment_data_before,experiment_data)
 
     remove_previous_results (path_csv_folder)
+
+# Comes from experiment_manager.ipynb, cell
+def test_get_experiment_numbers ():
+    # get input data
+    em = init_em ('get_experiment_numbers')
+    parameters_single_value={'offset':0.1}
+    parameters_multiple_values={'rate': [0.03,0.01], 'epochs': [5, 7]}
+    em.grid_search (parameters_multiple_values=parameters_multiple_values,
+                    parameters_single_value=parameters_single_value,
+                    other_parameters={'verbose':False})
+    df = em.get_experiment_data ()
+    display(df)
+
+    # run `get_experiment_numbers`
+    experiment_numbers = get_experiment_numbers (em.path_experiments, parameters_single_value,
+                                                 parameters_multiple_values)
+
+    # check results
+    assert experiment_numbers==[0, 1, 2, 3]
+
+    # delete generated experiment data
+    em.remove_previous_experiments (parent=True)

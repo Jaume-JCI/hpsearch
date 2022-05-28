@@ -151,10 +151,13 @@ class ExperimentManager (object):
         path_results = path_experiment/f'{run_number}'
         return path_results
 
-    def get_path_alternative (self, path_results):
+    def get_path_alternative (self, path_results, keep_parent_folder=True):
         if self.alternative_path is None:
             return path_results
-        path_alternative = str(path_results).replace (str(self.path_experiments), str(self.alternative_path))
+        if keep_parent_folder:
+            path_alternative = str(path_results).replace (str(self.path_experiments.parent), str(self.alternative_path))
+        else:
+            path_alternative = str(path_results).replace (str(self.path_experiments), str(self.alternative_path))
 
         return path_alternative
 
