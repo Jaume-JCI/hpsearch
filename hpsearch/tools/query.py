@@ -147,12 +147,12 @@ def parse_arguments_and_query (args):
 
     pars = parse_args(args)
 
-    do_query_and_show (pall=pars.a, best = pars.best, compact = pars.compact, exact=pars.exact,
-                       experiments=pars.experiments, pf = pars.f, last=pars.last,
-                       metric = pars.metric, op = pars.op, other_parameters=pars.other,
-                       input_range=pars.range, results=pars.results, folder= pars.folder,
-                       round=pars.round, runs = pars.runs, show=pars.show, stats=pars.stats,
-                       pv = pars.v, sort=pars.sort, col_width=pars.width, manager_path=pars.path)
+    do_query_and_show (pall=pars.a, best=pars.best, compact=pars.compact, exact=pars.exact,
+                       experiments=pars.experiments, pf=pars.f, last=pars.last,
+                       metric=pars.metric, op=pars.op, other_parameters=pars.other,
+                       input_range=pars.range, results=pars.results, folder=pars.folder,
+                       round=pars.round, runs=pars.runs, show=pars.show, stats=pars.stats,
+                       pv=pars.v, sort=pars.sort, col_width=pars.width, manager_path=pars.path)
 
 def main():
     parse_arguments_and_query (sys.argv[1:])
