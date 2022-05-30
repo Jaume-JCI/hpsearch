@@ -26,7 +26,7 @@ class MultiHistoryPlotter ():
                   ylegend=0.5, name_file='model_history.pk', op='max',
                   include_parameters_in_legend=False, backend='visdom',
                   use_run_number_in_label=True, use_run_number_in_title=False,
-                  write_scores_in_title=True, **kwargs):
+                  write_scores_in_title=None, **kwargs):
         self.experiments = experiments
         self.run_number = run_number
         self.path_experiments = path_experiments
@@ -46,7 +46,8 @@ class MultiHistoryPlotter ():
             self.path_experiments = get_path_experiments()
         self.use_run_number_in_label = use_run_number_in_label
         self.use_run_number_in_title = use_run_number_in_title
-        self.write_scores_in_title = write_scores_in_title
+        self.write_scores_in_title = (write_scores_in_title if write_scores_in_title is not None
+                                      else len(run_number) <= 5)
 
     def plot_multiple_histories (self, experiments=None, run_number=None, metrics=None,
                                  metrics_second=None):

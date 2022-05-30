@@ -207,16 +207,18 @@ class DummyExperimentManager (ExperimentManager):
         plot_utils.plot(title=metric, xlabel='epoch', ylabel=metric, traces=traces, backend=backend)
 
 # Cell
-def run_multiple_experiments (nruns=1, noise=0.0, verbose=True, rate=0.03, values_to_explore=None,
-                              other_parameters={}, EM=DummyExperimentManager, em=None, em_args={},
+def run_multiple_experiments (nruns=1, noise=0.0, verbose=True, rate=0.03, parameters_multiple_values=None,
+                              parameters_single_value=None, other_parameters={},
+                              EM=DummyExperimentManager, em=None, em_args={},
                               **kwargs):
     if em is None:
         em = EM (**kwargs)
-    parameters_single_value = dict(rate=rate, noise=noise)   # parameters where we use a fixed value
-    if values_to_explore is None:
+    # parameters where we use a fixed value
+    if parameters_single_value is None: parameters_single_value = dict(rate=rate, noise=noise)
+    if parameters_multiple_values is None:
         parameters_multiple_values=dict(offset=[0.1, 0.3, 0.6], epochs=[5, 15, 30]) # parameters where we try multiple values
     else:
-        parameters_multiple_values=values_to_explore
+        parameters_multiple_values=parameters_multiple_values
     other_parameters_original = other_parameters
     other_parameters = dict (verbose=verbose) # parameters that control other aspects that are not part of our experiment definition (a new experiment is not created if we assign different values for these parametsers)
     other_parameters.update (other_parameters_original)
@@ -228,7 +230,7 @@ def run_multiple_experiments (nruns=1, noise=0.0, verbose=True, rate=0.03, value
             **em_args)
 
 # Cell
-def generate_data (name_folder, parameters_multiple_values=None,
+def generate_data (name_folder, parameters_multiple_values=None, rate=0.03,
                    parameters_single_value=None, other_parameters={}, verbose=0, em_args={}, **kwargs):
     np.random.seed (42)
     path_experiments=f'test_{name_folder}/default'
@@ -236,8 +238,8 @@ def generate_data (name_folder, parameters_multiple_values=None,
     em = DummyExperimentManager (path_experiments=path_experiments, manager_path=manager_path,
                                  verbose=verbose, **kwargs)
     em.remove_previous_experiments (parent=True)
-    run_multiple_experiments (em=em, nruns=5, noise=0.1, verbose=False,
-                              values_to_explore=parameters_multiple_values,
+    run_multiple_experiments (em=em, nruns=5, noise=0.1, rate=rate, verbose=False,
+                              parameters_multiple_values=parameters_multiple_values,
                               parameters_single_value=parameters_single_value,
                               other_parameters=other_parameters,  em_args=em_args)
     return em

@@ -29,9 +29,9 @@ def generate_data_exp_utils (name_folder):
                                  verbose=0)
     em.remove_previous_experiments (parent=True)
     run_multiple_experiments(em=em, nruns=5, noise=0.1, verbose=False,
-                             values_to_explore=dict(offset=[0.1, 0.3, 0.6], epochs=[5, 10, 100]))
+                             parameters_multiple_values=dict(offset=[0.1, 0.3, 0.6], epochs=[5, 10, 100]))
     run_multiple_experiments(em=em, nruns=5, noise=0.1, verbose=False, rate=0.0001,
-                             values_to_explore=dict(offset=[0.1, 0.3, 0.6], epochs=[5, 10, 100]))
+                             parameters_multiple_values=dict(offset=[0.1, 0.3, 0.6], epochs=[5, 10, 100]))
     return em
 
 # Comes from experiment_utils.ipynb, cell

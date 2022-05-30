@@ -114,7 +114,7 @@ def remove_previous_experiments ():
     dummy_em.remove_previous_experiments (EM=ComplexDummyExperimentManager)
 
 # Cell
-def generate_data (name_folder, nruns=5, noise=0.1, verbose_model=False, verbose=0,
+def generate_data (name_folder, nruns=5, rate=0.03, noise=0.1, verbose_model=False, verbose=0,
                    parameters_multiple_values=None, parameters_single_value=None,
                    other_parameters={}, em_args={}, **kwargs):
     np.random.seed (42)
@@ -124,7 +124,7 @@ def generate_data (name_folder, nruns=5, noise=0.1, verbose_model=False, verbose
                                         verbose=verbose, **kwargs)
     em.remove_previous_experiments (parent=True)
     run_multiple_experiments (em=em, nruns=nruns, noise=noise, verbose=verbose,
-                              values_to_explore=parameters_multiple_values,
+                              parameters_multiple_values=parameters_multiple_values,
                               parameters_single_value=parameters_single_value,
                               other_parameters=other_parameters, em_args=em_args)
     return em

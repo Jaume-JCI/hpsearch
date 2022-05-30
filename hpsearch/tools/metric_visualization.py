@@ -48,8 +48,8 @@ def include_best_and_last_experiment (metrics, experiments=[-1, -2], run_number=
     return experiments
 
 # Cell
-def metric_visualization (experiments=[-1,-2], run_number=0, folder=None, metric=None, op = None,
-                          parameters=None, name_file='model_history.pk', visualization_options = {},
+def metric_visualization (experiments=[-1,-2], run_number=0, folder=None, metric=None, op= None,
+                          parameters=None, name_file='model_history.pk', visualization_options={},
                           backend='plotly', manager_path=dflt.manager_path, **kwargs):
 
     em = get_experiment_manager (manager_path=manager_path)
@@ -66,9 +66,12 @@ def metric_visualization (experiments=[-1,-2], run_number=0, folder=None, metric
         metrics = [metric]
     else:
         metrics = metric
+    if not isinstance (experiments, list): experiments = [experiments]
+    if isinstance (run_number, range): run_number = list(run_number)
+    if not isinstance (run_number, list): run_number = [run_number]
 
     experiments = include_best_and_last_experiment (metrics, experiments=experiments,
-                                                    run_number=run_number, op=op,
+                                                    run_number=run_number[0], op=op,
                                                     manager_path=manager_path)
 
     visualization_options = visualization_options.copy()
