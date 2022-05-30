@@ -48,9 +48,11 @@ nb_path: "nbs/experiment_manager.ipynb"
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">optuna</span>
 
-<span class="kn">from</span> <span class="nn">block_types.utils.nbdev_utils</span> <span class="kn">import</span> <span class="n">md</span>
+<span class="kn">from</span> <span class="nn">dsblocks.utils.nbdev_utils</span> <span class="kn">import</span> <span class="n">md</span>
+<span class="kn">from</span> <span class="nn">dsblocks.utils.utils</span> <span class="kn">import</span> <span class="n">check_last_part</span><span class="p">,</span> <span class="n">remove_previous_results</span>
 
 <span class="kn">from</span> <span class="nn">hpsearch.examples.complex_dummy_experiment_manager</span> <span class="kn">import</span> <span class="n">init_em</span>
+<span class="kn">import</span> <span class="nn">hpsearch.config.hp_defaults</span> <span class="k">as</span> <span class="nn">dflt</span>
 </pre></div>
 
     </div>
@@ -77,7 +79,7 @@ nb_path: "nbs/experiment_manager.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="ExperimentManager" class="doc_header"><code>class</code> <code>ExperimentManager</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L38" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ExperimentManager</code>(<strong><code>allow_base_class</code></strong>=<em><code>False</code></em>, <strong><code>path_experiments</code></strong>=<em><code>'results/hpsearch'</code></em>, <strong><code>defaults</code></strong>=<em><code>{}</code></em>, <strong><code>root</code></strong>=<em><code>''</code></em>, <strong><code>metric</code></strong>=<em><code>'accuracy'</code></em>, <strong><code>op</code></strong>=<em><code>'max'</code></em>, <strong><code>alternative_root_path</code></strong>=<em><code>None</code></em>, <strong><code>path_data</code></strong>=<em><code>None</code></em>, <strong><code>name_model_history</code></strong>=<em><code>'model_history.pk'</code></em>, <strong><code>model_file_name</code></strong>=<em><code>'model.h5'</code></em>, <strong><code>name_epoch</code></strong>=<em><code>'epochs'</code></em>, <strong><code>result_file</code></strong>=<em><code>'dict_results.pk'</code></em>, <strong><code>target_model_file</code></strong>=<em><code>None</code></em>, <strong><code>destination_model_file</code></strong>=<em><code>None</code></em>, <strong><code>root_folder</code></strong>=<em><code>None</code></em>, <strong><code>manager_path</code></strong>=<em><code>'em_obj'</code></em>, <strong><code>logger</code></strong>=<em><code>None</code></em>, <strong><code>verbose</code></strong>:<code>int</code>=<em><code>0</code></em>, <strong><code>name_logger</code></strong>:<code>str</code>=<em><code>'experiment_manager'</code></em>)</p>
+<h2 id="ExperimentManager" class="doc_header"><code>class</code> <code>ExperimentManager</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L38" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ExperimentManager</code>(<strong><code>allow_base_class</code></strong>=<em><code>False</code></em>, <strong><code>path_experiments</code></strong>=<em><code>'hpsearch/results'</code></em>, <strong><code>folder</code></strong>=<em><code>None</code></em>, <strong><code>parent_path</code></strong>=<em><code>None</code></em>, <strong><code>alternative_path</code></strong>=<em><code>None</code></em>, <strong><code>alternative_parent_path</code></strong>=<em><code>None</code></em>, <strong><code>defaults</code></strong>=<em><code>{}</code></em>, <strong><code>metric</code></strong>=<em><code>'accuracy'</code></em>, <strong><code>op</code></strong>=<em><code>'max'</code></em>, <strong><code>path_data</code></strong>=<em><code>None</code></em>, <strong><code>name_model_history</code></strong>=<em><code>'model_history.pk'</code></em>, <strong><code>model_file_name</code></strong>=<em><code>'model.h5'</code></em>, <strong><code>name_epoch</code></strong>=<em><code>'epochs'</code></em>, <strong><code>result_file</code></strong>=<em><code>'dict_results.pk'</code></em>, <strong><code>target_model_file</code></strong>=<em><code>None</code></em>, <strong><code>destination_model_file</code></strong>=<em><code>None</code></em>, <strong><code>manager_path</code></strong>=<em><code>'em_obj'</code></em>, <strong><code>non_pickable_fields</code></strong>=<em><code>[]</code></em>, <strong><code>avoid_saving_fields</code></strong>=<em><code>[]</code></em>, <strong><code>logger</code></strong>=<em><code>None</code></em>, <strong><code>verbose</code></strong>:<code>int</code>=<em><code>0</code></em>, <strong><code>name_logger</code></strong>:<code>str</code>=<em><code>'experiment_manager'</code></em>)</p>
 </blockquote>
 
 </div>
@@ -99,7 +101,7 @@ nb_path: "nbs/experiment_manager.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="get_path_alternative">get_path_alternative<a class="anchor-link" href="#get_path_alternative"> </a></h3>
+<h3 id="set_path_experiments">set_path_experiments<a class="anchor-link" href="#set_path_experiments"> </a></h3>
 </div>
 </div>
 </div>
@@ -114,7 +116,7 @@ nb_path: "nbs/experiment_manager.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_get_path_alternative" class="doc_header"><code>test_get_path_alternative</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L33" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_get_path_alternative</code>()</p>
+<h4 id="test_set_path_experiments" class="doc_header"><code>test_set_path_experiments</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L37" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_set_path_experiments</code>()</p>
 </blockquote>
 
 </div>
@@ -141,7 +143,143 @@ nb_path: "nbs/experiment_manager.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_get_path_alternative</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_set_path_experiments</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>running test_set_path_experiments
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="set_alternative_path">set_alternative_path<a class="anchor-link" href="#set_alternative_path"> </a></h3>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="test_set_alternative_path" class="doc_header"><code>test_set_alternative_path</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L55" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_set_alternative_path</code>()</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_set_alternative_path</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>running test_set_alternative_path
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="get_path_alternative">get_path_alternative<a class="anchor-link" href="#get_path_alternative"> </a></h3>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="test_get_path_alternative" class="doc_header"><code>test_get_path_alternative</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L74" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_get_path_alternative</code>()</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_get_path_alternative</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">,</span> <span class="n">do</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -155,6 +293,78 @@ nb_path: "nbs/experiment_manager.ipynb"
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>running test_get_path_alternative
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="remove_previous_experiments">remove_previous_experiments<a class="anchor-link" href="#remove_previous_experiments"> </a></h3>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="test_remove_previous_experiments" class="doc_header"><code>test_remove_previous_experiments</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L86" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_remove_previous_experiments</code>()</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_remove_previous_experiments</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>running test_remove_previous_experiments
+/home/jcidatascience/jaume/workspace/remote/hpsearch/test_basic/default
+[&#39;myfile.pk&#39;]
+/home/jcidatascience/jaume/workspace/remote/hpsearch/test_other_path_basic/default
+[&#39;other_file.pk&#39;]
 </pre>
 </div>
 </div>
@@ -196,7 +406,7 @@ nb_path: "nbs/experiment_manager.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_basic_usage" class="doc_header"><code>test_basic_usage</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L45" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_basic_usage</code>()</p>
+<h4 id="test_basic_usage" class="doc_header"><code>test_basic_usage</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L106" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_basic_usage</code>()</p>
 </blockquote>
 
 </div>
@@ -223,125 +433,10 @@ nb_path: "nbs/experiment_manager.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_basic_usage</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_basic_usage</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>running test_basic_usage
-fitting model with 10 epochs
-epoch 0: accuracy: 0.15000000000000002
-epoch 1: accuracy: 0.2
-epoch 2: accuracy: 0.25
-epoch 3: accuracy: 0.3
-epoch 4: accuracy: 0.35
-epoch 5: accuracy: 0.39999999999999997
-epoch 6: accuracy: 0.44999999999999996
-epoch 7: accuracy: 0.49999999999999994
-epoch 8: accuracy: 0.5499999999999999
-epoch 9: accuracy: 0.6
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-
-
-<div class="output_text output_subarea ">
-<pre>[&#39;current_experiment_number.pkl&#39;,
- &#39;experiments&#39;,
- &#39;experiments_data.csv&#39;,
- &#39;experiments_data.pk&#39;,
- &#39;git_hash.json&#39;,
- &#39;managers&#39;,
- &#39;other_parameters.csv&#39;,
- &#39;parameters.pk&#39;,
- &#39;parameters.txt&#39;,
- &#39;summary.txt&#39;]</pre>
-</div>
-
-</div>
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<p>experiment dataframe:</p>
-
-</div>
-
-</div>
-
-<div class="output_area">
-
-
-<div class="output_html rendered_html output_subarea ">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>offset</th>
-      <th>rate</th>
-      <th>0_validation_accuracy</th>
-      <th>0_test_accuracy</th>
-      <th>time_0</th>
-      <th>date</th>
-      <th>0_finished</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0.1</td>
-      <td>0.05</td>
-      <td>0.6</td>
-      <td>0.5</td>
-      <td>0.002118</td>
-      <td>23:16:45.952801</td>
-      <td>True</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>folder created in `test_basic/experiments`:
-[&#39;00000&#39;]
-This folder has one sub-folder per run, since multiple runs can be done with the same parameters.
-contents of current run at `test_basic/experiments/00000`:
-[&#39;other_parameters.json&#39;, &#39;parameters.pk&#39;, &#39;parameters.txt&#39;, &#39;0&#39;, &#39;parameters.json&#39;]
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -365,7 +460,7 @@ contents of current run at `test_basic/experiments/00000`:
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_same_values" class="doc_header"><code>test_same_values</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L110" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_same_values</code>()</p>
+<h4 id="test_same_values" class="doc_header"><code>test_same_values</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L166" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_same_values</code>()</p>
 </blockquote>
 
 </div>
@@ -399,99 +494,6 @@ contents of current run at `test_basic/experiments/00000`:
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>running test_same_values
-fitting model with 10 epochs
-epoch 0: accuracy: 0.15000000000000002
-epoch 1: accuracy: 0.2
-epoch 2: accuracy: 0.25
-epoch 3: accuracy: 0.3
-epoch 4: accuracy: 0.35
-epoch 5: accuracy: 0.39999999999999997
-epoch 6: accuracy: 0.44999999999999996
-epoch 7: accuracy: 0.49999999999999994
-epoch 8: accuracy: 0.5499999999999999
-epoch 9: accuracy: 0.6
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<p>experiment dataframe:</p>
-
-</div>
-
-</div>
-
-<div class="output_area">
-
-
-<div class="output_html rendered_html output_subarea ">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>offset</th>
-      <th>rate</th>
-      <th>0_validation_accuracy</th>
-      <th>0_test_accuracy</th>
-      <th>time_0</th>
-      <th>date</th>
-      <th>0_finished</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0.1</td>
-      <td>0.05</td>
-      <td>0.6</td>
-      <td>0.5</td>
-      <td>0.002142</td>
-      <td>23:16:46.063727</td>
-      <td>True</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>folders created in `test_same_values/experiments`:
-[&#39;00000&#39;]
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
 </div>
     {% endraw %}
 
@@ -512,7 +514,7 @@ epoch 9: accuracy: 0.6
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_almost_same_values" class="doc_header"><code>test_almost_same_values</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L140" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_almost_same_values</code>()</p>
+<h4 id="test_almost_same_values" class="doc_header"><code>test_almost_same_values</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L199" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_almost_same_values</code>()</p>
 </blockquote>
 
 </div>
@@ -539,105 +541,10 @@ epoch 9: accuracy: 0.6
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_almost_same_values</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_almost_same_values</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>running test_almost_same_values
-fitting model with 10 epochs
-epoch 0: accuracy: 0.15000000000000002
-epoch 1: accuracy: 0.2
-epoch 2: accuracy: 0.25
-epoch 3: accuracy: 0.3
-epoch 4: accuracy: 0.35
-epoch 5: accuracy: 0.39999999999999997
-epoch 6: accuracy: 0.44999999999999996
-epoch 7: accuracy: 0.49999999999999994
-epoch 8: accuracy: 0.5499999999999999
-epoch 9: accuracy: 0.6
-fitting model with 10 epochs
-epoch 0: accuracy: 0.1500000000000001
-epoch 1: accuracy: 0.2000000000000002
-epoch 2: accuracy: 0.25000000000000033
-epoch 3: accuracy: 0.30000000000000043
-epoch 4: accuracy: 0.35000000000000053
-epoch 5: accuracy: 0.40000000000000063
-epoch 6: accuracy: 0.45000000000000073
-epoch 7: accuracy: 0.5000000000000009
-epoch 8: accuracy: 0.5500000000000009
-epoch 9: accuracy: 0.600000000000001
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-
-<div class="output_html rendered_html output_subarea ">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>offset</th>
-      <th>rate</th>
-      <th>0_validation_accuracy</th>
-      <th>0_test_accuracy</th>
-      <th>time_0</th>
-      <th>date</th>
-      <th>0_finished</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0.1</td>
-      <td>0.05</td>
-      <td>0.6</td>
-      <td>0.5</td>
-      <td>0.002263</td>
-      <td>23:16:46.184010</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>0.1</td>
-      <td>0.05</td>
-      <td>0.6</td>
-      <td>0.5</td>
-      <td>0.002381</td>
-      <td>23:16:46.228300</td>
-      <td>True</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
 </div>
 </div>
 
@@ -661,7 +568,7 @@ epoch 9: accuracy: 0.600000000000001
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_new_runs" class="doc_header"><code>test_new_runs</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L175" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_new_runs</code>()</p>
+<h4 id="test_new_runs" class="doc_header"><code>test_new_runs</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L242" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_new_runs</code>()</p>
 </blockquote>
 
 </div>
@@ -688,216 +595,10 @@ epoch 9: accuracy: 0.600000000000001
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_new_runs</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_new_runs</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>running test_new_runs
-fitting model with 10 epochs
-epoch 0: accuracy: 0.15000000000000002
-epoch 1: accuracy: 0.2
-epoch 2: accuracy: 0.25
-epoch 3: accuracy: 0.3
-epoch 4: accuracy: 0.35
-epoch 5: accuracy: 0.39999999999999997
-epoch 6: accuracy: 0.44999999999999996
-epoch 7: accuracy: 0.49999999999999994
-epoch 8: accuracy: 0.5499999999999999
-epoch 9: accuracy: 0.6
-fitting model with 10 epochs
-epoch 0: accuracy: 0.15000000000000002
-epoch 1: accuracy: 0.2
-epoch 2: accuracy: 0.25
-epoch 3: accuracy: 0.3
-epoch 4: accuracy: 0.35
-epoch 5: accuracy: 0.39999999999999997
-epoch 6: accuracy: 0.44999999999999996
-epoch 7: accuracy: 0.49999999999999994
-epoch 8: accuracy: 0.5499999999999999
-epoch 9: accuracy: 0.6
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<p>experiment dataframe:</p>
-
-</div>
-
-</div>
-
-<div class="output_area">
-
-
-<div class="output_html rendered_html output_subarea ">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>offset</th>
-      <th>rate</th>
-      <th>0_validation_accuracy</th>
-      <th>0_test_accuracy</th>
-      <th>time_0</th>
-      <th>date</th>
-      <th>0_finished</th>
-      <th>1_validation_accuracy</th>
-      <th>1_test_accuracy</th>
-      <th>time_1</th>
-      <th>1_finished</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0.1</td>
-      <td>0.05</td>
-      <td>0.6</td>
-      <td>0.5</td>
-      <td>0.001979</td>
-      <td>23:16:46.367942</td>
-      <td>True</td>
-      <td>0.6</td>
-      <td>0.5</td>
-      <td>0.001837</td>
-      <td>True</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>fitting model with 10 epochs
-epoch 0: accuracy: 0.15000000000000002
-epoch 1: accuracy: 0.2
-epoch 2: accuracy: 0.25
-epoch 3: accuracy: 0.3
-epoch 4: accuracy: 0.35
-epoch 5: accuracy: 0.39999999999999997
-epoch 6: accuracy: 0.44999999999999996
-epoch 7: accuracy: 0.49999999999999994
-epoch 8: accuracy: 0.5499999999999999
-epoch 9: accuracy: 0.6
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<p>experiment dataframe:</p>
-
-</div>
-
-</div>
-
-<div class="output_area">
-
-
-<div class="output_html rendered_html output_subarea ">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>offset</th>
-      <th>rate</th>
-      <th>0_validation_accuracy</th>
-      <th>0_test_accuracy</th>
-      <th>time_0</th>
-      <th>date</th>
-      <th>0_finished</th>
-      <th>1_validation_accuracy</th>
-      <th>1_test_accuracy</th>
-      <th>time_1</th>
-      <th>1_finished</th>
-      <th>2_validation_accuracy</th>
-      <th>2_test_accuracy</th>
-      <th>time_2</th>
-      <th>2_finished</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0.1</td>
-      <td>0.05</td>
-      <td>0.6</td>
-      <td>0.5</td>
-      <td>0.001979</td>
-      <td>23:16:46.416525</td>
-      <td>True</td>
-      <td>0.6</td>
-      <td>0.5</td>
-      <td>0.001837</td>
-      <td>True</td>
-      <td>0.6</td>
-      <td>0.5</td>
-      <td>0.002162</td>
-      <td>True</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>folders created in `test_new_runs/experiments`:
-[&#39;00000&#39;]
-[&#39;0&#39;, &#39;1&#39;, &#39;2&#39;, &#39;other_parameters.json&#39;, &#39;parameters.json&#39;, &#39;parameters.pk&#39;, &#39;parameters.txt&#39;]
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -921,7 +622,7 @@ epoch 9: accuracy: 0.6
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_second_experiment" class="doc_header"><code>test_second_experiment</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L236" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_second_experiment</code>()</p>
+<h4 id="test_second_experiment" class="doc_header"><code>test_second_experiment</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L303" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_second_experiment</code>()</p>
 </blockquote>
 
 </div>
@@ -955,146 +656,6 @@ epoch 9: accuracy: 0.6
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>running test_second_experiment
-fitting model with 10 epochs
-epoch 0: accuracy: 0.15000000000000002
-epoch 1: accuracy: 0.2
-epoch 2: accuracy: 0.25
-epoch 3: accuracy: 0.3
-epoch 4: accuracy: 0.35
-epoch 5: accuracy: 0.39999999999999997
-epoch 6: accuracy: 0.44999999999999996
-epoch 7: accuracy: 0.49999999999999994
-epoch 8: accuracy: 0.5499999999999999
-epoch 9: accuracy: 0.6
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<p>If we run a second experiment with new parameters, a new row is added to the dataframe, and a new folder is created:</p>
-
-</div>
-
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>fitting model with 10 epochs
-epoch 0: accuracy: 0.8999999999999999
-epoch 1: accuracy: 1.0999999999999999
-epoch 2: accuracy: 1.2999999999999998
-epoch 3: accuracy: 1.4999999999999998
-epoch 4: accuracy: 1.6999999999999997
-epoch 5: accuracy: 1.8999999999999997
-epoch 6: accuracy: 2.0999999999999996
-epoch 7: accuracy: 2.3
-epoch 8: accuracy: 2.5
-epoch 9: accuracy: 2.7
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<p>experiment dataframe:</p>
-
-</div>
-
-</div>
-
-<div class="output_area">
-
-
-<div class="output_html rendered_html output_subarea ">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>offset</th>
-      <th>rate</th>
-      <th>0_validation_accuracy</th>
-      <th>0_test_accuracy</th>
-      <th>time_0</th>
-      <th>date</th>
-      <th>0_finished</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0.1</td>
-      <td>0.05</td>
-      <td>0.6</td>
-      <td>0.5</td>
-      <td>0.001854</td>
-      <td>23:16:46.516694</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>0.7</td>
-      <td>0.20</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>0.002180</td>
-      <td>23:16:46.554074</td>
-      <td>True</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<p>folders created in <code>test_second/experiments</code>:</p>
-
-</div>
-
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[&#39;00000&#39;, &#39;00001&#39;]
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
 </div>
     {% endraw %}
 
@@ -1107,113 +668,6 @@ epoch 9: accuracy: 2.7
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;a&#39;</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span><span class="s1">&#39;b&#39;</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span><span class="kc">None</span><span class="p">,</span><span class="mi">3</span><span class="p">]})</span>
-<span class="n">df</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>a</th>
-      <th>b</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>1</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>2</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>3</td>
-      <td>3.0</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">]</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>True</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
 <div class="output">
@@ -1222,7 +676,7 @@ epoch 9: accuracy: 2.7
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_new_parameter" class="doc_header"><code>test_new_parameter</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L265" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_new_parameter</code>()</p>
+<h4 id="test_new_parameter" class="doc_header"><code>test_new_parameter</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L334" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_new_parameter</code>()</p>
 </blockquote>
 
 </div>
@@ -1256,109 +710,6 @@ epoch 9: accuracy: 2.7
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>running test_new_parameter
-fitting model with 10 epochs
-epoch 0: accuracy: 0.15000000000000002
-epoch 1: accuracy: 0.2
-epoch 2: accuracy: 0.25
-epoch 3: accuracy: 0.3
-epoch 4: accuracy: 0.35
-epoch 5: accuracy: 0.39999999999999997
-epoch 6: accuracy: 0.44999999999999996
-epoch 7: accuracy: 0.49999999999999994
-epoch 8: accuracy: 0.5499999999999999
-epoch 9: accuracy: 0.6
-fitting model with 5 epochs
-epoch 0: accuracy: 0.15000000000000002
-epoch 1: accuracy: 0.2
-epoch 2: accuracy: 0.25
-epoch 3: accuracy: 0.3
-epoch 4: accuracy: 0.35
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<p>experiment dataframe:</p>
-
-</div>
-
-</div>
-
-<div class="output_area">
-
-
-<div class="output_html rendered_html output_subarea ">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>offset</th>
-      <th>rate</th>
-      <th>0_validation_accuracy</th>
-      <th>0_test_accuracy</th>
-      <th>time_0</th>
-      <th>date</th>
-      <th>0_finished</th>
-      <th>epochs</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0.1</td>
-      <td>0.05</td>
-      <td>0.60</td>
-      <td>0.50</td>
-      <td>0.001979</td>
-      <td>23:16:46.752457</td>
-      <td>True</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>0.1</td>
-      <td>0.05</td>
-      <td>0.35</td>
-      <td>0.45</td>
-      <td>0.001368</td>
-      <td>23:16:46.788333</td>
-      <td>True</td>
-      <td>5.0</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-</div>
-</div>
-
 </div>
     {% endraw %}
 
@@ -1379,7 +730,7 @@ epoch 4: accuracy: 0.35
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_new_parameter_default" class="doc_header"><code>test_new_parameter_default</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L298" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_new_parameter_default</code>()</p>
+<h4 id="test_new_parameter_default" class="doc_header"><code>test_new_parameter_default</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L370" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_new_parameter_default</code>()</p>
 </blockquote>
 
 </div>
@@ -1413,90 +764,6 @@ epoch 4: accuracy: 0.35
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>running test_new_parameter_default
-fitting model with 10 epochs
-epoch 0: accuracy: 0.15000000000000002
-epoch 1: accuracy: 0.2
-epoch 2: accuracy: 0.25
-epoch 3: accuracy: 0.3
-epoch 4: accuracy: 0.35
-epoch 5: accuracy: 0.39999999999999997
-epoch 6: accuracy: 0.44999999999999996
-epoch 7: accuracy: 0.49999999999999994
-epoch 8: accuracy: 0.5499999999999999
-epoch 9: accuracy: 0.6
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<p>experiment dataframe:</p>
-
-</div>
-
-</div>
-
-<div class="output_area">
-
-
-<div class="output_html rendered_html output_subarea ">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>offset</th>
-      <th>rate</th>
-      <th>0_validation_accuracy</th>
-      <th>0_test_accuracy</th>
-      <th>time_0</th>
-      <th>date</th>
-      <th>0_finished</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0.1</td>
-      <td>0.05</td>
-      <td>0.6</td>
-      <td>0.5</td>
-      <td>0.003174</td>
-      <td>23:16:46.887073</td>
-      <td>True</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-</div>
-</div>
-
 </div>
     {% endraw %}
 
@@ -1517,7 +784,7 @@ epoch 9: accuracy: 0.6
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_other_parameters" class="doc_header"><code>test_other_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L323" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_other_parameters</code>()</p>
+<h4 id="test_other_parameters" class="doc_header"><code>test_other_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L398" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_other_parameters</code>()</p>
 </blockquote>
 
 </div>
@@ -1551,79 +818,6 @@ epoch 9: accuracy: 0.6
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>running test_other_parameters
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<p>experiment dataframe:</p>
-
-</div>
-
-</div>
-
-<div class="output_area">
-
-
-<div class="output_html rendered_html output_subarea ">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>offset</th>
-      <th>rate</th>
-      <th>0_validation_accuracy</th>
-      <th>0_test_accuracy</th>
-      <th>time_0</th>
-      <th>date</th>
-      <th>0_finished</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0.1</td>
-      <td>0.05</td>
-      <td>0.6</td>
-      <td>0.5</td>
-      <td>0.000318</td>
-      <td>23:16:47.016432</td>
-      <td>True</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-</div>
-</div>
-
 </div>
     {% endraw %}
 
@@ -1635,11 +829,8 @@ epoch 9: accuracy: 0.6
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>In order to use this functionality, we need to indicate the name of the parameter that specifies the number of epochs. This can be done either passing this when constructing the object:</p>
+<p>In order to use this functionality, we need to indicate the name of the parameter that specifies the number of epochs. This can be done by passing this when constructing the object:</p>
 <div class="highlight"><pre><span></span><span class="n">em</span> <span class="o">=</span> <span class="n">MyExperimentManager</span> <span class="p">(</span><span class="n">name_epoch</span><span class="o">=</span><span class="s1">&#39;epochs&#39;</span><span class="p">)</span>
-</pre></div>
-<p>or indicating it in the <code>other_parameters</code> dictionary:</p>
-<div class="highlight"><pre><span></span><span class="n">other_parameters</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">name_epoch</span><span class="o">=</span><span class="s1">&#39;epochs&#39;</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -1656,7 +847,7 @@ epoch 9: accuracy: 0.6
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_remove_not_finished" class="doc_header"><code>test_remove_not_finished</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L356" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_remove_not_finished</code>()</p>
+<h4 id="test_remove_not_finished" class="doc_header"><code>test_remove_not_finished</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L434" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_remove_not_finished</code>()</p>
 </blockquote>
 
 </div>
@@ -1690,234 +881,6 @@ epoch 9: accuracy: 0.6
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>running test_remove_not_finished
-fitting model with 10 epochs
-epoch 0: accuracy: 0.15000000000000002
-epoch 1: accuracy: 0.2
-epoch 2: accuracy: 0.25
-epoch 3: accuracy: 0.3
-epoch 4: accuracy: 0.35
-epoch 5: accuracy: 0.39999999999999997
-epoch 6: accuracy: 0.44999999999999996
-epoch 7: accuracy: 0.49999999999999994
-epoch 8: accuracy: 0.5499999999999999
-epoch 9: accuracy: 0.6
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-
-<div class="output_html rendered_html output_subarea ">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>offset</th>
-      <th>rate</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0.1</td>
-      <td>0.05</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>fitting model with 10 epochs
-epoch 0: accuracy: 1.2
-epoch 1: accuracy: 1.4
-epoch 2: accuracy: 1.5999999999999999
-epoch 3: accuracy: 1.7999999999999998
-epoch 4: accuracy: 1.9999999999999998
-epoch 5: accuracy: 2.1999999999999997
-epoch 6: accuracy: 2.4
-epoch 7: accuracy: 2.6
-epoch 8: accuracy: 2.8000000000000003
-epoch 9: accuracy: 3.0000000000000004
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-
-<div class="output_html rendered_html output_subarea ">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>offset</th>
-      <th>rate</th>
-      <th>0_validation_accuracy</th>
-      <th>0_test_accuracy</th>
-      <th>time_0</th>
-      <th>date</th>
-      <th>0_finished</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0.1</td>
-      <td>0.05</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>1.0</td>
-      <td>0.20</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>0.002046</td>
-      <td>23:16:47.189619</td>
-      <td>True</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>fitting model with 10 epochs
-epoch 0: accuracy: 1.3
-epoch 1: accuracy: 1.6
-epoch 2: accuracy: 1.9000000000000001
-epoch 3: accuracy: 2.2
-epoch 4: accuracy: 2.5
-epoch 5: accuracy: 2.8
-epoch 6: accuracy: 3.0999999999999996
-epoch 7: accuracy: 3.3999999999999995
-epoch 8: accuracy: 3.6999999999999993
-epoch 9: accuracy: 3.999999999999999
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-
-<div class="output_html rendered_html output_subarea ">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>offset</th>
-      <th>rate</th>
-      <th>0_validation_accuracy</th>
-      <th>0_test_accuracy</th>
-      <th>time_0</th>
-      <th>date</th>
-      <th>0_finished</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0.1</td>
-      <td>0.05</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>1.0</td>
-      <td>0.20</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>0.002046</td>
-      <td>23:16:47.189619</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>1.0</td>
-      <td>0.30</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>0.002028</td>
-      <td>23:16:47.234635</td>
-      <td>True</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-</div>
-</div>
-
 </div>
     {% endraw %}
 
@@ -1938,7 +901,7 @@ epoch 9: accuracy: 3.999999999999999
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_repeat_experiment" class="doc_header"><code>test_repeat_experiment</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L386" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_repeat_experiment</code>()</p>
+<h4 id="test_repeat_experiment" class="doc_header"><code>test_repeat_experiment</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L464" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_repeat_experiment</code>()</p>
 </blockquote>
 
 </div>
@@ -1965,151 +928,10 @@ epoch 9: accuracy: 3.999999999999999
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_repeat_experiment</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_repeat_experiment</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>running test_repeat_experiment
-fitting model with 10 epochs
-epoch 0: accuracy: 0.15000000000000002
-epoch 1: accuracy: 0.2
-epoch 2: accuracy: 0.25
-epoch 3: accuracy: 0.3
-epoch 4: accuracy: 0.35
-epoch 5: accuracy: 0.39999999999999997
-epoch 6: accuracy: 0.44999999999999996
-epoch 7: accuracy: 0.49999999999999994
-epoch 8: accuracy: 0.5499999999999999
-epoch 9: accuracy: 0.6
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-
-<div class="output_html rendered_html output_subarea ">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>offset</th>
-      <th>rate</th>
-      <th>0_validation_accuracy</th>
-      <th>0_test_accuracy</th>
-      <th>time_0</th>
-      <th>date</th>
-      <th>0_finished</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0.1</td>
-      <td>0.05</td>
-      <td>0.6</td>
-      <td>0.5</td>
-      <td>0.001786</td>
-      <td>23:16:47.341406</td>
-      <td>True</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>fitting model with 10 epochs
-epoch 0: accuracy: 0.15000000000000002
-epoch 1: accuracy: 0.2
-epoch 2: accuracy: 0.25
-epoch 3: accuracy: 0.3
-epoch 4: accuracy: 0.35
-epoch 5: accuracy: 0.39999999999999997
-epoch 6: accuracy: 0.44999999999999996
-epoch 7: accuracy: 0.49999999999999994
-epoch 8: accuracy: 0.5499999999999999
-epoch 9: accuracy: 0.6
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-
-<div class="output_html rendered_html output_subarea ">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>offset</th>
-      <th>rate</th>
-      <th>0_validation_accuracy</th>
-      <th>0_test_accuracy</th>
-      <th>time_0</th>
-      <th>date</th>
-      <th>0_finished</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0.1</td>
-      <td>0.05</td>
-      <td>0.6</td>
-      <td>0.5</td>
-      <td>0.001786</td>
-      <td>23:16:47.385141</td>
-      <td>True</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
 </div>
 </div>
 
@@ -2127,9 +949,6 @@ epoch 9: accuracy: 0.6
 <p>In order to use this functionality, we need to indicate the name of the parameter that specifies the number of epochs. This can be done either passing this when constructing the object:</p>
 <div class="highlight"><pre><span></span><span class="n">em</span> <span class="o">=</span> <span class="n">MyExperimentManager</span> <span class="p">(</span><span class="n">name_epoch</span><span class="o">=</span><span class="s1">&#39;epochs&#39;</span><span class="p">)</span>
 </pre></div>
-<p>or indicating it in the <code>other_parameters</code> dictionary:</p>
-<div class="highlight"><pre><span></span><span class="n">other_parameters</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">name_epoch</span><span class="o">=</span><span class="s1">&#39;epochs&#39;</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
-</pre></div>
 
 </div>
 </div>
@@ -2145,7 +964,7 @@ epoch 9: accuracy: 0.6
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_check_finished" class="doc_header"><code>test_check_finished</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L416" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_check_finished</code>()</p>
+<h4 id="test_check_finished" class="doc_header"><code>test_check_finished</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L499" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_check_finished</code>()</p>
 </blockquote>
 
 </div>
@@ -2179,37 +998,6 @@ epoch 9: accuracy: 0.6
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>running test_check_finished
-fitting model with 5 epochs
-epoch 0: accuracy: 0.15000000000000002
-epoch 1: accuracy: 0.2
-epoch 2: accuracy: 0.25
-epoch 3: accuracy: 0.3
-epoch 4: accuracy: 0.35
-fitting model with 10 epochs
-epoch 0: accuracy: 0.15000000000000002
-epoch 1: accuracy: 0.2
-epoch 2: accuracy: 0.25
-epoch 3: accuracy: 0.3
-epoch 4: accuracy: 0.35
-epoch 5: accuracy: 0.39999999999999997
-epoch 6: accuracy: 0.44999999999999996
-epoch 7: accuracy: 0.49999999999999994
-epoch 8: accuracy: 0.5499999999999999
-epoch 9: accuracy: 0.6
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
 </div>
     {% endraw %}
 
@@ -2230,7 +1018,7 @@ epoch 9: accuracy: 0.6
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_recompute_metrics" class="doc_header"><code>test_recompute_metrics</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L448" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_recompute_metrics</code>()</p>
+<h4 id="test_recompute_metrics" class="doc_header"><code>test_recompute_metrics</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L537" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_recompute_metrics</code>()</p>
 </blockquote>
 
 </div>
@@ -2257,46 +1045,10 @@ epoch 9: accuracy: 0.6
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_recompute_metrics</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_recompute_metrics</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>running test_recompute_metrics
-fitting model with 10 epochs
-epoch 0: accuracy: 0.15000000000000002
-epoch 1: accuracy: 0.2
-epoch 2: accuracy: 0.25
-epoch 3: accuracy: 0.3
-epoch 4: accuracy: 0.35
-epoch 5: accuracy: 0.39999999999999997
-epoch 6: accuracy: 0.44999999999999996
-epoch 7: accuracy: 0.49999999999999994
-epoch 8: accuracy: 0.5499999999999999
-epoch 9: accuracy: 0.6
-fitting model with 10 epochs
-epoch 0: accuracy: 0.12000000000000001
-epoch 1: accuracy: 0.14
-epoch 2: accuracy: 0.16
-epoch 3: accuracy: 0.18
-epoch 4: accuracy: 0.19999999999999998
-epoch 5: accuracy: 0.21999999999999997
-epoch 6: accuracy: 0.23999999999999996
-epoch 7: accuracy: 0.25999999999999995
-epoch 8: accuracy: 0.27999999999999997
-epoch 9: accuracy: 0.3
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -2317,8 +1069,6 @@ epoch 9: accuracy: 0.3
 <li>The name of the file where the model is stored.
 This can be done either passing this when constructing the object:<div class="highlight"><pre><span></span><span class="n">em</span> <span class="o">=</span> <span class="n">MyExperimentManager</span> <span class="p">(</span><span class="n">name_epoch</span><span class="o">=</span><span class="s1">&#39;epochs&#39;</span><span class="p">,</span> <span class="n">model_file_name</span><span class="o">=</span><span class="s1">&#39;model_weights.pk&#39;</span><span class="p">)</span>
 </pre></div>
-or indicating it in the <code>other_parameters</code> dictionary:<div class="highlight"><pre><span></span><span class="n">other_parameters</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">name_epoch</span><span class="o">=</span><span class="s1">&#39;epochs&#39;</span><span class="p">,</span> <span class="n">model_file_name</span><span class="o">=</span><span class="s1">&#39;model_weights.pk&#39;</span><span class="p">)</span>
-</pre></div>
 </li>
 </ol>
 <p>Furthermore, in order to work, we need our experiment manager to make use of the parameter <code>resume</code> or the parameter <code>prev_path_results</code>. In particular, we need it to load the model file whose path is indicated in <code>parameters['resume']</code>, or whose path is indicated in <code>f'{parameters["prev_path_results"]}/{self.model_file_name}'</code></p>
@@ -2337,7 +1087,7 @@ or indicating it in the <code>other_parameters</code> dictionary:<div class="hig
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_prev_epoch" class="doc_header"><code>test_prev_epoch</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L479" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_prev_epoch</code>()</p>
+<h4 id="test_prev_epoch" class="doc_header"><code>test_prev_epoch</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L578" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_prev_epoch</code>()</p>
 </blockquote>
 
 </div>
@@ -2371,166 +1121,6 @@ or indicating it in the <code>other_parameters</code> dictionary:<div class="hig
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>running test_prev_epoch
-fitting model with 17 epochs
-epoch 0: accuracy: 0.15000000000000002
-epoch 1: accuracy: 0.2
-epoch 2: accuracy: 0.25
-epoch 3: accuracy: 0.3
-epoch 4: accuracy: 0.35
-epoch 5: accuracy: 0.39999999999999997
-epoch 6: accuracy: 0.44999999999999996
-epoch 7: accuracy: 0.49999999999999994
-epoch 8: accuracy: 0.5499999999999999
-epoch 9: accuracy: 0.6
-epoch 10: accuracy: 0.65
-epoch 11: accuracy: 0.7000000000000001
-epoch 12: accuracy: 0.7500000000000001
-epoch 13: accuracy: 0.8000000000000002
-epoch 14: accuracy: 0.8500000000000002
-epoch 15: accuracy: 0.9000000000000002
-epoch 16: accuracy: 0.9500000000000003
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-
-<div class="output_html rendered_html output_subarea ">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>offset</th>
-      <th>rate</th>
-      <th>epochs</th>
-      <th>0_validation_accuracy</th>
-      <th>0_test_accuracy</th>
-      <th>time_0</th>
-      <th>date</th>
-      <th>0_finished</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0.1</td>
-      <td>0.05</td>
-      <td>17.0</td>
-      <td>0.95</td>
-      <td>0.85</td>
-      <td>0.002587</td>
-      <td>23:16:47.808563</td>
-      <td>True</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>fitting model with 10 epochs
-epoch 0: accuracy: 0.15000000000000002
-epoch 1: accuracy: 0.2
-epoch 2: accuracy: 0.25
-epoch 3: accuracy: 0.3
-epoch 4: accuracy: 0.35
-epoch 5: accuracy: 0.39999999999999997
-epoch 6: accuracy: 0.44999999999999996
-epoch 7: accuracy: 0.49999999999999994
-epoch 8: accuracy: 0.5499999999999999
-epoch 9: accuracy: 0.6
-fitting model with 20 epochs
-epoch 0: accuracy: 0.15000000000000002
-epoch 1: accuracy: 0.2
-epoch 2: accuracy: 0.25
-epoch 3: accuracy: 0.3
-epoch 4: accuracy: 0.35
-epoch 5: accuracy: 0.39999999999999997
-epoch 6: accuracy: 0.44999999999999996
-epoch 7: accuracy: 0.49999999999999994
-epoch 8: accuracy: 0.5499999999999999
-epoch 9: accuracy: 0.6
-epoch 10: accuracy: 0.65
-epoch 11: accuracy: 0.7000000000000001
-epoch 12: accuracy: 0.7500000000000001
-epoch 13: accuracy: 0.8000000000000002
-epoch 14: accuracy: 0.8500000000000002
-epoch 15: accuracy: 0.9000000000000002
-epoch 16: accuracy: 0.9500000000000003
-epoch 17: accuracy: 1.0000000000000002
-epoch 18: accuracy: 1.0500000000000003
-epoch 19: accuracy: 1.1000000000000003
-fitting model with 15 epochs
-epoch 0: accuracy: 0.15000000000000002
-epoch 1: accuracy: 0.2
-epoch 2: accuracy: 0.25
-epoch 3: accuracy: 0.3
-epoch 4: accuracy: 0.35
-epoch 5: accuracy: 0.39999999999999997
-epoch 6: accuracy: 0.44999999999999996
-epoch 7: accuracy: 0.49999999999999994
-epoch 8: accuracy: 0.5499999999999999
-epoch 9: accuracy: 0.6
-epoch 10: accuracy: 0.65
-epoch 11: accuracy: 0.7000000000000001
-epoch 12: accuracy: 0.7500000000000001
-epoch 13: accuracy: 0.8000000000000002
-epoch 14: accuracy: 0.8500000000000002
-reading model from test_prev_epoch/experiments/00002/0/model_weights.pk
-fitting model with 2 epochs
-epoch 0: accuracy: 0.9000000000000002
-epoch 1: accuracy: 0.9500000000000003
-fitting model with 17 epochs
-epoch 0: accuracy: 0.15000000000000002
-epoch 1: accuracy: 0.2
-epoch 2: accuracy: 0.25
-epoch 3: accuracy: 0.3
-epoch 4: accuracy: 0.35
-epoch 5: accuracy: 0.39999999999999997
-epoch 6: accuracy: 0.44999999999999996
-epoch 7: accuracy: 0.49999999999999994
-epoch 8: accuracy: 0.5499999999999999
-epoch 9: accuracy: 0.6
-epoch 10: accuracy: 0.65
-epoch 11: accuracy: 0.7000000000000001
-epoch 12: accuracy: 0.7500000000000001
-epoch 13: accuracy: 0.8000000000000002
-epoch 14: accuracy: 0.8500000000000002
-epoch 15: accuracy: 0.9000000000000002
-epoch 16: accuracy: 0.9500000000000003
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
 </div>
     {% endraw %}
 
@@ -2545,7 +1135,7 @@ epoch 16: accuracy: 0.9500000000000003
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_prev_epoch2" class="doc_header"><code>test_prev_epoch2</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L521" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_prev_epoch2</code>()</p>
+<h4 id="test_prev_epoch2" class="doc_header"><code>test_prev_epoch2</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L620" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_prev_epoch2</code>()</p>
 </blockquote>
 
 </div>
@@ -2572,52 +1162,10 @@ epoch 16: accuracy: 0.9500000000000003
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_prev_epoch2</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_prev_epoch2</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>running test_prev_epoch2
-fitting model with 2 epochs
-epoch 0: accuracy: 0.13
-epoch 1: accuracy: 0.16
-fitting model with 5 epochs
-epoch 0: accuracy: 0.14
-epoch 1: accuracy: 0.18000000000000002
-epoch 2: accuracy: 0.22000000000000003
-epoch 3: accuracy: 0.26
-epoch 4: accuracy: 0.3
-reading model from test_prev_epoch2/experiments/00000/0/model_weights.pk
-fitting model with 3 epochs
-epoch 0: accuracy: 0.19
-epoch 1: accuracy: 0.22
-epoch 2: accuracy: 0.25
-fitting model with 2 epochs
-epoch 0: accuracy: 0.13
-epoch 1: accuracy: 0.16
-fitting model with 5 epochs
-epoch 0: accuracy: 0.14
-epoch 1: accuracy: 0.18000000000000002
-epoch 2: accuracy: 0.22000000000000003
-epoch 3: accuracy: 0.26
-epoch 4: accuracy: 0.3
-reading model from test_prev_epoch2/experiments/00000/0/model_weights.pk
-fitting model with 3 epochs
-epoch 0: accuracy: 0.19
-epoch 1: accuracy: 0.22
-epoch 2: accuracy: 0.25
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -2648,7 +1196,7 @@ epoch 2: accuracy: 0.25
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_from_exp" class="doc_header"><code>test_from_exp</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L571" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_from_exp</code>()</p>
+<h4 id="test_from_exp" class="doc_header"><code>test_from_exp</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L670" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_from_exp</code>()</p>
 </blockquote>
 
 </div>
@@ -2682,39 +1230,6 @@ epoch 2: accuracy: 0.25
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>running test_from_exp
-fitting model with 5 epochs
-epoch 0: accuracy: 0.15000000000000002
-epoch 1: accuracy: 0.2
-epoch 2: accuracy: 0.25
-epoch 3: accuracy: 0.3
-epoch 4: accuracy: 0.35
-fitting model with 2 epochs
-epoch 0: accuracy: 0.13
-epoch 1: accuracy: 0.16
-fitting model with 2 epochs
-epoch 0: accuracy: 0.14
-epoch 1: accuracy: 0.18000000000000002
-reading model from test_from_exp/experiments/00000/0/model_weights.pk
-fitting model with 5 epochs
-epoch 0: accuracy: 0.21000000000000002
-epoch 1: accuracy: 0.26
-epoch 2: accuracy: 0.31
-epoch 3: accuracy: 0.36
-epoch 4: accuracy: 0.41
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
 </div>
     {% endraw %}
 
@@ -2736,9 +1251,6 @@ This can be done either passing this when constructing the object:</p>
 <p>Alternatively, we can indicate the name of the file where the model history exists. This can be done either passing this when constructing the object:</p>
 <div class="highlight"><pre><span></span><span class="n">em</span> <span class="o">=</span> <span class="n">MyExperimentManager</span> <span class="p">(</span><span class="n">name_model_history</span><span class="o">=</span><span class="s1">&#39;history.pk&#39;</span><span class="p">)</span>
 </pre></div>
-<p>or indicating it in the <code>other_parameters</code> dictionary:</p>
-<div class="highlight"><pre><span></span><span class="n">other_parameters</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">model_file_name</span><span class="o">=</span><span class="s1">&#39;history.pk&#39;</span><span class="p">)</span>
-</pre></div>
 <p>If not indicated, the experiment manager tries to find the model history in a file named <code>model_history.pk</code>. In order to consider the history good enough, the experiment manager checks if the length of the arrays stored in the model_history dictionary is at least <code>parameters.get('min_iterations', dflt.min_iterations)</code></p>
 
 </div>
@@ -2755,7 +1267,7 @@ This can be done either passing this when constructing the object:</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_skip_interrupted" class="doc_header"><code>test_skip_interrupted</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L600" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_skip_interrupted</code>()</p>
+<h4 id="test_skip_interrupted" class="doc_header"><code>test_skip_interrupted</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L699" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_skip_interrupted</code>()</p>
 </blockquote>
 
 </div>
@@ -2782,100 +1294,10 @@ This can be done either passing this when constructing the object:</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_skip_interrupted</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_skip_interrupted</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>running test_skip_interrupted
-fitting model with 5 epochs
-epoch 0: accuracy: 0.13
-epoch 1: accuracy: 0.16
-epoch 2: accuracy: 0.19
-epoch 3: accuracy: 0.22
-epoch 4: accuracy: 0.25
-fitting model with 5 epochs
-epoch 0: accuracy: 0.14
-epoch 1: accuracy: 0.18000000000000002
-epoch 2: accuracy: 0.22000000000000003
-epoch 3: accuracy: 0.26
-epoch 4: accuracy: 0.3
-storing result from test_skip_interrupted/experiments/00000/0 with iterations 5
-not storing result from test_skip_interrupted/experiments/00000/0 with iterations 5
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-
-<div class="output_html rendered_html output_subarea ">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>offset</th>
-      <th>rate</th>
-      <th>epochs</th>
-      <th>0_validation_accuracy</th>
-      <th>0_test_accuracy</th>
-      <th>time_0</th>
-      <th>date</th>
-      <th>0_finished</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0.1</td>
-      <td>0.03</td>
-      <td>5.0</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>0.1</td>
-      <td>0.04</td>
-      <td>5.0</td>
-      <td>0.3</td>
-      <td>0.4</td>
-      <td>0.001693</td>
-      <td>23:16:48.623081</td>
-      <td>True</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
 </div>
 </div>
 
@@ -2893,9 +1315,6 @@ not storing result from test_skip_interrupted/experiments/00000/0 with iteration
 <p>In order to use this functionality, we need to indicate the name of the file where the model history exists. This can be done either passing this when constructing the object:</p>
 <div class="highlight"><pre><span></span><span class="n">em</span> <span class="o">=</span> <span class="n">MyExperimentManager</span> <span class="p">(</span><span class="n">name_model_history</span><span class="o">=</span><span class="s1">&#39;history.pk&#39;</span><span class="p">)</span>
 </pre></div>
-<p>or indicating it in the <code>other_parameters</code> dictionary:</p>
-<div class="highlight"><pre><span></span><span class="n">other_parameters</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">model_file_name</span><span class="o">=</span><span class="s1">&#39;history.pk&#39;</span><span class="p">)</span>
-</pre></div>
 <p>If not indicated, the experiment manager tries to find the model history in a file named <code>model_history.pk</code>. In order to consider the history good enough, the experiment manager checks if the length of the arrays stored in the model_history dictionary is at least <code>parameters.get('min_iterations', dflt.min_iterations)</code></p>
 
 </div>
@@ -2912,7 +1331,7 @@ not storing result from test_skip_interrupted/experiments/00000/0 with iteration
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_use_last_result" class="doc_header"><code>test_use_last_result</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L639" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_use_last_result</code>()</p>
+<h4 id="test_use_last_result" class="doc_header"><code>test_use_last_result</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L733" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_use_last_result</code>()</p>
 </blockquote>
 
 </div>
@@ -2939,252 +1358,10 @@ not storing result from test_skip_interrupted/experiments/00000/0 with iteration
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_use_last_result</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_use_last_result</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>running test_use_last_result
-fitting model with 5 epochs
-epoch 0: accuracy: 0.13
-epoch 1: accuracy: 0.16
-epoch 2: accuracy: 0.19
-epoch 3: accuracy: 0.22
-epoch 4: accuracy: 0.25
-fitting model with 5 epochs
-epoch 0: accuracy: 0.14
-epoch 1: accuracy: 0.18000000000000002
-epoch 2: accuracy: 0.22000000000000003
-epoch 3: accuracy: 0.26
-epoch 4: accuracy: 0.3
-not storing result from test_use_last_result/experiments/00000/0 with iterations 5
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-
-<div class="output_html rendered_html output_subarea ">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>offset</th>
-      <th>rate</th>
-      <th>epochs</th>
-      <th>0_validation_accuracy</th>
-      <th>0_test_accuracy</th>
-      <th>time_0</th>
-      <th>date</th>
-      <th>0_finished</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0.1</td>
-      <td>0.03</td>
-      <td>5.0</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>0.1</td>
-      <td>0.04</td>
-      <td>5.0</td>
-      <td>0.3</td>
-      <td>0.4</td>
-      <td>0.001404</td>
-      <td>23:16:48.842000</td>
-      <td>True</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>storing result from test_use_last_result/experiments/00000/0 with iterations 5
-0.25 {&#39;validation_accuracy&#39;: 0.25, &#39;test_accuracy&#39;: 0.35, &#39;accuracy&#39;: 0.25, &#39;last&#39;: 5}
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-
-<div class="output_html rendered_html output_subarea ">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>offset</th>
-      <th>rate</th>
-      <th>epochs</th>
-      <th>0_validation_accuracy</th>
-      <th>0_test_accuracy</th>
-      <th>time_0</th>
-      <th>date</th>
-      <th>0_finished</th>
-      <th>0_accuracy</th>
-      <th>0_last</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0.1</td>
-      <td>0.03</td>
-      <td>5.0</td>
-      <td>0.25</td>
-      <td>0.35</td>
-      <td>NaN</td>
-      <td>23:16:48.918354</td>
-      <td>False</td>
-      <td>0.25</td>
-      <td>5.0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>0.1</td>
-      <td>0.04</td>
-      <td>5.0</td>
-      <td>0.30</td>
-      <td>0.40</td>
-      <td>0.001404</td>
-      <td>23:16:48.842000</td>
-      <td>True</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>0.25 {&#39;validation_accuracy&#39;: 0.25}
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-
-<div class="output_html rendered_html output_subarea ">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>offset</th>
-      <th>rate</th>
-      <th>epochs</th>
-      <th>0_validation_accuracy</th>
-      <th>0_test_accuracy</th>
-      <th>time_0</th>
-      <th>date</th>
-      <th>0_finished</th>
-      <th>0_accuracy</th>
-      <th>0_last</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0.1</td>
-      <td>0.03</td>
-      <td>5.0</td>
-      <td>0.25</td>
-      <td>0.35</td>
-      <td>NaN</td>
-      <td>23:16:48.918354</td>
-      <td>False</td>
-      <td>0.25</td>
-      <td>5.0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>0.1</td>
-      <td>0.04</td>
-      <td>5.0</td>
-      <td>0.30</td>
-      <td>0.40</td>
-      <td>0.001404</td>
-      <td>23:16:48.842000</td>
-      <td>True</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
 </div>
 </div>
 
@@ -3208,7 +1385,7 @@ not storing result from test_use_last_result/experiments/00000/0 with iterations
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_use_last_result_run_interrupted" class="doc_header"><code>test_use_last_result_run_interrupted</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L692" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_use_last_result_run_interrupted</code>()</p>
+<h4 id="test_use_last_result_run_interrupted" class="doc_header"><code>test_use_last_result_run_interrupted</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L782" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_use_last_result_run_interrupted</code>()</p>
 </blockquote>
 
 </div>
@@ -3235,7 +1412,78 @@ not storing result from test_use_last_result/experiments/00000/0 with iterations
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_use_last_result_run_interrupted</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_use_last_result_run_interrupted</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Storing-parameters">Storing parameters<a class="anchor-link" href="#Storing-parameters"> </a></h4>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="test_storing_em_args_and_parameters" class="doc_header"><code>test_storing_em_args_and_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L814" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_storing_em_args_and_parameters</code>()</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_storing_em_args_and_parameters</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">debug</span>
 </pre></div>
 
     </div>
@@ -3247,25 +1495,8 @@ not storing result from test_use_last_result/experiments/00000/0 with iterations
 
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>running test_use_last_result_run_interrupted
-fitting model with 2 epochs
-epoch 0: accuracy: 0.13
-epoch 1: accuracy: 0.16
-fitting model with 5 epochs
-epoch 0: accuracy: 0.14
-epoch 1: accuracy: 0.18000000000000002
-epoch 2: accuracy: 0.22000000000000003
-epoch 3: accuracy: 0.26
-epoch 4: accuracy: 0.3
-not storing result from test_use_last_result_run_interrupted/experiments/00000/0 with iterations 2
-fitting model with 5 epochs
-epoch 0: accuracy: 0.13
-epoch 1: accuracy: 0.16
-epoch 2: accuracy: 0.19
-epoch 3: accuracy: 0.22
-epoch 4: accuracy: 0.25
-0.25 {&#39;validation_accuracy&#39;: 0.25, &#39;test_accuracy&#39;: 0.35}
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>ERROR:root:No traceback has been produced, nothing to debug.
 </pre>
 </div>
 </div>
@@ -3293,7 +1524,7 @@ epoch 4: accuracy: 0.25
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_grid_search" class="doc_header"><code>test_grid_search</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L724" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_grid_search</code>()</p>
+<h4 id="test_grid_search" class="doc_header"><code>test_grid_search</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L836" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_grid_search</code>()</p>
 </blockquote>
 
 </div>
@@ -3320,80 +1551,10 @@ epoch 4: accuracy: 0.25
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_grid_search</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_grid_search</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>running test_grid_search
-fitting model with 7 epochs
-epoch 0: accuracy: 0.11
-epoch 1: accuracy: 0.12
-epoch 2: accuracy: 0.13
-epoch 3: accuracy: 0.14
-epoch 4: accuracy: 0.15000000000000002
-epoch 5: accuracy: 0.16000000000000003
-epoch 6: accuracy: 0.17000000000000004
-fitting model with 7 epochs
-epoch 0: accuracy: 0.11
-epoch 1: accuracy: 0.12
-epoch 2: accuracy: 0.13
-epoch 3: accuracy: 0.14
-epoch 4: accuracy: 0.15000000000000002
-epoch 5: accuracy: 0.16000000000000003
-epoch 6: accuracy: 0.17000000000000004
-fitting model with 7 epochs
-epoch 0: accuracy: 0.13
-epoch 1: accuracy: 0.16
-epoch 2: accuracy: 0.19
-epoch 3: accuracy: 0.22
-epoch 4: accuracy: 0.25
-epoch 5: accuracy: 0.28
-epoch 6: accuracy: 0.31000000000000005
-fitting model with 7 epochs
-epoch 0: accuracy: 0.13
-epoch 1: accuracy: 0.16
-epoch 2: accuracy: 0.19
-epoch 3: accuracy: 0.22
-epoch 4: accuracy: 0.25
-epoch 5: accuracy: 0.28
-epoch 6: accuracy: 0.31000000000000005
-fitting model with 5 epochs
-epoch 0: accuracy: 0.11
-epoch 1: accuracy: 0.12
-epoch 2: accuracy: 0.13
-epoch 3: accuracy: 0.14
-epoch 4: accuracy: 0.15000000000000002
-fitting model with 5 epochs
-epoch 0: accuracy: 0.11
-epoch 1: accuracy: 0.12
-epoch 2: accuracy: 0.13
-epoch 3: accuracy: 0.14
-epoch 4: accuracy: 0.15000000000000002
-fitting model with 5 epochs
-epoch 0: accuracy: 0.13
-epoch 1: accuracy: 0.16
-epoch 2: accuracy: 0.19
-epoch 3: accuracy: 0.22
-epoch 4: accuracy: 0.25
-fitting model with 5 epochs
-epoch 0: accuracy: 0.13
-epoch 1: accuracy: 0.16
-epoch 2: accuracy: 0.19
-epoch 3: accuracy: 0.22
-epoch 4: accuracy: 0.25
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -3434,7 +1595,7 @@ epoch 4: accuracy: 0.25
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_run_multiple_repetitions" class="doc_header"><code>test_run_multiple_repetitions</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L786" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_run_multiple_repetitions</code>()</p>
+<h4 id="test_run_multiple_repetitions" class="doc_header"><code>test_run_multiple_repetitions</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L903" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_run_multiple_repetitions</code>()</p>
 </blockquote>
 
 </div>
@@ -3461,24 +1622,10 @@ epoch 4: accuracy: 0.25
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_run_multiple_repetitions</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_run_multiple_repetitions</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>running test_run_multiple_repetitions
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -3502,7 +1649,7 @@ epoch 4: accuracy: 0.25
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="parameter_sampler" class="doc_header"><code>parameter_sampler</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L844" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>parameter_sampler</code>(<strong><code>trial</code></strong>)</p>
+<h4 id="parameter_sampler" class="doc_header"><code>parameter_sampler</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L959" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>parameter_sampler</code>(<strong><code>trial</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -3526,7 +1673,7 @@ epoch 4: accuracy: 0.25
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_hp_optimization" class="doc_header"><code>test_hp_optimization</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L822" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_hp_optimization</code>()</p>
+<h4 id="test_hp_optimization" class="doc_header"><code>test_hp_optimization</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L939" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_hp_optimization</code>()</p>
 </blockquote>
 
 </div>
@@ -3553,260 +1700,10 @@ epoch 4: accuracy: 0.25
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_hp_optimization</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_hp_optimization</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>running test_hp_optimization
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre><span class="ansi-green-fg">[I 2022-02-09 23:16:51,558]</span> A new study created in RDB with name: test_hp_optimization_study
-<span class="ansi-green-fg">[I 2022-02-09 23:16:51,967]</span> Trial 0 finished with value: 0.08127185842415106 and parameters: {&#39;rate&#39;: 0.005939321535345923, &#39;offset&#39;: 0.01}. Best is trial 0 with value: 0.08127185842415106.
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>fitting model with 12 epochs
-epoch 0: accuracy: 0.015939321535345923
-epoch 1: accuracy: 0.021878643070691844
-epoch 2: accuracy: 0.02781796460603777
-epoch 3: accuracy: 0.033757286141383694
-epoch 4: accuracy: 0.03969660767672962
-epoch 5: accuracy: 0.04563592921207554
-epoch 6: accuracy: 0.05157525074742147
-epoch 7: accuracy: 0.05751457228276739
-epoch 8: accuracy: 0.06345389381811331
-epoch 9: accuracy: 0.06939321535345923
-epoch 10: accuracy: 0.07533253688880515
-epoch 11: accuracy: 0.08127185842415106
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre><span class="ansi-green-fg">[I 2022-02-09 23:16:52,238]</span> Trial 1 finished with value: 0.1577547183286018 and parameters: {&#39;rate&#39;: 0.004812893194050143, &#39;offset&#39;: 0.1}. Best is trial 1 with value: 0.1577547183286018.
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>fitting model with 12 epochs
-epoch 0: accuracy: 0.10481289319405016
-epoch 1: accuracy: 0.1096257863881003
-epoch 2: accuracy: 0.11443867958215045
-epoch 3: accuracy: 0.1192515727762006
-epoch 4: accuracy: 0.12406446597025075
-epoch 5: accuracy: 0.1288773591643009
-epoch 6: accuracy: 0.13369025235835105
-epoch 7: accuracy: 0.1385031455524012
-epoch 8: accuracy: 0.14331603874645135
-epoch 9: accuracy: 0.1481289319405015
-epoch 10: accuracy: 0.15294182513455165
-epoch 11: accuracy: 0.1577547183286018
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre><span class="ansi-green-fg">[I 2022-02-09 23:16:52,548]</span> Trial 2 finished with value: 0.1660755781341112 and parameters: {&#39;rate&#39;: 0.009672964844509264, &#39;offset&#39;: 0.05}. Best is trial 2 with value: 0.1660755781341112.
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>fitting model with 12 epochs
-epoch 0: accuracy: 0.05967296484450926
-epoch 1: accuracy: 0.06934592968901852
-epoch 2: accuracy: 0.07901889453352778
-epoch 3: accuracy: 0.08869185937803704
-epoch 4: accuracy: 0.0983648242225463
-epoch 5: accuracy: 0.10803778906705556
-epoch 6: accuracy: 0.11771075391156482
-epoch 7: accuracy: 0.1273837187560741
-epoch 8: accuracy: 0.13705668360058337
-epoch 9: accuracy: 0.14672964844509265
-epoch 10: accuracy: 0.15640261328960192
-epoch 11: accuracy: 0.1660755781341112
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre><span class="ansi-green-fg">[I 2022-02-09 23:16:52,843]</span> Trial 3 finished with value: 0.08334881259814472 and parameters: {&#39;rate&#39;: 0.006112401049845392, &#39;offset&#39;: 0.01}. Best is trial 2 with value: 0.1660755781341112.
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>fitting model with 12 epochs
-epoch 0: accuracy: 0.01611240104984539
-epoch 1: accuracy: 0.022224802099690782
-epoch 2: accuracy: 0.028337203149536173
-epoch 3: accuracy: 0.03444960419938156
-epoch 4: accuracy: 0.04056200524922696
-epoch 5: accuracy: 0.04667440629907235
-epoch 6: accuracy: 0.05278680734891775
-epoch 7: accuracy: 0.05889920839876314
-epoch 8: accuracy: 0.06501160944860854
-epoch 9: accuracy: 0.07112401049845393
-epoch 10: accuracy: 0.07723641154829933
-epoch 11: accuracy: 0.08334881259814472
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre><span class="ansi-green-fg">[I 2022-02-09 23:16:53,138]</span> Trial 4 finished with value: 0.11418358692355515 and parameters: {&#39;rate&#39;: 0.0011819655769629315, &#39;offset&#39;: 0.1}. Best is trial 2 with value: 0.1660755781341112.
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>fitting model with 12 epochs
-epoch 0: accuracy: 0.10118196557696293
-epoch 1: accuracy: 0.10236393115392586
-epoch 2: accuracy: 0.10354589673088879
-epoch 3: accuracy: 0.10472786230785172
-epoch 4: accuracy: 0.10590982788481465
-epoch 5: accuracy: 0.10709179346177758
-epoch 6: accuracy: 0.10827375903874051
-epoch 7: accuracy: 0.10945572461570344
-epoch 8: accuracy: 0.11063769019266637
-epoch 9: accuracy: 0.1118196557696293
-epoch 10: accuracy: 0.11300162134659222
-epoch 11: accuracy: 0.11418358692355515
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-
-<div class="output_html rendered_html output_subarea ">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>epochs</th>
-      <th>rate</th>
-      <th>offset</th>
-      <th>0_validation_accuracy</th>
-      <th>0_test_accuracy</th>
-      <th>time_0</th>
-      <th>date</th>
-      <th>0_finished</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>12.0</td>
-      <td>0.005939</td>
-      <td>0.01</td>
-      <td>0.081272</td>
-      <td>0.000000</td>
-      <td>0.002344</td>
-      <td>23:16:51.886043</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>12.0</td>
-      <td>0.004813</td>
-      <td>0.10</td>
-      <td>0.157755</td>
-      <td>0.057755</td>
-      <td>0.002549</td>
-      <td>23:16:52.170821</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>12.0</td>
-      <td>0.009673</td>
-      <td>0.05</td>
-      <td>0.166076</td>
-      <td>0.066076</td>
-      <td>0.002477</td>
-      <td>23:16:52.439548</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>12.0</td>
-      <td>0.006112</td>
-      <td>0.01</td>
-      <td>0.083349</td>
-      <td>0.000000</td>
-      <td>0.002311</td>
-      <td>23:16:52.765523</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>12.0</td>
-      <td>0.001182</td>
-      <td>0.10</td>
-      <td>0.114184</td>
-      <td>0.014184</td>
-      <td>0.002243</td>
-      <td>23:16:53.056603</td>
-      <td>True</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
 </div>
 </div>
 
@@ -3830,7 +1727,7 @@ epoch 11: accuracy: 0.11418358692355515
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="parameter_sampler" class="doc_header"><code>parameter_sampler</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L844" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>parameter_sampler</code>(<strong><code>trial</code></strong>)</p>
+<h4 id="parameter_sampler" class="doc_header"><code>parameter_sampler</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L959" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>parameter_sampler</code>(<strong><code>trial</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -3854,7 +1751,7 @@ epoch 11: accuracy: 0.11418358692355515
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_rerun_experiment" class="doc_header"><code>test_rerun_experiment</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L853" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_rerun_experiment</code>()</p>
+<h4 id="test_rerun_experiment" class="doc_header"><code>test_rerun_experiment</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L967" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_rerun_experiment</code>()</p>
 </blockquote>
 
 </div>
@@ -3881,358 +1778,10 @@ epoch 11: accuracy: 0.11418358692355515
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_rerun_experiment</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_rerun_experiment</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>running test_rerun_experiment
-fitting model with 5 epochs
-epoch 0: accuracy: 0.15000000000000002
-epoch 1: accuracy: 0.2
-epoch 2: accuracy: 0.25
-epoch 3: accuracy: 0.3
-epoch 4: accuracy: 0.35
-fitting model with 2 epochs
-epoch 0: accuracy: 0.13
-epoch 1: accuracy: 0.16
-fitting model with 10 epochs
-epoch 0: accuracy: 0.54
-epoch 1: accuracy: 0.5800000000000001
-epoch 2: accuracy: 0.6200000000000001
-epoch 3: accuracy: 0.6600000000000001
-epoch 4: accuracy: 0.7000000000000002
-epoch 5: accuracy: 0.7400000000000002
-epoch 6: accuracy: 0.7800000000000002
-epoch 7: accuracy: 0.8200000000000003
-epoch 8: accuracy: 0.8600000000000003
-epoch 9: accuracy: 0.9000000000000004
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre><span class="ansi-green-fg">[I 2022-02-09 23:16:54,922]</span> A new study created in RDB with name: hp_study
-<span class="ansi-green-fg">[I 2022-02-09 23:16:55,312]</span> Trial 0 finished with value: 0.18000000000000002 and parameters: {&#39;epochs&#39;: 4, &#39;offset&#39;: 0.02}. Best is trial 0 with value: 0.18000000000000002.
-<span class="ansi-green-fg">[I 2022-02-09 23:16:55,633]</span> Trial 1 finished with value: 0.22000000000000003 and parameters: {&#39;epochs&#39;: 4, &#39;offset&#39;: 0.06}. Best is trial 1 with value: 0.22000000000000003.
-<span class="ansi-green-fg">[I 2022-02-09 23:16:55,958]</span> Trial 2 finished with value: 0.18000000000000002 and parameters: {&#39;epochs&#39;: 4, &#39;offset&#39;: 0.02}. Best is trial 1 with value: 0.22000000000000003.
-<span class="ansi-green-fg">[I 2022-02-09 23:16:56,268]</span> Trial 3 finished with value: 0.1 and parameters: {&#39;epochs&#39;: 2, &#39;offset&#39;: 0.02}. Best is trial 1 with value: 0.22000000000000003.
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-
-<div class="output_html rendered_html output_subarea ">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>offset</th>
-      <th>rate</th>
-      <th>epochs</th>
-      <th>0_validation_accuracy</th>
-      <th>0_test_accuracy</th>
-      <th>time_0</th>
-      <th>date</th>
-      <th>0_finished</th>
-      <th>1_validation_accuracy</th>
-      <th>1_test_accuracy</th>
-      <th>...</th>
-      <th>time_2</th>
-      <th>2_finished</th>
-      <th>3_validation_accuracy</th>
-      <th>3_test_accuracy</th>
-      <th>time_3</th>
-      <th>3_finished</th>
-      <th>4_validation_accuracy</th>
-      <th>4_test_accuracy</th>
-      <th>time_4</th>
-      <th>4_finished</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0.10</td>
-      <td>0.05</td>
-      <td>5.0</td>
-      <td>0.35</td>
-      <td>0.45</td>
-      <td>0.000373</td>
-      <td>23:16:53.377123</td>
-      <td>True</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>0.10</td>
-      <td>0.03</td>
-      <td>2.0</td>
-      <td>0.16</td>
-      <td>0.26</td>
-      <td>0.001182</td>
-      <td>23:16:53.549267</td>
-      <td>True</td>
-      <td>0.160822</td>
-      <td>0.261897</td>
-      <td>...</td>
-      <td>0.000295</td>
-      <td>True</td>
-      <td>0.160277</td>
-      <td>0.260827</td>
-      <td>0.000315</td>
-      <td>True</td>
-      <td>0.159735</td>
-      <td>0.26272</td>
-      <td>0.000295</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>NaN</td>
-      <td>0.04</td>
-      <td>NaN</td>
-      <td>0.90</td>
-      <td>0.80</td>
-      <td>0.002174</td>
-      <td>23:16:53.327776</td>
-      <td>True</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>0.01</td>
-      <td>0.04</td>
-      <td>3.0</td>
-      <td>0.13</td>
-      <td>0.23</td>
-      <td>0.000303</td>
-      <td>23:16:53.635492</td>
-      <td>True</td>
-      <td>0.130000</td>
-      <td>0.230000</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>0.05</td>
-      <td>0.04</td>
-      <td>3.0</td>
-      <td>0.17</td>
-      <td>0.27</td>
-      <td>0.000302</td>
-      <td>23:16:53.720829</td>
-      <td>True</td>
-      <td>0.170000</td>
-      <td>0.270000</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>0.01</td>
-      <td>0.04</td>
-      <td>5.0</td>
-      <td>0.21</td>
-      <td>0.31</td>
-      <td>0.000319</td>
-      <td>23:16:53.808877</td>
-      <td>True</td>
-      <td>0.210000</td>
-      <td>0.310000</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>0.05</td>
-      <td>0.04</td>
-      <td>5.0</td>
-      <td>0.25</td>
-      <td>0.35</td>
-      <td>0.000316</td>
-      <td>23:16:53.903460</td>
-      <td>True</td>
-      <td>0.250000</td>
-      <td>0.350000</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>0.02</td>
-      <td>0.04</td>
-      <td>4.0</td>
-      <td>0.18</td>
-      <td>0.28</td>
-      <td>0.000340</td>
-      <td>23:16:55.877707</td>
-      <td>True</td>
-      <td>0.180000</td>
-      <td>0.280000</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>0.06</td>
-      <td>0.04</td>
-      <td>4.0</td>
-      <td>0.22</td>
-      <td>0.32</td>
-      <td>0.000424</td>
-      <td>23:16:55.548437</td>
-      <td>True</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>0.02</td>
-      <td>0.04</td>
-      <td>2.0</td>
-      <td>0.10</td>
-      <td>0.20</td>
-      <td>0.000387</td>
-      <td>23:16:56.189205</td>
-      <td>True</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-  </tbody>
-</table>
-<p>10 rows × 24 columns</p>
-</div>
-</div>
-
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>(10, 24)
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -4257,7 +1806,7 @@ epoch 9: accuracy: 0.9000000000000004
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_rerun_experiment_pipeline" class="doc_header"><code>test_rerun_experiment_pipeline</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L920" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_rerun_experiment_pipeline</code>()</p>
+<h4 id="test_rerun_experiment_pipeline" class="doc_header"><code>test_rerun_experiment_pipeline</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L1037" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_rerun_experiment_pipeline</code>()</p>
 </blockquote>
 
 </div>
@@ -4284,288 +1833,10 @@ epoch 9: accuracy: 0.9000000000000004
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_rerun_experiment_pipeline</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_rerun_experiment_pipeline</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>running test_rerun_experiment_pipeline
-fitting model with 5 epochs
-epoch 0: accuracy: 0.15000000000000002
-epoch 1: accuracy: 0.2
-epoch 2: accuracy: 0.25
-epoch 3: accuracy: 0.3
-epoch 4: accuracy: 0.35
-fitting model with 2 epochs
-epoch 0: accuracy: 0.13
-epoch 1: accuracy: 0.16
-fitting model with 10 epochs
-epoch 0: accuracy: 0.54
-epoch 1: accuracy: 0.5800000000000001
-epoch 2: accuracy: 0.6200000000000001
-epoch 3: accuracy: 0.6600000000000001
-epoch 4: accuracy: 0.7000000000000002
-epoch 5: accuracy: 0.7400000000000002
-epoch 6: accuracy: 0.7800000000000002
-epoch 7: accuracy: 0.8200000000000003
-epoch 8: accuracy: 0.8600000000000003
-epoch 9: accuracy: 0.9000000000000004
-fitting model with 10 epochs
-epoch 0: accuracy: 0.54
-epoch 1: accuracy: 0.5800000000000001
-epoch 2: accuracy: 0.6200000000000001
-epoch 3: accuracy: 0.6600000000000001
-epoch 4: accuracy: 0.7000000000000002
-epoch 5: accuracy: 0.7400000000000002
-epoch 6: accuracy: 0.7800000000000002
-epoch 7: accuracy: 0.8200000000000003
-epoch 8: accuracy: 0.8600000000000003
-epoch 9: accuracy: 0.9000000000000004
-fitting model with 10 epochs
-epoch 0: accuracy: 0.54
-epoch 1: accuracy: 0.5800000000000001
-epoch 2: accuracy: 0.6200000000000001
-epoch 3: accuracy: 0.6600000000000001
-epoch 4: accuracy: 0.7000000000000002
-epoch 5: accuracy: 0.7400000000000002
-epoch 6: accuracy: 0.7800000000000002
-epoch 7: accuracy: 0.8200000000000003
-epoch 8: accuracy: 0.8600000000000003
-epoch 9: accuracy: 0.9000000000000004
-fitting model with 10 epochs
-epoch 0: accuracy: 0.54
-epoch 1: accuracy: 0.5800000000000001
-epoch 2: accuracy: 0.6200000000000001
-epoch 3: accuracy: 0.6600000000000001
-epoch 4: accuracy: 0.7000000000000002
-epoch 5: accuracy: 0.7400000000000002
-epoch 6: accuracy: 0.7800000000000002
-epoch 7: accuracy: 0.8200000000000003
-epoch 8: accuracy: 0.8600000000000003
-epoch 9: accuracy: 0.9000000000000004
-fitting model with 10 epochs
-epoch 0: accuracy: 0.54
-epoch 1: accuracy: 0.5800000000000001
-epoch 2: accuracy: 0.6200000000000001
-epoch 3: accuracy: 0.6600000000000001
-epoch 4: accuracy: 0.7000000000000002
-epoch 5: accuracy: 0.7400000000000002
-epoch 6: accuracy: 0.7800000000000002
-epoch 7: accuracy: 0.8200000000000003
-epoch 8: accuracy: 0.8600000000000003
-epoch 9: accuracy: 0.9000000000000004
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-
-<div class="output_html rendered_html output_subarea ">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>offset</th>
-      <th>rate</th>
-      <th>epochs</th>
-      <th>0_validation_accuracy</th>
-      <th>0_test_accuracy</th>
-      <th>time_0</th>
-      <th>date</th>
-      <th>0_finished</th>
-      <th>1_validation_accuracy</th>
-      <th>1_test_accuracy</th>
-      <th>...</th>
-      <th>time_2</th>
-      <th>2_finished</th>
-      <th>3_validation_accuracy</th>
-      <th>3_test_accuracy</th>
-      <th>time_3</th>
-      <th>3_finished</th>
-      <th>4_validation_accuracy</th>
-      <th>4_test_accuracy</th>
-      <th>time_4</th>
-      <th>4_finished</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0.1</td>
-      <td>0.05</td>
-      <td>5.0</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>0.1</td>
-      <td>0.03</td>
-      <td>2.0</td>
-      <td>0.16</td>
-      <td>0.26</td>
-      <td>0.001061</td>
-      <td>23:16:56.436357</td>
-      <td>True</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>NaN</td>
-      <td>0.04</td>
-      <td>NaN</td>
-      <td>0.90</td>
-      <td>0.80</td>
-      <td>0.002206</td>
-      <td>23:16:56.639085</td>
-      <td>True</td>
-      <td>0.9</td>
-      <td>0.8</td>
-      <td>...</td>
-      <td>0.002144</td>
-      <td>True</td>
-      <td>0.9</td>
-      <td>0.8</td>
-      <td>0.001765</td>
-      <td>True</td>
-      <td>0.9</td>
-      <td>0.8</td>
-      <td>0.002192</td>
-      <td>True</td>
-    </tr>
-  </tbody>
-</table>
-<p>3 rows × 24 columns</p>
-</div>
-</div>
-
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>fitting model with 2 epochs
-epoch 0: accuracy: 0.14
-epoch 1: accuracy: 0.18000000000000002
-fitting model with 5 epochs
-epoch 0: accuracy: 0.15000000000000002
-epoch 1: accuracy: 0.2
-epoch 2: accuracy: 0.25
-epoch 3: accuracy: 0.3
-epoch 4: accuracy: 0.35
-fitting model with 2 epochs
-epoch 0: accuracy: 0.13
-epoch 1: accuracy: 0.16
-fitting model with 10 epochs
-epoch 0: accuracy: 0.54
-epoch 1: accuracy: 0.5800000000000001
-epoch 2: accuracy: 0.6200000000000001
-epoch 3: accuracy: 0.6600000000000001
-epoch 4: accuracy: 0.7000000000000002
-epoch 5: accuracy: 0.7400000000000002
-epoch 6: accuracy: 0.7800000000000002
-epoch 7: accuracy: 0.8200000000000003
-epoch 8: accuracy: 0.8600000000000003
-epoch 9: accuracy: 0.9000000000000004
-fitting model with 10 epochs
-epoch 0: accuracy: 0.54
-epoch 1: accuracy: 0.5800000000000001
-epoch 2: accuracy: 0.6200000000000001
-epoch 3: accuracy: 0.6600000000000001
-epoch 4: accuracy: 0.7000000000000002
-epoch 5: accuracy: 0.7400000000000002
-epoch 6: accuracy: 0.7800000000000002
-epoch 7: accuracy: 0.8200000000000003
-epoch 8: accuracy: 0.8600000000000003
-epoch 9: accuracy: 0.9000000000000004
-fitting model with 10 epochs
-epoch 0: accuracy: 0.54
-epoch 1: accuracy: 0.5800000000000001
-epoch 2: accuracy: 0.6200000000000001
-epoch 3: accuracy: 0.6600000000000001
-epoch 4: accuracy: 0.7000000000000002
-epoch 5: accuracy: 0.7400000000000002
-epoch 6: accuracy: 0.7800000000000002
-epoch 7: accuracy: 0.8200000000000003
-epoch 8: accuracy: 0.8600000000000003
-epoch 9: accuracy: 0.9000000000000004
-fitting model with 10 epochs
-epoch 0: accuracy: 0.54
-epoch 1: accuracy: 0.5800000000000001
-epoch 2: accuracy: 0.6200000000000001
-epoch 3: accuracy: 0.6600000000000001
-epoch 4: accuracy: 0.7000000000000002
-epoch 5: accuracy: 0.7400000000000002
-epoch 6: accuracy: 0.7800000000000002
-epoch 7: accuracy: 0.8200000000000003
-epoch 8: accuracy: 0.8600000000000003
-epoch 9: accuracy: 0.9000000000000004
-fitting model with 10 epochs
-epoch 0: accuracy: 0.54
-epoch 1: accuracy: 0.5800000000000001
-epoch 2: accuracy: 0.6200000000000001
-epoch 3: accuracy: 0.6600000000000001
-epoch 4: accuracy: 0.7000000000000002
-epoch 5: accuracy: 0.7400000000000002
-epoch 6: accuracy: 0.7800000000000002
-epoch 7: accuracy: 0.8200000000000003
-epoch 8: accuracy: 0.8600000000000003
-epoch 9: accuracy: 0.9000000000000004
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -4590,7 +1861,7 @@ epoch 9: accuracy: 0.9000000000000004
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_rerun_experiment_par" class="doc_header"><code>test_rerun_experiment_par</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L975" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_rerun_experiment_par</code>()</p>
+<h4 id="test_rerun_experiment_par" class="doc_header"><code>test_rerun_experiment_par</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L1094" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_rerun_experiment_par</code>()</p>
 </blockquote>
 
 </div>
@@ -4617,232 +1888,10 @@ epoch 9: accuracy: 0.9000000000000004
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_rerun_experiment_par</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_rerun_experiment_par</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>running test_rerun_experiment_par
-fitting model with 5 epochs
-epoch 0: accuracy: 0.15000000000000002
-epoch 1: accuracy: 0.2
-epoch 2: accuracy: 0.25
-epoch 3: accuracy: 0.3
-epoch 4: accuracy: 0.35
-fitting model with 2 epochs
-epoch 0: accuracy: 0.13
-epoch 1: accuracy: 0.16
-fitting model with 10 epochs
-epoch 0: accuracy: 0.54
-epoch 1: accuracy: 0.5800000000000001
-epoch 2: accuracy: 0.6200000000000001
-epoch 3: accuracy: 0.6600000000000001
-epoch 4: accuracy: 0.7000000000000002
-epoch 5: accuracy: 0.7400000000000002
-epoch 6: accuracy: 0.7800000000000002
-epoch 7: accuracy: 0.8200000000000003
-epoch 8: accuracy: 0.8600000000000003
-epoch 9: accuracy: 0.9000000000000004
-fitting model with 10 epochs
-epoch 0: accuracy: 0.54
-epoch 1: accuracy: 0.5800000000000001
-epoch 2: accuracy: 0.6200000000000001
-epoch 3: accuracy: 0.6600000000000001
-epoch 4: accuracy: 0.7000000000000002
-epoch 5: accuracy: 0.7400000000000002
-epoch 6: accuracy: 0.7800000000000002
-epoch 7: accuracy: 0.8200000000000003
-epoch 8: accuracy: 0.8600000000000003
-epoch 9: accuracy: 0.9000000000000004
-fitting model with 10 epochs
-epoch 0: accuracy: 0.54
-epoch 1: accuracy: 0.5800000000000001
-epoch 2: accuracy: 0.6200000000000001
-epoch 3: accuracy: 0.6600000000000001
-epoch 4: accuracy: 0.7000000000000002
-epoch 5: accuracy: 0.7400000000000002
-epoch 6: accuracy: 0.7800000000000002
-epoch 7: accuracy: 0.8200000000000003
-epoch 8: accuracy: 0.8600000000000003
-epoch 9: accuracy: 0.9000000000000004
-fitting model with 10 epochs
-epoch 0: accuracy: 0.54
-epoch 1: accuracy: 0.5800000000000001
-epoch 2: accuracy: 0.6200000000000001
-epoch 3: accuracy: 0.6600000000000001
-epoch 4: accuracy: 0.7000000000000002
-epoch 5: accuracy: 0.7400000000000002
-epoch 6: accuracy: 0.7800000000000002
-epoch 7: accuracy: 0.8200000000000003
-epoch 8: accuracy: 0.8600000000000003
-epoch 9: accuracy: 0.9000000000000004
-fitting model with 10 epochs
-epoch 0: accuracy: 0.54
-epoch 1: accuracy: 0.5800000000000001
-epoch 2: accuracy: 0.6200000000000001
-epoch 3: accuracy: 0.6600000000000001
-epoch 4: accuracy: 0.7000000000000002
-epoch 5: accuracy: 0.7400000000000002
-epoch 6: accuracy: 0.7800000000000002
-epoch 7: accuracy: 0.8200000000000003
-epoch 8: accuracy: 0.8600000000000003
-epoch 9: accuracy: 0.9000000000000004
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-
-<div class="output_html rendered_html output_subarea ">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>offset</th>
-      <th>rate</th>
-      <th>epochs</th>
-      <th>0_validation_accuracy</th>
-      <th>0_test_accuracy</th>
-      <th>time_0</th>
-      <th>date</th>
-      <th>0_finished</th>
-      <th>1_validation_accuracy</th>
-      <th>1_test_accuracy</th>
-      <th>...</th>
-      <th>time_2</th>
-      <th>2_finished</th>
-      <th>3_validation_accuracy</th>
-      <th>3_test_accuracy</th>
-      <th>time_3</th>
-      <th>3_finished</th>
-      <th>4_validation_accuracy</th>
-      <th>4_test_accuracy</th>
-      <th>time_4</th>
-      <th>4_finished</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0.1</td>
-      <td>0.05</td>
-      <td>5.0</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>0.1</td>
-      <td>0.03</td>
-      <td>2.0</td>
-      <td>0.16</td>
-      <td>0.26</td>
-      <td>0.000897</td>
-      <td>23:16:56.887922</td>
-      <td>True</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>NaN</td>
-      <td>0.04</td>
-      <td>NaN</td>
-      <td>0.90</td>
-      <td>0.80</td>
-      <td>0.002099</td>
-      <td>23:16:57.083852</td>
-      <td>True</td>
-      <td>0.9</td>
-      <td>0.8</td>
-      <td>...</td>
-      <td>0.002111</td>
-      <td>True</td>
-      <td>0.9</td>
-      <td>0.8</td>
-      <td>0.001865</td>
-      <td>True</td>
-      <td>0.9</td>
-      <td>0.8</td>
-      <td>0.001971</td>
-      <td>True</td>
-    </tr>
-  </tbody>
-</table>
-<p>3 rows × 24 columns</p>
-</div>
-</div>
-
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>fitting model with 10 epochs
-epoch 0: accuracy: 0.54
-epoch 1: accuracy: 0.5800000000000001
-epoch 2: accuracy: 0.6200000000000001
-epoch 3: accuracy: 0.6600000000000001
-epoch 4: accuracy: 0.7000000000000002
-epoch 5: accuracy: 0.7400000000000002
-epoch 6: accuracy: 0.7800000000000002
-epoch 7: accuracy: 0.8200000000000003
-epoch 8: accuracy: 0.8600000000000003
-epoch 9: accuracy: 0.9000000000000004
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -4866,7 +1915,7 @@ epoch 9: accuracy: 0.9000000000000004
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_git_revision_hash" class="doc_header"><code>get_git_revision_hash</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1099" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_git_revision_hash</code>(<strong><code>root_path</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="get_git_revision_hash" class="doc_header"><code>get_git_revision_hash</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1116" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_git_revision_hash</code>(<strong><code>path_experiments</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 
 </div>
@@ -4903,7 +1952,7 @@ epoch 9: accuracy: 0.9000000000000004
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_get_git_revision_hash" class="doc_header"><code>test_get_git_revision_hash</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L1013" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_get_git_revision_hash</code>()</p>
+<h4 id="test_get_git_revision_hash" class="doc_header"><code>test_get_git_revision_hash</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L1134" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_get_git_revision_hash</code>()</p>
 </blockquote>
 
 </div>
@@ -4930,32 +1979,10 @@ epoch 9: accuracy: 0.9000000000000004
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_get_git_revision_hash</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_get_git_revision_hash</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>running test_get_git_revision_hash
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>fatal: not a git repository (or any of the parent directories): .git
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -4979,7 +2006,7 @@ epoch 9: accuracy: 0.9000000000000004
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="record_parameters" class="doc_header"><code>record_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1117" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>record_parameters</code>(<strong><code>path_save</code></strong>, <strong><code>parameters</code></strong>, <strong><code>other_parameters</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="record_parameters" class="doc_header"><code>record_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1135" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>record_parameters</code>(<strong><code>path_save</code></strong>, <strong><code>parameters</code></strong>, <strong><code>other_parameters</code></strong>=<em><code>None</code></em>, <strong><code>em_args</code></strong>=<em><code>None</code></em>, <strong><code>info</code></strong>=<em><code>None</code></em>, <strong><code>em_attrs</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 
 </div>
@@ -5001,7 +2028,7 @@ epoch 9: accuracy: 0.9000000000000004
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="mypprint">mypprint<a class="anchor-link" href="#mypprint"> </a></h2>
+<h2 id="print_parameters">print_parameters<a class="anchor-link" href="#print_parameters"> </a></h2>
 </div>
 </div>
 </div>
@@ -5016,7 +2043,7 @@ epoch 9: accuracy: 0.9000000000000004
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="mypprint" class="doc_header"><code>mypprint</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1137" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>mypprint</code>(<strong><code>parameters</code></strong>, <strong><code>dict_name</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="print_parameters" class="doc_header"><code>print_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1188" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>print_parameters</code>(<strong><code>parameters</code></strong>, <strong><code>dict_name</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 
 </div>
@@ -5053,7 +2080,7 @@ epoch 9: accuracy: 0.9000000000000004
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="load_or_create_experiment_values" class="doc_header"><code>load_or_create_experiment_values</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1159" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>load_or_create_experiment_values</code>(<strong><code>path_csv</code></strong>, <strong><code>parameters</code></strong>, <strong><code>precision</code></strong>=<em><code>1e-15</code></em>)</p>
+<h4 id="load_or_create_experiment_values" class="doc_header"><code>load_or_create_experiment_values</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1210" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>load_or_create_experiment_values</code>(<strong><code>path_experiments</code></strong>, <strong><code>parameters</code></strong>, <strong><code>precision</code></strong>=<em><code>1e-15</code></em>, <strong><code>logger</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 
 </div>
@@ -5075,6 +2102,60 @@ epoch 9: accuracy: 0.9000000000000004
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Usage-example">Usage example<a class="anchor-link" href="#Usage-example"> </a></h3>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="test_load_or_create_experiment_values" class="doc_header"><code>test_load_or_create_experiment_values</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L1157" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_load_or_create_experiment_values</code>()</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_load_or_create_experiment_values</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="store_parameters">store_parameters<a class="anchor-link" href="#store_parameters"> </a></h2>
 </div>
 </div>
@@ -5090,7 +2171,7 @@ epoch 9: accuracy: 0.9000000000000004
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="store_parameters" class="doc_header"><code>store_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1211" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>store_parameters</code>(<strong><code>root_path</code></strong>, <strong><code>experiment_number</code></strong>, <strong><code>parameters</code></strong>)</p>
+<h4 id="store_parameters" class="doc_header"><code>store_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1256" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>store_parameters</code>(<strong><code>path_experiments</code></strong>, <strong><code>experiment_number</code></strong>, <strong><code>parameters</code></strong>)</p>
 </blockquote>
 <p>Keeps track of dictionary to map experiment number and parameters values for the different experiments.</p>
 
@@ -5128,7 +2209,7 @@ epoch 9: accuracy: 0.9000000000000004
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="isnull" class="doc_header"><code>isnull</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1230" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>isnull</code>(<strong><code>experiment_data</code></strong>, <strong><code>experiment_number</code></strong>, <strong><code>name_column</code></strong>)</p>
+<h4 id="isnull" class="doc_header"><code>isnull</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1276" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>isnull</code>(<strong><code>experiment_data</code></strong>, <strong><code>experiment_number</code></strong>, <strong><code>name_column</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -5165,7 +2246,7 @@ epoch 9: accuracy: 0.9000000000000004
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_experiment_number" class="doc_header"><code>get_experiment_number</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1234" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_experiment_number</code>(<strong><code>root_path</code></strong>, <strong><code>parameters</code></strong>=<em><code>{}</code></em>)</p>
+<h4 id="get_experiment_number" class="doc_header"><code>get_experiment_number</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1280" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_experiment_number</code>(<strong><code>path_experiments</code></strong>, <strong><code>parameters</code></strong>=<em><code>{}</code></em>)</p>
 </blockquote>
 
 </div>
@@ -5202,7 +2283,7 @@ epoch 9: accuracy: 0.9000000000000004
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_experiment_numbers" class="doc_header"><code>get_experiment_numbers</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1243" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_experiment_numbers</code>(<strong><code>path_results_base</code></strong>, <strong><code>parameters_single_value</code></strong>, <strong><code>parameters_multiple_values_all</code></strong>)</p>
+<h4 id="get_experiment_numbers" class="doc_header"><code>get_experiment_numbers</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1286" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_experiment_numbers</code>(<strong><code>path_results_base</code></strong>, <strong><code>parameters_single_value</code></strong>, <strong><code>parameters_multiple_values_all</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -5224,6 +2305,384 @@ epoch 9: accuracy: 0.9000000000000004
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Usage-example">Usage example<a class="anchor-link" href="#Usage-example"> </a></h3>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="test_get_experiment_numbers" class="doc_header"><code>test_get_experiment_numbers</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/test_experiment_manager.py#L1198" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_get_experiment_numbers</code>()</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">test_get_experiment_numbers</span> <span class="p">():</span>
+    <span class="c1"># get input data</span>
+    <span class="n">em</span> <span class="o">=</span> <span class="n">init_em</span> <span class="p">(</span><span class="s1">&#39;get_experiment_numbers&#39;</span><span class="p">)</span>
+    <span class="n">parameters_single_value</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;offset&#39;</span><span class="p">:</span><span class="mf">0.1</span><span class="p">}</span>
+    <span class="n">parameters_multiple_values</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;rate&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.03</span><span class="p">,</span><span class="mf">0.01</span><span class="p">],</span> <span class="s1">&#39;epochs&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">]}</span>
+    <span class="n">em</span><span class="o">.</span><span class="n">grid_search</span> <span class="p">(</span><span class="n">parameters_multiple_values</span><span class="o">=</span><span class="n">parameters_multiple_values</span><span class="p">,</span>
+                    <span class="n">parameters_single_value</span><span class="o">=</span><span class="n">parameters_single_value</span><span class="p">,</span>
+                    <span class="n">other_parameters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;verbose&#39;</span><span class="p">:</span><span class="kc">False</span><span class="p">})</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">get_experiment_data</span> <span class="p">()</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+    
+    <span class="c1"># run `get_experiment_numbers`</span>
+    <span class="n">experiment_numbers</span> <span class="o">=</span> <span class="n">get_experiment_numbers</span> <span class="p">(</span><span class="n">em</span><span class="o">.</span><span class="n">path_experiments</span><span class="p">,</span> <span class="n">parameters_single_value</span><span class="p">,</span> 
+                                                 <span class="n">parameters_multiple_values</span><span class="p">)</span>
+
+    <span class="c1"># check results</span>
+    <span class="k">assert</span> <span class="n">experiment_numbers</span><span class="o">==</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+    
+    <span class="c1"># delete generated experiment data</span>
+    <span class="n">em</span><span class="o">.</span><span class="n">remove_previous_experiments</span> <span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_get_experiment_numbers</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>running test_get_experiment_numbers
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py:1210: FutureWarning:
+
+The frame.append method is deprecated and will be removed from pandas in a future version. Use pandas.concat instead.
+
+/home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py:440: ResourceWarning:
+
+unclosed file &lt;_io.TextIOWrapper name=&#39;/home/jcidatascience/jaume/workspace/remote/hpsearch/test_get_experiment_numbers/default/summary.txt&#39; mode=&#39;w&#39; encoding=&#39;UTF-8&#39;&gt;
+
+/home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/config/manager_factory.py:53: ResourceWarning:
+
+unclosed file &lt;_io.TextIOWrapper name=&#39;/home/jcidatascience/jaume/workspace/remote/hpsearch/em_obj/logs.txt&#39; mode=&#39;w&#39; encoding=&#39;UTF-8&#39;&gt;
+
+/home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/config/manager_factory.py:53: ResourceWarning:
+
+unclosed file &lt;_io.TextIOWrapper name=&#39;/home/jcidatascience/jaume/workspace/remote/hpsearch/em_obj/logs.txt&#39; mode=&#39;w&#39; encoding=&#39;UTF-8&#39;&gt;
+
+/home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py:1213: FutureWarning:
+
+The default dtype for empty Series will be &#39;object&#39; instead of &#39;float64&#39; in a future version. Specify a dtype explicitly to silence this warning.
+
+/home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py:424: ResourceWarning:
+
+unclosed file &lt;_io.TextIOWrapper name=&#39;/home/jcidatascience/jaume/workspace/remote/hpsearch/test_get_experiment_numbers/default/experiments/00000/0/logs.txt&#39; mode=&#39;w&#39; encoding=&#39;UTF-8&#39;&gt;
+
+/home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py:431: ResourceWarning:
+
+unclosed file &lt;_io.TextIOWrapper name=&#39;/home/jcidatascience/jaume/workspace/remote/hpsearch/test_get_experiment_numbers/default/experiments/00000/0/summary.txt&#39; mode=&#39;w&#39; encoding=&#39;UTF-8&#39;&gt;
+
+/home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py:440: ResourceWarning:
+
+unclosed file &lt;_io.TextIOWrapper name=&#39;/home/jcidatascience/jaume/workspace/remote/hpsearch/test_get_experiment_numbers/default/summary.txt&#39; mode=&#39;w&#39; encoding=&#39;UTF-8&#39;&gt;
+
+/home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/config/manager_factory.py:53: ResourceWarning:
+
+unclosed file &lt;_io.TextIOWrapper name=&#39;/home/jcidatascience/jaume/workspace/remote/hpsearch/em_obj/logs.txt&#39; mode=&#39;w&#39; encoding=&#39;UTF-8&#39;&gt;
+
+/home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/config/manager_factory.py:53: ResourceWarning:
+
+unclosed file &lt;_io.TextIOWrapper name=&#39;/home/jcidatascience/jaume/workspace/remote/hpsearch/em_obj/logs.txt&#39; mode=&#39;w&#39; encoding=&#39;UTF-8&#39;&gt;
+
+/home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/config/manager_factory.py:53: ResourceWarning:
+
+unclosed file &lt;_io.TextIOWrapper name=&#39;/home/jcidatascience/jaume/workspace/remote/hpsearch/em_obj/logs.txt&#39; mode=&#39;w&#39; encoding=&#39;UTF-8&#39;&gt;
+
+/home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py:1213: FutureWarning:
+
+The default dtype for empty Series will be &#39;object&#39; instead of &#39;float64&#39; in a future version. Specify a dtype explicitly to silence this warning.
+
+/home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py:424: ResourceWarning:
+
+unclosed file &lt;_io.TextIOWrapper name=&#39;/home/jcidatascience/jaume/workspace/remote/hpsearch/test_get_experiment_numbers/default/experiments/00001/0/logs.txt&#39; mode=&#39;w&#39; encoding=&#39;UTF-8&#39;&gt;
+
+/home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py:431: ResourceWarning:
+
+unclosed file &lt;_io.TextIOWrapper name=&#39;/home/jcidatascience/jaume/workspace/remote/hpsearch/test_get_experiment_numbers/default/experiments/00001/0/summary.txt&#39; mode=&#39;w&#39; encoding=&#39;UTF-8&#39;&gt;
+
+/home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py:440: ResourceWarning:
+
+unclosed file &lt;_io.TextIOWrapper name=&#39;/home/jcidatascience/jaume/workspace/remote/hpsearch/test_get_experiment_numbers/default/summary.txt&#39; mode=&#39;w&#39; encoding=&#39;UTF-8&#39;&gt;
+
+/home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/config/manager_factory.py:53: ResourceWarning:
+
+unclosed file &lt;_io.TextIOWrapper name=&#39;/home/jcidatascience/jaume/workspace/remote/hpsearch/em_obj/logs.txt&#39; mode=&#39;w&#39; encoding=&#39;UTF-8&#39;&gt;
+
+/home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/config/manager_factory.py:53: ResourceWarning:
+
+unclosed file &lt;_io.TextIOWrapper name=&#39;/home/jcidatascience/jaume/workspace/remote/hpsearch/em_obj/logs.txt&#39; mode=&#39;w&#39; encoding=&#39;UTF-8&#39;&gt;
+
+/home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/config/manager_factory.py:53: ResourceWarning:
+
+unclosed file &lt;_io.TextIOWrapper name=&#39;/home/jcidatascience/jaume/workspace/remote/hpsearch/em_obj/logs.txt&#39; mode=&#39;w&#39; encoding=&#39;UTF-8&#39;&gt;
+
+/home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/config/manager_factory.py:53: ResourceWarning:
+
+unclosed file &lt;_io.TextIOWrapper name=&#39;/home/jcidatascience/jaume/workspace/remote/hpsearch/em_obj/logs.txt&#39; mode=&#39;w&#39; encoding=&#39;UTF-8&#39;&gt;
+
+/home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py:1213: FutureWarning:
+
+The default dtype for empty Series will be &#39;object&#39; instead of &#39;float64&#39; in a future version. Specify a dtype explicitly to silence this warning.
+
+/home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py:424: ResourceWarning:
+
+unclosed file &lt;_io.TextIOWrapper name=&#39;/home/jcidatascience/jaume/workspace/remote/hpsearch/test_get_experiment_numbers/default/experiments/00002/0/logs.txt&#39; mode=&#39;w&#39; encoding=&#39;UTF-8&#39;&gt;
+
+/home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py:431: ResourceWarning:
+
+unclosed file &lt;_io.TextIOWrapper name=&#39;/home/jcidatascience/jaume/workspace/remote/hpsearch/test_get_experiment_numbers/default/experiments/00002/0/summary.txt&#39; mode=&#39;w&#39; encoding=&#39;UTF-8&#39;&gt;
+
+/home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py:440: ResourceWarning:
+
+unclosed file &lt;_io.TextIOWrapper name=&#39;/home/jcidatascience/jaume/workspace/remote/hpsearch/test_get_experiment_numbers/default/summary.txt&#39; mode=&#39;w&#39; encoding=&#39;UTF-8&#39;&gt;
+
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea "><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="3" halign="left">parameters</th>
+      <th colspan="3" halign="left">run_info</th>
+      <th colspan="2" halign="left">scores</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th>epochs</th>
+      <th>offset</th>
+      <th>rate</th>
+      <th>date</th>
+      <th>finished</th>
+      <th>time</th>
+      <th>test_accuracy</th>
+      <th>validation_accuracy</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th>0</th>
+      <th>0</th>
+      <th>0</th>
+      <th>0</th>
+      <th>0</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5.0</td>
+      <td>0.1</td>
+      <td>0.03</td>
+      <td>10:14:08.204744</td>
+      <td>True</td>
+      <td>0.000468</td>
+      <td>0.35</td>
+      <td>0.25</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>5.0</td>
+      <td>0.1</td>
+      <td>NaN</td>
+      <td>10:14:08.296989</td>
+      <td>True</td>
+      <td>0.000469</td>
+      <td>0.25</td>
+      <td>0.15</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>7.0</td>
+      <td>0.1</td>
+      <td>0.03</td>
+      <td>10:14:08.400023</td>
+      <td>True</td>
+      <td>0.000532</td>
+      <td>0.41</td>
+      <td>0.31</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>7.0</td>
+      <td>0.1</td>
+      <td>NaN</td>
+      <td>10:14:08.511109</td>
+      <td>True</td>
+      <td>0.000467</td>
+      <td>0.27</td>
+      <td>0.17</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[0, 1, 2, 3]
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/config/manager_factory.py:53: ResourceWarning:
+
+unclosed file &lt;_io.TextIOWrapper name=&#39;/home/jcidatascience/jaume/workspace/remote/hpsearch/em_obj/logs.txt&#39; mode=&#39;w&#39; encoding=&#39;UTF-8&#39;&gt;
+
+/home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/config/manager_factory.py:53: ResourceWarning:
+
+unclosed file &lt;_io.TextIOWrapper name=&#39;/home/jcidatascience/jaume/workspace/remote/hpsearch/em_obj/logs.txt&#39; mode=&#39;w&#39; encoding=&#39;UTF-8&#39;&gt;
+
+/home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/config/manager_factory.py:53: ResourceWarning:
+
+unclosed file &lt;_io.TextIOWrapper name=&#39;/home/jcidatascience/jaume/workspace/remote/hpsearch/em_obj/logs.txt&#39; mode=&#39;w&#39; encoding=&#39;UTF-8&#39;&gt;
+
+/home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/config/manager_factory.py:53: ResourceWarning:
+
+unclosed file &lt;_io.TextIOWrapper name=&#39;/home/jcidatascience/jaume/workspace/remote/hpsearch/em_obj/logs.txt&#39; mode=&#39;w&#39; encoding=&#39;UTF-8&#39;&gt;
+
+/home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/config/manager_factory.py:53: ResourceWarning:
+
+unclosed file &lt;_io.TextIOWrapper name=&#39;/home/jcidatascience/jaume/workspace/remote/hpsearch/em_obj/logs.txt&#39; mode=&#39;w&#39; encoding=&#39;UTF-8&#39;&gt;
+
+/home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/config/manager_factory.py:53: ResourceWarning:
+
+unclosed file &lt;_io.TextIOWrapper name=&#39;/home/jcidatascience/jaume/workspace/remote/hpsearch/em_obj/logs.txt&#39; mode=&#39;w&#39; encoding=&#39;UTF-8&#39;&gt;
+
+/home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/config/manager_factory.py:53: ResourceWarning:
+
+unclosed file &lt;_io.TextIOWrapper name=&#39;/home/jcidatascience/jaume/workspace/remote/hpsearch/em_obj/logs.txt&#39; mode=&#39;w&#39; encoding=&#39;UTF-8&#39;&gt;
+
+/home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/config/manager_factory.py:53: ResourceWarning:
+
+unclosed file &lt;_io.TextIOWrapper name=&#39;/home/jcidatascience/jaume/workspace/remote/hpsearch/em_obj/logs.txt&#39; mode=&#39;w&#39; encoding=&#39;UTF-8&#39;&gt;
+
+/home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/config/manager_factory.py:53: ResourceWarning:
+
+unclosed file &lt;_io.TextIOWrapper name=&#39;/home/jcidatascience/jaume/workspace/remote/hpsearch/em_obj/logs.txt&#39; mode=&#39;w&#39; encoding=&#39;UTF-8&#39;&gt;
+
+/home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/config/manager_factory.py:53: ResourceWarning:
+
+unclosed file &lt;_io.TextIOWrapper name=&#39;/home/jcidatascience/jaume/workspace/remote/hpsearch/em_obj/logs.txt&#39; mode=&#39;w&#39; encoding=&#39;UTF-8&#39;&gt;
+
+/home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/config/manager_factory.py:53: ResourceWarning:
+
+unclosed file &lt;_io.TextIOWrapper name=&#39;/home/jcidatascience/jaume/workspace/remote/hpsearch/em_obj/logs.txt&#39; mode=&#39;w&#39; encoding=&#39;UTF-8&#39;&gt;
+
+/home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/config/manager_factory.py:53: ResourceWarning:
+
+unclosed file &lt;_io.TextIOWrapper name=&#39;/home/jcidatascience/jaume/workspace/remote/hpsearch/em_obj/logs.txt&#39; mode=&#39;w&#39; encoding=&#39;UTF-8&#39;&gt;
+
+/home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/config/manager_factory.py:53: ResourceWarning:
+
+unclosed file &lt;_io.TextIOWrapper name=&#39;/home/jcidatascience/jaume/workspace/remote/hpsearch/em_obj/logs.txt&#39; mode=&#39;w&#39; encoding=&#39;UTF-8&#39;&gt;
+
+/home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/config/manager_factory.py:53: ResourceWarning:
+
+unclosed file &lt;_io.TextIOWrapper name=&#39;/home/jcidatascience/jaume/workspace/remote/hpsearch/em_obj/logs.txt&#39; mode=&#39;w&#39; encoding=&#39;UTF-8&#39;&gt;
+
+/home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/config/manager_factory.py:53: ResourceWarning:
+
+unclosed file &lt;_io.TextIOWrapper name=&#39;/home/jcidatascience/jaume/workspace/remote/hpsearch/em_obj/logs.txt&#39; mode=&#39;w&#39; encoding=&#39;UTF-8&#39;&gt;
+
+/home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/config/manager_factory.py:53: ResourceWarning:
+
+unclosed file &lt;_io.TextIOWrapper name=&#39;/home/jcidatascience/jaume/workspace/remote/hpsearch/em_obj/logs.txt&#39; mode=&#39;w&#39; encoding=&#39;UTF-8&#39;&gt;
+
+/home/jcidatascience/jaume/workspace/remote/hpsearch/hpsearch/config/manager_factory.py:53: ResourceWarning:
+
+unclosed file &lt;_io.TextIOWrapper name=&#39;/home/jcidatascience/jaume/workspace/remote/hpsearch/em_obj/logs.txt&#39; mode=&#39;w&#39; encoding=&#39;UTF-8&#39;&gt;
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="insert_experiment_script_path">insert_experiment_script_path<a class="anchor-link" href="#insert_experiment_script_path"> </a></h2>
 </div>
 </div>
@@ -5239,7 +2698,7 @@ epoch 9: accuracy: 0.9000000000000004
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="insert_experiment_script_path" class="doc_header"><code>insert_experiment_script_path</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1260" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>insert_experiment_script_path</code>(<strong><code>other_parameters</code></strong>, <strong><code>logger</code></strong>)</p>
+<h4 id="insert_experiment_script_path" class="doc_header"><code>insert_experiment_script_path</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1303" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>insert_experiment_script_path</code>(<strong><code>info</code></strong>, <strong><code>logger</code></strong>, <strong><code>stack_level</code></strong>=<em><code>-3</code></em>)</p>
 </blockquote>
 
 </div>
@@ -5276,7 +2735,7 @@ epoch 9: accuracy: 0.9000000000000004
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="load_parameters" class="doc_header"><code>load_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1271" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>load_parameters</code>(<strong><code>experiment</code></strong>=<em><code>None</code></em>, <strong><code>root_path</code></strong>=<em><code>None</code></em>, <strong><code>root_folder</code></strong>=<em><code>None</code></em>, <strong><code>other_parameters</code></strong>=<em><code>{}</code></em>, <strong><code>parameters</code></strong>=<em><code>{}</code></em>, <strong><code>check_experiment_matches</code></strong>=<em><code>True</code></em>, <strong><code>em</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="load_parameters" class="doc_header"><code>load_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1314" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>load_parameters</code>(<strong><code>experiment</code></strong>=<em><code>None</code></em>, <strong><code>other_parameters</code></strong>=<em><code>{}</code></em>, <strong><code>em_args</code></strong>=<em><code>{}</code></em>, <strong><code>parameters</code></strong>=<em><code>{}</code></em>, <strong><code>check_experiment_matches</code></strong>=<em><code>True</code></em>, <strong><code>em</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 
 </div>
@@ -5313,7 +2772,31 @@ epoch 9: accuracy: 0.9000000000000004
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="save_other_parameters" class="doc_header"><code>save_other_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1307" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>save_other_parameters</code>(<strong><code>experiment_number</code></strong>, <strong><code>other_parameters</code></strong>, <strong><code>root_path</code></strong>)</p>
+<h4 id="get_scalar_fields" class="doc_header"><code>get_scalar_fields</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1349" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_scalar_fields</code>(<strong><code>other_parameters</code></strong>)</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="save_other_parameters" class="doc_header"><code>save_other_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1358" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>save_other_parameters</code>(<strong><code>experiment_number</code></strong>, <strong><code>other_parameters</code></strong>, <strong><code>path_experiments</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -5334,5 +2817,5 @@ epoch 9: accuracy: 0.9000000000000004
     {% endraw %}
 
 </div>
- 
+
 

@@ -31,6 +31,9 @@ entries:
       title: Test metric visualization
       url: tst.print_info.html
     - output: web,pdf
+      title: Test modify manager
+      url: tst.modify_manager.html
+    - output: web,pdf
       title: Test more runs
       url: tst.more_runs.html
     - output: web,pdf
@@ -49,8 +52,11 @@ entries:
       title: Test rerun
       url: tst.rerun.html
     - output: web,pdf
-      title: Test nbdev_utils
+      title: Test experiment manager
       url: tst.experiment_manager.html
+    - output: web,pdf
+      title: Test convert legacy
+      url: tst.convert_legacy.html
     - output: web,pdf
       title: Test experiment utils
       url: tst.experiment_utils.html
@@ -94,6 +100,9 @@ entries:
       title: Metric visualization
       url: metric_visualization.html
     - output: web,pdf
+      title: Modify manager
+      url: modify_manager.html
+    - output: web,pdf
       title: More runs
       url: more_runs.html
     - output: web,pdf
@@ -117,6 +126,9 @@ entries:
     - output: web,pdf
       title: Visualization
       url: visualization.html
+    - output: web,pdf
+      title: Convert legacy data format
+      url: convert_legacy.html
     - output: web,pdf
       title: Experiment Utils
       url: experiment_utils.html

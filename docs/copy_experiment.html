@@ -64,10 +64,10 @@ nb_path: "nbs/tools/copy_experiment.ipynb"
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <div class="highlight"><pre><span></span><span class="c1">#export</span>
-<span class="k">def</span> <span class="nf">get_best_experiment</span> <span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">runs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">op</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+<span class="k">def</span> <span class="nf">get_best_experiment</span> <span class="p">(</span><span class="n">folder</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">runs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">op</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
                          <span class="n">stats</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">results</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">other_parameters</span><span class="o">=</span><span class="p">{},</span> 
                          <span class="n">sort</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">show</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">query</span> <span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="n">root</span><span class="p">,</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">query</span> <span class="p">(</span><span class="n">folder</span><span class="o">=</span><span class="n">folder</span><span class="p">,</span>
                <span class="n">metric</span><span class="o">=</span><span class="n">metric</span><span class="p">,</span> <span class="n">runs</span><span class="o">=</span><span class="n">runs</span><span class="p">,</span> <span class="n">op</span><span class="o">=</span><span class="n">op</span><span class="p">,</span> <span class="n">stats</span><span class="o">=</span><span class="n">stats</span><span class="p">,</span>
                <span class="n">results</span><span class="o">=</span><span class="n">results</span><span class="p">,</span> <span class="n">other_parameters</span><span class="o">=</span><span class="n">other_parameters</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">sort</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -100,7 +100,7 @@ nb_path: "nbs/tools/copy_experiment.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="copy_experiment_contents" class="doc_header"><code>copy_experiment_contents</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tools/copy_experiment.py#L22" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>copy_experiment_contents</code>(<strong><code>experiment</code></strong>=<em><code>None</code></em>, <strong><code>root</code></strong>=<em><code>None</code></em>, <strong><code>destination_folder</code></strong>=<em><code>'.'</code></em>, <strong><code>run</code></strong>=<em><code>0</code></em>, <strong><code>desired</code></strong>=<em><code>None</code></em>, <strong><code>target_model</code></strong>=<em><code>None</code></em>, <strong><code>destination_model</code></strong>=<em><code>None</code></em>, <strong><code>manager_path</code></strong>=<em><code>'em_obj'</code></em>)</p>
+<h4 id="copy_experiment_contents" class="doc_header"><code>copy_experiment_contents</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tools/copy_experiment.py#L24" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>copy_experiment_contents</code>(<strong><code>experiment</code></strong>=<em><code>None</code></em>, <strong><code>folder</code></strong>=<em><code>None</code></em>, <strong><code>destination_folder</code></strong>=<em><code>'.'</code></em>, <strong><code>run</code></strong>=<em><code>0</code></em>, <strong><code>desired</code></strong>=<em><code>None</code></em>, <strong><code>target_model</code></strong>=<em><code>None</code></em>, <strong><code>destination_model</code></strong>=<em><code>None</code></em>, <strong><code>manager_path</code></strong>=<em><code>'em_obj'</code></em>)</p>
 </blockquote>
 
 </div>
@@ -137,7 +137,7 @@ nb_path: "nbs/tools/copy_experiment.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="copy_code" class="doc_header"><code>copy_code</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tools/copy_experiment.py#L48" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>copy_code</code>(<strong><code>source_folder</code></strong>, <strong><code>destination_folder</code></strong>, <strong><code>file</code></strong>=<em><code>None</code></em>, <strong><code>path_root_experiment</code></strong>=<em><code>None</code></em>, <strong><code>manager_path</code></strong>=<em><code>'em_obj'</code></em>)</p>
+<h4 id="copy_code" class="doc_header"><code>copy_code</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tools/copy_experiment.py#L50" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>copy_code</code>(<strong><code>source_folder</code></strong>, <strong><code>destination_folder</code></strong>, <strong><code>file</code></strong>=<em><code>None</code></em>, <strong><code>path_experiment</code></strong>=<em><code>None</code></em>, <strong><code>manager_path</code></strong>=<em><code>'em_obj'</code></em>)</p>
 </blockquote>
 
 </div>
@@ -161,7 +161,7 @@ nb_path: "nbs/tools/copy_experiment.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="main" class="doc_header"><code>main</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tools/copy_experiment.py#L175" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>main</code>()</p>
+<h4 id="main" class="doc_header"><code>main</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tools/copy_experiment.py#L178" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>main</code>()</p>
 </blockquote>
 
 </div>
@@ -198,7 +198,7 @@ nb_path: "nbs/tools/copy_experiment.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="copy_experiment_contents_and_code" class="doc_header"><code>copy_experiment_contents_and_code</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tools/copy_experiment.py#L114" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>copy_experiment_contents_and_code</code>(<strong><code>experiment</code></strong>=<em><code>None</code></em>, <strong><code>root</code></strong>=<em><code>None</code></em>, <strong><code>content</code></strong>=<em><code>'.'</code></em>, <strong><code>code</code></strong>=<em><code>'.'</code></em>, <strong><code>run</code></strong>=<em><code>0</code></em>, <strong><code>file</code></strong>=<em><code>None</code></em>, <strong><code>target_model</code></strong>=<em><code>None</code></em>, <strong><code>destination_model</code></strong>=<em><code>None</code></em>, <strong><code>desired</code></strong>=<em><code>None</code></em>, <strong><code>manager_path</code></strong>=<em><code>'em_obj'</code></em>)</p>
+<h4 id="copy_experiment_contents_and_code" class="doc_header"><code>copy_experiment_contents_and_code</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tools/copy_experiment.py#L116" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>copy_experiment_contents_and_code</code>(<strong><code>experiment</code></strong>=<em><code>None</code></em>, <strong><code>folder</code></strong>=<em><code>None</code></em>, <strong><code>content</code></strong>=<em><code>'.'</code></em>, <strong><code>code</code></strong>=<em><code>'.'</code></em>, <strong><code>run</code></strong>=<em><code>0</code></em>, <strong><code>file</code></strong>=<em><code>None</code></em>, <strong><code>target_model</code></strong>=<em><code>None</code></em>, <strong><code>destination_model</code></strong>=<em><code>None</code></em>, <strong><code>desired</code></strong>=<em><code>None</code></em>, <strong><code>manager_path</code></strong>=<em><code>'em_obj'</code></em>)</p>
 </blockquote>
 
 </div>
@@ -235,7 +235,7 @@ nb_path: "nbs/tools/copy_experiment.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_copy_content_and_code" class="doc_header"><code>test_copy_content_and_code</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/tools/test_copy_experiment.py#L17" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_copy_content_and_code</code>()</p>
+<h4 id="test_copy_content_and_code" class="doc_header"><code>test_copy_content_and_code</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/tools/test_copy_experiment.py#L18" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_copy_content_and_code</code>()</p>
 </blockquote>
 
 </div>
@@ -276,27 +276,55 @@ nb_path: "nbs/tools/copy_experiment.ipynb"
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>running test_copy_content_and_code
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
 </pre>
 </div>
 </div>
 
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#%debug</span>
-</pre></div>
-
-    </div>
 </div>
 </div>
 
@@ -320,7 +348,7 @@ nb_path: "nbs/tools/copy_experiment.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="copy_code_with_experiment_paths" class="doc_header"><code>copy_code_with_experiment_paths</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tools/copy_experiment.py#L133" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>copy_code_with_experiment_paths</code>(<strong><code>experiment</code></strong>=<em><code>None</code></em>, <strong><code>root</code></strong>=<em><code>None</code></em>, <strong><code>destination_folder</code></strong>=<em><code>'.'</code></em>, <strong><code>file</code></strong>=<em><code>None</code></em>, <strong><code>run</code></strong>=<em><code>0</code></em>, <strong><code>desired</code></strong>=<em><code>None</code></em>, <strong><code>manager_path</code></strong>=<em><code>'em_obj'</code></em>)</p>
+<h4 id="copy_code_with_experiment_paths" class="doc_header"><code>copy_code_with_experiment_paths</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tools/copy_experiment.py#L135" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>copy_code_with_experiment_paths</code>(<strong><code>experiment</code></strong>=<em><code>None</code></em>, <strong><code>folder</code></strong>=<em><code>None</code></em>, <strong><code>destination_folder</code></strong>=<em><code>'.'</code></em>, <strong><code>file</code></strong>=<em><code>None</code></em>, <strong><code>run</code></strong>=<em><code>0</code></em>, <strong><code>desired</code></strong>=<em><code>None</code></em>, <strong><code>manager_path</code></strong>=<em><code>'em_obj'</code></em>)</p>
 </blockquote>
 
 </div>
@@ -357,7 +385,7 @@ nb_path: "nbs/tools/copy_experiment.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_copy_code_with_experiment_paths" class="doc_header"><code>test_copy_code_with_experiment_paths</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/tools/test_copy_experiment.py#L59" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_copy_code_with_experiment_paths</code>()</p>
+<h4 id="test_copy_code_with_experiment_paths" class="doc_header"><code>test_copy_code_with_experiment_paths</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/tools/test_copy_experiment.py#L77" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_copy_code_with_experiment_paths</code>()</p>
 </blockquote>
 
 </div>
@@ -398,6 +426,51 @@ nb_path: "nbs/tools/copy_experiment.ipynb"
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>running test_copy_code_with_experiment_paths
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
+error saving other parameters
 </pre>
 </div>
 </div>
@@ -425,7 +498,7 @@ nb_path: "nbs/tools/copy_experiment.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="parse_args" class="doc_header"><code>parse_args</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tools/copy_experiment.py#L146" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>parse_args</code>(<strong><code>args</code></strong>)</p>
+<h4 id="parse_args" class="doc_header"><code>parse_args</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tools/copy_experiment.py#L149" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>parse_args</code>(<strong><code>args</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -449,7 +522,7 @@ nb_path: "nbs/tools/copy_experiment.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="parse_arguments_and_run" class="doc_header"><code>parse_arguments_and_run</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tools/copy_experiment.py#L167" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>parse_arguments_and_run</code>(<strong><code>args</code></strong>, <strong><code>desired</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="parse_arguments_and_run" class="doc_header"><code>parse_arguments_and_run</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tools/copy_experiment.py#L170" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>parse_arguments_and_run</code>(<strong><code>args</code></strong>, <strong><code>desired</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 
 </div>
@@ -473,7 +546,7 @@ nb_path: "nbs/tools/copy_experiment.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="main" class="doc_header"><code>main</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tools/copy_experiment.py#L175" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>main</code>()</p>
+<h4 id="main" class="doc_header"><code>main</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tools/copy_experiment.py#L178" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>main</code>()</p>
 </blockquote>
 
 </div>
@@ -510,7 +583,7 @@ nb_path: "nbs/tools/copy_experiment.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_parse_arguments_copy_experiment" class="doc_header"><code>test_parse_arguments_copy_experiment</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/tools/test_copy_experiment.py#L81" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_parse_arguments_copy_experiment</code>()</p>
+<h4 id="test_parse_arguments_copy_experiment" class="doc_header"><code>test_parse_arguments_copy_experiment</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/tools/test_copy_experiment.py#L99" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_parse_arguments_copy_experiment</code>()</p>
 </blockquote>
 
 </div>
@@ -555,6 +628,61 @@ nb_path: "nbs/tools/copy_experiment.ipynb"
 </div>
 </div>
 
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">ValueError</span>                                Traceback (most recent call last)
+<span class="ansi-green-fg">/tmp/ipykernel_93938/4202148619.py</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>tst<span class="ansi-blue-fg">.</span>run <span class="ansi-blue-fg">(</span>test_parse_arguments_copy_experiment<span class="ansi-blue-fg">,</span> tag<span class="ansi-blue-fg">=</span><span class="ansi-blue-fg">&#39;dummy&#39;</span><span class="ansi-blue-fg">,</span> debug<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">False</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">~/jaume/workspace/remote/ds-blocks/dsblocks/utils/nbdev_utils.py</span> in <span class="ansi-cyan-fg">run</span><span class="ansi-blue-fg">(self, test_func, data_func, do, include, debug, exclude, tag, show, store)</span>
+<span class="ansi-green-intense-fg ansi-bold">    113</span>                 <span class="ansi-green-fg">if</span> show<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">    114</span>                     print <span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">f&#39;running {name}&#39;</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">--&gt; 115</span><span class="ansi-red-fg">                 </span>test_func <span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">*</span>args<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    116</span> 
+<span class="ansi-green-intense-fg ansi-bold">    117</span> <span class="ansi-red-fg"># Cell</span>
+
+<span class="ansi-green-fg">/tmp/ipykernel_93938/745222880.py</span> in <span class="ansi-cyan-fg">test_parse_arguments_copy_experiment</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-intense-fg ansi-bold">      1</span> <span class="ansi-red-fg">#export tests.tools.test_copy_experiment</span>
+<span class="ansi-green-intense-fg ansi-bold">      2</span> <span class="ansi-green-fg">def</span> test_parse_arguments_copy_experiment <span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">----&gt; 3</span><span class="ansi-red-fg">     </span>em <span class="ansi-blue-fg">=</span> generate_data <span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#39;parse_arguments_copy_experiment&#39;</span><span class="ansi-blue-fg">,</span> root_folder<span class="ansi-blue-fg">=</span><span class="ansi-blue-fg">&#39;newroot&#39;</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">      4</span> 
+<span class="ansi-green-intense-fg ansi-bold">      5</span>     df <span class="ansi-blue-fg">=</span> em<span class="ansi-blue-fg">.</span>get_experiment_data <span class="ansi-blue-fg">(</span>folder_experiments<span class="ansi-blue-fg">=</span><span class="ansi-blue-fg">&#39;newroot&#39;</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">~/jaume/workspace/remote/hpsearch/hpsearch/examples/complex_dummy_experiment_manager.py</span> in <span class="ansi-cyan-fg">generate_data</span><span class="ansi-blue-fg">(name_folder, nruns, noise, verbose_model, verbose, parameters_multiple_values, parameters_single_value, other_parameters, em_args, **kwargs)</span>
+<span class="ansi-green-intense-fg ansi-bold">    116</span>     path_experiments <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">f&#39;test_{name_folder}&#39;</span>
+<span class="ansi-green-intense-fg ansi-bold">    117</span>     manager_path <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">f&#39;{path_experiments}/managers&#39;</span>
+<span class="ansi-green-fg">--&gt; 118</span><span class="ansi-red-fg">     em = ComplexDummyExperimentManager (path_experiments=path_experiments, manager_path=manager_path,
+</span><span class="ansi-green-intense-fg ansi-bold">    119</span>                                         verbose=verbose, **kwargs)
+<span class="ansi-green-intense-fg ansi-bold">    120</span>     em<span class="ansi-blue-fg">.</span>remove_previous_experiments <span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">~/jaume/workspace/remote/hpsearch/hpsearch/examples/complex_dummy_experiment_manager.py</span> in <span class="ansi-cyan-fg">__init__</span><span class="ansi-blue-fg">(self, model_file_name, **kwargs)</span>
+<span class="ansi-green-intense-fg ansi-bold">     20</span> 
+<span class="ansi-green-intense-fg ansi-bold">     21</span>     <span class="ansi-green-fg">def</span> __init__ <span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> model_file_name<span class="ansi-blue-fg">=</span><span class="ansi-blue-fg">&#39;model_weights.pk&#39;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kwargs<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">---&gt; 22</span><span class="ansi-red-fg">         </span>super<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">.</span>__init__ <span class="ansi-blue-fg">(</span>model_file_name<span class="ansi-blue-fg">=</span>model_file_name<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kwargs<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">     23</span>         self<span class="ansi-blue-fg">.</span>raise_error_if_run <span class="ansi-blue-fg">=</span> <span class="ansi-green-fg">False</span>
+<span class="ansi-green-intense-fg ansi-bold">     24</span>         self<span class="ansi-blue-fg">.</span>desired_path_results_previous_experiment <span class="ansi-blue-fg">=</span> <span class="ansi-green-fg">None</span>
+
+<span class="ansi-green-fg">~/jaume/workspace/remote/hpsearch/hpsearch/examples/dummy_experiment_manager.py</span> in <span class="ansi-cyan-fg">__init__</span><span class="ansi-blue-fg">(self, path_experiments, root, metric, op, **kwargs)</span>
+<span class="ansi-green-intense-fg ansi-bold">    138</span>         <span class="ansi-green-fg">if</span> path_experiments <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span> path_experiments <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">f&#39;{os.path.dirname(hpsearch.__file__)}/../results&#39;</span>
+<span class="ansi-green-intense-fg ansi-bold">    139</span> 
+<span class="ansi-green-fg">--&gt; 140</span><span class="ansi-red-fg">         super().__init__ (path_experiments=path_experiments,
+</span><span class="ansi-green-intense-fg ansi-bold">    141</span>                           root<span class="ansi-blue-fg">=</span>root<span class="ansi-blue-fg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">    142</span>                           metric<span class="ansi-blue-fg">=</span>metric<span class="ansi-blue-fg">,</span>
+
+<span class="ansi-green-fg">~/jaume/workspace/remote/hpsearch/hpsearch/experiment_manager.py</span> in <span class="ansi-cyan-fg">__init__</span><span class="ansi-blue-fg">(self, allow_base_class, path_experiments, defaults, root, metric, op, alternative_root_path, path_data, name_model_history, model_file_name, name_epoch, result_file, target_model_file, destination_model_file, root_folder, manager_path, non_pickable_fields, avoid_saving_fields, logger, verbose, name_logger)</span>
+<span class="ansi-green-intense-fg ansi-bold">     99</span>             self<span class="ansi-blue-fg">.</span>root <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>root_folder
+<span class="ansi-green-intense-fg ansi-bold">    100</span>         <span class="ansi-green-fg">if</span> self<span class="ansi-blue-fg">.</span>root <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">not</span> <span class="ansi-green-fg">None</span> <span class="ansi-green-fg">and</span> self<span class="ansi-blue-fg">.</span>root_folder <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">not</span> <span class="ansi-green-fg">None</span> <span class="ansi-green-fg">and</span> self<span class="ansi-blue-fg">.</span>root <span class="ansi-blue-fg">!=</span> self<span class="ansi-blue-fg">.</span>root_folder<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">--&gt; 101</span><span class="ansi-red-fg">             </span><span class="ansi-green-fg">raise</span> ValueError <span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#39;self.root != self.root_folder&#39;</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    102</span> 
+<span class="ansi-green-intense-fg ansi-bold">    103</span>         self.registered_name = (f&#39;{class_name}-default&#39; if (self.root_folder is None
+
+<span class="ansi-red-fg">ValueError</span>: self.root != self.root_folder</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -562,5 +690,5 @@ nb_path: "nbs/tools/copy_experiment.ipynb"
     {% endraw %}
 
 </div>
- 
+
 

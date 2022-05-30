@@ -46,7 +46,10 @@ nb_path: "nbs/examples/dummy_experiment_manager.ipynb"
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pytest</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">block_types.utils.nbdev_utils</span> <span class="kn">import</span> <span class="n">md</span>
+
+<span class="kn">from</span> <span class="nn">dsblocks.utils.nbdev_utils</span> <span class="kn">import</span> <span class="n">md</span>
+
+<span class="kn">import</span> <span class="nn">hpsearch.config.hp_defaults</span> <span class="k">as</span> <span class="nn">dflt</span>
 </pre></div>
 
     </div>
@@ -110,7 +113,7 @@ nb_path: "nbs/examples/dummy_experiment_manager.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="DummyExperimentManager" class="doc_header"><code>class</code> <code>DummyExperimentManager</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/examples/dummy_experiment_manager.py#L129" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>DummyExperimentManager</code>(<strong><code>path_experiments</code></strong>=<em><code>None</code></em>, <strong><code>root</code></strong>=<em><code>''</code></em>, <strong><code>metric</code></strong>=<em><code>'validation_accuracy'</code></em>, <strong><code>op</code></strong>=<em><code>'max'</code></em>, <strong>**<code>kwargs</code></strong>) :: <a href="/hpsearch/experiment_manager.html#ExperimentManager"><code>ExperimentManager</code></a></p>
+<h2 id="DummyExperimentManager" class="doc_header"><code>class</code> <code>DummyExperimentManager</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/examples/dummy_experiment_manager.py#L130" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>DummyExperimentManager</code>(<strong><code>path_experiments</code></strong>=<em><code>None</code></em>, <strong><code>folder</code></strong>=<em><code>None</code></em>, <strong><code>metric</code></strong>=<em><code>'validation_accuracy'</code></em>, <strong><code>op</code></strong>=<em><code>'max'</code></em>, <strong>**<code>kwargs</code></strong>) :: <a href="/hpsearch/experiment_manager.html#ExperimentManager"><code>ExperimentManager</code></a></p>
 </blockquote>
 
 </div>
@@ -153,7 +156,7 @@ nb_path: "nbs/examples/dummy_experiment_manager.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="run_multiple_experiments" class="doc_header"><code>run_multiple_experiments</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/examples/dummy_experiment_manager.py#L210" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>run_multiple_experiments</code>(<strong><code>nruns</code></strong>=<em><code>1</code></em>, <strong><code>noise</code></strong>=<em><code>0.0</code></em>, <strong><code>verbose</code></strong>=<em><code>True</code></em>, <strong><code>rate</code></strong>=<em><code>0.03</code></em>, <strong><code>values_to_explore</code></strong>=<em><code>None</code></em>, <strong><code>other_parameters</code></strong>=<em><code>{}</code></em>, <strong><code>EM</code></strong>=<em><code>DummyExperimentManager</code></em>, <strong><code>em</code></strong>=<em><code>None</code></em>, <strong>**<code>kwargs</code></strong>)</p>
+<h4 id="run_multiple_experiments" class="doc_header"><code>run_multiple_experiments</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/examples/dummy_experiment_manager.py#L211" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>run_multiple_experiments</code>(<strong><code>nruns</code></strong>=<em><code>1</code></em>, <strong><code>noise</code></strong>=<em><code>0.0</code></em>, <strong><code>verbose</code></strong>=<em><code>True</code></em>, <strong><code>rate</code></strong>=<em><code>0.03</code></em>, <strong><code>parameters_multiple_values</code></strong>=<em><code>None</code></em>, <strong><code>parameters_single_value</code></strong>=<em><code>None</code></em>, <strong><code>other_parameters</code></strong>=<em><code>{}</code></em>, <strong><code>EM</code></strong>=<em><code>DummyExperimentManager</code></em>, <strong><code>em</code></strong>=<em><code>None</code></em>, <strong><code>em_args</code></strong>=<em><code>{}</code></em>, <strong>**<code>kwargs</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -190,7 +193,7 @@ nb_path: "nbs/examples/dummy_experiment_manager.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="generate_data" class="doc_header"><code>generate_data</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/examples/dummy_experiment_manager.py#L229" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>generate_data</code>(<strong><code>name_folder</code></strong>, <strong><code>parameters_multiple_values</code></strong>=<em><code>None</code></em>, <strong><code>parameters_single_value</code></strong>=<em><code>None</code></em>, <strong><code>other_parameters</code></strong>=<em><code>{}</code></em>, <strong><code>verbose</code></strong>=<em><code>0</code></em>, <strong>**<code>kwargs</code></strong>)</p>
+<h4 id="generate_data" class="doc_header"><code>generate_data</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/examples/dummy_experiment_manager.py#L234" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>generate_data</code>(<strong><code>name_folder</code></strong>, <strong><code>parameters_multiple_values</code></strong>=<em><code>None</code></em>, <strong><code>rate</code></strong>=<em><code>0.03</code></em>, <strong><code>parameters_single_value</code></strong>=<em><code>None</code></em>, <strong><code>other_parameters</code></strong>=<em><code>{}</code></em>, <strong><code>verbose</code></strong>=<em><code>0</code></em>, <strong><code>em_args</code></strong>=<em><code>{}</code></em>, <strong>**<code>kwargs</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -227,7 +230,7 @@ nb_path: "nbs/examples/dummy_experiment_manager.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="remove_previous_experiments" class="doc_header"><code>remove_previous_experiments</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/examples/dummy_experiment_manager.py#L247" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>remove_previous_experiments</code>(<strong><code>EM</code></strong>=<em><code>DummyExperimentManager</code></em>)</p>
+<h4 id="remove_previous_experiments" class="doc_header"><code>remove_previous_experiments</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/examples/dummy_experiment_manager.py#L252" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>remove_previous_experiments</code>(<strong><code>EM</code></strong>=<em><code>DummyExperimentManager</code></em>)</p>
 </blockquote>
 
 </div>
@@ -264,7 +267,7 @@ nb_path: "nbs/examples/dummy_experiment_manager.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_dummy_experiment_manager" class="doc_header"><code>test_dummy_experiment_manager</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/examples/test_dummy_experiment_manager.py#L18" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_dummy_experiment_manager</code>()</p>
+<h4 id="test_dummy_experiment_manager" class="doc_header"><code>test_dummy_experiment_manager</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/examples/test_dummy_experiment_manager.py#L19" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_dummy_experiment_manager</code>()</p>
 </blockquote>
 
 </div>
@@ -286,26 +289,28 @@ nb_path: "nbs/examples/dummy_experiment_manager.ipynb"
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">test_dummy_experiment_manager</span> <span class="p">():</span>
     <span class="n">em</span> <span class="o">=</span> <span class="n">generate_data</span> <span class="p">(</span><span class="s1">&#39;dummy_experiment_manager&#39;</span><span class="p">)</span>
-
-    <span class="n">path_results</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">get_path_experiments</span><span class="p">()</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span> <span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">path_results</span><span class="si">}</span><span class="s1">/experiments_data.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">get_experiment_data</span> <span class="p">()</span>
     <span class="n">display</span> <span class="p">(</span><span class="n">df</span><span class="p">)</span>
 
     <span class="c1"># check that stored parameters are correct</span>
-    <span class="k">assert</span> <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">epochs</span><span class="o">.</span><span class="n">values</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span> <span class="mf">5.</span><span class="p">,</span>  <span class="mf">5.</span><span class="p">,</span>  <span class="mf">5.</span><span class="p">,</span> <span class="mf">15.</span><span class="p">,</span> <span class="mf">15.</span><span class="p">,</span> <span class="mf">15.</span><span class="p">,</span> <span class="mf">30.</span><span class="p">,</span> <span class="mf">30.</span><span class="p">,</span> <span class="mf">30.</span><span class="p">]))</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
-    <span class="k">assert</span> <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">offset</span><span class="o">.</span><span class="n">values</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">]))</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
-    <span class="k">assert</span> <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">rate</span><span class="o">.</span><span class="n">values</span> <span class="o">==</span> <span class="mf">0.03</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+    <span class="n">par</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">parameter</span><span class="p">:</span> <span class="p">(</span><span class="n">dflt</span><span class="o">.</span><span class="n">parameters_col</span><span class="p">,</span> <span class="n">parameter</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">par</span><span class="p">(</span><span class="s1">&#39;epochs&#39;</span><span class="p">)]</span><span class="o">.</span><span class="n">values</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span> <span class="mf">5.</span><span class="p">,</span>  <span class="mf">5.</span><span class="p">,</span>  <span class="mf">5.</span><span class="p">,</span> <span class="mf">15.</span><span class="p">,</span> <span class="mf">15.</span><span class="p">,</span> <span class="mf">15.</span><span class="p">,</span> <span class="mf">30.</span><span class="p">,</span> <span class="mf">30.</span><span class="p">,</span> <span class="mf">30.</span><span class="p">]))</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">par</span><span class="p">(</span><span class="s1">&#39;offset&#39;</span><span class="p">)]</span><span class="o">.</span><span class="n">values</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">]))</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">par</span><span class="p">(</span><span class="s1">&#39;rate&#39;</span><span class="p">)]</span><span class="o">.</span><span class="n">values</span> <span class="o">==</span> <span class="mf">0.03</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
 
     <span class="c1"># check that the accuracy values are correct</span>
     <span class="n">epochs_before_overfitting</span> <span class="o">=</span> <span class="mi">20</span>
     <span class="n">epochs_test</span> <span class="o">=</span> <span class="mi">10</span>
     <span class="k">for</span> <span class="n">experiment_id</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">experiment_id</span><span class="p">,</span> <span class="s1">&#39;epochs&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">epochs_before_overfitting</span><span class="p">:</span>
-            <span class="n">accuracy</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">experiment_id</span><span class="p">,</span> <span class="s1">&#39;offset&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">experiment_id</span><span class="p">,</span> <span class="s1">&#39;rate&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">experiment_id</span><span class="p">,</span> <span class="s1">&#39;epochs&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">experiment_id</span><span class="p">,</span> <span class="n">par</span><span class="p">(</span><span class="s1">&#39;epochs&#39;</span><span class="p">)]</span> <span class="o">&lt;</span> <span class="n">epochs_before_overfitting</span><span class="p">:</span>
+            <span class="n">accuracy</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">experiment_id</span><span class="p">,</span> <span class="n">par</span><span class="p">(</span><span class="s1">&#39;offset&#39;</span><span class="p">)]</span> <span class="o">+</span> 
+                        <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">experiment_id</span><span class="p">,</span> <span class="n">par</span><span class="p">(</span><span class="s1">&#39;rate&#39;</span><span class="p">)]</span> <span class="o">*</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">experiment_id</span><span class="p">,</span> <span class="n">par</span><span class="p">(</span><span class="s1">&#39;epochs&#39;</span><span class="p">)])</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">epochs_after_overfitting</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">experiment_id</span><span class="p">,</span> <span class="s1">&#39;epochs&#39;</span><span class="p">]</span><span class="o">-</span><span class="n">epochs_before_overfitting</span>
-            <span class="n">accuracy</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">experiment_id</span><span class="p">,</span> <span class="s1">&#39;offset&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">experiment_id</span><span class="p">,</span> <span class="s1">&#39;rate&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">epochs_before_overfitting</span>  <span class="o">-</span> <span class="n">epochs_after_overfitting</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">experiment_id</span><span class="p">,</span> <span class="s1">&#39;epochs&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">epochs_test</span><span class="p">:</span>
+            <span class="n">epochs_after_overfitting</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">experiment_id</span><span class="p">,</span> <span class="n">par</span><span class="p">(</span><span class="s1">&#39;epochs&#39;</span><span class="p">)]</span><span class="o">-</span><span class="n">epochs_before_overfitting</span>
+            <span class="n">accuracy</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">experiment_id</span><span class="p">,</span> <span class="n">par</span><span class="p">(</span><span class="s1">&#39;offset&#39;</span><span class="p">)]</span> <span class="o">+</span> 
+                        <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">experiment_id</span><span class="p">,</span> <span class="n">par</span><span class="p">(</span><span class="s1">&#39;rate&#39;</span><span class="p">)]</span> <span class="o">*</span> 
+                        <span class="p">(</span><span class="n">epochs_before_overfitting</span>  <span class="o">-</span> <span class="n">epochs_after_overfitting</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">experiment_id</span><span class="p">,</span> <span class="n">par</span><span class="p">(</span><span class="s1">&#39;epochs&#39;</span><span class="p">)]</span> <span class="o">&lt;</span> <span class="n">epochs_test</span><span class="p">:</span>
             <span class="n">test_accuracy</span> <span class="o">=</span> <span class="n">accuracy</span> <span class="o">+</span> <span class="mf">0.1</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">test_accuracy</span> <span class="o">=</span> <span class="n">accuracy</span> <span class="o">-</span> <span class="mf">0.1</span>
@@ -323,7 +328,7 @@ nb_path: "nbs/examples/dummy_experiment_manager.ipynb"
 
     <span class="n">em</span><span class="o">.</span><span class="n">experiment_visualization</span> <span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span> <span class="n">backend</span><span class="o">=</span><span class="s1">&#39;matplotlib&#39;</span><span class="p">)</span>
 
-    <span class="n">em</span><span class="o">.</span><span class="n">remove_previous_experiments</span><span class="p">()</span>
+    <span class="n">em</span><span class="o">.</span><span class="n">remove_previous_experiments</span> <span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -420,8 +425,7 @@ write_manager failed with exception &lt;class &#39;__main__.DummyExperimentManag
 <div class="output_area">
 
 
-<div class="output_html rendered_html output_subarea ">
-<div>
+<div class="output_html rendered_html output_subarea "><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -682,8 +686,7 @@ write_manager failed with exception &lt;class &#39;__main__.DummyExperimentManag
   </tbody>
 </table>
 <p>9 rows × 25 columns</p>
-</div>
-</div>
+</div></div>
 
 </div>
 
@@ -804,5 +807,5 @@ write_manager failed with exception &lt;class &#39;__main__.DummyExperimentManag
     {% endraw %}
 
 </div>
- 
+
 

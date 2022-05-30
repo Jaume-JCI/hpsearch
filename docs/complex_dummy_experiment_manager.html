@@ -44,7 +44,7 @@ nb_path: "nbs/examples/complex_dummy_experiment_manager.ipynb"
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pytest</span>
-<span class="kn">from</span> <span class="nn">block_types.utils.nbdev_utils</span> <span class="kn">import</span> <span class="n">md</span>
+<span class="kn">from</span> <span class="nn">dsblocks.utils.nbdev_utils</span> <span class="kn">import</span> <span class="n">md</span>
 </pre></div>
 
     </div>
@@ -71,7 +71,31 @@ nb_path: "nbs/examples/complex_dummy_experiment_manager.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="ComplexDummyExperimentManager" class="doc_header"><code>class</code> <code>ComplexDummyExperimentManager</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/examples/complex_dummy_experiment_manager.py#L19" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ComplexDummyExperimentManager</code>(<strong><code>model_file_name</code></strong>=<em><code>'model_weights.pk'</code></em>, <strong>**<code>kwargs</code></strong>) :: <a href="/hpsearch/dummy_experiment_manager.html#DummyExperimentManager"><code>DummyExperimentManager</code></a></p>
+<h2 id="ComplexDummyExperimentManager" class="doc_header"><code>class</code> <code>ComplexDummyExperimentManager</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/examples/complex_dummy_experiment_manager.py#L22" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ComplexDummyExperimentManager</code>(<strong><code>model_file_name</code></strong>=<em><code>'model_weights.pk'</code></em>, <strong>**<code>kwargs</code></strong>) :: <a href="/hpsearch/dummy_experiment_manager.html#DummyExperimentManager"><code>DummyExperimentManager</code></a></p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h2 id="DummyManagerAvoidSaving" class="doc_header"><code>class</code> <code>DummyManagerAvoidSaving</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/examples/complex_dummy_experiment_manager.py#L90" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>DummyManagerAvoidSaving</code>(<strong>**<code>kwargs</code></strong>) :: <a href="/hpsearch/complex_dummy_experiment_manager.html#ComplexDummyExperimentManager"><code>ComplexDummyExperimentManager</code></a></p>
 </blockquote>
 
 </div>
@@ -108,7 +132,7 @@ nb_path: "nbs/examples/complex_dummy_experiment_manager.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="test_complex_dummy_experiment_manager" class="doc_header"><code>test_complex_dummy_experiment_manager</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/examples/test_complex_dummy_experiment_manager.py#L17" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_complex_dummy_experiment_manager</code>()</p>
+<h4 id="test_complex_dummy_experiment_manager" class="doc_header"><code>test_complex_dummy_experiment_manager</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/examples/test_complex_dummy_experiment_manager.py#L18" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_complex_dummy_experiment_manager</code>()</p>
 </blockquote>
 
 </div>
@@ -144,7 +168,7 @@ nb_path: "nbs/examples/complex_dummy_experiment_manager.ipynb"
     <span class="p">)</span>
     
     <span class="n">em</span> <span class="o">=</span> <span class="n">ComplexDummyExperimentManager</span> <span class="p">(</span><span class="n">path_experiments</span><span class="o">=</span><span class="s1">&#39;test_complex_dummy_experiment_manager&#39;</span><span class="p">,</span> 
-                                        <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                                        <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name_epoch</span><span class="o">=</span><span class="s1">&#39;epochs&#39;</span><span class="p">)</span>
     <span class="n">em</span><span class="o">.</span><span class="n">create_experiment_and_run</span> <span class="p">(</span><span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;epochs&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">});</span>
     <span class="n">reference_accuracy</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">accuracy</span>
     <span class="n">reference_weight</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">weight</span>
@@ -156,7 +180,7 @@ nb_path: "nbs/examples/complex_dummy_experiment_manager.ipynb"
     <span class="n">path_experiments</span> <span class="o">=</span> <span class="n">get_path_experiments</span> <span class="p">()</span>
     <span class="nb">print</span> <span class="p">(</span><span class="sa">f</span><span class="s1">&#39;experiments folders: </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">path_experiments</span><span class="si">}</span><span class="s2">/experiments&quot;</span><span class="p">)</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
 
-    <span class="n">experiments_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_pickle</span> <span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">path_experiments</span><span class="si">}</span><span class="s1">/experiments_data.pk&#39;</span><span class="p">)</span>
+    <span class="n">experiments_data</span> <span class="o">=</span> <span class="n">read_df</span> <span class="p">(</span><span class="n">path_experiments</span><span class="p">)</span>
     <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;csv data&#39;</span><span class="p">)</span>
     <span class="n">display</span> <span class="p">(</span><span class="n">experiments_data</span><span class="p">)</span>
 
@@ -170,14 +194,14 @@ nb_path: "nbs/examples/complex_dummy_experiment_manager.ipynb"
     <span class="n">md</span> <span class="p">(</span><span class="s1">&#39;We run the first experiment  with 20 epochs:&#39;</span><span class="p">)</span>
 
     <span class="c1"># a.- remove previous experiment</span>
-    <span class="n">em</span><span class="o">.</span><span class="n">remove_previous_experiments</span><span class="p">()</span>
+    <span class="n">em</span><span class="o">.</span><span class="n">remove_previous_experiments</span> <span class="p">()</span>
 
     <span class="c1"># b.- create first experiment with epochs=20</span>
     <span class="n">em</span><span class="o">.</span><span class="n">create_experiment_and_run</span> <span class="p">(</span><span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;epochs&#39;</span><span class="p">:</span> <span class="mi">20</span><span class="p">});</span>
 
     <span class="nb">print</span> <span class="p">(</span><span class="sa">f</span><span class="s1">&#39;experiments folders: </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">path_experiments</span><span class="si">}</span><span class="s2">/experiments&quot;</span><span class="p">)</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
 
-    <span class="n">experiments_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_pickle</span> <span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">path_experiments</span><span class="si">}</span><span class="s1">/experiments_data.pk&#39;</span><span class="p">)</span>
+    <span class="n">experiments_data</span> <span class="o">=</span> <span class="n">read_df</span> <span class="p">(</span><span class="n">path_experiments</span><span class="p">)</span>
     <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;csv data&#39;</span><span class="p">)</span>
     <span class="n">display</span><span class="p">(</span><span class="n">experiments_data</span><span class="p">)</span>
     <span class="nb">print</span> <span class="p">(</span><span class="sa">f</span><span class="s1">&#39;weight: </span><span class="si">{</span><span class="n">em</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">weight</span><span class="si">}</span><span class="s1">, accuracy: </span><span class="si">{</span><span class="n">em</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">accuracy</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
@@ -185,11 +209,9 @@ nb_path: "nbs/examples/complex_dummy_experiment_manager.ipynb"
     <span class="n">md</span> <span class="p">(</span><span class="s1">&#39;We run the second experiment resumes from the previous one and increases the epochs to 30&#39;</span><span class="p">)</span>
     <span class="c1"># 4.- create second experiment with epochs=10</span>
     <span class="n">em</span><span class="o">.</span><span class="n">create_experiment_and_run</span> <span class="p">(</span><span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;epochs&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">},</span> 
-                              <span class="n">other_parameters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;prev_epoch&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-                                               <span class="s1">&#39;name_epoch&#39;</span><span class="p">:</span> <span class="s1">&#39;epochs&#39;</span><span class="p">,</span>
-                                               <span class="s1">&#39;previous_model_file_name&#39;</span><span class="p">:</span> <span class="s1">&#39;model_weights.pk&#39;</span><span class="p">});</span>
+                                  <span class="n">prev_epoch</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">previous_model_file_name</span><span class="o">=</span><span class="s1">&#39;model_weights.pk&#39;</span><span class="p">);</span>
 
-    <span class="n">experiments_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_pickle</span> <span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">path_experiments</span><span class="si">}</span><span class="s1">/experiments_data.pk&#39;</span><span class="p">)</span>
+    <span class="n">experiments_data</span> <span class="o">=</span> <span class="n">read_df</span> <span class="p">(</span><span class="n">path_experiments</span><span class="p">)</span>
     <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;csv data&#39;</span><span class="p">)</span>
     <span class="n">display</span><span class="p">(</span><span class="n">experiments_data</span><span class="p">)</span>
 
@@ -204,7 +226,7 @@ nb_path: "nbs/examples/complex_dummy_experiment_manager.ipynb"
     <span class="n">md</span> <span class="p">(</span><span class="s1">&#39;We plot the history&#39;</span><span class="p">)</span>
     <span class="n">plot_multiple_histories</span> <span class="p">([</span><span class="mi">1</span><span class="p">],</span> <span class="n">run_number</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">op</span><span class="o">=</span><span class="s1">&#39;max&#39;</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="s1">&#39;matplotlib&#39;</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="s1">&#39;validation_accuracy&#39;</span><span class="p">)</span>
     
-    <span class="n">em</span><span class="o">.</span><span class="n">remove_previous_experiments</span><span class="p">()</span>
+    <span class="n">em</span><span class="o">.</span><span class="n">remove_previous_experiments</span> <span class="p">()</span>
 </pre></div>
 
     </div>
@@ -305,8 +327,7 @@ csv data
 <div class="output_area">
 
 
-<div class="output_html rendered_html output_subarea ">
-<div>
+<div class="output_html rendered_html output_subarea "><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -344,8 +365,7 @@ csv data
     </tr>
   </tbody>
 </table>
-</div>
-</div>
+</div></div>
 
 </div>
 
@@ -374,8 +394,7 @@ csv data
 <div class="output_area">
 
 
-<div class="output_html rendered_html output_subarea ">
-<div>
+<div class="output_html rendered_html output_subarea "><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -403,8 +422,7 @@ csv data
     </tr>
   </tbody>
 </table>
-</div>
-</div>
+</div></div>
 
 </div>
 
@@ -470,8 +488,7 @@ csv data
 <div class="output_area">
 
 
-<div class="output_html rendered_html output_subarea ">
-<div>
+<div class="output_html rendered_html output_subarea "><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -509,8 +526,7 @@ csv data
     </tr>
   </tbody>
 </table>
-</div>
-</div>
+</div></div>
 
 </div>
 
@@ -563,8 +579,7 @@ csv data
 <div class="output_area">
 
 
-<div class="output_html rendered_html output_subarea ">
-<div>
+<div class="output_html rendered_html output_subarea "><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -611,8 +626,7 @@ csv data
     </tr>
   </tbody>
 </table>
-</div>
-</div>
+</div></div>
 
 </div>
 
@@ -649,8 +663,7 @@ csv data
 <div class="output_area">
 
 
-<div class="output_html rendered_html output_subarea ">
-<div>
+<div class="output_html rendered_html output_subarea "><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -678,8 +691,7 @@ csv data
     </tr>
   </tbody>
 </table>
-</div>
-</div>
+</div></div>
 
 </div>
 
@@ -706,7 +718,7 @@ csv data
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="init_em" class="doc_header"><code>init_em</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/examples/complex_dummy_experiment_manager.py#L87" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>init_em</code>(<strong><code>name_folder</code></strong>)</p>
+<h4 id="init_em" class="doc_header"><code>init_em</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/examples/complex_dummy_experiment_manager.py#L97" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>init_em</code>(<strong><code>name_folder</code></strong>, <strong>**<code>kwargs</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -737,7 +749,7 @@ csv data
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="run_multiple_experiments" class="doc_header"><code>run_multiple_experiments</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/examples/complex_dummy_experiment_manager.py#L100" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>run_multiple_experiments</code>(<strong>**<code>kwargs</code></strong>)</p>
+<h4 id="run_multiple_experiments" class="doc_header"><code>run_multiple_experiments</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/examples/complex_dummy_experiment_manager.py#L110" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>run_multiple_experiments</code>(<strong>**<code>kwargs</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -761,7 +773,7 @@ csv data
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="remove_previous_experiments" class="doc_header"><code>remove_previous_experiments</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/examples/complex_dummy_experiment_manager.py#L103" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>remove_previous_experiments</code>()</p>
+<h4 id="remove_previous_experiments" class="doc_header"><code>remove_previous_experiments</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/examples/complex_dummy_experiment_manager.py#L113" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>remove_previous_experiments</code>()</p>
 </blockquote>
 
 </div>
@@ -792,7 +804,7 @@ csv data
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="generate_data" class="doc_header"><code>generate_data</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/examples/complex_dummy_experiment_manager.py#L107" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>generate_data</code>(<strong><code>name_folder</code></strong>, <strong><code>nruns</code></strong>=<em><code>5</code></em>, <strong><code>noise</code></strong>=<em><code>0.1</code></em>, <strong><code>verbose_model</code></strong>=<em><code>False</code></em>, <strong><code>verbose</code></strong>=<em><code>0</code></em>, <strong><code>parameters_multiple_values</code></strong>=<em><code>None</code></em>, <strong><code>parameters_single_value</code></strong>=<em><code>None</code></em>, <strong><code>other_parameters</code></strong>=<em><code>{}</code></em>, <strong>**<code>kwargs</code></strong>)</p>
+<h4 id="generate_data" class="doc_header"><code>generate_data</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/examples/complex_dummy_experiment_manager.py#L117" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>generate_data</code>(<strong><code>name_folder</code></strong>, <strong><code>nruns</code></strong>=<em><code>5</code></em>, <strong><code>rate</code></strong>=<em><code>0.03</code></em>, <strong><code>noise</code></strong>=<em><code>0.1</code></em>, <strong><code>verbose_model</code></strong>=<em><code>False</code></em>, <strong><code>verbose</code></strong>=<em><code>0</code></em>, <strong><code>parameters_multiple_values</code></strong>=<em><code>None</code></em>, <strong><code>parameters_single_value</code></strong>=<em><code>None</code></em>, <strong><code>other_parameters</code></strong>=<em><code>{}</code></em>, <strong><code>em_args</code></strong>=<em><code>{}</code></em>, <strong>**<code>kwargs</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -813,5 +825,5 @@ csv data
     {% endraw %}
 
 </div>
- 
+
 

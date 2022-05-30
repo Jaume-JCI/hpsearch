@@ -28,7 +28,8 @@ class MultiHistoryPlotter ():
                   use_run_number_in_label=True, use_run_number_in_title=False,
                   write_scores_in_title=None, **kwargs):
         self.experiments = experiments
-        self.run_number = run_number
+        self.run_number = (run_number if isinstance(run_number, list) else
+                           list(run_number) if isinstance(run_number, range) else [run_number])
         self.path_experiments = path_experiments
         if path_experiments is not None:
             em = get_experiment_manager ()
@@ -47,7 +48,7 @@ class MultiHistoryPlotter ():
         self.use_run_number_in_label = use_run_number_in_label
         self.use_run_number_in_title = use_run_number_in_title
         self.write_scores_in_title = (write_scores_in_title if write_scores_in_title is not None
-                                      else len(run_number) <= 5)
+                                      else len(self.run_number) <= 5)
 
     def plot_multiple_histories (self, experiments=None, run_number=None, metrics=None,
                                  metrics_second=None):
@@ -69,7 +70,7 @@ class MultiHistoryPlotter ():
             df = df.loc[self.experiments, self.parameters]
 
         if type(self.metrics)==str and (self.metrics == 'all'):
-            path_results = get_path_results (self.experiments[0], run_number=self.run_number)
+            path_results = get_path_results (self.experiments[0], run_number=self.run_number[0])
             history = joblib.load (f'{path_results}/{self.name_file}')
             self.metrics = history.keys()
         if type(self.metrics) == str:

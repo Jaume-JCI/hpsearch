@@ -15,7 +15,7 @@ from distutils.dir_util import copy_tree
 
 from dsblocks.utils.utils import check_last_part
 
-from ..experiment_manager import mypprint
+from ..experiment_manager import print_parameters
 from ..config.hpconfig import get_experiment_manager
 from .query import query
 import hpsearch.config.hp_defaults as dflt
@@ -91,7 +91,7 @@ def copy_code (source_folder, destination_folder, file=None,
         parameters, other_parameters, *_ = joblib.load (f'{path_experiment}/separate_parameters.pk')
     except FileNotFoundError:
         parameters, other_parameters, *_ = joblib.load (f'{path_experiment}/parameters.pk')
-    parameters = mypprint(parameters, dict_name='    parameters')
+    parameters = print_parameters(parameters, dict_name='    parameters')
 
     path_results_str = '{path_results}'
     run_experiment = (

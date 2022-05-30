@@ -197,6 +197,7 @@ class DummyExperimentManager (ExperimentManager):
                                   **kwargs):
         path_experiments = self.path_experiments
         traces = []
+        if isinstance(run_number, list) or isinstance(run_number, range): run_number = run_number[0]
         for experiment_id in experiments:
             path_results = self.get_path_results (experiment_id, run_number=run_number)
             if os.path.exists('%s/%s' %(path_results, name_file)):
