@@ -5,3 +5,8 @@ nbs/.ipynb_checkpoints
 hpsearch.egg-info
 nbs/**/*/.ipynb_checkpoints
 nbs/**/*/*.py
+nbs/experiment_manager.py
+paired_notebooks
+hpsearch/.ipynb_checkpoints
+em_obj
+config_test
