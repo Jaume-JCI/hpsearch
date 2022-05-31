@@ -193,19 +193,21 @@ class DummyExperimentManager (ExperimentManager):
         return defaults
 
     def experiment_visualization (self, experiments=None, run_number=0,
-                                  name_file='model_history.pk', metric='test_accuracy', backend='matplotlib',
-                                  **kwargs):
+                                  name_file='model_history.pk', metrics=['test_accuracy'],
+                                  backend='matplotlib', **kwargs):
         path_experiments = self.path_experiments
-        traces = []
+        if not isinstance(metrics, list): metrics = [metrics]
         if isinstance(run_number, list) or isinstance(run_number, range): run_number = run_number[0]
-        for experiment_id in experiments:
-            path_results = self.get_path_results (experiment_id, run_number=run_number)
-            if os.path.exists('%s/%s' %(path_results, name_file)):
-                history = joblib.load('%s/%s' %(path_results, name_file))
-                label = '{}'.format(experiment_id)
-                traces = plot_utils.add_trace ((1-np.array(history[metric]))*20, style='A.-', label=label,
-                                               backend=backend, traces=traces)
-        plot_utils.plot(title=metric, xlabel='epoch', ylabel=metric, traces=traces, backend=backend)
+        for metric in metrics:
+            traces = []
+            for experiment_id in experiments:
+                path_results = self.get_path_results (experiment_id, run_number=run_number)
+                if os.path.exists('%s/%s' %(path_results, name_file)):
+                    history = joblib.load('%s/%s' %(path_results, name_file))
+                    label = '{}'.format(experiment_id)
+                    traces = plot_utils.add_trace ((1-np.array(history[metric]))*20, style='A.-',
+                                                   label=label, backend=backend, traces=traces)
+            plot_utils.plot(title=metric, xlabel='epoch', ylabel=metric, traces=traces, backend=backend)
 
 # Cell
 def run_multiple_experiments (nruns=1, noise=0.0, verbose=True, rate=0.03, parameters_multiple_values=None,

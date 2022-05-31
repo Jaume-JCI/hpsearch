@@ -82,7 +82,7 @@ def test_write_manager ():
 # Comes from manager_factory.ipynb, cell
 def test_pickle_object ():
     from hpsearch.examples.complex_dummy_experiment_manager import ComplexDummyExperimentManager
-    em = ComplexDummyExperimentManager (path_experiments='my_new_path/other_folder')
+    em = ComplexDummyExperimentManager (path_experiments='test_my_new_path/other_folder')
     em.my_new_field = [2, 1, 3]
     em.greeting_message = 'good morning!'
 
@@ -109,7 +109,7 @@ def test_pickle_object ():
     #del experiment_manager
     em = factory.get_experiment_manager()
 
-    #assert em.path_experiments=='my_new_path/other_folder'
+    #assert em.path_experiments=='test_my_new_path/other_folder'
     assert em.folder=='other_folder'
     assert em.my_new_field == [2, 1, 3]
     assert em.greeting_message == 'good morning!'
@@ -119,7 +119,7 @@ def test_does_not_pickle_unpickable ():
     global em
     from hpsearch.examples.complex_dummy_experiment_manager import DummyManagerAvoidSaving
 
-    em = DummyManagerAvoidSaving (path_experiments='my_new_path/other_folder')
+    em = DummyManagerAvoidSaving (path_experiments='test_my_new_path/other_folder')
 
     factory = ManagerFactory (verbose=2)
     factory.delete_and_reset_all()
@@ -152,7 +152,7 @@ def test_does_not_pickle_unpickable ():
     del em
     em = factory.get_experiment_manager()
 
-    #assert em.path_experiments=='my_new_path/other_folder'
+    #assert em.path_experiments=='test_my_new_path/other_folder'
     assert em.folder=='other_folder'
     assert em.my_new_field is None
     assert em.greeting_message is None

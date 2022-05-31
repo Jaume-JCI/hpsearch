@@ -10,3 +10,4 @@ paired_notebooks
 hpsearch/.ipynb_checkpoints
 em_obj
 config_test
+.coverage

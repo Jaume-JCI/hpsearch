@@ -26,14 +26,14 @@ class MultiHistoryPlotter ():
                   ylegend=0.5, name_file='model_history.pk', op='max',
                   include_parameters_in_legend=False, backend='visdom',
                   use_run_number_in_label=True, use_run_number_in_title=False,
-                  write_scores_in_title=None, **kwargs):
+                  write_scores_in_title=None, start=None, end=None, **kwargs):
         self.experiments = experiments
         self.run_number = (run_number if isinstance(run_number, list) else
                            list(run_number) if isinstance(run_number, range) else [run_number])
         self.path_experiments = path_experiments
+        self.em = get_experiment_manager ()
         if path_experiments is not None:
-            em = get_experiment_manager ()
-            em.set_path_experiments (path_experiments=path_experiments)
+            self.em.set_path_experiments (path_experiments=path_experiments)
         self.metrics = metrics
         self.metrics_second = [] if metrics_second is None else metrics_second
         self.parameters = parameters
@@ -49,6 +49,8 @@ class MultiHistoryPlotter ():
         self.use_run_number_in_title = use_run_number_in_title
         self.write_scores_in_title = (write_scores_in_title if write_scores_in_title is not None
                                       else len(self.run_number) <= 5)
+        self.start = start
+        self.end = end
 
     def plot_multiple_histories (self, experiments=None, run_number=None, metrics=None,
                                  metrics_second=None):
@@ -59,7 +61,7 @@ class MultiHistoryPlotter ():
         self.metrics = metrics if metrics is not None else self.metrics
         self.metrics_second = metrics_second if metrics_second is not None else self.metrics_second
 
-        df = read_df (self.path_experiments)
+        df = self.em.get_experiment_data ()
         df = ut.replace_with_default_values (df)
         df2 = ut.get_experiment_parameters (df.loc[self.experiments], only_not_null=True)
         parameters2, df2 = ut.get_parameters_unique(df2)
@@ -161,13 +163,14 @@ class MultiHistoryPlotter ():
                     label = f'{number}'
         else:
             label = ''
-        traces = plot_utils.add_trace (history[metric], style='A.-', label=label, backend=self.backend,
-                                       traces=traces)
+        array = history[metric][self.start:self.end]
+        traces = plot_utils.add_trace (array, style='A.-', label=label,
+                                       backend=self.backend, traces=traces)
         if self.op == 'min':
-            imin = int(np.array(history[metric]).argmin())
+            imin = int(np.array(array).argmin())
         else:
-            imin = int(np.array(history[metric]).argmax())
-        vmin = float(history[metric][imin])
+            imin = int(np.array(array).argmax())
+        vmin = float(array[imin])
         traces = plot_utils.add_trace ([imin], [vmin], style='A.', label=None, backend=self.backend,
                                        marker={'color': 'red', 'symbol': 104, 'size': 10},
                                        traces=traces)

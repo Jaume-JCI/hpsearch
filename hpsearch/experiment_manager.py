@@ -30,7 +30,9 @@ from dsblocks.utils.utils import set_logger, set_verbosity, store_attr, json_loa
 # hpsearch core API
 from .config.manager_factory import ManagerFactory
 from .utils import experiment_utils
-from .utils.experiment_utils import remove_defaults, read_df, write_df, write_binary_df_if_not_exists
+from .utils.experiment_utils import (remove_defaults, read_df, write_df,
+                                             write_binary_df_if_not_exists)
+from .utils.convert_legacy import update_data_format
 from .utils.organize_experiments import remove_defaults_from_experiment_data
 import hpsearch.config.hp_defaults as dflt
 
@@ -47,6 +49,7 @@ class ExperimentManager (object):
                   defaults=dflt.defaults,
                   metric=dflt.metric,
                   op=dflt.op,
+                  backend=dflt.backend,
                   path_data=None,
                   name_model_history=dflt.name_model_history,
                   model_file_name=dflt.model_file_name,
@@ -70,6 +73,7 @@ class ExperimentManager (object):
         self.defaults = defaults
         self.key_score = metric
         self.op = op
+        self.backend = backend
         self._alternative_path = alternative_path
         self.path_data = path_data
         self.name_model_history = name_model_history
@@ -186,6 +190,7 @@ class ExperimentManager (object):
 
     def get_experiment_data (self, experiments=None):
         experiment_data = read_df (self.path_experiments)
+        if experiment_data.columns.nlevels==1: experiment_data = update_data_format (experiment_data)
         if experiments is not None:
             experiment_data = experiment_data.loc[experiments,:]
         return experiment_data
