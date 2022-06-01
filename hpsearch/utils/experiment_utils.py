@@ -17,6 +17,7 @@ from sklearn.model_selection import ParameterGrid
 import warnings
 
 from ..config import hp_defaults as dflt
+from ..config.hpconfig import get_experiment_manager
 warnings.filterwarnings('ignore')
 
 # Cell
@@ -390,16 +391,16 @@ def query (path_experiments=None,
               parameters_all=[],
               exact_match=True,
               query_other_parameters=False,
+              em=None,
               **kwargs):
 
-    if path_experiments is None:
-        from ..config.hpconfig import get_path_experiments
-        path_experiments = get_path_experiments()
+    if em is None: em = get_experiment_manager ()
+    if path_experiments is None: path_experiments = em.path_experiments
 
     if query_other_parameters:
         experiment_data = pd.read_csv(f'{path_experiments}/other_parameters.csv', index_col=0)
     else:
-        experiment_data = read_df (path_experiments)
+        experiment_data = em.get_experiment_data ()
 
     non_valid_pars = set(
         [(dflt.parameters_col, c, '') for c in parameters_fixed.keys()]

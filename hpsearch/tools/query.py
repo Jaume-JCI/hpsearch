@@ -16,6 +16,7 @@ import pandas as pd
 # hpsearch api
 import hpsearch.utils.experiment_utils as ut
 import hpsearch.config.hp_defaults as dflt
+from ..config.hpconfig import get_experiment_manager, get_em_args, add_em_args
 
 # Cell
 def query (pv={}, pf={}, pall=[], pexact=False, folder=None,
@@ -32,17 +33,13 @@ def query (pv={}, pf={}, pall=[], pexact=False, folder=None,
 
 # Cell
 def do_query_and_show (pall=[], best=None, compact=0, exact=False, experiments=None, pf={}, last=None,
-                       metric=None, op=None, other_parameters=False, input_range=None, results=0,
-                       folder=None, round=2, runs=None, show=False, stats=['mean'], pv={},
-                       sort=None, display_all_columns=False, col_width=None,
-                       manager_path=dflt.manager_path, **kwargs):
-
-    from ..config.hpconfig import get_experiment_manager
-    em = get_experiment_manager (manager_path=manager_path)
-    if folder is not None or metric is not None or op is not None:
-        if folder is not None: em.set_path_experiments (folder=folder)
-        if metric is not None: em.key_score = metric
-        if op is not None: em.op = op
+                       other_parameters=False, input_range=None, results=0,
+                       round=2, runs=None, show=False, stats=['mean'], pv={},
+                       sort=None, display_all_columns=False, col_width=None, **kwargs):
+    em_args = get_em_args (kwargs)
+    em = get_experiment_manager (**em_args)
+    kwargs = {k: kwargs[k] for k in kwargs if k not in em_args}
+    folder, metric, op = em.folder, em.key_score, em.op
 
     df = query (pv=pv, pf=pf, pall=pall, pexact=exact, folder=em.folder,
                metric=em.key_score, experiments=experiments, runs=runs, op=em.op, stats=stats,
@@ -108,10 +105,8 @@ def parse_args(args):
 
     parser = argparse.ArgumentParser(description='show metrics in visdom browser')
     # Datasets
-    parser.add_argument('-m','--metric', type=str, default=None, help="metrics scores")
     parser.add_argument('--stats', type=str, nargs='+', default=['mean'],  help="statistics for multiple runs")
     parser.add_argument('--experiments', type=int, nargs='+', default=None,  help="experiment numbers")
-    parser.add_argument('--folder', type=str, default=None)
     parser.add_argument('-v', type=str, default='{}', help='variable parameters')
     parser.add_argument('-f', type=str, default='{}', help='fixed parameters')
     parser.add_argument('-a', type=str, default='[]', help='all parameters')
@@ -124,12 +119,11 @@ def parse_args(args):
     parser.add_argument('-s', '--show', action= "store_true")
     parser.add_argument('--other', action= "store_true")
     parser.add_argument('--always', type=str, default = default_always)
-    parser.add_argument('--op', default=None, type=str)
     parser.add_argument('--round', default=2, type=int, help='round scores to this number of digits')
     parser.add_argument('--runs', default=None, type=int, nargs='+', help='query restricted to run number provided')
     parser.add_argument('--sort', default=None, type=str)
     parser.add_argument('--width', default=None, type=int, help='max column width')
-    parser.add_argument('-p', '--path', default=dflt.manager_path, type=str)
+    add_em_args (parser)
     pars = parser.parse_args(args)
 
     pars.v = eval(pars.v)
@@ -149,10 +143,9 @@ def parse_arguments_and_query (args):
 
     do_query_and_show (pall=pars.a, best=pars.best, compact=pars.compact, exact=pars.exact,
                        experiments=pars.experiments, pf=pars.f, last=pars.last,
-                       metric=pars.metric, op=pars.op, other_parameters=pars.other,
-                       input_range=pars.range, results=pars.results, folder=pars.folder,
+                       other_parameters=pars.other, input_range=pars.range, results=pars.results,
                        round=pars.round, runs=pars.runs, show=pars.show, stats=pars.stats,
-                       pv=pars.v, sort=pars.sort, col_width=pars.width, manager_path=pars.path)
+                       pv=pars.v, sort=pars.sort, col_width=pars.width, **get_em_args (pars))
 
 def main():
     parse_arguments_and_query (sys.argv[1:])

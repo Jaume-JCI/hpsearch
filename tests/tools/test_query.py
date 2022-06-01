@@ -61,7 +61,7 @@ def test_do_query_and_show_sort_maximum ():
 def test_parse_arguments_and_query_change_metric ():
     em = generate_data ('parse_arguments_and_query_change_metric')
 
-    command = f'--metric test_accuracy -p {em.manager_path}'
+    command = f'--metric test_accuracy --manager_path {em.manager_path}'
     parse_arguments_and_query (command.split())
 
     em.remove_previous_experiments (parent=True)
@@ -70,7 +70,7 @@ def test_parse_arguments_and_query_change_metric ():
 def test_parse_arguments_and_query_with_conditions ():
     em = generate_data ('parse_arguments_and_query_with_conditions')
 
-    command = f'--metric validation_accuracy --op max -f dict(epochs=15) -p {em.manager_path}'
+    command = f'--metric validation_accuracy --op max -f dict(epochs=15) --manager_path {em.manager_path}'
     parse_arguments_and_query (command.split())
 
     em.remove_previous_experiments (parent=True)
