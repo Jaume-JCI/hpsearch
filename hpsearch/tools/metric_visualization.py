@@ -21,13 +21,13 @@ from .utils import include_best_and_last_experiment, set_metric
 # Cell
 def metric_visualization (experiments=[-1,-2], run_number=0, parameters=None,
                           name_file='model_history.pk', visualization_options={},
-                          manager_path=dflt.manager_path, backend=dflt.backend,
                           metric=None, **kwargs):
-    em = get_experiment_manager (manager_path=manager_path, backend=backend, **kwargs)
-    folder = em.folder
+    em_args = get_em_args (kwargs)
+    em = get_experiment_manager (**em_args)
+    kwargs = {k: kwargs[k] for k in kwargs if k not in em_args}
+
+    folder, op, backend, manager_path = em.folder, em.op, em.backend, em.manager_path
     metric = set_metric (em, metric)
-    op = em.op
-    backend = em.backend
 
     # metrics
     metrics = metric
