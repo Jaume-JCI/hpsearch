@@ -22,8 +22,8 @@ from ..utils.experiment_utils import read_df, write_df
 # Cell
 class MultiHistoryPlotter ():
     def __init__ (self, experiments=None, run_number=0, path_experiments=None,
-                  metrics='all', max_run_number=None, parameters=None,
-                  compare=True,  ylegend=0.5, name_file='model_history.pk', op='max',
+                  metrics='all', metrics_second=None, max_run_number=None, parameters=None,
+                  compare = True, ylegend=0.5, name_file='model_history.pk', op='max',
                   include_parameters_in_legend=False, backend='visdom',
                   use_run_number_in_label=True, use_run_number_in_title=False,
                   write_scores_in_title=None, start=None, end=None, **kwargs):
@@ -99,7 +99,7 @@ class MultiHistoryPlotter ():
                     if run_number == 'mean':
                         history = self.obtain_average_history ([metric] + self.metrics_second,
                                                                experiment_id,
-                                                               max_run_number=max_run_number)
+                                                               max_run_number=self.max_run_number)
                     else:
                         history = None
                     traces, title, history = self.plot_metric (
