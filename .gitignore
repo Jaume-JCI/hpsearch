@@ -11,3 +11,5 @@ hpsearch/.ipynb_checkpoints
 em_obj
 config_test
 .coverage
+tests/**/*/__pycache__
+tests/__pycache__

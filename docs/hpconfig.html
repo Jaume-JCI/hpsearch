@@ -1,6 +1,6 @@
 ---
 
-title: Parameter configuration
+title: Loading experiment manager and configuration
 
 
 keywords: fastai
@@ -33,6 +33,40 @@ nb_path: "nbs/config/hpconfig.ipynb"
     
 <div class="cell border-box-sizing code_cell rendered">
 
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.utils</span> <span class="kn">import</span> <span class="n">Bunch</span>
+
+<span class="kn">from</span> <span class="nn">dsblocks.utils.utils</span> <span class="kn">import</span> <span class="n">check_last_part</span>
+
+<span class="kn">from</span> <span class="nn">hpsearch.examples.dummy_experiment_manager</span> <span class="kn">import</span> <span class="n">DummyExperimentManager</span><span class="p">,</span> <span class="n">generate_data</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="get_experiment_manager">get_experiment_manager<a class="anchor-link" href="#get_experiment_manager"> </a></h2>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
 <div class="output_wrapper">
 <div class="output">
 
@@ -40,7 +74,175 @@ nb_path: "nbs/config/hpconfig.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_experiment_manager" class="doc_header"><code>get_experiment_manager</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/config/hpconfig.py#L14" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_experiment_manager</code>(<strong><code>manager_path</code></strong>=<em><code>'em_obj'</code></em>)</p>
+<h4 id="get_experiment_manager" class="doc_header"><code>get_experiment_manager</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/config/hpconfig.py#L17" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_experiment_manager</code>(<strong><code>manager_path</code></strong>=<em><code>'em_obj'</code></em>, <strong>**<code>kwargs</code></strong>)</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Usage-example">Usage example<a class="anchor-link" href="#Usage-example"> </a></h3>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="test_get_experiment_manager" class="doc_header"><code>test_get_experiment_manager</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/config/test_hpconfig.py#L24" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_get_experiment_manager</code>()</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">test_get_experiment_manager</span> <span class="p">():</span>
+    <span class="n">em</span> <span class="o">=</span> <span class="n">generate_data</span> <span class="p">(</span><span class="s1">&#39;get_experiment_manager&#39;</span><span class="p">)</span>
+    <span class="n">manager_path</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">manager_path</span>
+    <span class="k">del</span> <span class="n">em</span>
+    
+    <span class="n">em</span> <span class="o">=</span> <span class="n">get_experiment_manager</span> <span class="p">(</span><span class="n">manager_path</span><span class="p">)</span>
+    <span class="n">check_last_part</span> <span class="p">(</span><span class="n">em</span><span class="o">.</span><span class="n">path_experiments</span><span class="p">,</span> <span class="s1">&#39;test_get_experiment_manager/default&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">em</span><span class="o">.</span><span class="n">key_score</span> <span class="o">==</span> <span class="s1">&#39;validation_accuracy&#39;</span> <span class="ow">and</span> <span class="n">em</span><span class="o">.</span><span class="n">op</span> <span class="o">==</span> <span class="s1">&#39;max&#39;</span>
+
+    <span class="n">em</span> <span class="o">=</span> <span class="n">get_experiment_manager</span> <span class="p">(</span><span class="n">manager_path</span><span class="p">,</span> <span class="n">path_experiments</span><span class="o">=</span><span class="s1">&#39;my_new_parent_path/my_new_folder&#39;</span><span class="p">,</span> 
+                               <span class="n">metric</span><span class="o">=</span><span class="s1">&#39;new_metric&#39;</span><span class="p">,</span> <span class="n">op</span><span class="o">=</span><span class="s1">&#39;min&#39;</span><span class="p">)</span>
+    <span class="n">check_last_part</span> <span class="p">(</span><span class="n">em</span><span class="o">.</span><span class="n">path_experiments</span><span class="p">,</span> <span class="s1">&#39;my_new_parent_path/my_new_folder&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">em</span><span class="o">.</span><span class="n">key_score</span> <span class="o">==</span> <span class="s1">&#39;new_metric&#39;</span> <span class="ow">and</span> <span class="n">em</span><span class="o">.</span><span class="n">op</span> <span class="o">==</span> <span class="s1">&#39;min&#39;</span>
+
+    <span class="n">em</span> <span class="o">=</span> <span class="n">get_experiment_manager</span> <span class="p">(</span><span class="n">manager_path</span><span class="p">,</span> <span class="n">folder</span><span class="o">=</span><span class="s1">&#39;other_folder&#39;</span><span class="p">)</span>
+    <span class="n">check_last_part</span> <span class="p">(</span><span class="n">em</span><span class="o">.</span><span class="n">path_experiments</span><span class="p">,</span> <span class="s1">&#39;my_new_parent_path/other_folder&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">em</span><span class="o">.</span><span class="n">key_score</span> <span class="o">==</span> <span class="s1">&#39;new_metric&#39;</span> <span class="ow">and</span> <span class="n">em</span><span class="o">.</span><span class="n">op</span> <span class="o">==</span> <span class="s1">&#39;min&#39;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_get_experiment_manager</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>running test_modify_experiment_manager
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="get_default_parameters">get_default_parameters<a class="anchor-link" href="#get_default_parameters"> </a></h2>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="get_default_parameters" class="doc_header"><code>get_default_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/config/hpconfig.py#L25" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_default_parameters</code>(<strong><code>parameters</code></strong>, <strong><code>manager_path</code></strong>=<em><code>'em_obj'</code></em>)</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="get_path_experiments-and-other-paths">get_path_experiments and other paths<a class="anchor-link" href="#get_path_experiments-and-other-paths"> </a></h2>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="get_path_experiments" class="doc_header"><code>get_path_experiments</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/config/hpconfig.py#L30" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_path_experiments</code>(<strong><code>manager_path</code></strong>=<em><code>'em_obj'</code></em>)</p>
 </blockquote>
 
 </div>
@@ -64,7 +266,7 @@ nb_path: "nbs/config/hpconfig.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_default_parameters" class="doc_header"><code>get_default_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/config/hpconfig.py#L20" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_default_parameters</code>(<strong><code>parameters</code></strong>, <strong><code>manager_path</code></strong>=<em><code>'em_obj'</code></em>)</p>
+<h4 id="get_path_alternative" class="doc_header"><code>get_path_alternative</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/config/hpconfig.py#L34" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_path_alternative</code>(<strong><code>path_results</code></strong>, <strong><code>manager_path</code></strong>=<em><code>'em_obj'</code></em>)</p>
 </blockquote>
 
 </div>
@@ -88,7 +290,7 @@ nb_path: "nbs/config/hpconfig.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_default_operations" class="doc_header"><code>get_default_operations</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/config/hpconfig.py#L24" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_default_operations</code>(<strong><code>manager_path</code></strong>=<em><code>'em_obj'</code></em>)</p>
+<h4 id="get_path_experiment" class="doc_header"><code>get_path_experiment</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/config/hpconfig.py#L38" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_path_experiment</code>(<strong><code>experiment_id</code></strong>, <strong><code>manager_path</code></strong>=<em><code>'em_obj'</code></em>)</p>
 </blockquote>
 
 </div>
@@ -112,7 +314,7 @@ nb_path: "nbs/config/hpconfig.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_path_experiments" class="doc_header"><code>get_path_experiments</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/config/hpconfig.py#L28" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_path_experiments</code>(<strong><code>manager_path</code></strong>=<em><code>'em_obj'</code></em>)</p>
+<h4 id="get_path_results" class="doc_header"><code>get_path_results</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/config/hpconfig.py#L42" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_path_results</code>(<strong><code>experiment_id</code></strong>, <strong><code>run_number</code></strong>, <strong><code>manager_path</code></strong>=<em><code>'em_obj'</code></em>)</p>
 </blockquote>
 
 </div>
@@ -136,7 +338,7 @@ nb_path: "nbs/config/hpconfig.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_path_alternative" class="doc_header"><code>get_path_alternative</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/config/hpconfig.py#L32" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_path_alternative</code>(<strong><code>path_results</code></strong>, <strong><code>manager_path</code></strong>=<em><code>'em_obj'</code></em>)</p>
+<h4 id="get_path_data" class="doc_header"><code>get_path_data</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/config/hpconfig.py#L46" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_path_data</code>(<strong><code>run_number</code></strong>, <strong><code>parameters</code></strong>=<em><code>{}</code></em>, <strong><code>manager_path</code></strong>=<em><code>'em_obj'</code></em>)</p>
 </blockquote>
 
 </div>
@@ -153,6 +355,19 @@ nb_path: "nbs/config/hpconfig.ipynb"
     
 <div class="cell border-box-sizing code_cell rendered">
 
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="experiment_visualization">experiment_visualization<a class="anchor-link" href="#experiment_visualization"> </a></h2>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
 <div class="output_wrapper">
 <div class="output">
 
@@ -160,7 +375,7 @@ nb_path: "nbs/config/hpconfig.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_path_data" class="doc_header"><code>get_path_data</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/config/hpconfig.py#L36" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_path_data</code>(<strong><code>run_number</code></strong>, <strong><code>parameters</code></strong>=<em><code>{}</code></em>, <strong><code>manager_path</code></strong>=<em><code>'em_obj'</code></em>)</p>
+<h4 id="experiment_visualization" class="doc_header"><code>experiment_visualization</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/config/hpconfig.py#L51" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>experiment_visualization</code>(<strong><code>manager_path</code></strong>=<em><code>'em_obj'</code></em>, <strong>**<code>kwargs</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -177,6 +392,19 @@ nb_path: "nbs/config/hpconfig.ipynb"
     
 <div class="cell border-box-sizing code_cell rendered">
 
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="get_experiment_data">get_experiment_data<a class="anchor-link" href="#get_experiment_data"> </a></h2>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
 <div class="output_wrapper">
 <div class="output">
 
@@ -184,7 +412,7 @@ nb_path: "nbs/config/hpconfig.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_path_experiment" class="doc_header"><code>get_path_experiment</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/config/hpconfig.py#L40" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_path_experiment</code>(<strong><code>experiment_id</code></strong>, <strong><code>manager_path</code></strong>=<em><code>'em_obj'</code></em>)</p>
+<h4 id="get_experiment_data" class="doc_header"><code>get_experiment_data</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/config/hpconfig.py#L56" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_experiment_data</code>(<strong><code>experiments</code></strong>=<em><code>None</code></em>, <strong><code>manager_path</code></strong>=<em><code>'em_obj'</code></em>)</p>
 </blockquote>
 
 </div>
@@ -201,6 +429,19 @@ nb_path: "nbs/config/hpconfig.ipynb"
     
 <div class="cell border-box-sizing code_cell rendered">
 
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="get_em_args">get_em_args<a class="anchor-link" href="#get_em_args"> </a></h2>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
 <div class="output_wrapper">
 <div class="output">
 
@@ -208,7 +449,7 @@ nb_path: "nbs/config/hpconfig.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_path_results" class="doc_header"><code>get_path_results</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/config/hpconfig.py#L44" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_path_results</code>(<strong><code>experiment_id</code></strong>, <strong><code>run_number</code></strong>, <strong><code>manager_path</code></strong>=<em><code>'em_obj'</code></em>)</p>
+<h4 id="get_em_args" class="doc_header"><code>get_em_args</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/config/hpconfig.py#L62" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_em_args</code>(<strong><code>pars</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -225,6 +466,19 @@ nb_path: "nbs/config/hpconfig.ipynb"
     
 <div class="cell border-box-sizing code_cell rendered">
 
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Usage-example">Usage example<a class="anchor-link" href="#Usage-example"> </a></h3>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
 <div class="output_wrapper">
 <div class="output">
 
@@ -232,7 +486,87 @@ nb_path: "nbs/config/hpconfig.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="experiment_visualization" class="doc_header"><code>experiment_visualization</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/config/hpconfig.py#L48" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>experiment_visualization</code>(<strong><code>manager_path</code></strong>=<em><code>'em_obj'</code></em>, <strong>**<code>kwargs</code></strong>)</p>
+<h4 id="test_get_em_args" class="doc_header"><code>test_get_em_args</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/config/test_hpconfig.py#L43" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_get_em_args</code>()</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">test_get_em_args</span> <span class="p">():</span>
+    <span class="n">em_args</span> <span class="o">=</span> <span class="n">get_em_args</span> <span class="p">({</span><span class="s1">&#39;hello&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;path_experiments&#39;</span><span class="p">:</span> <span class="s1">&#39;mypath&#39;</span><span class="p">,</span> <span class="s1">&#39;folder&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">})</span>
+    <span class="k">assert</span> <span class="p">(</span><span class="n">em_args</span><span class="o">==</span><span class="p">{</span><span class="s1">&#39;path_experiments&#39;</span><span class="p">:</span> <span class="s1">&#39;mypath&#39;</span><span class="p">})</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_get_em_args</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>running test_get_em_args
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="modify_experiment_manager">modify_experiment_manager<a class="anchor-link" href="#modify_experiment_manager"> </a></h2>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="modify_experiment_manager" class="doc_header"><code>modify_experiment_manager</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/config/hpconfig.py#L67" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>modify_experiment_manager</code>(<strong><code>experiment_manager</code></strong>, <strong>**<code>kwargs</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -249,6 +583,19 @@ nb_path: "nbs/config/hpconfig.ipynb"
     
 <div class="cell border-box-sizing code_cell rendered">
 
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Usage-example">Usage example<a class="anchor-link" href="#Usage-example"> </a></h3>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
 <div class="output_wrapper">
 <div class="output">
 
@@ -256,7 +603,97 @@ nb_path: "nbs/config/hpconfig.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_experiment_data" class="doc_header"><code>get_experiment_data</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/config/hpconfig.py#L52" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_experiment_data</code>(<strong><code>experiments</code></strong>=<em><code>None</code></em>, <strong><code>manager_path</code></strong>=<em><code>'em_obj'</code></em>)</p>
+<h4 id="test_modify_experiment_manager" class="doc_header"><code>test_modify_experiment_manager</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/tests/config/test_hpconfig.py#L48" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>test_modify_experiment_manager</code>()</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">test_modify_experiment_manager</span> <span class="p">():</span>
+    <span class="n">em</span> <span class="o">=</span> <span class="n">DummyExperimentManager</span> <span class="p">()</span>
+    <span class="n">check_last_part</span> <span class="p">(</span><span class="n">em</span><span class="o">.</span><span class="n">path_experiments</span><span class="p">,</span> <span class="s1">&#39;results&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">em</span><span class="o">.</span><span class="n">key_score</span> <span class="o">==</span> <span class="s1">&#39;validation_accuracy&#39;</span> <span class="ow">and</span> <span class="n">em</span><span class="o">.</span><span class="n">op</span> <span class="o">==</span> <span class="s1">&#39;max&#39;</span>
+    
+    <span class="n">modify_experiment_manager</span> <span class="p">(</span><span class="n">em</span><span class="p">,</span> <span class="n">path_experiments</span><span class="o">=</span><span class="s1">&#39;my_new_parent_path/my_new_folder&#39;</span><span class="p">,</span> 
+                               <span class="n">metric</span><span class="o">=</span><span class="s1">&#39;new_metric&#39;</span><span class="p">,</span> <span class="n">op</span><span class="o">=</span><span class="s1">&#39;min&#39;</span><span class="p">)</span>
+    <span class="n">check_last_part</span> <span class="p">(</span><span class="n">em</span><span class="o">.</span><span class="n">path_experiments</span><span class="p">,</span> <span class="s1">&#39;my_new_parent_path/my_new_folder&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">em</span><span class="o">.</span><span class="n">key_score</span> <span class="o">==</span> <span class="s1">&#39;new_metric&#39;</span> <span class="ow">and</span> <span class="n">em</span><span class="o">.</span><span class="n">op</span> <span class="o">==</span> <span class="s1">&#39;min&#39;</span>
+    
+    <span class="n">modify_experiment_manager</span> <span class="p">(</span><span class="n">em</span><span class="p">,</span> <span class="n">folder</span><span class="o">=</span><span class="s1">&#39;other_folder&#39;</span><span class="p">)</span>
+    <span class="n">check_last_part</span> <span class="p">(</span><span class="n">em</span><span class="o">.</span><span class="n">path_experiments</span><span class="p">,</span> <span class="s1">&#39;my_new_parent_path/other_folder&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">em</span><span class="o">.</span><span class="n">key_score</span> <span class="o">==</span> <span class="s1">&#39;new_metric&#39;</span> <span class="ow">and</span> <span class="n">em</span><span class="o">.</span><span class="n">op</span> <span class="o">==</span> <span class="s1">&#39;min&#39;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">.</span><span class="n">run</span> <span class="p">(</span><span class="n">test_modify_experiment_manager</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;dummy&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>running test_modify_experiment_manager
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="add_em_args">add_em_args<a class="anchor-link" href="#add_em_args"> </a></h2>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="add_em_args" class="doc_header"><code>add_em_args</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/config/hpconfig.py#L76" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>add_em_args</code>(<strong><code>parser</code></strong>, <strong><code>but</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 
 </div>

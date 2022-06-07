@@ -10,137 +10,111 @@ entries:
       title: Overview
       url: /
     - output: web,pdf
-      title: Test manager factory
-      url: tst.manager_factory.html
-    - output: web,pdf
-      title: Test complex dummy experiment manager
-      url: tst.complex_dummy_experiment_manager.html
-    - output: web,pdf
-      title: Test dummy experiment manager
-      url: tst.dummy_experiment_manager.html
-    - output: web,pdf
-      title: Test example experiment manager
-      url: tst.example_experiment_manager.html
-    - output: web,pdf
-      title: Test change manager
-      url: tst.change_manager.html
-    - output: web,pdf
-      title: Test copy_experiment
-      url: tst.copy_experiment.html
-    - output: web,pdf
-      title: Test metric visualization
-      url: tst.print_info.html
-    - output: web,pdf
-      title: Test modify manager
-      url: tst.modify_manager.html
-    - output: web,pdf
-      title: Test more runs
-      url: tst.more_runs.html
-    - output: web,pdf
-      title: Test print parameters
-      url: tst.print_parameters.html
-    - output: web,pdf
-      title: Test print table
-      url: tst.print_table.html
-    - output: web,pdf
-      title: Test query
-      url: tst.query.html
-    - output: web,pdf
-      title: Test remove experiments
-      url: tst.remove_experiments.html
-    - output: web,pdf
-      title: Test rerun
-      url: tst.rerun.html
-    - output: web,pdf
-      title: Test experiment manager
-      url: tst.experiment_manager.html
-    - output: web,pdf
-      title: Test convert legacy
-      url: tst.convert_legacy.html
-    - output: web,pdf
-      title: Test experiment utils
-      url: tst.experiment_utils.html
-    - output: web,pdf
-      title: Test organize experiments
-      url: tst.organize_experiments.html
-    - output: web,pdf
-      title: Test experiment visualization
-      url: tst.experiment_visualization.html
-    - output: web,pdf
-      title: Test visualization
-      url: tst.plot_utils.html
-    - output: web,pdf
-      title: Default parameter values
-      url: hp_defaults.html
-    - output: web,pdf
-      title: Parameter configuration
-      url: hpconfig.html
-    - output: web,pdf
-      title: Manager factory
-      url: manager_factory.html
-    - output: web,pdf
-      title: Complex Dummy Experiment Manager
-      url: complex_dummy_experiment_manager.html
-    - output: web,pdf
-      title: Dummy Experiment Manager
-      url: dummy_experiment_manager.html
-    - output: web,pdf
-      title: Example Experiment Manager
-      url: example_experiment_manager.html
-    - output: web,pdf
       title: Experiment Manager
       url: experiment_manager.html
-    - output: web,pdf
-      title: Change manager
-      url: change_manager.html
-    - output: web,pdf
-      title: Copy experiment indicated by argument
-      url: copy_experiment.html
-    - output: web,pdf
-      title: Metric visualization
-      url: metric_visualization.html
-    - output: web,pdf
-      title: Modify manager
-      url: modify_manager.html
-    - output: web,pdf
-      title: More runs
-      url: more_runs.html
-    - output: web,pdf
-      title: Print info
-      url: print_info.html
-    - output: web,pdf
-      title: Print parameters
-      url: print_parameters.html
-    - output: web,pdf
-      title: Print table
-      url: print_table.html
-    - output: web,pdf
-      title: Query
-      url: query.html
-    - output: web,pdf
-      title: Remove experiments
-      url: remove_experiments.html
-    - output: web,pdf
-      title: Re-run previous experiments with new parameters
-      url: rerun.html
-    - output: web,pdf
-      title: Visualization
-      url: visualization.html
-    - output: web,pdf
-      title: Convert legacy data format
-      url: convert_legacy.html
-    - output: web,pdf
-      title: Experiment Utils
-      url: experiment_utils.html
-    - output: web,pdf
-      title: Organize experiments
-      url: organize_experiments.html
-    - output: web,pdf
-      title: Visualization utils
-      url: experiment_visualization.html
-    - output: web,pdf
-      title: Plot utilities
-      url: plot_utils.html
+      subfolders:
+      - output: web
+        subfolderitems:
+        - output: web,pdf
+          title: Manager factory
+          url: manager_factory.html
+        - output: web,pdf
+          title: Parameter configuration
+          url: hpconfig.html
+        title: Session management
+    - output: web
+      subfolders:
+      - output: web
+        subfolderitems:
+        - output: web,pdf
+          title: Complex Dummy Experiment Manager
+          url: complex_dummy_experiment_manager.html
+        - output: web,pdf
+          title: Dummy Experiment Manager
+          url: dummy_experiment_manager.html
+        - output: web,pdf
+          title: Example Experiment Manager
+          url: example_experiment_manager.html
+        title: Dummy Experiment Managers
+      title: ' '
+    - output: web
+      subfolders:
+      - output: web
+        subfolderitems:
+        - output: web,pdf
+          title: Change manager
+          url: change_manager.html
+        - output: web,pdf
+          title: Copy experiment indicated by argument
+          url: copy_experiment.html
+        - output: web,pdf
+          title: Metric visualization
+          url: metric_visualization.html
+        - output: web,pdf
+          title: Modify manager
+          url: modify_manager.html
+        - output: web,pdf
+          title: More runs
+          url: more_runs.html
+        - output: web,pdf
+          title: Print info
+          url: print_info.html
+        - output: web,pdf
+          title: Print parameters
+          url: print_parameters.html
+        - output: web,pdf
+          title: Print table
+          url: print_table.html
+        - output: web,pdf
+          title: Query
+          url: query.html
+        - output: web,pdf
+          title: Remove experiments
+          url: remove_experiments.html
+        - output: web,pdf
+          title: Re-run previous experiments with new parameters
+          url: rerun.html
+        title: CLI tools
+      title: '  '
+    - output: web
+      subfolders:
+      - output: web
+        subfolderitems:
+        - output: web,pdf
+          title: Experiment Utils
+          url: experiment_utils.html
+        - output: web,pdf
+          title: Convert legacy data format
+          url: convert_legacy.html
+        - output: web,pdf
+          title: Organize experiments
+          url: organize_experiments.html
+        title: Utils
+      title: '   '
+    - output: web
+      subfolders:
+      - output: web
+        subfolderitems:
+        - output: web,pdf
+          title: Visualization utils
+          url: experiment_visualization.html
+        - output: web,pdf
+          title: Plot utilities
+          url: plot_utils.html
+        - output: web,pdf
+          title: Other visualization features
+          url: visualization.html
+        title: Visualization
+      title: '     '
+    - output: web
+      subfolders:
+      - output: web
+        subfolderitems:
+        - output: web,pdf
+          title: Default parameter values
+          url: hp_defaults.html
+        title: Miscellaneous
+      title: '      '
     output: web
     title: hpsearch
   output: web

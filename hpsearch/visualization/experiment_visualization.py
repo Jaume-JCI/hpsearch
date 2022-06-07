@@ -22,14 +22,15 @@ from ..utils.experiment_utils import read_df, write_df
 # Cell
 class MultiHistoryPlotter ():
     def __init__ (self, experiments=None, run_number=0, path_experiments=None,
-                  metrics='all', metrics_second=None, parameters = None, compare = True,
-                  ylegend=0.5, name_file='model_history.pk', op='max',
+                  metrics='all', max_run_number=None, parameters=None,
+                  compare=True,  ylegend=0.5, name_file='model_history.pk', op='max',
                   include_parameters_in_legend=False, backend='visdom',
                   use_run_number_in_label=True, use_run_number_in_title=False,
                   write_scores_in_title=None, start=None, end=None, **kwargs):
         self.experiments = experiments
         self.run_number = (run_number if isinstance(run_number, list) else
                            list(run_number) if isinstance(run_number, range) else [run_number])
+        self.max_run_number = max_run_number
         self.path_experiments = path_experiments
         self.em = get_experiment_manager ()
         if path_experiments is not None:
@@ -53,11 +54,12 @@ class MultiHistoryPlotter ():
         self.end = end
 
     def plot_multiple_histories (self, experiments=None, run_number=None, metrics=None,
-                                 metrics_second=None):
+                                 metrics_second=None, max_run_number=None):
         self.experiments = experiments if experiments is not None else self.experiments
         assert self.experiments is not None, ('experiments needs to be indicated, '
                                               'either at construction time or in this call')
         self.run_number = run_number if run_number is not None else self.run_number
+        if max_run_number is not None: self.max_run_number = max_run_number
         self.metrics = metrics if metrics is not None else self.metrics
         self.metrics_second = metrics_second if metrics_second is not None else self.metrics_second
 
@@ -96,7 +98,8 @@ class MultiHistoryPlotter ():
                 for run_number in run_numbers:
                     if run_number == 'mean':
                         history = self.obtain_average_history ([metric] + self.metrics_second,
-                                                               experiment_id)
+                                                               experiment_id,
+                                                               max_run_number=max_run_number)
                     else:
                         history = None
                     traces, title, history = self.plot_metric (
@@ -190,7 +193,7 @@ class MultiHistoryPlotter ():
             if df2 is not None: df2.loc[experiment_id, metric] = vmin
         return traces, title
 
-    def obtain_average_history (self, metrics, experiment_id):
+    def obtain_average_history (self, metrics, experiment_id, max_run_number=None):
         run_number = 0
         avg_history = None
         while True:
@@ -207,6 +210,7 @@ class MultiHistoryPlotter ():
             else:
                 break
             run_number += 1
+            if max_run_number is not None and run_number > max_run_number: break
         avg_history = {k:avg_history[k]/run_number for k in metrics}
 
         return avg_history

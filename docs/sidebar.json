@@ -1,49 +1,44 @@
 {
   "hpsearch": {
     "Overview": "/",
-    "Test manager factory": "tst.manager_factory.html",
-    "Test complex dummy experiment manager": "tst.complex_dummy_experiment_manager.html",
-    "Test dummy experiment manager": "tst.dummy_experiment_manager.html",
-    "Test example experiment manager": "tst.example_experiment_manager.html",
-    "Test change manager": "tst.change_manager.html",
-    "Test copy_experiment": "tst.copy_experiment.html",
-    "Test metric visualization": "tst.print_info.html",
-    "Test modify manager": "tst.modify_manager.html",
-    "Test more runs": "tst.more_runs.html",
-    "Test print parameters": "tst.print_parameters.html",
-    "Test print table": "tst.print_table.html",
-    "Test query": "tst.query.html",
-    "Test remove experiments": "tst.remove_experiments.html",
-    "Test rerun": "tst.rerun.html",
-    "Test experiment manager": "tst.experiment_manager.html",
-    "Test convert legacy": "tst.convert_legacy.html",
-    "Test experiment utils": "tst.experiment_utils.html",
-    "Test organize experiments": "tst.organize_experiments.html",
-    "Test experiment visualization": "tst.experiment_visualization.html",
-    "Test visualization": "tst.plot_utils.html",
-    "Default parameter values": "hp_defaults.html",
-    "Parameter configuration": "hpconfig.html",
-    "Manager factory": "manager_factory.html",
-    "Complex Dummy Experiment Manager": "complex_dummy_experiment_manager.html",
-    "Dummy Experiment Manager": "dummy_experiment_manager.html",
-    "Example Experiment Manager": "example_experiment_manager.html",
+      
     "Experiment Manager": "experiment_manager.html",
-    "Change manager": "change_manager.html",
-    "Copy experiment indicated by argument": "copy_experiment.html",
-    "Metric visualization": "metric_visualization.html",
-    "Modify manager": "modify_manager.html",
-    "More runs": "more_runs.html",
-    "Print info": "print_info.html",
-    "Print parameters": "print_parameters.html",
-    "Print table": "print_table.html",
-    "Query": "query.html",
-    "Remove experiments": "remove_experiments.html",
-    "Re-run previous experiments with new parameters": "rerun.html",
-    "Visualization": "visualization.html",
-    "Convert legacy data format": "convert_legacy.html",
-    "Experiment Utils": "experiment_utils.html",
-    "Organize experiments": "organize_experiments.html",
-    "Visualization utils": "experiment_visualization.html",
-    "Plot utilities": "plot_utils.html"
+    
+     "": {"Session management": {
+        "Manager factory": "manager_factory.html",
+        "Parameter configuration": "hpconfig.html"}},
+      
+     " ": { "Dummy Experiment Managers": {
+        "Complex Dummy Experiment Manager": "complex_dummy_experiment_manager.html",
+        "Dummy Experiment Manager": "dummy_experiment_manager.html",
+        "Example Experiment Manager": "example_experiment_manager.html"}},
+      
+     "  ": {"CLI tools": {
+        "Change manager": "change_manager.html",
+        "Copy experiment indicated by argument": "copy_experiment.html",
+        "Metric visualization": "metric_visualization.html",
+        "Modify manager": "modify_manager.html",
+        "More runs": "more_runs.html",
+        "Print info": "print_info.html",
+        "Print parameters": "print_parameters.html",
+        "Print table": "print_table.html",
+        "Query": "query.html",
+        "Remove experiments": "remove_experiments.html",
+        "Re-run previous experiments with new parameters": "rerun.html"}},
+    
+      
+     "   ": {"Utils": {
+        "Experiment Utils": "experiment_utils.html",
+        "Convert legacy data format": "convert_legacy.html",
+        "Organize experiments": "organize_experiments.html"}},
+    
+     "     ": {"Visualization": {
+        "Visualization utils": "experiment_visualization.html",
+        "Plot utilities": "plot_utils.html",
+        "Other visualization features": "visualization.html"}},
+    
+     "      ": {"Miscellaneous": {
+        "Default parameter values": "hp_defaults.html"
+    }}
   }
 }

@@ -79,7 +79,7 @@ nb_path: "nbs/experiment_manager.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="ExperimentManager" class="doc_header"><code>class</code> <code>ExperimentManager</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L38" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ExperimentManager</code>(<strong><code>allow_base_class</code></strong>=<em><code>False</code></em>, <strong><code>path_experiments</code></strong>=<em><code>'hpsearch/results'</code></em>, <strong><code>folder</code></strong>=<em><code>None</code></em>, <strong><code>parent_path</code></strong>=<em><code>None</code></em>, <strong><code>alternative_path</code></strong>=<em><code>None</code></em>, <strong><code>alternative_parent_path</code></strong>=<em><code>None</code></em>, <strong><code>defaults</code></strong>=<em><code>{}</code></em>, <strong><code>metric</code></strong>=<em><code>'accuracy'</code></em>, <strong><code>op</code></strong>=<em><code>'max'</code></em>, <strong><code>path_data</code></strong>=<em><code>None</code></em>, <strong><code>name_model_history</code></strong>=<em><code>'model_history.pk'</code></em>, <strong><code>model_file_name</code></strong>=<em><code>'model.h5'</code></em>, <strong><code>name_epoch</code></strong>=<em><code>'epochs'</code></em>, <strong><code>result_file</code></strong>=<em><code>'dict_results.pk'</code></em>, <strong><code>target_model_file</code></strong>=<em><code>None</code></em>, <strong><code>destination_model_file</code></strong>=<em><code>None</code></em>, <strong><code>manager_path</code></strong>=<em><code>'em_obj'</code></em>, <strong><code>non_pickable_fields</code></strong>=<em><code>[]</code></em>, <strong><code>avoid_saving_fields</code></strong>=<em><code>[]</code></em>, <strong><code>logger</code></strong>=<em><code>None</code></em>, <strong><code>verbose</code></strong>:<code>int</code>=<em><code>0</code></em>, <strong><code>name_logger</code></strong>:<code>str</code>=<em><code>'experiment_manager'</code></em>)</p>
+<h2 id="ExperimentManager" class="doc_header"><code>class</code> <code>ExperimentManager</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L40" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ExperimentManager</code>(<strong><code>allow_base_class</code></strong>=<em><code>False</code></em>, <strong><code>path_experiments</code></strong>=<em><code>'hpsearch/results'</code></em>, <strong><code>folder</code></strong>=<em><code>None</code></em>, <strong><code>parent_path</code></strong>=<em><code>None</code></em>, <strong><code>alternative_path</code></strong>=<em><code>None</code></em>, <strong><code>alternative_parent_path</code></strong>=<em><code>None</code></em>, <strong><code>defaults</code></strong>=<em><code>{}</code></em>, <strong><code>metric</code></strong>=<em><code>'accuracy'</code></em>, <strong><code>op</code></strong>=<em><code>'max'</code></em>, <strong><code>backend</code></strong>=<em><code>'plotly'</code></em>, <strong><code>path_data</code></strong>=<em><code>None</code></em>, <strong><code>name_model_history</code></strong>=<em><code>'model_history.pk'</code></em>, <strong><code>model_file_name</code></strong>=<em><code>'model.h5'</code></em>, <strong><code>name_epoch</code></strong>=<em><code>'epochs'</code></em>, <strong><code>result_file</code></strong>=<em><code>'dict_results.pk'</code></em>, <strong><code>target_model_file</code></strong>=<em><code>None</code></em>, <strong><code>destination_model_file</code></strong>=<em><code>None</code></em>, <strong><code>manager_path</code></strong>=<em><code>'em_obj'</code></em>, <strong><code>non_pickable_fields</code></strong>=<em><code>[]</code></em>, <strong><code>avoid_saving_fields</code></strong>=<em><code>[]</code></em>, <strong><code>logger</code></strong>=<em><code>None</code></em>, <strong><code>verbose</code></strong>:<code>int</code>=<em><code>0</code></em>, <strong><code>name_logger</code></strong>:<code>str</code>=<em><code>'experiment_manager'</code></em>)</p>
 </blockquote>
 
 </div>
@@ -1915,7 +1915,7 @@ This can be done either passing this when constructing the object:</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_git_revision_hash" class="doc_header"><code>get_git_revision_hash</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1116" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_git_revision_hash</code>(<strong><code>path_experiments</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="get_git_revision_hash" class="doc_header"><code>get_git_revision_hash</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1121" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_git_revision_hash</code>(<strong><code>path_experiments</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 
 </div>
@@ -2006,7 +2006,7 @@ This can be done either passing this when constructing the object:</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="record_parameters" class="doc_header"><code>record_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1135" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>record_parameters</code>(<strong><code>path_save</code></strong>, <strong><code>parameters</code></strong>, <strong><code>other_parameters</code></strong>=<em><code>None</code></em>, <strong><code>em_args</code></strong>=<em><code>None</code></em>, <strong><code>info</code></strong>=<em><code>None</code></em>, <strong><code>em_attrs</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="record_parameters" class="doc_header"><code>record_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1140" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>record_parameters</code>(<strong><code>path_save</code></strong>, <strong><code>parameters</code></strong>, <strong><code>other_parameters</code></strong>=<em><code>None</code></em>, <strong><code>em_args</code></strong>=<em><code>None</code></em>, <strong><code>info</code></strong>=<em><code>None</code></em>, <strong><code>em_attrs</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 
 </div>
@@ -2043,7 +2043,7 @@ This can be done either passing this when constructing the object:</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="print_parameters" class="doc_header"><code>print_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1188" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>print_parameters</code>(<strong><code>parameters</code></strong>, <strong><code>dict_name</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="print_parameters" class="doc_header"><code>print_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1193" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>print_parameters</code>(<strong><code>parameters</code></strong>, <strong><code>dict_name</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 
 </div>
@@ -2080,7 +2080,7 @@ This can be done either passing this when constructing the object:</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="load_or_create_experiment_values" class="doc_header"><code>load_or_create_experiment_values</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1210" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>load_or_create_experiment_values</code>(<strong><code>path_experiments</code></strong>, <strong><code>parameters</code></strong>, <strong><code>precision</code></strong>=<em><code>1e-15</code></em>, <strong><code>logger</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="load_or_create_experiment_values" class="doc_header"><code>load_or_create_experiment_values</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1215" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>load_or_create_experiment_values</code>(<strong><code>path_experiments</code></strong>, <strong><code>parameters</code></strong>, <strong><code>precision</code></strong>=<em><code>1e-15</code></em>, <strong><code>logger</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 
 </div>
@@ -2171,7 +2171,7 @@ This can be done either passing this when constructing the object:</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="store_parameters" class="doc_header"><code>store_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1256" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>store_parameters</code>(<strong><code>path_experiments</code></strong>, <strong><code>experiment_number</code></strong>, <strong><code>parameters</code></strong>)</p>
+<h4 id="store_parameters" class="doc_header"><code>store_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1261" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>store_parameters</code>(<strong><code>path_experiments</code></strong>, <strong><code>experiment_number</code></strong>, <strong><code>parameters</code></strong>)</p>
 </blockquote>
 <p>Keeps track of dictionary to map experiment number and parameters values for the different experiments.</p>
 
@@ -2209,7 +2209,7 @@ This can be done either passing this when constructing the object:</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="isnull" class="doc_header"><code>isnull</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1276" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>isnull</code>(<strong><code>experiment_data</code></strong>, <strong><code>experiment_number</code></strong>, <strong><code>name_column</code></strong>)</p>
+<h4 id="isnull" class="doc_header"><code>isnull</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1281" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>isnull</code>(<strong><code>experiment_data</code></strong>, <strong><code>experiment_number</code></strong>, <strong><code>name_column</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -2246,7 +2246,7 @@ This can be done either passing this when constructing the object:</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_experiment_number" class="doc_header"><code>get_experiment_number</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1280" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_experiment_number</code>(<strong><code>path_experiments</code></strong>, <strong><code>parameters</code></strong>=<em><code>{}</code></em>)</p>
+<h4 id="get_experiment_number" class="doc_header"><code>get_experiment_number</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1285" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_experiment_number</code>(<strong><code>path_experiments</code></strong>, <strong><code>parameters</code></strong>=<em><code>{}</code></em>)</p>
 </blockquote>
 
 </div>
@@ -2283,7 +2283,7 @@ This can be done either passing this when constructing the object:</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_experiment_numbers" class="doc_header"><code>get_experiment_numbers</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1286" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_experiment_numbers</code>(<strong><code>path_results_base</code></strong>, <strong><code>parameters_single_value</code></strong>, <strong><code>parameters_multiple_values_all</code></strong>)</p>
+<h4 id="get_experiment_numbers" class="doc_header"><code>get_experiment_numbers</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1291" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_experiment_numbers</code>(<strong><code>path_results_base</code></strong>, <strong><code>parameters_single_value</code></strong>, <strong><code>parameters_multiple_values_all</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -2698,7 +2698,7 @@ unclosed file &lt;_io.TextIOWrapper name=&#39;/home/jcidatascience/jaume/workspa
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="insert_experiment_script_path" class="doc_header"><code>insert_experiment_script_path</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1303" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>insert_experiment_script_path</code>(<strong><code>info</code></strong>, <strong><code>logger</code></strong>, <strong><code>stack_level</code></strong>=<em><code>-3</code></em>)</p>
+<h4 id="insert_experiment_script_path" class="doc_header"><code>insert_experiment_script_path</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1308" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>insert_experiment_script_path</code>(<strong><code>info</code></strong>, <strong><code>logger</code></strong>, <strong><code>stack_level</code></strong>=<em><code>-3</code></em>)</p>
 </blockquote>
 
 </div>
@@ -2735,7 +2735,7 @@ unclosed file &lt;_io.TextIOWrapper name=&#39;/home/jcidatascience/jaume/workspa
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="load_parameters" class="doc_header"><code>load_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1314" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>load_parameters</code>(<strong><code>experiment</code></strong>=<em><code>None</code></em>, <strong><code>other_parameters</code></strong>=<em><code>{}</code></em>, <strong><code>em_args</code></strong>=<em><code>{}</code></em>, <strong><code>parameters</code></strong>=<em><code>{}</code></em>, <strong><code>check_experiment_matches</code></strong>=<em><code>True</code></em>, <strong><code>em</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="load_parameters" class="doc_header"><code>load_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1319" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>load_parameters</code>(<strong><code>experiment</code></strong>=<em><code>None</code></em>, <strong><code>other_parameters</code></strong>=<em><code>{}</code></em>, <strong><code>em_args</code></strong>=<em><code>{}</code></em>, <strong><code>parameters</code></strong>=<em><code>{}</code></em>, <strong><code>check_experiment_matches</code></strong>=<em><code>True</code></em>, <strong><code>em</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 
 </div>
@@ -2772,7 +2772,7 @@ unclosed file &lt;_io.TextIOWrapper name=&#39;/home/jcidatascience/jaume/workspa
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_scalar_fields" class="doc_header"><code>get_scalar_fields</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1349" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_scalar_fields</code>(<strong><code>other_parameters</code></strong>)</p>
+<h4 id="get_scalar_fields" class="doc_header"><code>get_scalar_fields</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1354" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_scalar_fields</code>(<strong><code>other_parameters</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -2796,7 +2796,7 @@ unclosed file &lt;_io.TextIOWrapper name=&#39;/home/jcidatascience/jaume/workspa
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="save_other_parameters" class="doc_header"><code>save_other_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1358" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>save_other_parameters</code>(<strong><code>experiment_number</code></strong>, <strong><code>other_parameters</code></strong>, <strong><code>path_experiments</code></strong>)</p>
+<h4 id="save_other_parameters" class="doc_header"><code>save_other_parameters</code><a href="https://github.com/Jaume-JCI/hpsearch/tree/master/hpsearch/experiment_manager.py#L1363" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>save_other_parameters</code>(<strong><code>experiment_number</code></strong>, <strong><code>other_parameters</code></strong>, <strong><code>path_experiments</code></strong>)</p>
 </blockquote>
 
 </div>
