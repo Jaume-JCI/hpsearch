@@ -6,9 +6,10 @@ __all__ = ['init_em_fixture', 'test_set_path_experiments', 'test_set_alternative
            'test_other_parameters', 'test_remove_not_finished', 'test_repeat_experiment', 'test_check_finished',
            'test_recompute_metrics', 'test_prev_epoch', 'test_prev_epoch2', 'test_from_exp', 'test_skip_interrupted',
            'test_use_last_result', 'test_use_last_result_run_interrupted', 'test_storing_em_args_and_parameters',
-           'test_grid_search', 'test_run_multiple_repetitions', 'parameter_sampler', 'test_hp_optimization',
-           'parameter_sampler', 'test_rerun_experiment', 'test_rerun_experiment_pipeline', 'test_rerun_experiment_par',
-           'test_get_git_revision_hash', 'test_load_or_create_experiment_values', 'test_get_experiment_numbers']
+           'test_grid_search', 'test_run_multiple_repetitions', 'parameter_sampler1', 'test_hp_optimization',
+           'test_hp_optimization_2', 'test_hp_optimization_3', 'parameter_sampler2', 'test_rerun_experiment',
+           'test_rerun_experiment_pipeline', 'test_rerun_experiment_par', 'test_get_git_revision_hash',
+           'test_load_or_create_experiment_values', 'test_get_experiment_numbers']
 
 # Cell
 import pytest
@@ -927,7 +928,7 @@ def test_run_multiple_repetitions ():
     em.remove_previous_experiments (parent=True)
 
 # Comes from experiment_manager.ipynb, cell
-def parameter_sampler (trial):
+def parameter_sampler1 (trial):
     rate = trial.suggest_uniform('rate', 0.001, 0.01)
     offset = trial.suggest_categorical('offset', [0.01, 0.05, 0.1])
 
@@ -942,21 +943,67 @@ def test_hp_optimization ():
 
     parameters = {'epochs': 12}
 
-    em.hp_optimization (parameter_sampler=parameter_sampler, parameters=parameters,
+    em.hp_optimization (parameter_sampler=parameter_sampler1, parameters=parameters,
                         study_name='test_hp_optimization_study',
                         n_trials=5)
-
+    # show
     df = em.get_experiment_data ()
     display (df)
-    # TODO: error in pytest
-    #assert df.shape == (5,8)
-    #assert (df['offset']==[0.01,0.10,0.05,0.01,0.10]).all()
-    #assert np.max(np.abs(df['rate']-[0.005939, 0.004813, 0.009673, 0.006112, 0.001182])) < 1e-5
+    assert df.shape == (5,8)
+
+    # check
+    offset_col = (dflt.parameters_col, 'offset', '')
+    assert (df[offset_col]==[0.01,0.10,0.05,0.01,0.10]).all()
+    rate_col = (dflt.parameters_col, 'rate', '')
+    assert np.max(np.abs(df[rate_col]-[0.005939, 0.004813, 0.009673, 0.006112, 0.001182])) < 1e-5
+    epochs_col = (dflt.parameters_col, 'epochs', '')
+    assert (df[epochs_col]==12).all()
 
     em.remove_previous_experiments (parent=True)
 
 # Comes from experiment_manager.ipynb, cell
-def parameter_sampler (trial):
+def test_hp_optimization_2 ():
+    em = init_em ('hp_optimization_2')
+    np.random.seed (42)
+    parameters = {'epochs': 21}
+    em.hp_optimization (sampler_method='skopt', pruner_method='halving',
+                        parameter_sampler=parameter_sampler1, parameters=parameters,
+                        study_name='test_hp_optimization_study_2',
+                        n_trials=6, nruns=2)
+    # show
+    df = em.get_experiment_data ()
+    display (df)
+
+    # check
+    assert df.shape == (6,13)
+    assert sorted(df[(dflt.scores_col, 'test_accuracy')].columns)==[0,1]
+    em.remove_previous_experiments (parent=True)
+
+# Comes from experiment_manager.ipynb, cell
+def test_hp_optimization_3 ():
+    em = init_em ('hp_optimization_3')
+    np.random.seed (42)
+
+    parameters = {'epochs': 21}
+
+    em.hp_optimization (sampler_method='tpe', pruner_method='median',
+                        parameter_sampler=parameter_sampler1, parameters=parameters,
+                        study_name='test_hp_optimization_study_3',
+                        n_trials=6, nruns_best=5)
+    # show
+    df = em.get_experiment_data ()
+    display (df)
+
+    # check
+    assert df.shape==(6,28)
+    assert sorted(df[(dflt.scores_col, 'test_accuracy')].columns)==list(range(5))
+    assert all(df[(dflt.scores_col, 'test_accuracy')].loc[:,1:4].isna().all(axis=1)==[True]*5+[False])
+    assert all(df[(dflt.scores_col, 'test_accuracy')].loc[:,1:4].isna().any(axis=1)==[True]*5+[False])
+
+    em.remove_previous_experiments (parent=True)
+
+# Comes from experiment_manager.ipynb, cell
+def parameter_sampler2 (trial):
     epochs = trial.suggest_categorical('epochs', [2, 4])
     offset = trial.suggest_categorical('offset', [0.02, 0.06])
 
@@ -1020,7 +1067,7 @@ def test_rerun_experiment ():
     # parameters
     # ****************************************
     em.rerun_experiment (experiments=[2],
-                         parameter_sampler=parameter_sampler,
+                         parameter_sampler=parameter_sampler2,
                          other_parameters={'verbose':False},
                          n_trials=4, sampler_method='skopt')
     df2 = em.get_experiment_data ()

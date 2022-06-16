@@ -38,7 +38,6 @@ import hpsearch.config.hp_defaults as dflt
 
 # Cell
 class ExperimentManager (object):
-
     def __init__ (self,
                   allow_base_class=dflt.allow_base_class,
                   path_experiments='hpsearch/results',
@@ -678,13 +677,12 @@ class ExperimentManager (object):
         import gc
         gc.collect()
 
-    def run_multiple_repetitions (self, parameters={}, other_parameters = {},
-                     log_message='', nruns = None, run_numbers=[0], **kwargs):
+    def run_multiple_repetitions (self, parameters={}, other_parameters={},
+                     log_message='', nruns=None, run_numbers=[0], **kwargs):
 
         other_parameters = other_parameters.copy()
 
-        if nruns is not None:
-            run_numbers = range (nruns)
+        if nruns is not None: run_numbers = range (nruns)
 
         path_experiments = self.path_experiments
         path_experiments.mkdir (parents=True, exist_ok = True)
@@ -707,14 +705,13 @@ class ExperimentManager (object):
 
         return mu, std, dict_results
 
-
     def hp_optimization (self, parameter_sampler=None, log_message=None,
                          parameters={}, other_parameters={}, info=Bunch(),
                          nruns=None, stack_level=-3, sampler_method='random',
-                         pruner_method='halving', n_evaluations=20, seed=0,
+                         pruner_method='none', n_evaluations=20, seed=0,
                          n_startup_trials=5, n_trials=10, study_name='hp_study',
                          run_number=None, n_jobs=1, nruns_best=0,
-                         **kwargs):
+                         n_warmup_steps=None, **kwargs):
 
         import optuna
         from optuna.pruners import SuccessiveHalvingPruner, MedianPruner
@@ -727,7 +724,7 @@ class ExperimentManager (object):
         store_attr (store_args=False, self=em_args, but='parameters, other_parameters')
 
         path_experiments = self.path_experiments
-        path_experiments.mkdir (parents=True, exist_ok = True)
+        path_experiments.mkdir (parents=True, exist_ok=True)
 
         other_parameters = other_parameters.copy()
 
@@ -735,12 +732,10 @@ class ExperimentManager (object):
             info['log_message'] = log_message
         insert_experiment_script_path (info, self.logger, stack_level=stack_level)
 
-        # n_warmup_steps: Disable pruner until the trial reaches the given number of step.
         if sampler_method == 'random':
             sampler = RandomSampler(seed=seed)
         elif sampler_method == 'tpe':
-            sampler = TPESampler(n_startup_trials=n_startup_trials,
-                                 seed=seed)
+            sampler = TPESampler(n_startup_trials=n_startup_trials, seed=seed)
         elif sampler_method == 'skopt':
             # cf https://scikit-optimize.github.io/#skopt.Optimizer
             # GP: gaussian process
@@ -750,14 +745,13 @@ class ExperimentManager (object):
             raise ValueError('Unknown sampler: {}'.format(sampler_method))
 
         if pruner_method == 'halving':
-            pruner = SuccessiveHalvingPruner(min_resource=1, reduction_factor=4,
-                                             min_early_stopping_rate=0)
+            pruner = SuccessiveHalvingPruner(min_resource=1, reduction_factor=4, min_early_stopping_rate=0)
         elif pruner_method == 'median':
-            pruner = MedianPruner(n_startup_trials=5, n_warmup_steps=n_evaluations // 3)
-        elif pruner_method == 'none':
-            # Do not prune
-            pruner = MedianPruner(n_startup_trials=n_trials,
-                                  n_warmup_steps=n_evaluations)
+            # n_warmup_steps: Disable pruner until the trial reaches the given number of step.
+            if n_warmup_steps is None: n_warmup_steps = n_evaluations // 3
+            pruner = MedianPruner(n_startup_trials=5, n_warmup_steps=n_warmup_steps)
+        elif pruner_method == 'none': # Do not prune
+            pruner = optuna.pruners.NopPruner ()
         else:
             raise ValueError(f'Unknown pruner: {pruner_method}')
 
@@ -780,16 +774,15 @@ class ExperimentManager (object):
             if parameter_sampler is not None:
                 hp_parameters.update(parameter_sampler(trial))
 
-            if nruns is None:
+            if nruns is None or nruns < 2:
                 _, dict_results = self.create_experiment_and_run (
                     parameters=hp_parameters, other_parameters=other_parameters,
-                    run_number=run_number, info=info,
-                    em_args=em_args, **kwargs
+                    run_number=run_number, info=info, em_args=em_args, **kwargs
                 )
             else:
                 mu_best, std_best, dict_results = self.run_multiple_repetitions (
                     parameters=hp_parameters, other_parameters=other_parameters,
-                    info=info, em_args=em_args, **kwargs
+                    info=info, em_args=em_args, nruns=nruns, **kwargs
                 )
 
             if dict_results.get('is_pruned', False):
