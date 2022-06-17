@@ -709,7 +709,8 @@ class ExperimentManager (object):
                          parameters={}, other_parameters={}, info=Bunch(),
                          nruns=None, stack_level=-3, sampler_method='random',
                          pruner_method='none', n_evaluations=20, seed=0,
-                         n_startup_trials=5, n_trials=10, study_name='hp_study',
+                         n_startup_trials=5, n_startup_trials_pruner=5,
+                         n_trials=10, study_name='hp_study',
                          run_number=None, n_jobs=1, nruns_best=0,
                          n_warmup_steps=None, **kwargs):
 
@@ -749,7 +750,7 @@ class ExperimentManager (object):
         elif pruner_method == 'median':
             # n_warmup_steps: Disable pruner until the trial reaches the given number of step.
             if n_warmup_steps is None: n_warmup_steps = n_evaluations // 3
-            pruner = MedianPruner(n_startup_trials=5, n_warmup_steps=n_warmup_steps)
+            pruner = MedianPruner(n_startup_trials=n_startup_trials_pruner, n_warmup_steps=n_warmup_steps)
         elif pruner_method == 'none': # Do not prune
             pruner = optuna.pruners.NopPruner ()
         else:
