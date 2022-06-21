@@ -189,9 +189,10 @@ class ExperimentManager (object):
 
     def get_experiment_data (self, experiments=None):
         experiment_data = read_df (self.path_experiments)
-        if experiment_data.columns.nlevels==1: experiment_data = update_data_format (experiment_data)
-        if experiments is not None:
-            experiment_data = experiment_data.loc[experiments,:]
+        if experiment_data is not None:
+            if experiment_data.columns.nlevels==1: experiment_data = update_data_format (experiment_data)
+            if experiments is not None:
+                experiment_data = experiment_data.loc[experiments,:]
         return experiment_data
 
     def remove_previous_experiments (self, parent=False, only_test=True, include_alternative=True,
@@ -817,25 +818,50 @@ class ExperimentManager (object):
                        parameters_single_value={},
                        parameters_multiple_values={}, log_message='',
                        only_if_exists=False, check_experiment_matches=True,
-                       query_args, info=Bunch(), **kwargs):
+                       query_args={}, info=Bunch(), n_iterations=1, **kwargs):
+
+        from .tools.query import query
+
         em_args=kwargs
         parameters_multiple_values_original = parameters_multiple_values.copy()
         script_parameters = {}
         insert_experiment_script_path (script_parameters, self.logger)
         info['rerun_script'] = script_parameters
         em_args['info'] = info
-        for k in parameters_greedy:
-            parameters_multiple_values = parameters_multiple_values_original.copy()
-            parameters_multiple_values.update ({k: parameters_greedy[k]})
+        parameters_greedy_list = (parameters_greedy if isinstance (parameters_greedy, list)
+                                  else [{k:parameters_greedy[k]} for k in parameters_greedy])
+        for iteration in range(n_iterations):
+            for parameters_greedy in parameters_greedy_list:
+                parameters_multiple_values = parameters_multiple_values_original.copy()
+                parameters_multiple_values.update (parameters_greedy)
 
-            df = query (folder=self.folder, metric=self.key_score, op=self.op, stats=['mean'], **query_args)
-            experiment_number = df.index[0]
-            self.rerun_experiment (experiments=[experiment_number], nruns=nruns,
-                                   other_parameters=other_parameters,
-                                   parameters=parameters_single_value,
-                                   parameters_multiple_values=parameters_multiple_values,
-                                   log_message=log_message, only_if_exists=only_if_exists,
-                                   check_experiment_matches=check_experiment_matches, **em_args)
+                df = query (folder=self.folder, metric=self.key_score, op=self.op, stats=['mean'], **query_args)
+                if df is None or df.empty:
+                    message = 'starting set of experiments with grid-search'
+                    print (message); self.logger.info (message)
+                    self.grid_search (parameters_multiple_values=parameters_multiple_values,
+                                      parameters_single_value=parameters_single_value,
+                                      other_parameters=other_parameters,
+                                      run_numbers=run_numbers, log_message=log_message,
+                                      nruns=nruns, **em_args)
+                else:
+                    experiment_number = df.index[0]
+                    dict_par = df.loc[experiment_number, dflt.parameters_col].to_dict()
+                    dict_par = {k[0]:dict_par[k] for k in dict_par}
+                    message = '- Continuing search starting from previous best\n'
+                    message += (f'    Exp#={experiment_number}, '
+                                f'Parameters={dict_par}\n')
+                    message += (f'    Best metric {self.key_score}: '
+                                f'{df.loc[experiment_number, (dflt.stats_col, self.key_score)].values}\n')
+                    message += (f'- Starting new round with variable parameters: {parameters_multiple_values}\n'
+                                f'And fixed parameters: {parameters_single_value}')
+                    print (message); self.logger.info (message)
+                    self.rerun_experiment (experiments=[experiment_number], nruns=nruns,
+                                           other_parameters=other_parameters,
+                                           parameters=parameters_single_value,
+                                           parameters_multiple_values=parameters_multiple_values,
+                                           log_message=log_message, only_if_exists=only_if_exists,
+                                           check_experiment_matches=check_experiment_matches, **em_args)
 
     def rerun_experiment (self, experiments=[], run_numbers=[0], nruns=None,
                           other_parameters={}, em_args={}, parameters={},
@@ -1262,7 +1288,9 @@ def load_or_create_experiment_values (path_experiments, parameters, precision=1e
             experiment_data = experiment_data.append (parameters, ignore_index=True)
             experiment_data.columns = columns
         else:
-            experiment_data.loc[experiment_number]=None
+            experiment_data = pd.concat(
+                [experiment_data, pd.DataFrame(columns=experiment_data.columns, index=[experiment_number])],
+                axis=0)
             experiment_data[[c for c in columns if c not in experiment_data]] = None
             experiment_data.loc [experiment_number, columns] = parameters.values()
             experiment_data = experiment_data[experiment_data.columns.sort_values()]
