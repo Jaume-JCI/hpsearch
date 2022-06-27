@@ -14,7 +14,7 @@ import pdb
 import hpsearch.config.hp_defaults as dflt
 
 # Cell
-def change_manager (subclass=None, manager_path=dflt.manager_path):
+def change_manager (subclass=None, manager_path=dflt.manager_path, print_list=True):
     # TODO: check if it is really necessary to import inside the function and reload
     import hpsearch.config.manager_factory as mf
     from ..config.hpconfig import register_manager
@@ -23,12 +23,14 @@ def change_manager (subclass=None, manager_path=dflt.manager_path):
     manager_factory = mf.ManagerFactory (manager_path=manager_path, verbose=2)
 
     if subclass is None:
+        print ('\nList of managers:')
         manager_factory.list_subclasses ()
     else:
         manager_factory.change_manager (subclass)
         em = manager_factory.get_experiment_manager ()
         register_manager (em, manager_path=manager_factory.manager_path)
-        change_manager (subclass=None, manager_path=manager_path)
+        if print_list:
+            change_manager (subclass=None, manager_path=manager_path)
 
 # Cell
 def parse_args (args):

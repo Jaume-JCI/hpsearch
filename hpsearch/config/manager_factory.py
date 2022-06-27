@@ -205,8 +205,8 @@ class ManagerFactory (object):
         prev_class = ''
         for i in range(len(managers)):
             if manager_classes[i] != prev_class:
-                print (manager_classes[i])
-            print (f'    {folders[i]}\t=>\t{managers[i]}')
+                print (f'{manager_classes[i]}:')
+            print (f'    {folders[i]:50}{managers[i]}')
             prev_class = manager_classes[i]
 
         #print (f'managers: {sorted(managers)}')

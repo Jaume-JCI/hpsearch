@@ -24,6 +24,7 @@ from hpsearch.examples.dummy_experiment_manager import DummyExperimentManager, g
 def test_get_experiment_manager ():
     em = generate_data ('get_experiment_manager')
     manager_path = em.manager_path
+    em_orig = em
     del em
 
     em = get_experiment_manager (manager_path)
@@ -38,6 +39,7 @@ def test_get_experiment_manager ():
     em = get_experiment_manager (manager_path, folder='other_folder')
     check_last_part (em.path_experiments, 'my_new_parent_path/other_folder')
     assert em.key_score == 'new_metric' and em.op == 'min'
+    em_orig.remove_previous_experiments (parent=True)
 
 # Comes from hpconfig.ipynb, cell
 def test_get_em_args ():
@@ -63,6 +65,7 @@ def test_modify_experiment_manager ():
 def test_register_manager ():
     em = generate_data ('register_manager')
     manager_path = em.manager_path
+    em_orig = em
     del em
     em = get_experiment_manager (manager_path)
     assert em is not None
@@ -70,3 +73,5 @@ def test_register_manager ():
     register_manager (None)
     import hpsearch.config.hpconfig as hpcfg
     assert hpcfg.mf.experiment_manager is None
+
+    em_orig.remove_previous_experiments (parent=True)

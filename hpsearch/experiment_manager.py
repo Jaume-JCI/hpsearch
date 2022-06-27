@@ -293,14 +293,13 @@ class ExperimentManager (object):
 
     # *************************************************************************
     # *************************************************************************
-    def create_experiment_and_run (self, parameters = {}, other_parameters = {},
-                                   info = Bunch(), em_args=Bunch(),
+    def create_experiment_and_run (self, parameters={}, other_parameters={},
+                                   info=Bunch(), em_args=Bunch(),
                                    run_number=0, log_message=None, stack_level=-3,
                                    precision=1e-15, experiment_number=None,
                                    repeat_experiment=False, remove_not_finished=False,
                                    only_remove_not_finished=False, check_finished=False,
-                                   recompute_metrics=False,
-                                   force_recompute_metrics=False,
+                                   recompute_metrics=False, force_recompute_metrics=False,
                                    check_finished_if_interrupted=False, prev_epoch=False,
                                    use_previous_best=dflt.use_previous_best, from_exp=None,
                                    skip_interrupted=False, use_last_result=False,
@@ -311,7 +310,9 @@ class ExperimentManager (object):
                                    use_process=False):
 
         """
+        Log experiment parameters, run experiment if not run before, and log results.
 
+        Can resume previously run experiment.
         """
         current_em_args = Bunch ()
         store_attr (store_args=False, self=current_em_args, but='parameters, other_parameters, info, em_args')
@@ -1185,16 +1186,16 @@ def record_parameters (path_save, parameters, other_parameters=None, em_args=Non
                       em_attrs=None):
     if em_attrs is not None:
         em_attrs = get_scalar_fields (em_attrs)
-    with open('%s/parameters.txt' %path_save, 'wt') as f:
-        f.write('%s\n' %print_parameters(parameters, dict_name='parameters'))
+    with open(f'{path_save}/parameters.txt', 'wt') as f:
+        f.write(f'{print_parameters(parameters, dict_name="parameters")}\n')
         if other_parameters is not None:
-            f.write('\n\n%s\n' %print_parameters(other_parameters, dict_name='other_parameters'))
+            f.write(f'\n\n{print_parameters(other_parameters, dict_name="other_parameters")}\n')
         if em_args is not None:
-            f.write('\n\n%s\n' %print_parameters(other_parameters, dict_name='em_args'))
+            f.write(f'\n\n{print_parameters(em_args, dict_name="em_args")}\n')
         if info is not None:
-            f.write('\n\n%s\n' %print_parameters(info, dict_name='info'))
+            f.write(f'\n\n{print_parameters(info, dict_name="info")}\n')
         if em_attrs is not None:
-            f.write('\n\n%s\n' %print_parameters(em_attrs, dict_name='info'))
+            f.write(f'\n\n{print_parameters(em_attrs, dict_name="em_attrs")}\n')
 
     to_pickle = [parameters]
     if other_parameters is not None:
