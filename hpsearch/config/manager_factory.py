@@ -199,8 +199,17 @@ class ManagerFactory (object):
     def list_pickled_managers (self):
         managers = glob.glob (f'{self.manager_path}/fields/*.pk')
         managers = [Path(x).name.split('.pk')[0] for x in managers]
-        managers = [x for x in managers if x != 'last']
-        print (f'managers: {managers}')
+        managers = sorted([x for x in managers if x != 'last'])
+        manager_classes = [manager.split('-')[0] for manager in managers]
+        folders = [manager.split('-')[1] for manager in managers]
+        prev_class = ''
+        for i in range(len(managers)):
+            if manager_classes[i] != prev_class:
+                print (manager_classes[i])
+            print (f'    {folders[i]}\t=>\t{managers[i]}')
+            prev_class = manager_classes[i]
+
+        #print (f'managers: {sorted(managers)}')
 
     def print_current_manager (self):
         em = self.get_experiment_manager ()

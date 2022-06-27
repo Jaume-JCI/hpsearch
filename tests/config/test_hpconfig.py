@@ -68,5 +68,5 @@ def test_register_manager ():
     assert em is not None
 
     register_manager (None)
-    em = get_experiment_manager (manager_path)
-    assert em is None
+    import hpsearch.config.hpconfig as hpcfg
+    assert hpcfg.mf.experiment_manager is None
