@@ -2,7 +2,8 @@
 
 __all__ = ['changeable_properties', 'get_experiment_manager', 'get_default_parameters', 'get_path_experiments',
            'get_path_alternative', 'get_path_experiment', 'get_path_results', 'get_path_data',
-           'experiment_visualization', 'get_experiment_data', 'get_em_args', 'modify_experiment_manager', 'add_em_args']
+           'experiment_visualization', 'get_experiment_data', 'get_em_args', 'modify_experiment_manager', 'add_em_args',
+           'register_manager']
 
 # Cell
 import os
@@ -78,3 +79,8 @@ def add_em_args (parser, but=None):
     properties = changeable_properties if but is None else changeable_properties - set(but)
     for k in properties:
         parser.add_argument(f'--{k}', type=str, default=None)
+
+# Cell
+def register_manager (experiment_manager_to_register, manager_path=dflt.manager_path, **kwargs):
+    manager_factory = ManagerFactory(manager_path=manager_path)
+    manager_factory.register_manager (experiment_manager_to_register)

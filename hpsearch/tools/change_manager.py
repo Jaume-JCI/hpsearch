@@ -17,6 +17,7 @@ import hpsearch.config.hp_defaults as dflt
 def change_manager (subclass=None, manager_path=dflt.manager_path):
     # TODO: check if it is really necessary to import inside the function and reload
     import hpsearch.config.manager_factory as mf
+    from ..config.hpconfig import register_manager
     reload (mf)
 
     manager_factory = mf.ManagerFactory (manager_path=manager_path, verbose=2)
@@ -25,6 +26,8 @@ def change_manager (subclass=None, manager_path=dflt.manager_path):
         manager_factory.list_subclasses ()
     else:
         manager_factory.change_manager (subclass)
+        em = manager_factory.get_experiment_manager ()
+        register_manager (em, manager_path=manager_factory.manager_path)
         change_manager (subclass=None, manager_path=manager_path)
 
 # Cell
