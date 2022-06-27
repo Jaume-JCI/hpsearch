@@ -812,15 +812,39 @@ class ExperimentManager (object):
 
         return best_value
 
+    def greedy_search (self, run_numbers=[0], nruns=None, other_parameters={},
+                       em_args={}, parameters_greedy={},
+                       parameters_single_value={},
+                       parameters_multiple_values={}, log_message='',
+                       only_if_exists=False, check_experiment_matches=True,
+                       query_args, info=Bunch(), **kwargs):
+        em_args=kwargs
+        parameters_multiple_values_original = parameters_multiple_values.copy()
+        script_parameters = {}
+        insert_experiment_script_path (script_parameters, self.logger)
+        info['rerun_script'] = script_parameters
+        em_args['info'] = info
+        for k in parameters_greedy:
+            parameters_multiple_values = parameters_multiple_values_original.copy()
+            parameters_multiple_values.update ({k: parameters_greedy[k]})
+
+            df = query (folder=self.folder, metric=self.key_score, op=self.op, stats=['mean'], **query_args)
+            experiment_number = df.index[0]
+            self.rerun_experiment (experiments=[experiment_number], nruns=nruns,
+                                   other_parameters=other_parameters,
+                                   parameters=parameters_single_value,
+                                   parameters_multiple_values=parameters_multiple_values,
+                                   log_message=log_message, only_if_exists=only_if_exists,
+                                   check_experiment_matches=check_experiment_matches, **em_args)
+
     def rerun_experiment (self, experiments=[], run_numbers=[0], nruns=None,
                           other_parameters={}, em_args={}, parameters={},
                           parameter_sampler=None, parameters_multiple_values=None,
                           log_message='', only_if_exists=False, check_experiment_matches=True,
-                          **kwargs):
+                          info=Bunch (), **kwargs):
 
         other_parameters = other_parameters.copy()
         em_args = kwargs
-        info = Bunch ()
         path_experiments = self.path_experiments
 
         if nruns is not None:
