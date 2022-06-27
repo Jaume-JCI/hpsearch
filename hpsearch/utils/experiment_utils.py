@@ -403,6 +403,8 @@ def query (path_experiments=None,
         experiment_data = pd.read_csv(f'{path_experiments}/other_parameters.csv', index_col=0)
     else:
         experiment_data = em.get_experiment_data ()
+    if experiment_data is None:
+        return None
 
     non_valid_pars = set(
         [(dflt.parameters_col, c, '') for c in parameters_fixed.keys()]

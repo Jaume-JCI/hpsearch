@@ -7,9 +7,9 @@ __all__ = ['init_em_fixture', 'test_set_path_experiments', 'test_set_alternative
            'test_recompute_metrics', 'test_prev_epoch', 'test_prev_epoch2', 'test_from_exp', 'test_skip_interrupted',
            'test_use_last_result', 'test_use_last_result_run_interrupted', 'test_storing_em_args_and_parameters',
            'test_grid_search', 'test_run_multiple_repetitions', 'parameter_sampler1', 'test_hp_optimization',
-           'test_hp_optimization_2', 'test_hp_optimization_3', 'parameter_sampler2', 'test_rerun_experiment',
-           'test_rerun_experiment_pipeline', 'test_rerun_experiment_par', 'test_get_git_revision_hash',
-           'test_load_or_create_experiment_values', 'test_get_experiment_numbers']
+           'test_hp_optimization_2', 'test_hp_optimization_3', 'test_greedy_search', 'parameter_sampler2',
+           'test_rerun_experiment', 'test_rerun_experiment_pipeline', 'test_rerun_experiment_par',
+           'test_get_git_revision_hash', 'test_load_or_create_experiment_values', 'test_get_experiment_numbers']
 
 # Cell
 import pytest
@@ -999,6 +999,33 @@ def test_hp_optimization_3 ():
     assert sorted(df[(dflt.scores_col, 'test_accuracy')].columns)==list(range(5))
     assert all(df[(dflt.scores_col, 'test_accuracy')].loc[:,1:4].isna().all(axis=1)==[True]*5+[False])
     assert all(df[(dflt.scores_col, 'test_accuracy')].loc[:,1:4].isna().any(axis=1)==[True]*5+[False])
+
+    em.remove_previous_experiments (parent=True)
+
+# Comes from experiment_manager.ipynb, cell
+def test_greedy_search ():
+    em = init_em ('greedy_search')
+
+    em.greedy_search (parameters_multiple_values={'rate': [0.03, 0.01]},
+                      parameters_greedy={'epochs': [5, 7], 'offset': [0.1, 0.2, 0.3]},
+                      other_parameters={'verbose':False})
+
+    df = em.get_experiment_data ()
+    display (df)
+
+    # checks
+    assert (df[('parameters', 'rate')][0::2]==0.03).all() and df[('parameters', 'rate')][1::2].isna().all()
+    assert (df[('parameters', 'epochs')].loc[:1]==5).all() and (df[('parameters', 'epochs')].loc[2:]==7).all()
+    assert df[('parameters', 'offset')].loc[0:3].isna().all() and (df[('parameters', 'offset')].loc[4:]==[0.1,0.1,0.2,0.2,0.3,0.3]).all()
+
+    em.greedy_search (parameters_multiple_values={'noise': [1.0, 0.0]},
+                      parameters_greedy=[{'epochs': [10, 20]},
+                                         {'offset': [0.3, 0.6, 0.5]},
+                                         {'rate': [0.1, 0.2, 0.3]}],
+                      other_parameters={'verbose':False})
+
+    df = em.get_experiment_data ()
+    display (df)
 
     em.remove_previous_experiments (parent=True)
 
