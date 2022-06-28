@@ -15,7 +15,7 @@ import shutil
 
 from sklearn.utils import Bunch
 
-from dsblocks.utils.utils import check_last_part
+from dsblocks.utils.utils import check_last_part, remove_previous_results
 
 from hpsearch.config.hpconfig import *
 from hpsearch.examples.dummy_experiment_manager import DummyExperimentManager, generate_data
@@ -23,6 +23,7 @@ from hpsearch.examples.dummy_experiment_manager import DummyExperimentManager, g
 # Comes from hpconfig.ipynb, cell
 def test_get_experiment_manager ():
     em = generate_data ('get_experiment_manager')
+    path_experiments = str(em.path_experiments.parent)
     manager_path = em.manager_path
     em_orig = em
     del em
@@ -39,7 +40,7 @@ def test_get_experiment_manager ():
     em = get_experiment_manager (manager_path, folder='other_folder')
     check_last_part (em.path_experiments, 'my_new_parent_path/other_folder')
     assert em.key_score == 'new_metric' and em.op == 'min'
-    em_orig.remove_previous_experiments (parent=True)
+    remove_previous_results (path_experiments)
 
 # Comes from hpconfig.ipynb, cell
 def test_get_em_args ():
