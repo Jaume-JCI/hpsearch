@@ -7,8 +7,11 @@ import pytest
 import pandas as pd
 import os
 import joblib
+import shutil
 from IPython.display import display
+
 from dsblocks.utils.nbdev_utils import md
+from dsblocks.utils.utils import remove_previous_results
 
 from hpsearch.utils.organize_experiments import *
 from hpsearch.examples.dummy_experiment_manager import generate_data
@@ -18,7 +21,8 @@ from hpsearch.utils.experiment_utils import read_df, write_df
 # Comes from organize_experiments.ipynb, cell
 def test_remove_experiments ():
     em = generate_data ('remove_experiments')
-
+    shutil.copytree ('test_remove_experiments', 'test_alternative_remove_experiments')
+    em.set_alternative_path (alternative_parent_path='test_alternative_remove_experiments')
     path_experiments = em.path_experiments
     print (f'path_experiments: {path_experiments}\n')
     print (f'experiments content: {os.listdir(path_experiments)}\n')
@@ -48,3 +52,4 @@ def test_remove_experiments ():
     print (experiments_data)
 
     em.remove_previous_experiments (parent=True)
+    remove_previous_results ('test_alternative_remove_experiments')

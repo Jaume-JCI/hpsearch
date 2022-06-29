@@ -32,14 +32,16 @@ def remove_defaults_from_experiment_data (experiment_data):
         for default_name in default_names:
             has_default = experiment_data.loc[experiment_number, default_name] == defaults[default_name]
             if has_default:
-                print ('found experiment with default in experiment_number {}, parameter {}, values: {}'.format(experiment_number, default_name, experiment_data.loc[experiment_number, default_name]))
+                print (f'found experiment with default in experiment_number {experiment_number}, '
+                       f'parameter {default_name}, values: '
+                       f'{experiment_data.loc[experiment_number, default_name]}')
                 changed_df = True
                 experiment_data.loc[experiment_number, default_name] = None
 
     # check if there are repeated experiments
     if changed_df:
         if experiment_data[parameters_names].duplicated().any():
-            print ('duplicated experiments: {}'.format(experiment_data[parameters_names].duplicated()))
+            print (f'duplicated experiments: {experiment_data[parameters_names].duplicated()}')
             experiment_data = experiment_data_original
             changed_df = False
 
@@ -62,6 +64,9 @@ def remove_experiments (experiments=[], folder=None, manager_path=dflt.manager_p
     for experiment in experiments:
         path_experiment = em.get_path_experiment (experiment)
         shutil.rmtree(path_experiment)
+        if em.alternative_path is not None:
+            alternative_path = str(path_experiment).replace (str(em.path_experiments), str(em.alternative_path))
+            shutil.rmtree(alternative_path)
 
     # 3. move experiment folders
     for new_number, original_number in enumerate(experiment_data.index):
@@ -69,6 +74,15 @@ def remove_experiments (experiments=[], folder=None, manager_path=dflt.manager_p
         path_original_experiment = em.get_path_experiment (original_number)
         if path_new_experiment != path_original_experiment:
             shutil.move (path_original_experiment, path_new_experiment)
+            if em.alternative_path is not None:
+                new_alternative_path = str(path_new_experiment).replace (
+                    str(em.path_experiments), str(em.alternative_path)
+                )
+                original_alternative_path = str(path_original_experiment).replace (
+                    str(em.path_experiments), str(em.alternative_path)
+                )
+                shutil.move (original_alternative_path, new_alternative_path)
+
 
     # 4. move experiment indexes
     experiment_data.index = range(len(experiment_data.index))
