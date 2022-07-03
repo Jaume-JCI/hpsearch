@@ -619,7 +619,12 @@ class ExperimentManager (object):
         mi_col = (dflt.run_info_col, 'finished', run_number)
         experiment_data.loc[experiment_number, mi_col]=finished
 
-        experiment_data = experiment_data[experiment_data.columns.sort_values()]
+        try:
+            experiment_data.columns = pd.MultiIndex.from_tuples(
+                [(c[0],c[1],str(c[2])) for c in experiment_data.columns])
+            experiment_data = experiment_data[experiment_data.columns.sort_values()]
+        except TypeError as e:
+            self.logger.warning (f'received exception {e}, we cannot sort the columns')
         write_df (experiment_data, self.path_experiments)
 
     def grid_search (self, parameters_multiple_values={}, parameters_single_value={}, other_parameters={},
