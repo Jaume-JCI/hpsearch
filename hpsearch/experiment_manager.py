@@ -603,8 +603,12 @@ class ExperimentManager (object):
         return result, dict_results
 
     def log_results (self, dict_results, experiment_data, experiment_number, run_number,
-                time_spent, finished=True):
+                time_spent, finished=True, str_run_number=True):
         if not isinstance(dict_results, dict): dict_results = {self.key_score: dict_results}
+        if str_run_number:
+            experiment_data.columns = pd.MultiIndex.from_tuples(
+                [(c[0],c[1],str(c[2])) for c in experiment_data.columns])
+            run_number = str(run_number)
         columns = pd.MultiIndex.from_product ([[dflt.scores_col],
                                                list(dict_results.keys()),
                                                [run_number]])
@@ -620,8 +624,6 @@ class ExperimentManager (object):
         experiment_data.loc[experiment_number, mi_col]=finished
 
         try:
-            experiment_data.columns = pd.MultiIndex.from_tuples(
-                [(c[0],c[1],str(c[2])) for c in experiment_data.columns])
             experiment_data = experiment_data[experiment_data.columns.sort_values()]
         except TypeError as e:
             self.logger.warning (f'received exception {e}, we cannot sort the columns')
