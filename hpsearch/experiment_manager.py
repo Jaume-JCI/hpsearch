@@ -603,7 +603,7 @@ class ExperimentManager (object):
         return result, dict_results
 
     def log_results (self, dict_results, experiment_data, experiment_number, run_number,
-                time_spent, finished=True, str_run_number=True):
+                time_spent, finished=True, str_run_number=False):
         if not isinstance(dict_results, dict): dict_results = {self.key_score: dict_results}
         if str_run_number:
             experiment_data.columns = pd.MultiIndex.from_tuples(

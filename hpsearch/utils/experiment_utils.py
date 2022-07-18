@@ -34,12 +34,14 @@ def read_df (path, name='experiments_data'):
             experiment_data = None
     return experiment_data
 
+# Cell
 def write_df (df, path, name='experiments_data'):
     path_csv = f'{path}/{name}.csv'
     path_pickle = path_csv.replace('csv', 'pk')
     df.to_pickle (path_pickle)
     df.to_csv (path_csv)
 
+# Cell
 def write_binary_df_if_not_exists (df, path, name='experiments_data'):
     path_pickle = f'{path}/{name}.pk'
     df.to_pickle (path_pickle)
