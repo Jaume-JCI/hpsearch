@@ -331,6 +331,11 @@ def test_summarize_results ():
     assert set(['mean','median','min','max','std'])==set(summary[dflt.stats_col, 'validation_accuracy'].columns)
 
     md ('\n\n')
+    md ('- We can indicate more than one metric:')
+    summary = summarize_results (score_name=['validation_accuracy', 'test_accuracy'])
+    display (summary)
+
+    md ('\n\n')
     md ('- We can also restrict the stats to be provided:')
     summary = summarize_results (score_name='validation_accuracy', stats=['mean', 'min', 'max'])
     assert summary.shape == (3, 6)

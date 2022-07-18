@@ -35,7 +35,11 @@ def test_do_query_and_show ():
 def test_do_query_and_show_change_metric ():
     em = generate_data ('do_query_and_show_change_metric')
 
+    # if we want to use a single metric, we can simply indicate its name:
     do_query_and_show (metric='test_accuracy', manager_path=em.manager_path)
+
+    # we can indicate more than one metric, using a list:
+    do_query_and_show (metric=['test_accuracy', 'validation_accuracy'], manager_path=em.manager_path)
 
     em.remove_previous_experiments (parent=True)
 
@@ -61,6 +65,11 @@ def test_do_query_and_show_sort_maximum ():
 def test_parse_arguments_and_query_change_metric ():
     em = generate_data ('parse_arguments_and_query_change_metric')
 
+    # indicate more than one metric
+    command = f'--metric test_accuracy validation_accuracy --manager_path {em.manager_path}'
+    parse_arguments_and_query (command.split())
+
+    # indicate a single metric
     command = f'--metric test_accuracy --manager_path {em.manager_path}'
     parse_arguments_and_query (command.split())
 

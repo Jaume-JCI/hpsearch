@@ -103,7 +103,7 @@ def do_query_and_show (pall=[], best=None, compact=0, exact=False, experiments=N
 def parse_args(args):
     default_always = ''
 
-    parser = argparse.ArgumentParser(description='show metrics in visdom browser')
+    parser = argparse.ArgumentParser(description='Run query')
     # Datasets
     parser.add_argument('--stats', type=str, nargs='+', default=['mean'],  help="statistics for multiple runs")
     parser.add_argument('--experiments', type=int, nargs='+', default=None,  help="experiment numbers")
@@ -123,7 +123,8 @@ def parse_args(args):
     parser.add_argument('--runs', default=None, type=int, nargs='+', help='query restricted to run number provided')
     parser.add_argument('--sort', default=None, type=str)
     parser.add_argument('--width', default=None, type=int, help='max column width')
-    add_em_args (parser)
+    parser.add_argument('--metric', type=str, nargs='+', default=None, help='include these metrics')
+    add_em_args (parser, but=['metric'])
     pars = parser.parse_args(args)
 
     pars.v = eval(pars.v)
