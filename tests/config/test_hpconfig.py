@@ -74,7 +74,7 @@ def test_add_em_args ():
     assert hasattr(pars, 'metric') and hasattr(pars, 'manager_path')
 
     # we can skip some of those using `but`:
-    parser = argparse.ArgumentParser(description='test)
+    parser = argparse.ArgumentParser(description='test')
     add_em_args (parser, but=['metric'])
     pars = parser.parse_args([])
     assert not hasattr(pars, 'metric') and hasattr(pars, 'manager_path')

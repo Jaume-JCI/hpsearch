@@ -38,6 +38,7 @@ def print_info (experiments=[-1], path_experiments=None, folder=None, display_al
     df = read_df (path_experiments)
 
     metric_column = (dflt.scores_col, em.key_score, run_number)
+    metric_column_str = (dflt.scores_col, em.key_score, str(run_number))
 
     experiments = include_best_and_last_experiment ([em.key_score], experiments=experiments,
                                                     run_number=run_number, op=em.op)
@@ -48,7 +49,11 @@ def print_info (experiments=[-1], path_experiments=None, folder=None, display_al
     for experiment in experiments:
         parameters = ut.get_parameters_columns(df.loc[[experiment]], True)
         print (f'\nparameters for {experiment}:')
-        display (df.loc[experiment, parameters + [metric_column]])
+        try:
+            display (df.loc[experiment, parameters + [metric_column]])
+        except KeyError:
+            display (df.loc[experiment, parameters + [metric_column_str]])
+            run_number = str(run_number)
         print ('scores for all experiments:')
         df_scores = ut.get_experiment_scores(df.loc[[experiment]], score_name=metric, remove_score_name=True)
         display(df_scores.round(round_digits))
