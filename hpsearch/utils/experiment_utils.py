@@ -24,12 +24,16 @@ warnings.filterwarnings('ignore')
 def read_df (path, name='experiments_data'):
     path_csv = f'{path}/{name}.csv'
     path_pickle = path_csv.replace('csv', 'pk')
+    path_columns_pickle = path_csv.replace('.csv', '_columns.pk')
     experiment_data = None
     try:
         experiment_data = pd.read_pickle (path_pickle)
     except:
         try:
             experiment_data = pd.read_csv (path_csv, index_col=0)
+            if os.path.exists (path_columns_pickle):
+                c = joblib.load (path_columns_pickle)
+                experiment_data.columns = pd.MultiIndex.from_tuples (c)
         except:
             experiment_data = None
     return experiment_data
@@ -38,8 +42,11 @@ def read_df (path, name='experiments_data'):
 def write_df (df, path, name='experiments_data'):
     path_csv = f'{path}/{name}.csv'
     path_pickle = path_csv.replace('csv', 'pk')
+    path_columns_pickle = path_csv.replace('.csv', '_columns.pk')
     df.to_pickle (path_pickle)
     df.to_csv (path_csv)
+    c = df.columns.tolist ()
+    joblib.dump (c, path_columns_pickle)
 
 # Cell
 def write_binary_df_if_not_exists (df, path, name='experiments_data'):
@@ -234,11 +241,25 @@ def find_rows_with_parameters_dict (experiment_data, parameters_dict, create_if_
                 changed_dataframe = True
             else:
                 raise ValueError ('parameter %s not found in experiment_data' %parameter)
+
+        if experiment_data[mi_parameter].dtype == np.dtype('O'):
+            idx_true = experiment_data[mi_parameter] == 'True'
+            idx_false = experiment_data[mi_parameter] == 'False'
+            experiment_data.loc[idx_true, mi_parameter]=True
+            experiment_data.loc[idx_false, mi_parameter]=False
+            try:
+                experiment_data[mi_parameter] = pd.to_numeric(experiment_data[mi_parameter])
+                experiment_data.loc[idx_true, mi_parameter]=True
+                experiment_data.loc[idx_false, mi_parameter]=False
+            except ValueError:
+                pass
         if parameters_dict[parameter] is None:
             matching_condition = experiment_data[mi_parameter].isnull()
         elif experiment_data[mi_parameter].isnull().all():
             matching_condition = ~experiment_data[mi_parameter].isnull()
-        elif (type(parameters_dict[parameter]) == float) or (type(parameters_dict[parameter]) == np.float32) or (type(parameters_dict[parameter]) == np.float64):
+        elif ((type(parameters_dict[parameter]) == float) or
+              (type(parameters_dict[parameter]) == np.float32) or
+              (type(parameters_dict[parameter]) == np.float64)):
             if parameters_dict[parameter] == np.floor(parameters_dict[parameter]):
                 matching_condition = experiment_data[mi_parameter]==parameters_dict[parameter]
             else:

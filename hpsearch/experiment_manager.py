@@ -1333,7 +1333,9 @@ def store_parameters (path_experiments, experiment_number, parameters):
 
 # Cell
 def isnull (experiment_data, experiment_number, name_column):
-    return (name_column not in experiment_data.columns) or (experiment_data.loc[experiment_number, name_column] is None) or np.isnan(experiment_data.loc[experiment_number, name_column])
+    return ((name_column not in experiment_data.columns) or
+            (experiment_data.loc[experiment_number, name_column] is None) or
+            np.isnan(float(experiment_data.loc[experiment_number, name_column])))
 
 # Cell
 def get_experiment_number (path_experiments, parameters = {}):
@@ -1382,8 +1384,12 @@ def load_parameters (experiment=None,
 
     path_experiment = em.get_path_experiment (experiment)
 
-    if os.path.exists('%s/parameters.pk' %path_experiment):
-        parameters2, other_parameters2, em_args2, *_ = joblib.load (f'{path_experiment}/parameters.pk')
+    if (path_experiment/'parameters.pk').exists():
+        try:
+            parameters2, other_parameters2, em_args2, *_ = joblib.load (path_experiment/'parameters.pk')
+        except ValueError:
+            parameters2, other_parameters2 = joblib.load (path_experiment/'parameters.pk')
+            em_args2 = {}
 
         other_parameters2.update(other_parameters)
         other_parameters = other_parameters2

@@ -3,8 +3,8 @@
 __all__ = ['generate_data_exp_utils', 'test_get_experiment_data', 'test_get_parameters_and_scores',
            'test_get_scores_names', 'test_get_monitored_training_metrics', 'test_get_runs_with_results',
            'test_get_parameters_unique', 'test_compact_parameters', 'test_replace_with_default_values',
-           'test_remove_defaults', 'test_find_rows_with_parameters_dict', 'test_summarize_results', 'test_query',
-           'test_summary']
+           'test_remove_defaults', 'test_find_rows_with_parameters_dict', 'test_find_rows_with_parameters_dict_corner',
+           'test_summarize_results', 'test_query', 'test_summary']
 
 # Cell
 import pytest
@@ -307,6 +307,30 @@ def test_find_rows_with_parameters_dict ():
     assert matching_rows==[]
 
     em.remove_previous_experiments (parent=True)
+
+# Comes from experiment_utils.ipynb, cell
+def test_find_rows_with_parameters_dict_corner ():
+    df = pd.DataFrame ({'a': ['1.0', '0.0', 'False', '1', '1', 'True'],
+                        'b': [1,     2,     'yes',   'no',  1,   True],
+                        'c': ['a',     'b',     'yes',   'no',  'c',  'd']})
+    df.columns = pd.MultiIndex.from_tuples ([('parameters','a',''),
+                                             ('parameters','b',''),
+                                             ('parameters','c','')])
+    result = find_rows_with_parameters_dict (df, dict (a=False, c='yes'), exact_match=False)
+    matching_rows, changed_dataframe, matching_all_condition = result
+    assert matching_rows==[2]
+
+    result = find_rows_with_parameters_dict (df, dict (a=False, c='no'), exact_match=False)
+    matching_rows, changed_dataframe, matching_all_condition = result
+    assert matching_rows==[]
+
+    result = find_rows_with_parameters_dict (df, dict (a=True, b=True), exact_match=False)
+    matching_rows, changed_dataframe, matching_all_condition = result
+    assert matching_rows==[0, 4, 5]
+
+    result = find_rows_with_parameters_dict (df, dict (a=0.0), exact_match=False)
+    matching_rows, changed_dataframe, matching_all_condition = result
+    assert matching_rows==[1, 2]
 
 # Comes from experiment_utils.ipynb, cell
 def test_summarize_results ():
