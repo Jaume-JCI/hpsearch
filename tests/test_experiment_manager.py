@@ -120,8 +120,8 @@ def test_basic_usage ():
     # Eight files  are stored in *path_experiments*, and the `experiments` folder is created:
 
     files_stored = ['current_experiment_number.pkl', 'experiments', 'experiments_data.csv',
-                    'experiments_data.pk', 'git_hash.json', 'managers', 'other_parameters.csv',
-                    'parameters.pk', 'parameters.txt', 'summary.txt']
+                    'experiments_data.pk', 'experiments_data_columns.pk', 'git_hash.json', 'managers',
+                    'other_parameters.csv', 'parameters.pk', 'parameters.txt', 'summary.txt']
     display (files_stored)
 
     path_experiments = em.path_experiments
