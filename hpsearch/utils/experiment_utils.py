@@ -7,9 +7,9 @@ __all__ = ['read_df', 'write_df', 'write_binary_df_if_not_exists', 'get_experime
            'query', 'summary']
 
 # Cell
+import joblib
 import pandas as pd
 import numpy as np
-import pickle
 import os
 import sys
 import time
@@ -141,7 +141,7 @@ def get_monitored_training_metrics (experiment, run_number=0, history_file_name=
         path_results = get_path_results(experiment, run_number)
     path_history = f'{path_results}/{history_file_name}'
     if os.path.exists(path_history):
-        history=pickle.load(open(path_history,'rb'))
+        history=joblib.load(path_history)
         return list(history.keys())
     else:
         return []
