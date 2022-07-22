@@ -301,7 +301,7 @@ def summarize_results(intersection=False,
                       ascending=False,
                       sort_key='mean',
                       #stats = ['mean','median','rank','min','max','std'],
-                      stats = ['mean','median','min','max','std']):
+                      stats=['mean','median','min','max','std']):
     """
     Obtains summary scores for the desired list of experiments.
 
@@ -321,6 +321,7 @@ def summarize_results(intersection=False,
     else:
         experiment_data = data.copy()
 
+    if experiments is not None: experiment_data = experiment_data.loc[experiments]
     # Determine the columnns that provide evaluation scores.
     result_columns = get_scores_columns (experiment_data, score_name=score_name, run_number=run_number)
 
